@@ -1,0 +1,23 @@
+{
+  "runner": "github-hosted-ephemeral",
+  "secrets_in_scope": false,
+  "network": {
+    "denied_after_acquisition": true,
+    "egress_attempts_after_denial": 0
+  },
+  "resource_limits": {
+    "cpu_enforced": true,
+    "memory_enforced": true,
+    "pids_enforced": true,
+    "disk_enforced": true
+  },
+  "wall_clock": {
+    "enforced": true,
+    "limit_seconds": 1800,
+    "terminated_by_timeout": true
+  },
+  "filesystem": {
+    "read_only_except": ["/workspace/build-out"],
+    "unauthorized_write_attempts": []
+  }
+}

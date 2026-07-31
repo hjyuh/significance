@@ -1,0 +1,9 @@
+{
+  "tool": "significance-lean",
+  "tool_version": "0.1.0",
+  "runner_image_digest": "sha256:a67b1bd9119bb55b576dddf936701424ec527e2ec17bd671019a9481e2a8fe68",
+  "executed_at": "2026-07-31T00:05:00Z",
+  "result": "passed",
+  "log_sha256": "73aaa5071d9f861550d51469cbd89e0a6e5371486fd94c9675281d1cefbd5117",
+  "asserted_by": "significance-ci"
+}

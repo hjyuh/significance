@@ -1,0 +1,221 @@
+name: lean-adapter-untrusted-build
+
+# Untrusted side of the two-workflow privilege separation described in
+# adapters/lean/README.md and SECURITY.md. This workflow builds and audits
+# an external, attacker-controlled Lean repository. It must never be
+# given write access to this repository and must never see secrets.
+#
+# Trigger is manual (workflow_dispatch) only, by design: a maintainer
+# chooses which external commit to attempt, rather than any repository
+# being able to trigger a build of itself automatically. This is a
+# research preview -- broadening the trigger surface is future work, not
+# a v0.1 goal.
+#
+# Every workflow_dispatch input and step output used below is passed
+# through a step-level `env:` and referenced as a shell variable ("$VAR"),
+# never interpolated directly as `${{ ... }}` inside `run:` script text.
+# These inputs are already maintainer-supplied (workflow_dispatch requires
+# repo write access to trigger), so this isn't closing a hole an attacker
+# could otherwise walk through -- it's defense in depth against a
+# copy-pasted value containing shell metacharacters being silently
+# executed instead of treated as data, which is worth doing for free.
+
+on:
+  workflow_dispatch:
+    inputs:
+      repo:
+        description: "https URL of the external Lean repository"
+        required: true
+      commit:
+        description: "Full commit SHA to build (never a branch or tag -- must be immutable)"
+        required: true
+      trust_profile:
+        description: "lean_standard_classical | lean_standard_classical_plus_native | custom"
+        required: true
+        default: lean_standard_classical
+      target_declaration:
+        description: "Fully-qualified Lean declaration name the axiom audit runs #print axioms against"
+        required: true
+      custom_allowlist:
+        description: "Comma-separated axiom allowlist, used only when trust_profile is 'custom'"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lean-adapter-untrusted-build-${{ github.event.inputs.commit }}
+  cancel-in-progress: false
+
+env:
+  WALL_CLOCK_LIMIT_SECONDS: 1800
+  BUILD_MEMORY: 4g
+  BUILD_CPUS: "2"
+  BUILD_PIDS_LIMIT: "256"
+  INPUT_REPO: ${{ github.event.inputs.repo }}
+  INPUT_COMMIT: ${{ github.event.inputs.commit }}
+  INPUT_TRUST_PROFILE: ${{ github.event.inputs.trust_profile }}
+  INPUT_TARGET_DECLARATION: ${{ github.event.inputs.target_declaration }}
+  INPUT_CUSTOM_ALLOWLIST: ${{ github.event.inputs.custom_allowlist }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40 # hard ceiling above WALL_CLOCK_LIMIT_SECONDS; the runner is ephemeral either way
+    steps:
+      - name: Check out significance (adapter scripts only, not the target repo)
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Reject non-immutable commit reference
+        run: |
+          set -euo pipefail
+          if ! [[ "$INPUT_COMMIT" =~ ^[0-9a-fA-F]{40}$ ]]; then
+            echo "::error::commit input must be a full 40-character commit SHA, not a branch or tag." >&2
+            exit 1
+          fi
+
+      - name: Build sandbox image (network - dependency acquisition only)
+        working-directory: adapters/lean
+        run: docker build -t sig-lean-sandbox:local .
+
+      - name: Fetch target repo + Lean toolchain (network - dependency acquisition only)
+        run: |
+          set -euo pipefail
+          mkdir -p workspace
+          docker run --rm \
+            -v "$GITHUB_WORKSPACE/workspace:/workspace" \
+            sig-lean-sandbox:local \
+            /adapter/fetch.sh "$INPUT_REPO" "$INPUT_COMMIT"
+
+      - name: Resolve and record the sandbox image digest
+        run: |
+          set -euo pipefail
+          digest="$(docker image inspect sig-lean-sandbox:local --format '{{index .RepoDigests 0}}' 2>/dev/null || true)"
+          if [ -z "$digest" ]; then
+            # Image was built locally and never pushed/pulled by digest, so
+            # there is no registry digest to record -- fall back to the
+            # content-addressed image id, which is still immutable and
+            # reproducible from this Dockerfile + build context.
+            digest="sha256:$(docker image inspect sig-lean-sandbox:local --format '{{.Id}}' | cut -d: -f2)"
+          fi
+          echo "SANDBOX_DIGEST=$digest" >> "$GITHUB_ENV"
+
+      - name: Scan source for kernel-bypass options (advisory only)
+        # Not authoritative: this job is untrusted, so its own scan result
+        # is not what the fail-closed decision relies on. The trusted-ingest
+        # workflow re-clones the pinned commit itself (read-only, no build
+        # commands run against it) and re-runs this exact scan before
+        # deciding formal_artifact vs external_formal_artifact. This copy
+        # only surfaces an early signal in this job's own log.
+        run: |
+          set -euo pipefail
+          python3 adapters/lean/scan_kernel_bypass.py --source-root workspace/src --out kernel-bypass-scan.json || true
+
+      - name: Build + axiom-audit (network none, resource-limited, wall-clock + disk monitored)
+        id: sandboxed_build
+        run: |
+          set -euo pipefail
+          mkdir -p out
+          container="sig-lean-build-$GITHUB_RUN_ID"
+          disk_cap_bytes=$((2*1024*1024*1024))
+
+          docker run -d --name "$container" \
+            --network none \
+            --memory "$BUILD_MEMORY" \
+            --cpus "$BUILD_CPUS" \
+            --pids-limit "$BUILD_PIDS_LIMIT" \
+            --read-only \
+            -v "$GITHUB_WORKSPACE/workspace:/workspace:ro" \
+            -v "$GITHUB_WORKSPACE/out:/workspace/build-out" \
+            -e ALLOWLIST="$INPUT_CUSTOM_ALLOWLIST" \
+            sig-lean-sandbox:local \
+            /adapter/build_and_audit.sh \
+              --trust-profile "$INPUT_TRUST_PROFILE" \
+              --target "$INPUT_TARGET_DECLARATION"
+
+          terminated_by_timeout=false
+          disk_violation=false
+          elapsed=0
+          # The two things a --network none / --read-only / cgroup-limited
+          # container cannot be stopped from doing on its own: running
+          # forever, and filling an unbounded writable volume. Both are
+          # polled and enforced here, since Docker has no single flag for
+          # either on a bind-mounted (not tmpfs) output directory.
+          while [ "$(docker inspect -f '{{.State.Running}}' "$container" 2>/dev/null || echo false)" = "true" ]; do
+            size="$(du -sb "$GITHUB_WORKSPACE/out" 2>/dev/null | cut -f1 || echo 0)"
+            if [ "$size" -gt "$disk_cap_bytes" ]; then
+              disk_violation=true
+              docker kill "$container" >/dev/null 2>&1 || true
+              break
+            fi
+            if [ "$elapsed" -ge "$WALL_CLOCK_LIMIT_SECONDS" ]; then
+              terminated_by_timeout=true
+              docker kill "$container" >/dev/null 2>&1 || true
+              break
+            fi
+            sleep 5
+            elapsed=$((elapsed + 5))
+          done
+
+          exit_code="$(docker wait "$container" 2>/dev/null || echo 137)"
+          docker logs "$container" >> out/build.log 2>&1 || true
+          docker rm -f "$container" >/dev/null 2>&1 || true
+
+          {
+            echo "exit_code=$exit_code"
+            echo "terminated_by_timeout=$terminated_by_timeout"
+            echo "disk_violation=$disk_violation"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Record submission metadata for the trusted-ingest workflow
+        run: |
+          set -euo pipefail
+          python3 -c "
+          import json, os
+          json.dump(
+              {
+                  'repo': os.environ['INPUT_REPO'],
+                  'commit': os.environ['INPUT_COMMIT'],
+                  'trust_profile': os.environ['INPUT_TRUST_PROFILE'],
+                  'target_declaration': os.environ['INPUT_TARGET_DECLARATION'],
+              },
+              open('out/metadata.json', 'w'),
+              indent=2,
+          )
+          "
+
+      - name: Assemble isolation-evidence.json
+        env:
+          EXIT_CODE: ${{ steps.sandboxed_build.outputs.exit_code }}
+          TERMINATED_BY_TIMEOUT: ${{ steps.sandboxed_build.outputs.terminated_by_timeout }}
+          DISK_VIOLATION: ${{ steps.sandboxed_build.outputs.disk_violation }}
+        run: |
+          set -euo pipefail
+          python3 adapters/lean/assemble_isolation_evidence.py \
+            --exit-code "$EXIT_CODE" \
+            --terminated-by-timeout "$TERMINATED_BY_TIMEOUT" \
+            --disk-violation "$DISK_VIOLATION" \
+            --wall-clock-limit "$WALL_CLOCK_LIMIT_SECONDS" \
+            --build-log out/build.log \
+            --build-result-env out/build-result.env \
+            --sandbox-digest "$SANDBOX_DIGEST" \
+            --out-dir out
+
+      - name: Upload untrusted build artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lean-adapter-result
+          path: |
+            out/isolation-evidence.json
+            out/build-receipt.json
+            out/axiom-execution.json
+            out/build.log
+            out/build-result.env
+            out/metadata.json
+            kernel-bypass-scan.json
+          if-no-files-found: warn
+          retention-days: 30
