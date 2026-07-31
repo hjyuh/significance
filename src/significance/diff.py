@@ -35,9 +35,13 @@ def _diff(a, b, path=()):
             for id_ in sorted(set(a_map) | set(b_map), key=str):
                 sub_path = path + (f"id={id_}",)
                 if id_ not in a_map:
-                    changes.append({"path": sub_path, "kind": "added", "old": None, "new": b_map[id_]})
+                    changes.append(
+                        {"path": sub_path, "kind": "added", "old": None, "new": b_map[id_]}
+                    )
                 elif id_ not in b_map:
-                    changes.append({"path": sub_path, "kind": "removed", "old": a_map[id_], "new": None})
+                    changes.append(
+                        {"path": sub_path, "kind": "removed", "old": a_map[id_], "new": None}
+                    )
                 else:
                     changes.extend(_diff(a_map[id_], b_map[id_], sub_path))
             return changes

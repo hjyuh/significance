@@ -20,7 +20,9 @@ def _build_parser() -> argparse.ArgumentParser:
     p_init.add_argument("--records-dir", default="records")
 
     p_validate = sub.add_parser("validate", help="validate one or more records")
-    p_validate.add_argument("paths", nargs="+", help="record file(s) or a directory of *.yaml records")
+    p_validate.add_argument(
+        "paths", nargs="+", help="record file(s) or a directory of *.yaml records"
+    )
     p_validate.add_argument(
         "--base", help="git ref or file path to compare against for append-only enforcement"
     )

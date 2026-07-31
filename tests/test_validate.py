@@ -4,6 +4,7 @@ covering all ten broken-fixture scenarios named in the design doc.
 
 from __future__ import annotations
 
+import subprocess
 from pathlib import Path
 
 import pytest
@@ -95,4 +96,32 @@ def test_base_as_missing_file_is_ignored_not_crashed():
         [str(RECORDS_DIR / "2026-sandoval-ramsey-k7.yaml")],
         base=str(BROKEN_DIR / "does-not-exist.yaml"),
     )
+    assert violations == []
+
+
+def test_base_as_git_ref_with_non_ascii_content_is_clean(tmp_path):
+    # Regression test: resolve_base()'s `git show` subprocess call used
+    # text=True without an explicit encoding, so on a platform whose locale
+    # codec isn't UTF-8 (e.g. Windows' default ANSI codepage), any non-ASCII
+    # byte in the record -- this repo's own example record has an em dash --
+    # got mis-decoded, making the git-ref-loaded "base" record compare
+    # unequal to the identical working-tree record and produce a spurious
+    # non-monotonic-record-version violation on a record that hadn't
+    # actually changed at all. Self-contained (a scratch repo, not this
+    # repo's live history) so it doesn't depend on ambient working-tree state.
+    repo = tmp_path / "scratch-repo"
+    records_dir = repo / "records"
+    records_dir.mkdir(parents=True)
+    record_text = (RECORDS_DIR / "2026-sandoval-ramsey-k7.yaml").read_text(encoding="utf-8")
+    assert "—" in record_text  # confirm the fixture actually has an em dash
+    (records_dir / "r.yaml").write_text(record_text, encoding="utf-8")
+
+    def git(*args):
+        subprocess.run(["git", *args], cwd=repo, check=True, capture_output=True)
+
+    git("init", "-q", "-b", "main")
+    git("-c", "user.name=t", "-c", "user.email=t@example.com", "add", "records/r.yaml")
+    git("-c", "user.name=t", "-c", "user.email=t@example.com", "commit", "-q", "-m", "init")
+
+    violations = validate_paths([str(records_dir / "r.yaml")], base="HEAD")
     assert violations == []

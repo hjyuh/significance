@@ -18,11 +18,18 @@ significance = "significance.cli:main"
 [dependency-groups]
 dev = [
     "pytest>=8.3,<9",
+    "ruff>=0.6,<1",
 ]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["adapters/lean"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
 
 [build-system]
 requires = ["hatchling"]

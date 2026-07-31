@@ -23,7 +23,10 @@ _ATTRIBUTION_FIELDS = {"basis", "asserted_by", "asserted_at"}
 # cannot tell the two apart. Fingerprinting the whole required set does.
 _ATTRIBUTED_VALUE_REQUIRED = frozenset({"value", "basis", "asserted_by", "asserted_at"})
 _EXECUTION_RECEIPT_REQUIRED = frozenset(
-    {"tool", "tool_version", "runner_image_digest", "executed_at", "result", "log_sha256", "asserted_by"}
+    {
+        "tool", "tool_version", "runner_image_digest", "executed_at",
+        "result", "log_sha256", "asserted_by",
+    }
 )
 _MANUSCRIPT_REQUIRED = frozenset({"url", "label", "sha256", "retrieved_at"})
 

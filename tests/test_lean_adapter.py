@@ -42,7 +42,10 @@ def _ingest_from_fixture(name: str, source_root: Path | None = None):
         "log_sha256": "0" * 64,
         "asserted_by": "significance-ci",
     }
-    axiom_execution = _load(d / "axiom-execution.json") if (d / "axiom-execution.json").exists() else dict(build_receipt)
+    axiom_execution_path = d / "axiom-execution.json"
+    axiom_execution = (
+        _load(axiom_execution_path) if axiom_execution_path.exists() else dict(build_receipt)
+    )
     correspondence = (
         _load(d / "correspondence.json")
         if (d / "correspondence.json").exists()
@@ -67,7 +70,11 @@ def _ingest_from_fixture(name: str, source_root: Path | None = None):
         lockfile_hash="b" * 64,
         correspondence=correspondence,
         asserted_at="2026-07-31T00:10:00Z",
-        source_root=source_root if source_root is not None else (d / "src" if (d / "src").exists() else None),
+        source_root=(
+            source_root
+            if source_root is not None
+            else (d / "src" if (d / "src").exists() else None)
+        ),
     )
 
 

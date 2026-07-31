@@ -37,6 +37,7 @@ def _repo_root(start: str) -> str | None:
         cwd=start,
         capture_output=True,
         text=True,
+        encoding="utf-8",
     )
     if result.returncode != 0:
         return None
@@ -61,6 +62,7 @@ def resolve_base(ref_or_file: str, record_path: Path) -> dict | None:
         cwd=root,
         capture_output=True,
         text=True,
+        encoding="utf-8",
     )
     if result.returncode != 0:
         return None

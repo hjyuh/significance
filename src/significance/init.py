@@ -245,7 +245,9 @@ def _scaffold_ai_provenance(prompt_fn, party_ids) -> dict:
 
 
 def scaffold_record(prompt_fn) -> dict:
-    record_id = _ask(prompt_fn, "record_id (<year>-<author-slug>-<topic-slug>)", pattern=RECORD_ID_RE)
+    record_id = _ask(
+        prompt_fn, "record_id (<year>-<author-slug>-<topic-slug>)", pattern=RECORD_ID_RE
+    )
     parties = _scaffold_parties(prompt_fn)
     party_ids = list(parties)
     claim = _scaffold_claim(prompt_fn, party_ids)

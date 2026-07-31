@@ -14,10 +14,9 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import json
 import re
 from pathlib import Path
-
-import json
 
 _EROFS_RE = re.compile(r"Read-only file system[^\n]*", re.IGNORECASE)
 _NETWORK_ERROR_RE = re.compile(

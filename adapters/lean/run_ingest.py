@@ -28,17 +28,29 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--evidence-id", required=True)
     parser.add_argument("--repo", required=True)
     parser.add_argument("--commit", required=True)
-    parser.add_argument("--isolation-evidence", required=True, help="path to isolation-evidence.json")
+    parser.add_argument(
+        "--isolation-evidence", required=True, help="path to isolation-evidence.json"
+    )
     parser.add_argument("--build-receipt", required=True, help="path to build-receipt.json")
-    parser.add_argument("--axiom-execution-receipt", required=True, help="path to axiom-execution.json")
+    parser.add_argument(
+        "--axiom-execution-receipt", required=True, help="path to axiom-execution.json"
+    )
     parser.add_argument("--trust-profile", required=True)
     parser.add_argument("--allowlist", required=True, help="comma-separated axiom allowlist")
     parser.add_argument("--allowlist-version", required=True)
-    parser.add_argument("--toolchain-pin", required=True, help="resolved sha256 digest of the build image")
+    parser.add_argument(
+        "--toolchain-pin", required=True, help="resolved sha256 digest of the build image"
+    )
     parser.add_argument("--lockfile-hash", required=True)
-    parser.add_argument("--correspondence", required=True, help="path to a human-authored correspondence.json")
+    parser.add_argument(
+        "--correspondence", required=True, help="path to a human-authored correspondence.json"
+    )
     parser.add_argument("--asserted-at", required=True)
-    parser.add_argument("--source-root", required=True, help="read-only checkout to scan for kernel-bypass options")
+    parser.add_argument(
+        "--source-root",
+        required=True,
+        help="read-only checkout to scan for kernel-bypass options",
+    )
     parser.add_argument("--out", required=True)
     args = parser.parse_args(argv)
 
