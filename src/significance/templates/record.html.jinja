@@ -1,0 +1,183 @@
+{% extends "base.html.jinja" %}
+{% import "macros.jinja" as m %}
+
+{% block title %}{{ record.record_id }} — Significance{% endblock %}
+
+{% block content %}
+<article class="record">
+  <p class="record-id">{{ record.record_id }} · v{{ record.record_version }} · {{ record.record_state }}</p>
+
+  {% set fr = record.get('freshness', {}) %}
+  {% if fr.get('result') in ('stale', 'unknown') %}
+  <div class="banner banner-{{ fr.result }}">
+    <strong>Freshness: {{ fr.result|upper }}.</strong>
+    {% if fr.get('observed_source_version') %}Observed source version {{ fr.observed_source_version }}, last confirmed {{ fr.confirmed_source_version }}.{% endif %}
+    Checked at {{ fr.get('checked_at', '?') }}.
+  </div>
+  {% endif %}
+
+  <h1 class="claim-text">{{ record.claim.text.value }}</h1>
+  <p>{{ m.attribution(record.claim.text) }}</p>
+
+  {% if record.claim.get('scope') %}
+  <section>
+    <h2>Scope</h2>
+    <p>{{ record.claim.scope.value }}</p>
+    <p>{{ m.attribution(record.claim.scope) }}</p>
+  </section>
+  {% endif %}
+
+  {% if record.claim.get('exclusions') %}
+  <section>
+    <h2>Exclusions</h2>
+    <ul>
+    {% for ex in record.claim.exclusions %}
+      <li>{{ ex.value }} {{ m.attribution(ex) }}</li>
+    {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  <section>
+    <h2>Manuscript</h2>
+    <p>{{ m.external_link(record.manuscript.url, record.manuscript.label) }}</p>
+    <p class="meta">
+      sha256 <code>{{ record.manuscript.sha256 }}</code>
+      {%- if record.manuscript.get('immutable_version_id') %} · {{ record.manuscript.immutable_version_id }}{% endif %}
+      · retrieved {{ record.manuscript.retrieved_at }}
+    </p>
+    {% if fr.get('result') == 'current' %}
+    <p class="meta">Freshness: current · checked {{ fr.get('checked_at', '?') }}</p>
+    {% endif %}
+  </section>
+
+  <section>
+    <h2>Evidence</h2>
+    {% for ev in record.get('evidence', []) %}
+    <div class="evidence-card evidence-{{ ev.kind }}">
+      <h3>{{ ev.id }} <span class="kind">({{ ev.kind|replace('_', ' ') }})</span></h3>
+
+      {% if ev.kind == 'formal_artifact' %}
+        <div class="side-by-side">
+          <div class="informal">
+            <h4>Informal (manuscript)</h4>
+            <p>{{ record.claim.text.value }}</p>
+          </div>
+          <div class="formal">
+            <h4>Formal ({{ ev.toolchain.get('name', '?') }})</h4>
+            <p>{{ m.external_link(ev.repo) }} @ <code>{{ ev.commit }}</code></p>
+            <p>{{ ev.correspondence.value }}</p>
+            <p>{{ m.attribution(ev.correspondence) }}</p>
+          </div>
+        </div>
+        <h4>Axiom policy</h4>
+        <p>trust profile: {{ ev.axiom_policy.trust_profile }} (allowlist v{{ ev.axiom_policy.allowlist_version }})</p>
+        <ul>{% for a in ev.axiom_policy.get('allowlist', []) %}<li><code>{{ a }}</code></li>{% endfor %}</ul>
+        <h4>Build receipt</h4>
+        {{ m.receipt(ev.artifact_build) }}
+        <h4>Axiom check receipt</h4>
+        {{ m.receipt(ev.axiom_policy.execution) }}
+
+      {% elif ev.kind == 'external_formal_artifact' %}
+        <p class="reported-note">Reported, not reproduced.</p>
+        <p>{{ m.external_link(ev.repo) }}{% if ev.get('commit') %} @ <code>{{ ev.commit }}</code>{% endif %}</p>
+        <p>{{ ev.description }}</p>
+        <p>{{ m.attribution(ev) }}</p>
+
+      {% elif ev.kind == 'computational_reproduction' %}
+        <p>{{ ev.description }}</p>
+        {{ m.receipt(ev.execution) }}
+
+      {% elif ev.kind == 'informal_review' %}
+        <p>{{ ev.text }}</p>
+        <p>{{ m.attribution(ev) }}</p>
+
+      {% elif ev.kind == 'mathematical_assessment' %}
+        <p class="assessment-target">Target: {{ ev.target }}</p>
+        {% if ev.report.get('inline') %}<p>{{ ev.report.inline }}</p>{% endif %}
+        {% if ev.report.get('url') %}<p>{{ m.external_link(ev.report.url) }}</p>{% endif %}
+        <p>{{ m.attribution(ev) }}</p>
+        {% if ev.get('author_response') %}
+        <div class="author-response">
+          <h4>Author response</h4>
+          {% for r in ev.author_response %}
+          <p>{{ r.text }} <span class="attribution">— {{ r.asserted_by }}, {{ r.asserted_at }}</span></p>
+          {% endfor %}
+        </div>
+        {% endif %}
+      {% endif %}
+    </div>
+    {% endfor %}
+  </section>
+
+  {% if record.get('digestions') %}
+  <section>
+    <h2>Digestions</h2>
+    {% for d in record.digestions %}
+    <div class="digestion">
+      <p class="meta">For: {{ d.audience }}</p>
+      <p>{{ d.text }}</p>
+      <p>{{ m.attribution(d) }}</p>
+    </div>
+    {% endfor %}
+  </section>
+  {% endif %}
+
+  {% if record.get('importance_claims') %}
+  <section>
+    <h2>Importance</h2>
+    {% for ic in record.importance_claims %}
+    <p>{{ ic.text }} {{ m.attribution(ic) }}</p>
+    {% endfor %}
+  </section>
+  {% endif %}
+
+  {% set ai = record.get('ai_provenance') %}
+  {% if ai %}
+  <section>
+    <h2>AI provenance</h2>
+    <p>{{ ai.disclosure.value }}</p>
+    <p>{{ m.attribution(ai.disclosure) }}</p>
+    {% if ai.get('roles') %}
+    <table class="roles">
+      <thead><tr><th>Role</th><th>Model</th><th>Basis</th><th>Asserted by</th></tr></thead>
+      <tbody>
+      {% for r in ai.roles %}
+        <tr><td>{{ r.role|replace('_',' ') }}</td><td>{{ r.model }}</td><td>{{ r.basis }}</td><td>{{ r.asserted_by }}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+  </section>
+  {% endif %}
+
+  {% if record.get('open_invitations') %}
+  <section>
+    <h2>Open invitations</h2>
+    <ul>
+    {% for oi in record.open_invitations %}
+      <li>{{ oi.kind|replace('_',' ') }}: {{ oi.target }} — created by {{ oi.created_by }} at {{ oi.created_at }}</li>
+    {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  <section>
+    <h2>History (append-only)</h2>
+    <ul class="history">
+    {% for h in record.get('history', []) %}
+      <li><span class="event-id">{{ h.id }}</span> — {{ h.type }} — {{ h.at }} — {{ h.by }}{% if h.get('note') %}: {{ h.note }}{% endif %}</li>
+    {% endfor %}
+    </ul>
+  </section>
+
+  <section class="what-this-does-not-establish">
+    <h2>What this does not establish</h2>
+    <ul>
+      <li>Correspondence between formal and informal statements is attested, not machine-checked.</li>
+      <li>A formalization may omit hypotheses present in the informal statement.</li>
+      <li>The adapter is not a general mathematical verifier — it performs narrow evidence checks.</li>
+    </ul>
+  </section>
+</article>
+{% endblock %}

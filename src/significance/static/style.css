@@ -1,0 +1,151 @@
+/* Restrained academic dossier styling. No color-coded badges/pills, no
+   iconography implying a verdict — freshness and result states are plain
+   text, styled the same as any other label. */
+
+:root {
+  color-scheme: light dark;
+  --fg: #1a1a1a;
+  --bg: #fdfdfb;
+  --muted: #5a5a5a;
+  --border: #ccc;
+  --accent-border: #888;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #e6e6e6;
+    --bg: #16161a;
+    --muted: #a0a0a0;
+    --border: #3a3a3f;
+    --accent-border: #6a6a6a;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: "Iowan Old Style", "Palatino Linotype", Georgia, "Times New Roman", serif;
+  color: var(--fg);
+  background: var(--bg);
+  line-height: 1.55;
+  margin: 0;
+}
+
+main {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 4rem;
+}
+
+.site-header, .site-footer {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 1rem 1.25rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.site-header a {
+  color: var(--fg);
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  margin-top: 2rem;
+}
+
+h1, h2, h3, h4 { font-weight: 600; line-height: 1.25; }
+h1.claim-text { font-size: 1.5rem; margin-bottom: 0.25rem; }
+h2 { font-size: 1.1rem; margin-top: 2.25rem; border-bottom: 1px solid var(--border); padding-bottom: 0.25rem; }
+h3 { font-size: 1rem; }
+h4 { font-size: 0.9rem; color: var(--muted); }
+
+.record-id { color: var(--muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
+
+.attribution, .locator, .meta {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.banner {
+  border: 1px solid var(--accent-border);
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+}
+
+.evidence-card {
+  border: 1px solid var(--border);
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.evidence-card .kind {
+  color: var(--muted);
+  font-weight: normal;
+  font-size: 0.85rem;
+}
+
+.side-by-side {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin: 0.75rem 0;
+}
+
+.side-by-side > div {
+  flex: 1 1 15rem;
+  border-left: 2px solid var(--border);
+  padding-left: 0.75rem;
+}
+
+.reported-note {
+  font-style: italic;
+  color: var(--muted);
+}
+
+dl.receipt {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.15rem 0.75rem;
+  font-size: 0.85rem;
+  margin: 0.5rem 0 1rem;
+}
+
+dl.receipt dt { color: var(--muted); }
+dl.receipt dd { margin: 0; word-break: break-all; }
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.9rem;
+  margin: 0.75rem 0;
+}
+
+th, td {
+  text-align: left;
+  padding: 0.35rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.what-this-does-not-establish {
+  margin-top: 3rem;
+  padding-top: 0.5rem;
+}
+
+.what-this-does-not-establish ul {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.history .event-id, code {
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  font-size: 0.85em;
+}
+
+.history { padding-left: 1.2rem; font-size: 0.9rem; }
+
+a { color: inherit; }

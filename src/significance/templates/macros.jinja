@@ -1,0 +1,30 @@
+{% macro external_link(url, text=None) -%}
+{%- set safe = url|safe_href -%}
+{%- if safe -%}
+<a href="{{ safe }}">{{ text or url }}</a>
+{%- else -%}
+{{ text or url }}
+{%- endif -%}
+{%- endmacro %}
+
+{% macro attribution(node) -%}
+<span class="attribution">[{{ node.get('basis', '?') }}, asserted by {{ node.get('asserted_by', '?') }}{% if node.get('asserted_at') %} at {{ node.get('asserted_at') }}{% endif %}]</span>
+{%- if node.get('locator') %}
+<span class="locator">
+{%- if node.locator.get('section') %} §{{ node.locator.section }}{% endif -%}
+{%- if node.locator.get('page') %}, p.{{ node.locator.page }}{% endif -%}
+{%- if node.locator.get('quote') %}: "{{ node.locator.quote }}"{% endif -%}
+</span>
+{%- endif -%}
+{%- endmacro %}
+
+{% macro receipt(r) -%}
+<dl class="receipt">
+  <dt>tool</dt><dd>{{ r.get('tool', '?') }} {{ r.get('tool_version', '') }}</dd>
+  <dt>runner image</dt><dd><code>{{ r.get('runner_image_digest', '?') }}</code></dd>
+  <dt>executed at</dt><dd>{{ r.get('executed_at', '?') }}</dd>
+  <dt>result</dt><dd>{{ r.get('result', '?') }}</dd>
+  <dt>log sha256</dt><dd><code>{{ r.get('log_sha256', '?') }}</code></dd>
+  <dt>asserted by</dt><dd>{{ r.get('asserted_by', '?') }}</dd>
+</dl>
+{%- endmacro %}

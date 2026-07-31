@@ -1,0 +1,22 @@
+{% extends "base.html.jinja" %}
+{% block title %}Significance — records{% endblock %}
+{% block content %}
+<h1>Records</h1>
+{% if records %}
+<table class="record-index">
+  <thead><tr><th>Record</th><th>Claim</th><th>State</th><th>Freshness</th></tr></thead>
+  <tbody>
+  {% for r in records %}
+    <tr>
+      <td><a href="{{ r.record_id }}/index.html">{{ r.record_id }}</a></td>
+      <td>{{ r.claim.text.value }}</td>
+      <td>{{ r.record_state }}</td>
+      <td>{{ r.get('freshness', {}).get('result', '?') }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No records built.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none';">
+<title>{% block title %}Significance{% endblock %}</title>
+<link rel="stylesheet" href="{{ root_prefix }}static/style.css">
+</head>
+<body>
+<header class="site-header"><a href="{{ root_prefix }}index.html">Significance</a></header>
+<main>
+{% block content %}{% endblock %}
+</main>
+<footer class="site-footer">
+<p>Significance mechanically validates provenance and a narrow set of evidence predicates. It does not mechanically determine mathematical truth.</p>
+</footer>
+</body>
+</html>

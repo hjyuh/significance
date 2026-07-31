@@ -8,6 +8,7 @@ from pathlib import Path
 from significance.diff import diff_records, format_diff_human
 from significance.init import scaffold_record, write_record
 from significance.records import load_record, validator
+from significance.render import build_site
 from significance.validate import validate_paths
 
 
@@ -29,6 +30,10 @@ def _build_parser() -> argparse.ArgumentParser:
     p_diff.add_argument("a")
     p_diff.add_argument("b")
     p_diff.add_argument("--json", action="store_true")
+
+    p_build = sub.add_parser("build", help="render a directory of records to a static site")
+    p_build.add_argument("records_dir")
+    p_build.add_argument("-o", "--out", default="site")
 
     return parser
 
@@ -66,10 +71,25 @@ def _cmd_diff(args) -> int:
     return 1 if result["append_only_violations"] else 0
 
 
+def _cmd_build(args) -> int:
+    result = build_site(args.records_dir, args.out)
+    for f, violations in result.skipped.items():
+        print(f"skipped {f}: {len(violations)} violation(s)", file=sys.stderr)
+        for v in violations:
+            print(f"  {v}", file=sys.stderr)
+    print(f"Built {len(result.built)} record(s) to {args.out}")
+    return 1 if result.skipped else 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = _build_parser()
     args = parser.parse_args(argv)
-    handlers = {"init": _cmd_init, "validate": _cmd_validate, "diff": _cmd_diff}
+    handlers = {
+        "init": _cmd_init,
+        "validate": _cmd_validate,
+        "diff": _cmd_diff,
+        "build": _cmd_build,
+    }
     return handlers[args.command](args)
 
 

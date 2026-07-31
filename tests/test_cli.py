@@ -46,3 +46,20 @@ def test_diff_cli_exits_zero_on_identical_records(capsys):
     p = str(BROKEN_DIR / "append-only" / "base.yaml")
     code = main(["diff", p, p])
     assert code == 0
+
+
+def test_build_cli_exits_zero_and_writes_site(tmp_path, capsys):
+    out = tmp_path / "site"
+    code = main(["build", str(RECORDS_DIR), "-o", str(out)])
+    output = capsys.readouterr().out
+    assert code == 0
+    assert "Built 1 record" in output
+    assert (out / "index.html").exists()
+
+
+def test_build_cli_exits_one_when_a_record_is_skipped(tmp_path, capsys):
+    out = tmp_path / "site"
+    code = main(["build", str(BROKEN_DIR / "duplicate-record-id"), "-o", str(out)])
+    err = capsys.readouterr().err
+    assert code == 1
+    assert "duplicate-record-id" in err
