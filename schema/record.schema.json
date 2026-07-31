@@ -252,12 +252,35 @@
     "evidence_item": {
       "type": "object",
       "required": ["id", "kind"],
-      "oneOf": [
-        { "$ref": "#/$defs/evidence_formal_artifact" },
-        { "$ref": "#/$defs/evidence_external_formal_artifact" },
-        { "$ref": "#/$defs/evidence_computational_reproduction" },
-        { "$ref": "#/$defs/evidence_informal_review" },
-        { "$ref": "#/$defs/evidence_mathematical_assessment" }
+      "properties": {
+        "kind": {
+          "enum": [
+            "formal_artifact", "external_formal_artifact",
+            "computational_reproduction", "informal_review", "mathematical_assessment"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "kind": { "const": "formal_artifact" } } },
+          "then": { "$ref": "#/$defs/evidence_formal_artifact" }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "external_formal_artifact" } } },
+          "then": { "$ref": "#/$defs/evidence_external_formal_artifact" }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "computational_reproduction" } } },
+          "then": { "$ref": "#/$defs/evidence_computational_reproduction" }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "informal_review" } } },
+          "then": { "$ref": "#/$defs/evidence_informal_review" }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "mathematical_assessment" } } },
+          "then": { "$ref": "#/$defs/evidence_mathematical_assessment" }
+        }
       ]
     },
 
@@ -304,7 +327,8 @@
         "description": { "type": "string", "minLength": 1 },
         "basis": { "$ref": "#/$defs/basis" },
         "asserted_by": { "$ref": "#/$defs/party_id" },
-        "asserted_at": { "$ref": "#/$defs/iso_datetime" }
+        "asserted_at": { "$ref": "#/$defs/iso_datetime" },
+        "locator": { "$ref": "#/$defs/locator" }
       }
     },
 
@@ -362,6 +386,7 @@
         "basis": { "$ref": "#/$defs/basis" },
         "asserted_by": { "$ref": "#/$defs/party_id" },
         "asserted_at": { "$ref": "#/$defs/iso_datetime" },
+        "locator": { "$ref": "#/$defs/locator" },
         "author_response": {
           "type": "array",
           "description": "Attachable by the author; never removable by the assessor.",
@@ -403,7 +428,8 @@
               },
               "model": { "type": "string", "minLength": 1 },
               "basis": { "$ref": "#/$defs/basis" },
-              "asserted_by": { "$ref": "#/$defs/party_id" }
+              "asserted_by": { "$ref": "#/$defs/party_id" },
+              "locator": { "$ref": "#/$defs/locator" }
             }
           }
         }
@@ -419,6 +445,7 @@
         "text": { "type": "string", "minLength": 1 },
         "basis": { "$ref": "#/$defs/basis" },
         "asserted_by": { "$ref": "#/$defs/party_id" },
+        "locator": { "$ref": "#/$defs/locator" },
         "source_claims": {
           "type": "array",
           "items": { "type": "string" },

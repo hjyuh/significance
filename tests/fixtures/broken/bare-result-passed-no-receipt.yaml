@@ -117,13 +117,13 @@ evidence:
 
 ai_provenance:
   disclosure:
-    value: "An LLM was used for literature search and for generating candidate case splits in the proof of Lemma 3.4, which the author then verified by hand and in Lean."
+    value: "An LLM was used for literature search and for generating candidate case splits in the proof of Lemma 3.4, which the author then worked through by hand and in Lean."
     basis: source_quote
     asserted_by: author-as
     asserted_at: "2026-06-01T12:00:00Z"
     locator:
       section: "Acknowledgements"
-      quote: "We used a large language model for literature search and for generating candidate case splits, which were independently verified."
+      quote: "We used a large language model for literature search and for generating candidate case splits, which were independently worked through by the author."
   roles:
     - role: literature_search
       model: "claude-opus-4"

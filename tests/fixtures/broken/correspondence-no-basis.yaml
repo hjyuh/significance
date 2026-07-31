@@ -38,6 +38,7 @@ claim:
   text:
     value: "Every 2-coloring of the edges of K_18 contains a monochromatic K_7 minus a perfect matching."
     basis: source_quote
+    asserted_by: author-as
     asserted_at: "2026-06-01T12:00:00Z"
     locator:
       section: "1.1"
@@ -94,7 +95,6 @@ evidence:
         asserted_by: significance-ci
     correspondence:
       value: "The Lean statement `ramsey_k7_near_matching` in Ramsey/K7.lean corresponds to Theorem 1.2 of the manuscript, modulo restating the coloring as a Sym2-indexed function."
-      basis: author_attestation
       asserted_by: author-as
       asserted_at: "2026-07-20T10:00:00Z"
 

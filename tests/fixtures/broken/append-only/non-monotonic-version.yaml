@@ -38,6 +38,7 @@ claim:
   text:
     value: "Every 2-coloring of the edges of K_18 contains a monochromatic K_7 minus a perfect matching."
     basis: source_quote
+    asserted_by: author-as
     asserted_at: "2026-06-01T12:00:00Z"
     locator:
       section: "1.1"
@@ -183,3 +184,8 @@ history:
     at: "2026-07-28T09:00:00Z"
     by: significance-ci
     note: "Routine freshness check against arXiv v2; unchanged."
+  - id: evt-extra-note
+    type: note_added
+    at: "2026-07-29T09:00:00Z"
+    by: editor-mz
+    note: "A harmless new event, added without bumping record_version."

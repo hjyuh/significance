@@ -4,7 +4,7 @@ record_version: 2
 record_state: active
 
 freshness:
-  result: current
+  result: stale
   observed_source_version: "v2"
   confirmed_source_version: "v2"
   checked_at: "2026-07-28T09:00:00Z"
@@ -38,6 +38,7 @@ claim:
   text:
     value: "Every 2-coloring of the edges of K_18 contains a monochromatic K_7 minus a perfect matching."
     basis: source_quote
+    asserted_by: author-as
     asserted_at: "2026-06-01T12:00:00Z"
     locator:
       section: "1.1"

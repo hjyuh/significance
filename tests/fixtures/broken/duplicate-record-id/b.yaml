@@ -38,6 +38,7 @@ claim:
   text:
     value: "Every 2-coloring of the edges of K_18 contains a monochromatic K_7 minus a perfect matching."
     basis: source_quote
+    asserted_by: author-as
     asserted_at: "2026-06-01T12:00:00Z"
     locator:
       section: "1.1"
@@ -57,7 +58,7 @@ claim:
 
 manuscript:
   url: "https://arxiv.org/abs/2606.01234"
-  label: "Sandoval, 'Ramsey numbers for near-perfect matchings in K_7', arXiv:2606.01234"
+  label: "Sandoval, 'Ramsey numbers for near-perfect matchings in K_7' (duplicate copy), arXiv:2606.01234"
   immutable_version_id: "v2"
   sha256: "8f10a68d54a88afcb6369c01da9ddfb6881d754e5ece210541f8656783692941"
   retrieved_at: "2026-07-28T09:00:00Z"

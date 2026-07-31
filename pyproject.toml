@@ -12,6 +12,9 @@ dependencies = [
     "markupsafe>=2.1,<3",
 ]
 
+[project.scripts]
+significance = "significance.cli:main"
+
 [dependency-groups]
 dev = [
     "pytest>=8.3,<9",

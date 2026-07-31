@@ -1,6 +1,6 @@
 schema_version: 1
 record_id: 2026-sandoval-ramsey-k7
-record_version: 2
+record_version: 3
 record_state: active
 
 freshness:
@@ -38,6 +38,7 @@ claim:
   text:
     value: "Every 2-coloring of the edges of K_18 contains a monochromatic K_7 minus a perfect matching."
     basis: source_quote
+    asserted_by: author-as
     asserted_at: "2026-06-01T12:00:00Z"
     locator:
       section: "1.1"
@@ -168,11 +169,6 @@ history:
     type: created
     at: "2026-06-01T12:00:00Z"
     by: author-as
-  - id: evt-lean-added
-    type: evidence_added
-    at: "2026-07-20T10:00:00Z"
-    by: author-as
-    note: "Added Lean formalization evidence (ev-lean-formalization)."
   - id: evt-assessment-added
     type: evidence_added
     at: "2026-07-25T14:00:00Z"
