@@ -1,0 +1,474 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://significance.dev/schema/record.schema.json",
+  "title": "Significance claim record",
+  "description": "Structural schema for a Significance v0.1 claim record. This schema validates shape and attribution only; it does not and cannot determine mathematical truth. Cross-record rules (uniqueness, append-only history, foreign-key resolution of asserted_by, freshness staleness computation) are enforced by `significance validate`, not by this schema alone.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "record_id",
+    "record_version",
+    "record_state",
+    "freshness",
+    "parties",
+    "claim",
+    "manuscript",
+    "evidence",
+    "ai_provenance",
+    "history"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "const": 1,
+      "description": "Schema generation this record conforms to. v0.1 only emits 1."
+    },
+    "record_id": {
+      "type": "string",
+      "pattern": "^[0-9]{4}(-[a-z0-9]+){2,}$",
+      "description": "Globally namespaced as <year>-<author-slug>-<topic-slug>, lowercase kebab-case, e.g. '2026-sandoval-ramsey-k7'. Uniqueness is enforced per-repository by the validator, not by this schema."
+    },
+    "record_version": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Monotonic integer. The validator enforces monotonic increase against the base-branch record; this schema only enforces type and lower bound."
+    },
+    "record_state": {
+      "type": "string",
+      "enum": ["active", "superseded", "withdrawn"],
+      "description": "Authored lifecycle state. Distinct from freshness, which is computed."
+    },
+    "freshness": { "$ref": "#/$defs/freshness" },
+    "parties": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "$ref": "#/$defs/party" },
+      "propertyNames": { "$ref": "#/$defs/party_id" },
+      "description": "Map of party id to identity. Every asserted_by elsewhere in the record must reference a key declared here (enforced by the validator, not this schema)."
+    },
+    "claim": { "$ref": "#/$defs/claim" },
+    "manuscript": { "$ref": "#/$defs/manuscript" },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/evidence_item" }
+    },
+    "ai_provenance": { "$ref": "#/$defs/ai_provenance" },
+    "digestions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/digestion" }
+    },
+    "importance_claims": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/importance_claim" }
+    },
+    "open_invitations": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/open_invitation" }
+    },
+    "history": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/history_event" },
+      "description": "Append-only. Existing event ids may never disappear or change payload; the validator enforces this against the base-branch record, this schema only validates shape of the current set."
+    }
+  },
+
+  "$defs": {
+    "basis": {
+      "type": "string",
+      "enum": ["source_quote", "author_attestation", "editorial_inference", "machine_result"]
+    },
+    "attested_basis": {
+      "description": "Basis values permitted for claims of correspondence between formal and informal statements. Correspondence is attested, never machine-asserted.",
+      "type": "string",
+      "enum": ["source_quote", "author_attestation", "editorial_inference"]
+    },
+    "party_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "iso_datetime": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "party": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["verification_method"],
+      "oneOf": [
+        { "required": ["name"] },
+        { "required": ["pseudonym"] }
+      ],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "pseudonym": { "type": "string", "minLength": 1 },
+        "verification_method": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind"],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": ["github_identity", "orcid", "email_confirmation", "pseudonymous"]
+            },
+            "identifier": { "type": "string" },
+            "verified_at": { "$ref": "#/$defs/iso_datetime" }
+          }
+        }
+      }
+    },
+
+    "attributed_value": {
+      "description": "Base shape shared by every non-trivial asserted value in the record: no unattributed assertion.",
+      "type": "object",
+      "required": ["value", "basis", "asserted_by", "asserted_at"],
+      "properties": {
+        "value": {},
+        "basis": { "$ref": "#/$defs/basis" },
+        "asserted_by": { "$ref": "#/$defs/party_id" },
+        "asserted_at": { "$ref": "#/$defs/iso_datetime" },
+        "locator": { "$ref": "#/$defs/locator" }
+      }
+    },
+
+    "locator": {
+      "description": "Pointer to where an attributed value comes from in the source. Required whenever basis is source_quote (enforced by the validator).",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "section": { "type": "string" },
+        "page": { "type": "integer", "minimum": 1 },
+        "url": { "type": "string", "format": "uri" },
+        "quote": { "type": "string" }
+      }
+    },
+
+    "execution_receipt": {
+      "description": "Required for any machine_result. A bare result: passed with no receipt is rejected by the validator; this schema requires the fields to be present at all.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tool", "tool_version", "runner_image_digest", "executed_at", "result", "log_sha256", "asserted_by"],
+      "properties": {
+        "tool": { "type": "string", "minLength": 1 },
+        "tool_version": { "type": "string", "minLength": 1 },
+        "runner_image_digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+        "executed_at": { "$ref": "#/$defs/iso_datetime" },
+        "result": { "type": "string", "enum": ["passed", "failed"] },
+        "log_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "asserted_by": { "$ref": "#/$defs/party_id" }
+      }
+    },
+
+    "freshness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["result", "checked_at"],
+      "properties": {
+        "result": { "type": "string", "enum": ["current", "stale", "unknown"] },
+        "observed_source_version": { "type": "string" },
+        "confirmed_source_version": { "type": "string" },
+        "checked_at": { "$ref": "#/$defs/iso_datetime" }
+      },
+      "if": {
+        "properties": { "result": { "const": "unknown" } },
+        "required": ["result"]
+      },
+      "then": {},
+      "else": {
+        "required": ["result", "checked_at", "observed_source_version", "confirmed_source_version"]
+      }
+    },
+
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "text", "scope"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+        "text": { "$ref": "#/$defs/attributed_value" },
+        "scope": { "$ref": "#/$defs/attributed_value" },
+        "exclusions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/attributed_value" }
+        }
+      }
+    },
+
+    "manuscript": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["url", "label", "sha256", "retrieved_at"],
+      "properties": {
+        "url": { "type": "string", "format": "uri" },
+        "label": { "type": "string", "minLength": 1 },
+        "immutable_version_id": {
+          "type": "string",
+          "description": "Host-provided immutable version identifier where one exists, e.g. an arXiv vN. Compared before hashes, since a regenerated PDF can differ byte-for-byte without a meaningful revision."
+        },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "retrieved_at": { "$ref": "#/$defs/iso_datetime" }
+      }
+    },
+
+    "axiom_trust_profile": {
+      "type": "string",
+      "enum": ["lean_standard_classical", "lean_standard_classical_plus_native", "custom"],
+      "description": "Deliberately not named kernel_only. Each profile expands to a versioned allowlist that must appear in full in the receipt."
+    },
+
+    "axiom_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["trust_profile", "allowlist", "allowlist_version", "execution"],
+      "properties": {
+        "trust_profile": { "$ref": "#/$defs/axiom_trust_profile" },
+        "allowlist": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+        "allowlist_version": { "type": "string" },
+        "execution": { "$ref": "#/$defs/execution_receipt" }
+      }
+    },
+
+    "toolchain": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "pin_kind", "pin"],
+      "properties": {
+        "name": { "type": "string" },
+        "pin_kind": {
+          "type": "string",
+          "enum": ["digest", "commit"],
+          "description": "Toolchain must be pinned by immutable digest or commit, never only a tag."
+        },
+        "pin": { "type": "string", "minLength": 1 }
+      }
+    },
+
+    "evidence_item": {
+      "type": "object",
+      "required": ["id", "kind"],
+      "oneOf": [
+        { "$ref": "#/$defs/evidence_formal_artifact" },
+        { "$ref": "#/$defs/evidence_external_formal_artifact" },
+        { "$ref": "#/$defs/evidence_computational_reproduction" },
+        { "$ref": "#/$defs/evidence_informal_review" },
+        { "$ref": "#/$defs/evidence_mathematical_assessment" }
+      ]
+    },
+
+    "evidence_formal_artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "repo", "commit", "toolchain", "lockfile_hash", "artifact_build", "axiom_policy", "correspondence"],
+      "properties": {
+        "id": { "type": "string" },
+        "kind": { "const": "formal_artifact" },
+        "repo": { "type": "string", "format": "uri" },
+        "commit": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{7,40}$",
+          "description": "Immutable commit sha, never a mutable tag or branch name."
+        },
+        "toolchain": { "$ref": "#/$defs/toolchain" },
+        "lockfile_hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "artifact_build": { "$ref": "#/$defs/execution_receipt" },
+        "axiom_policy": { "$ref": "#/$defs/axiom_policy" },
+        "correspondence": {
+          "allOf": [
+            { "$ref": "#/$defs/attributed_value" },
+            {
+              "properties": {
+                "basis": { "$ref": "#/$defs/attested_basis" }
+              }
+            }
+          ]
+        }
+      }
+    },
+
+    "evidence_external_formal_artifact": {
+      "description": "Reported, not reproduced: no receipts, no build claims.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "repo", "description", "basis", "asserted_by", "asserted_at"],
+      "properties": {
+        "id": { "type": "string" },
+        "kind": { "const": "external_formal_artifact" },
+        "repo": { "type": "string", "format": "uri" },
+        "commit": { "type": "string", "pattern": "^[a-f0-9]{7,40}$" },
+        "description": { "type": "string", "minLength": 1 },
+        "basis": { "$ref": "#/$defs/basis" },
+        "asserted_by": { "$ref": "#/$defs/party_id" },
+        "asserted_at": { "$ref": "#/$defs/iso_datetime" }
+      }
+    },
+
+    "evidence_computational_reproduction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "description", "execution"],
+      "properties": {
+        "id": { "type": "string" },
+        "kind": { "const": "computational_reproduction" },
+        "description": { "type": "string", "minLength": 1 },
+        "inputs": { "type": "string" },
+        "outputs_summary": { "type": "string" },
+        "execution": { "$ref": "#/$defs/execution_receipt" }
+      }
+    },
+
+    "evidence_informal_review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "reviewer", "text", "basis", "asserted_by", "asserted_at"],
+      "properties": {
+        "id": { "type": "string" },
+        "kind": { "const": "informal_review" },
+        "reviewer": { "$ref": "#/$defs/party_id" },
+        "text": { "type": "string", "minLength": 1 },
+        "basis": { "$ref": "#/$defs/basis" },
+        "asserted_by": { "$ref": "#/$defs/party_id" },
+        "asserted_at": { "$ref": "#/$defs/iso_datetime" },
+        "locator": { "$ref": "#/$defs/locator" }
+      }
+    },
+
+    "evidence_mathematical_assessment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "target", "report", "basis", "asserted_by", "asserted_at"],
+      "properties": {
+        "id": { "type": "string" },
+        "kind": { "const": "mathematical_assessment" },
+        "target": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Must name a specific numbered statement, e.g. 'Theorem 1.2', not the manuscript as a whole."
+        },
+        "report": {
+          "type": "object",
+          "additionalProperties": false,
+          "minProperties": 1,
+          "properties": {
+            "url": { "type": "string", "format": "uri" },
+            "inline": { "type": "string" }
+          }
+        },
+        "basis": { "$ref": "#/$defs/basis" },
+        "asserted_by": { "$ref": "#/$defs/party_id" },
+        "asserted_at": { "$ref": "#/$defs/iso_datetime" },
+        "author_response": {
+          "type": "array",
+          "description": "Attachable by the author; never removable by the assessor.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["text", "asserted_by", "asserted_at"],
+            "properties": {
+              "text": { "type": "string", "minLength": 1 },
+              "asserted_by": { "$ref": "#/$defs/party_id" },
+              "asserted_at": { "$ref": "#/$defs/iso_datetime" }
+            }
+          }
+        }
+      }
+    },
+
+    "ai_provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["disclosure", "roles"],
+      "properties": {
+        "disclosure": { "$ref": "#/$defs/attributed_value" },
+        "roles": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["role", "model", "basis", "asserted_by"],
+            "description": "Roles are reported by a party, not independently discovered facts.",
+            "properties": {
+              "role": {
+                "type": "string",
+                "enum": [
+                  "problem_selection", "literature_search", "conjecture_generation",
+                  "proof_generation", "criticism", "computation", "formalization",
+                  "prose_editing", "candidate_generation"
+                ]
+              },
+              "model": { "type": "string", "minLength": 1 },
+              "basis": { "$ref": "#/$defs/basis" },
+              "asserted_by": { "$ref": "#/$defs/party_id" }
+            }
+          }
+        }
+      }
+    },
+
+    "digestion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["audience", "text", "basis", "asserted_by", "source_claims"],
+      "properties": {
+        "audience": { "type": "string", "minLength": 1 },
+        "text": { "type": "string", "minLength": 1 },
+        "basis": { "$ref": "#/$defs/basis" },
+        "asserted_by": { "$ref": "#/$defs/party_id" },
+        "source_claims": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        }
+      }
+    },
+
+    "importance_claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text", "basis", "asserted_by"],
+      "properties": {
+        "text": { "type": "string", "minLength": 1 },
+        "basis": { "$ref": "#/$defs/basis" },
+        "asserted_by": { "$ref": "#/$defs/party_id" },
+        "source": { "$ref": "#/$defs/locator" }
+      }
+    },
+
+    "open_invitation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "target", "created_by", "created_at"],
+      "properties": {
+        "kind": { "type": "string", "minLength": 1 },
+        "target": { "type": "string", "minLength": 1 },
+        "created_by": {
+          "$ref": "#/$defs/party_id",
+          "description": "Any named party, not restricted to authors."
+        },
+        "created_at": { "$ref": "#/$defs/iso_datetime" }
+      }
+    },
+
+    "history_event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type", "at", "by"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+        "type": { "type": "string", "minLength": 1 },
+        "at": { "$ref": "#/$defs/iso_datetime" },
+        "by": { "$ref": "#/$defs/party_id" },
+        "note": { "type": "string" },
+        "corrects": {
+          "type": "string",
+          "description": "References the id of an earlier event this one corrects. Corrections are new events; they never mutate the referenced event."
+        }
+      }
+    }
+  }
+}
