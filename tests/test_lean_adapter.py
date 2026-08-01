@@ -138,6 +138,19 @@ def test_scan_kernel_bypass_matches_any_debug_skip_option(tmp_path):
     assert hits[0].line == 1
 
 
+def test_scan_kernel_bypass_ignores_dependency_and_build_trees(tmp_path):
+    (tmp_path / "Submission.lean").write_text("theorem x : True := trivial\n", encoding="utf-8")
+    for excluded in (".lake", ".git", "build", "dist"):
+        dependency_dir = tmp_path / excluded / "packages" / "dependency"
+        dependency_dir.mkdir(parents=True)
+        (dependency_dir / "Unsafe.lean").write_text(
+            "set_option debug.skipKernelTC true\n",
+            encoding="utf-8",
+        )
+
+    assert scan_tree(tmp_path) == []
+
+
 def test_check_isolation_ok_requires_every_field_correct():
     clean = _load(FIXTURES / "clean-success" / "isolation-evidence.json")
     assert check_isolation(clean).ok

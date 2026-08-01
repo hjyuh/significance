@@ -12,6 +12,7 @@ inert comment.
 
 from __future__ import annotations
 
+import os
 import re
 from dataclasses import dataclass
 from pathlib import Path
@@ -19,6 +20,7 @@ from pathlib import Path
 RULE = "kernel-bypass-option-detected"
 
 _PATTERN = re.compile(r"set_option\s+(debug\.skip\w*)")
+_EXCLUDED_PARTS = frozenset({".git", ".lake", "build", "dist"})
 
 
 @dataclass
@@ -42,8 +44,11 @@ def scan_file(path: Path) -> list[BypassHit]:
 
 def scan_tree(root: Path) -> list[BypassHit]:
     hits: list[BypassHit] = []
-    for path in sorted(Path(root).rglob("*.lean")):
-        hits.extend(scan_file(path))
+    for directory, dirnames, filenames in os.walk(root):
+        dirnames[:] = sorted(name for name in dirnames if name not in _EXCLUDED_PARTS)
+        for filename in sorted(filenames):
+            if filename.endswith(".lean"):
+                hits.extend(scan_file(Path(directory) / filename))
     return hits
 
 

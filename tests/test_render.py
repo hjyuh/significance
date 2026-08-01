@@ -42,6 +42,7 @@ def test_build_produces_index_and_record_page(tmp_path):
     assert (out / "static" / "style.css").exists()
 
     record_html = (out / "2026-sandoval-ramsey-k7" / "index.html").read_text(encoding="utf-8")
+    assert all(line == line.rstrip() for line in record_html.splitlines())
     assert "Content-Security-Policy" in record_html
     assert "What this does not establish" in record_html
     # No scores/badges/verdict language (word-boundary: "ai_provenance" is a

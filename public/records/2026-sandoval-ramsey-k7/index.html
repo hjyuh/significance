@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none';">
+<title>2026-sandoval-ramsey-k7 — Significance</title>
+<link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+<header class="site-header"><a href="../index.html">Significance</a></header>
+<main>
+<article class="record">
+  <p class="record-id">2026-sandoval-ramsey-k7 · v2 · active</p>
+
+
+  <h1 class="claim-text">Every 2-coloring of the edges of K_18 contains a monochromatic K_7 minus a perfect matching.</h1>
+  <p><span class="attribution">[source_quote, asserted by author-as at 2026-06-01T12:00:00Z]</span><span class="locator"> §1.1: "Theorem 1.2. Every 2-colouring of E(K_18) admits a monochromatic K_7 minus a perfect matching."</span></p>
+
+  <section>
+    <h2>Scope</h2>
+    <p>Applies to complete graphs on 18 or more vertices; the construction in Section 4 is specific to n = 18.</p>
+    <p><span class="attribution">[author_attestation, asserted by author-as at 2026-06-01T12:00:00Z]</span></p>
+  </section>
+
+  <section>
+    <h2>Exclusions</h2>
+    <ul>
+      <li>Does not address the n = 17 boundary case, left open in Section 6. <span class="attribution">[source_quote, asserted by author-as at 2026-06-01T12:00:00Z]</span><span class="locator"> §6</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Manuscript</h2>
+    <p><a href="https://arxiv.org/abs/2606.01234">Sandoval, &#39;Ramsey numbers for near-perfect matchings in K_7&#39;, arXiv:2606.01234</a></p>
+    <p class="meta">
+      sha256 <code>8f10a68d54a88afcb6369c01da9ddfb6881d754e5ece210541f8656783692941</code> · v2      · retrieved 2026-07-28T09:00:00Z
+    </p>
+    <p class="meta">Freshness: current · checked 2026-07-28T09:00:00Z</p>
+  </section>
+
+  <section>
+    <h2>Evidence</h2>
+    <div class="evidence-card evidence-formal_artifact">
+      <h3>ev-lean-formalization <span class="kind">(formal artifact)</span></h3>
+
+        <div class="side-by-side">
+          <div class="informal">
+            <h4>Informal (manuscript)</h4>
+            <p>Every 2-coloring of the edges of K_18 contains a monochromatic K_7 minus a perfect matching.</p>
+          </div>
+          <div class="formal">
+            <h4>Formal (lean4)</h4>
+            <p><a href="https://github.com/asandoval/ramsey-k7-lean">https://github.com/asandoval/ramsey-k7-lean</a> @ <code>a1b2c3d4e5f60718293a4b5c6d7e8f9a0b1c2d3</code></p>
+            <p>The Lean statement `ramsey_k7_near_matching` in Ramsey/K7.lean corresponds to Theorem 1.2 of the manuscript, modulo restating the coloring as a Sym2-indexed function.</p>
+            <p><span class="attribution">[author_attestation, asserted by author-as at 2026-07-20T10:00:00Z]</span></p>
+          </div>
+        </div>
+        <h4>Axiom policy</h4>
+        <p>trust profile: lean_standard_classical (allowlist v1)</p>
+        <ul><li><code>propext</code></li><li><code>Classical.choice</code></li><li><code>Quot.sound</code></li></ul>
+        <h4>Build receipt</h4>
+        <dl class="receipt">
+  <dt>tool</dt><dd>significance-lean 0.1.0</dd>
+  <dt>runner image</dt><dd><code>sha256:a67b1bd9119bb55b576dddf936701424ec527e2ec17bd671019a9481e2a8fe68</code></dd>
+  <dt>executed at</dt><dd>2026-07-20T03:14:00Z</dd>
+  <dt>result</dt><dd>passed</dd>
+  <dt>log sha256</dt><dd><code>c46928bc87de23b9a8bd235aa1fe67ccb1542c8389ad3f02bf4ab5cff506e98f</code></dd>
+  <dt>asserted by</dt><dd>significance-ci</dd>
+</dl>
+        <h4>Axiom check receipt</h4>
+        <dl class="receipt">
+  <dt>tool</dt><dd>significance-lean 0.1.0</dd>
+  <dt>runner image</dt><dd><code>sha256:a67b1bd9119bb55b576dddf936701424ec527e2ec17bd671019a9481e2a8fe68</code></dd>
+  <dt>executed at</dt><dd>2026-07-20T03:15:00Z</dd>
+  <dt>result</dt><dd>passed</dd>
+  <dt>log sha256</dt><dd><code>73aaa5071d9f861550d51469cbd89e0a6e5371486fd94c9675281d1cefbd5117</code></dd>
+  <dt>asserted by</dt><dd>significance-ci</dd>
+</dl>
+
+    </div>
+    <div class="evidence-card evidence-external_formal_artifact">
+      <h3>ev-prior-partial-result <span class="kind">(external formal artifact)</span></h3>
+
+        <p class="reported-note">Reported, not reproduced.</p>
+        <p><a href="https://github.com/other-group/ramsey-partial">https://github.com/other-group/ramsey-partial</a> @ <code>9f8e7d6c5b4a392817263544352617f8e9d0a1b</code></p>
+        <p>An independent, unreproduced Coq formalization of the n = 20 special case, reported by its authors in the linked repository&#39;s README.</p>
+        <p><span class="attribution">[author_attestation, asserted by author-as at 2026-06-01T12:00:00Z]</span></p>
+
+    </div>
+    <div class="evidence-card evidence-mathematical_assessment">
+      <h3>ev-assessment-reviewer-ok <span class="kind">(mathematical assessment)</span></h3>
+
+        <p class="assessment-target">Target: Theorem 1.2</p>
+<p>The case split in Lemma 3.4 covers all colorings up to the symmetry group action claimed in Section 3; I checked the n=18 base case by hand and it is consistent with the stated bound.</p>        <p><span class="attribution">[author_attestation, asserted by reviewer-ok at 2026-07-25T14:00:00Z]</span></p>
+        <div class="author-response">
+          <h4>Author response</h4>
+          <p>Thank you — Lemma 3.4&#39;s symmetry argument is elaborated further in the v2 revision, Appendix B. <span class="attribution">— author-as, 2026-07-26T09:00:00Z</span></p>
+        </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Digestions</h2>
+    <div class="digestion">
+      <p class="meta">For: general_mathematician</p>
+      <p>This paper pins down a small but stubborn Ramsey-type number: it shows 18 vertices are enough to force a large monochromatic near-clique in any red/blue edge coloring, matching a construction that shows 17 is not enough.</p>
+      <p><span class="attribution">[editorial_inference, asserted by editor-mz]</span></p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Importance</h2>
+    <p>Closes a gap between the previously known bounds of 17 and 19 for this Ramsey-type quantity, reported open since a 2019 survey. <span class="attribution">[source_quote, asserted by author-as]</span></p>
+  </section>
+
+  <section>
+    <h2>AI provenance</h2>
+    <p>An LLM was used for literature search and for generating candidate case splits in the proof of Lemma 3.4, which the author then worked through by hand and in Lean.</p>
+    <p><span class="attribution">[source_quote, asserted by author-as at 2026-06-01T12:00:00Z]</span><span class="locator"> §Acknowledgements: "We used a large language model for literature search and for generating candidate case splits, which were independently worked through by the author."</span></p>
+    <table class="roles">
+      <thead><tr><th>Role</th><th>Model</th><th>Basis</th><th>Asserted by</th></tr></thead>
+      <tbody>
+        <tr><td>literature search</td><td>claude-opus-4</td><td>author_attestation</td><td>author-as</td></tr>
+        <tr><td>candidate generation</td><td>claude-opus-4</td><td>author_attestation</td><td>author-as</td></tr>
+        <tr><td>formalization</td><td>claude-sonnet-4</td><td>author_attestation</td><td>author-as</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Open invitations</h2>
+    <ul>
+      <li>formalization: Theorem 1.2, n = 17 boundary case (Section 6) — created by editor-mz at 2026-07-28T09:30:00Z</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>History (append-only)</h2>
+    <ul class="history">
+      <li><span class="event-id">evt-created</span> — created — 2026-06-01T12:00:00Z — author-as</li>
+      <li><span class="event-id">evt-lean-added</span> — evidence_added — 2026-07-20T10:00:00Z — author-as: Added Lean formalization evidence (ev-lean-formalization).</li>
+      <li><span class="event-id">evt-assessment-added</span> — evidence_added — 2026-07-25T14:00:00Z — reviewer-ok: Added mathematical assessment of Theorem 1.2.</li>
+      <li><span class="event-id">evt-freshness-recheck</span> — freshness_checked — 2026-07-28T09:00:00Z — significance-ci: Routine freshness check against arXiv v2; unchanged.</li>
+    </ul>
+  </section>
+
+  <section class="what-this-does-not-establish">
+    <h2>What this does not establish</h2>
+    <ul>
+      <li>Correspondence between formal and informal statements is attested, not machine-checked.</li>
+      <li>A formalization may omit hypotheses present in the informal statement.</li>
+      <li>The adapter is not a general mathematical verifier — it performs narrow evidence checks.</li>
+    </ul>
+  </section>
+</article>
+</main>
+<footer class="site-footer">
+<p>Significance mechanically validates provenance and a narrow set of evidence predicates. It does not mechanically determine mathematical truth.</p>
+</footer>
+</body>
+</html>

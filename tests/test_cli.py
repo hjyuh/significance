@@ -50,10 +50,11 @@ def test_diff_cli_exits_zero_on_identical_records(capsys):
 
 def test_build_cli_exits_zero_and_writes_site(tmp_path, capsys):
     out = tmp_path / "site"
+    expected_records = len(list(RECORDS_DIR.glob("*.yaml")))
     code = main(["build", str(RECORDS_DIR), "-o", str(out)])
     output = capsys.readouterr().out
     assert code == 0
-    assert "Built 1 record" in output
+    assert f"Built {expected_records} record" in output
     assert (out / "index.html").exists()
 
 

@@ -44,6 +44,8 @@ def _environment() -> Environment:
     env = Environment(
         loader=FileSystemLoader(str(_TEMPLATES_DIR)),
         autoescape=True,
+        trim_blocks=True,
+        lstrip_blocks=True,
     )
     env.filters["safe_href"] = safe_href
     return env

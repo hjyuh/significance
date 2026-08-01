@@ -1,0 +1,131 @@
+schema_version: 1
+record_id: 2026-openai-nonsofic-groups
+record_version: 1
+record_state: active
+
+freshness:
+  result: current
+  observed_source_version: "official-release-2026-08-01"
+  confirmed_source_version: "official-release-2026-08-01"
+  checked_at: "2026-08-01T14:09:51Z"
+
+parties:
+  openai:
+    name: "OpenAI"
+    verification_method:
+      kind: github_identity
+      identifier: "openai"
+      verified_at: "2026-08-01T13:57:00Z"
+  significance-editor:
+    pseudonym: "Significance editor"
+    verification_method:
+      kind: pseudonymous
+      identifier: "significance-project"
+
+claim:
+  id: claim-main
+  text:
+    value: "The unit group L_F2(1,2)× of the binary Leavitt algebra is not sofic."
+    basis: source_quote
+    asserted_by: openai
+    asserted_at: "2026-08-01T13:53:00Z"
+    locator:
+      page: 78
+      quote: "Theorem 1.1. The unit group L_F2(1,2)× is not sofic."
+  scope:
+    value: "The manuscript identifies a concrete countable unit group; its public Comparator target separately states existence of a finitely presented non-sofic group."
+    basis: editorial_inference
+    asserted_by: significance-editor
+    asserted_at: "2026-08-01T13:57:00Z"
+  exclusions:
+    - value: "The manuscript says this result does not determine whether the unit group is hyperlinear."
+      basis: source_quote
+      asserted_by: openai
+      asserted_at: "2026-08-01T13:53:00Z"
+      locator:
+        page: 80
+        quote: "Theorem 1.1 does not determine whether L_F2(1,2)× is hyperlinear."
+
+manuscript:
+  url: "https://cdn.openai.com/pdf/ten-proofs-oai.pdf"
+  label: "OpenAI, Ten Advances in Mathematics and Theoretical Computer Science"
+  immutable_version_id: "official-release-2026-08-01"
+  sha256: "f318c6508c9d49ef876a5a26cd73928705f96c07bb43e92a0cb35bd3f666ea53"
+  retrieved_at: "2026-08-01T14:09:51Z"
+
+evidence:
+  - id: ev-openai-lean-artifact
+    kind: external_formal_artifact
+    repo: "https://github.com/openai/ten-proofs"
+    commit: "c510a55434c0935cde446e5a372699a4671438f6"
+    description: "OpenAI publishes NonSoficGroup.lean and a Comparator challenge targeting existence of a finitely presented non-sofic group. Significance has not yet attached an independent execution receipt."
+    basis: source_quote
+    asserted_by: openai
+    asserted_at: "2026-08-01T13:57:00Z"
+    locator:
+      url: "https://github.com/openai/ten-proofs/tree/c510a55434c0935cde446e5a372699a4671438f6"
+
+ai_provenance:
+  disclosure:
+    value: "The results were achieved by an internal version of Astra, our next major model."
+    basis: source_quote
+    asserted_by: openai
+    asserted_at: "2026-08-01T13:53:00Z"
+    locator:
+      url: "https://openai.com/index/ten-advances-in-mathematics/"
+      quote: "The results were achieved by an internal version of Astra, our next major model."
+  roles:
+    - role: proof_generation
+      model: "internal version of Astra"
+      basis: source_quote
+      asserted_by: openai
+      locator:
+        url: "https://openai.com/index/ten-advances-in-mathematics/"
+    - role: formalization
+      model: "internal version of Astra"
+      basis: source_quote
+      asserted_by: openai
+      locator:
+        url: "https://openai.com/index/ten-advances-in-mathematics/"
+    - role: prose_editing
+      model: "internal version of Astra"
+      basis: source_quote
+      asserted_by: openai
+      locator:
+        url: "https://openai.com/index/ten-advances-in-mathematics/"
+
+digestions:
+  - audience: general_mathematician
+    text: "The manuscript proposes an explicit boundary for finite-permutation approximation: a concrete group built from the binary Leavitt algebra that is claimed not to admit sofic approximations. The public Lean target records a related existential finite-presentation statement, so correspondence between the concrete and formal claims remains a useful, separate audit task."
+    basis: editorial_inference
+    asserted_by: significance-editor
+    source_claims: [claim-main]
+
+importance_claims:
+  - text: "The announcement describes the result as addressing a central open question in group theory."
+    basis: source_quote
+    asserted_by: openai
+    source:
+      url: "https://openai.com/index/ten-advances-in-mathematics/"
+      quote: "addressing a central open question in group theory"
+
+open_invitations:
+  - kind: reproduction
+    target: "Reproduce NonSoficGroup at commit c510a55434c0935cde446e5a372699a4671438f6 under Lean 4.32.0 and run its Comparator/Nanoda challenge."
+    created_by: significance-editor
+    created_at: "2026-08-01T13:57:00Z"
+  - kind: correspondence
+    target: "Trace the declaration chain between manuscript Theorem 1.1 and the Comparator target exists_finitelyPresented_nonsofic_group."
+    created_by: significance-editor
+    created_at: "2026-08-01T13:57:00Z"
+  - kind: mathematical_review
+    target: "Assess the expander-matching criterion in Proposition 2.3 or the Thompson-group step in Proposition 3.2, naming the exact artifact revision reviewed."
+    created_by: significance-editor
+    created_at: "2026-08-01T13:57:00Z"
+
+history:
+  - id: evt-created
+    type: created
+    at: "2026-08-01T13:57:00Z"
+    by: significance-editor
+    note: "Created from the official OpenAI release, the byte-matched 249-page manuscript, and the public Lean repository."
