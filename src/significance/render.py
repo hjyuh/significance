@@ -14,6 +14,7 @@ entirely.
 
 from __future__ import annotations
 
+import json
 import re
 import shutil
 from dataclasses import dataclass, field
@@ -99,5 +100,29 @@ def build_site(records_dir: str | Path, out_dir: str | Path) -> BuildResult:
     built_records.sort(key=lambda r: r["record_id"])
     index_html = index_template.render(records=built_records, root_prefix="")
     (out_dir / "index.html").write_text(index_html, encoding="utf-8")
+
+    # This is the only record-data interface consumed by the React homepage.
+    # Keeping it beside the Python-rendered index makes validation and record
+    # selection Python's responsibility; the JS layer only presents the
+    # already-validated summaries and cannot invent a second freshness state.
+    index_data = [
+        {
+            "record_id": record["record_id"],
+            "record_version": record["record_version"],
+            "record_state": record["record_state"],
+            "claim": record["claim"]["text"]["value"],
+            "claim_basis": record["claim"]["text"]["basis"],
+            "claim_asserted_by": record["claim"]["text"]["asserted_by"],
+            "freshness": record.get("freshness", {}).get("result", "unknown"),
+            "freshness_checked_at": record.get("freshness", {}).get("checked_at"),
+            "evidence_count": len(record.get("evidence", [])),
+            "open_invitation_count": len(record.get("open_invitations", [])),
+        }
+        for record in built_records
+    ]
+    (out_dir / "index.json").write_text(
+        json.dumps(index_data, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
 
     return result

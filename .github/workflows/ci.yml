@@ -32,6 +32,27 @@ jobs:
       - name: Test
         run: uv run pytest -q
 
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install web dependencies
+        run: npm ci
+
+      - name: Lint web app
+        run: npm run lint
+
+      - name: Test web app and generated record interface
+        run: npm test
+
+      - name: Generated record assets are committed
+        run: |
+          if [ -n "$(git status --porcelain -- public/records)" ]; then
+            git status --short -- public/records
+            exit 1
+          fi
+
       - name: Fetch PR base for append-only comparison
         if: github.event_name == 'pull_request'
         env:

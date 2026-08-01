@@ -9,3 +9,4 @@ dist/
 .next/
 .wrangler/
 tmp/
+.openai/hosting.json

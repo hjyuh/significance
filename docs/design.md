@@ -34,6 +34,12 @@ Significance ships three things:
 - A CLI: `init`, `validate`, `diff`, and `build`.
 - A static renderer that gives each published record a stable URL.
 
+The hosted presentation adds a React/vinext homepage, but not a second record
+renderer. Python validation produces both the static record pages and a narrow
+JSON index of validated summaries; React only maps that generated index into
+the homepage. It does not read YAML or independently assert record state,
+freshness, or evidence counts.
+
 It has two deliberately separate layers:
 
 - **Evidence ledger:** machine results or explicitly attributed facts about a

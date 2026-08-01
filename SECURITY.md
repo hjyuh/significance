@@ -3,9 +3,11 @@
 This file is the threat model for the Lean evidence adapter
 (`adapters/lean/`, `.github/workflows/lean-adapter-*.yml`) — the one part
 of Significance that executes code it does not control. Everything else
-in this repository (the schema, CLI, and static renderer) only ever
-parses YAML/JSON and reads or writes files the user already asked it to
-touch; there is no comparable attack surface there.
+in this repository (the schema, CLI, static renderer, React presentation
+shell, and minimal static-serving Worker) only processes validated record
+data or serves generated assets. The Worker declares no database, object
+storage, or image-transformation binding; there is no comparable arbitrary-code
+execution boundary there.
 
 To report a vulnerability, open a private security advisory on this
 repository rather than a public issue.

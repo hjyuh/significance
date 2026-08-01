@@ -108,6 +108,8 @@ main { width: min(1080px, 100%); margin: 0 auto; }
 
 .records { padding: 34px 28px 46px; border-bottom: 1px solid var(--rule); }
 
+.records-list { display: grid; gap: 14px; }
+
 .record-card {
   display: block;
   padding: 28px 30px 30px;
@@ -154,6 +156,8 @@ main { width: min(1080px, 100%); margin: 0 auto; }
   color: var(--note);
   font-size: 12px;
 }
+
+.empty-records { margin: 0; color: var(--muted); }
 
 .principles {
   display: grid;

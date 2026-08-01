@@ -10,9 +10,11 @@ Jinja's autoescape alone would not neutralize (a `javascript:` href).
 
 from __future__ import annotations
 
+import json
 import re
 from pathlib import Path
 
+from significance.records import load_record
 from significance.render import build_site, safe_href
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -40,8 +42,26 @@ def test_build_produces_index_and_record_page(tmp_path):
     assert result.built == [PUBLIC_RECORD_ID]
     assert result.skipped == {}
     assert (out / "index.html").exists()
+    assert (out / "index.json").exists()
     assert (out / PUBLIC_RECORD_ID / "index.html").exists()
     assert (out / "static" / "style.css").exists()
+
+    source = load_record(RECORDS_DIR / f"{PUBLIC_RECORD_ID}.yaml")
+    summaries = json.loads((out / "index.json").read_text(encoding="utf-8"))
+    assert summaries == [
+        {
+            "record_id": source["record_id"],
+            "record_version": source["record_version"],
+            "record_state": source["record_state"],
+            "claim": source["claim"]["text"]["value"],
+            "claim_basis": source["claim"]["text"]["basis"],
+            "claim_asserted_by": source["claim"]["text"]["asserted_by"],
+            "freshness": source["freshness"]["result"],
+            "freshness_checked_at": source["freshness"]["checked_at"],
+            "evidence_count": len(source["evidence"]),
+            "open_invitation_count": len(source["open_invitations"]),
+        }
+    ]
 
     record_html = (out / PUBLIC_RECORD_ID / "index.html").read_text(encoding="utf-8")
     assert all(line == line.rstrip() for line in record_html.splitlines())

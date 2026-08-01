@@ -6,7 +6,10 @@
     "node": ">=22.13.0"
   },
   "scripts": {
+    "records:build": "uv run significance build records/ -o public/records/",
+    "predev": "npm run records:build",
     "dev": "vinext dev",
+    "prebuild": "npm run records:build",
     "build": "vinext build",
     "start": "vinext start",
     "test": "npm run build && node --test tests/rendered-html.test.mjs",

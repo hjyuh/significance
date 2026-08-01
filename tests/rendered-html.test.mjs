@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import test from "node:test";
 
 const indexPath = "public/records/index.html";
@@ -23,29 +23,23 @@ test("the rendered record preserves the project's epistemic boundary", () => {
   assert.doesNotMatch(record, /mathematically verified|proof verified/i);
 });
 
-test("the homepage summary stays faithful to the published corpus", () => {
+test("the homepage derives its record facts from the generated index", () => {
   const homepage = readFileSync("app/page.tsx", "utf8");
-  const sourceRecord = readFileSync(
-    "records/2026-openai-nonsofic-groups.yaml",
-    "utf8",
-  );
-  const publishedRecords = readdirSync("records").filter((name) =>
-    name.endsWith(".yaml"),
-  );
-  const invitations = sourceRecord
-    .split("\nopen_invitations:\n", 2)[1]
-    .split("\nhistory:\n", 1)[0]
-    .match(/^  - kind:/gm);
+  const summaries = JSON.parse(readFileSync("public/records/index.json", "utf8"));
 
-  assert.equal(publishedRecords.length, 1);
-  assert.match(homepage, /Current records — 1/);
-  assert.match(
+  assert.match(homepage, /import generatedRecords from "\.\.\/public\/records\/index\.json"/);
+  assert.match(homepage, /records\.length/);
+  assert.match(homepage, /records\.map/);
+  assert.equal(summaries.length, 1);
+  assert.equal(summaries[0].record_id, "2026-openai-nonsofic-groups");
+  assert.equal(summaries[0].freshness, "current");
+  assert.equal(summaries[0].evidence_count, 1);
+  assert.equal(summaries[0].open_invitation_count, 3);
+
+  // Record facts must not be copied into JSX. The generated JSON is their
+  // sole interface to React.
+  assert.doesNotMatch(
     homepage,
-    /The unit group L_F2\(1,2\)× of the binary Leavitt algebra is not\s+sofic\./,
+    /2026-openai-nonsofic-groups|2026-08-01|L_F2\(1,2\)|three scoped invitations/,
   );
-  assert.match(sourceRecord, /The unit group L_F2\(1,2\)×/);
-  assert.equal(invitations?.length, 3);
-  assert.match(homepage, /three scoped invitations/);
-  assert.match(homepage, /not independently reproduced/);
-  assert.doesNotMatch(homepage, />Nonsofic groups exist</);
 });
