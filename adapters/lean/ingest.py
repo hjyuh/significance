@@ -82,7 +82,7 @@ def ingest(
                 "Isolation could not be demonstrated for this submission "
                 f"({'; '.join(fail_closed.reasons)}); reported, not reproduced."
             ),
-            "basis": "author_attestation",
+            "basis": "machine_result",
             "asserted_by": "significance-ci",
             "asserted_at": asserted_at,
         }

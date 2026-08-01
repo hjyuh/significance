@@ -12,6 +12,9 @@ freshness:
 parties:
   openai:
     name: "OpenAI"
+    # This records the editor's check that the public OpenAI organization
+    # controls the cited repository. It does not imply OpenAI participated in,
+    # confirmed, or endorsed this Significance record.
     verification_method:
       kind: github_identity
       identifier: "openai"

@@ -65,7 +65,7 @@ jobs:
     timeout-minutes: 40 # hard ceiling above WALL_CLOCK_LIMIT_SECONDS; the runner is ephemeral either way
     steps:
       - name: Check out significance (adapter scripts only, not the target repo)
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           persist-credentials: false
 
@@ -206,7 +206,7 @@ jobs:
 
       - name: Upload untrusted build artifacts
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: lean-adapter-result
           path: |

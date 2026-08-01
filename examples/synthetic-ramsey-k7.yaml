@@ -1,5 +1,7 @@
+# SYNTHETIC EXAMPLE ONLY. Every person, paper, identifier, receipt, and URL in
+# this file is fictional. Production builds render records/ and never examples/.
 schema_version: 1
-record_id: 2026-sandoval-ramsey-k7
+record_id: 0000-example-synthetic-ramsey-k7
 record_version: 2
 record_state: active
 
@@ -11,16 +13,16 @@ freshness:
 
 parties:
   author-as:
-    name: "A. Sandoval"
+    name: "Example Author"
     verification_method:
       kind: orcid
-      identifier: "0000-0002-1111-2222"
+      identifier: "0000-0000-0000-0000"
       verified_at: "2026-01-05T00:00:00Z"
   editor-mz:
-    name: "M. Zeitler"
+    name: "Example Editor"
     verification_method:
       kind: github_identity
-      identifier: "mzeitler"
+      identifier: "example-editor"
       verified_at: "2026-01-10T00:00:00Z"
   reviewer-ok:
     pseudonym: "reviewer-ok"
@@ -57,8 +59,8 @@ claim:
         section: "6"
 
 manuscript:
-  url: "https://arxiv.org/abs/2606.01234"
-  label: "Sandoval, 'Ramsey numbers for near-perfect matchings in K_7', arXiv:2606.01234"
+  url: "https://example.org/papers/synthetic-ramsey-k7"
+  label: "Synthetic example paper — not a real publication"
   immutable_version_id: "v2"
   sha256: "8f10a68d54a88afcb6369c01da9ddfb6881d754e5ece210541f8656783692941"
   retrieved_at: "2026-07-28T09:00:00Z"
@@ -66,7 +68,7 @@ manuscript:
 evidence:
   - id: ev-lean-formalization
     kind: formal_artifact
-    repo: "https://github.com/asandoval/ramsey-k7-lean"
+    repo: "https://example.org/repos/synthetic-ramsey-k7-lean"
     commit: "a1b2c3d4e5f60718293a4b5c6d7e8f9a0b1c2d3"
     toolchain:
       name: lean4
@@ -101,7 +103,7 @@ evidence:
 
   - id: ev-prior-partial-result
     kind: external_formal_artifact
-    repo: "https://github.com/other-group/ramsey-partial"
+    repo: "https://example.org/repos/synthetic-ramsey-partial"
     commit: "9f8e7d6c5b4a392817263544352617f8e9d0a1b"
     description: "An independent, unreproduced Coq formalization of the n = 20 special case, reported by its authors in the linked repository's README."
     basis: author_attestation

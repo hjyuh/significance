@@ -17,6 +17,8 @@ from significance.render import build_site, safe_href
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 RECORDS_DIR = REPO_ROOT / "records"
+EXAMPLE_RECORD = REPO_ROOT / "examples" / "synthetic-ramsey-k7.yaml"
+PUBLIC_RECORD_ID = "2026-openai-nonsofic-groups"
 BROKEN_DIR = REPO_ROOT / "tests" / "fixtures" / "broken"
 HOSTILE_DIR = REPO_ROOT / "tests" / "fixtures" / "hostile"
 
@@ -35,13 +37,13 @@ def test_build_produces_index_and_record_page(tmp_path):
     out = tmp_path / "site"
     result = build_site(RECORDS_DIR, out)
 
-    assert "2026-sandoval-ramsey-k7" in result.built
+    assert result.built == [PUBLIC_RECORD_ID]
     assert result.skipped == {}
     assert (out / "index.html").exists()
-    assert (out / "2026-sandoval-ramsey-k7" / "index.html").exists()
+    assert (out / PUBLIC_RECORD_ID / "index.html").exists()
     assert (out / "static" / "style.css").exists()
 
-    record_html = (out / "2026-sandoval-ramsey-k7" / "index.html").read_text(encoding="utf-8")
+    record_html = (out / PUBLIC_RECORD_ID / "index.html").read_text(encoding="utf-8")
     assert all(line == line.rstrip() for line in record_html.splitlines())
     assert "Content-Security-Policy" in record_html
     assert "What this does not establish" in record_html
@@ -56,23 +58,21 @@ def test_build_skips_invalid_records_but_still_builds_valid_ones(tmp_path):
     records_dir = tmp_path / "records"
     records_dir.mkdir()
     (records_dir / "good.yaml").write_text(
-        (RECORDS_DIR / "2026-sandoval-ramsey-k7.yaml").read_text(encoding="utf-8"),
+        EXAMPLE_RECORD.read_text(encoding="utf-8"),
         encoding="utf-8",
     )
-    # missing-manuscript-hash.yaml is derived from the same base example, so
-    # it shares record_id "2026-sandoval-ramsey-k7" with good.yaml above --
-    # give it a distinct id so this test isolates "missing hash", not the
-    # (separately tested) duplicate-record-id case.
+    # Give the broken fixture a distinct id so this test remains focused on
+    # the missing hash rather than cross-record identity.
     bad_text = (BROKEN_DIR / "missing-manuscript-hash.yaml").read_text(encoding="utf-8")
     bad_text = bad_text.replace(
-        "record_id: 2026-sandoval-ramsey-k7", "record_id: 2026-bad-example-record"
+        "record_id: 0000-example-synthetic-ramsey-k7", "record_id: 2026-bad-example-record"
     )
     assert "2026-bad-example-record" in bad_text
     (records_dir / "bad.yaml").write_text(bad_text, encoding="utf-8")
 
     result = build_site(records_dir, tmp_path / "site")
 
-    assert result.built == ["2026-sandoval-ramsey-k7"]
+    assert result.built == ["0000-example-synthetic-ramsey-k7"]
     assert str(records_dir / "bad.yaml") in result.skipped
     assert result.skipped[str(records_dir / "bad.yaml")][0].rule == "missing-manuscript-hash"
 

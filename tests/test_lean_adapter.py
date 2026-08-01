@@ -93,6 +93,8 @@ def test_network_egress_attempt_fails_closed():
     assert result.kind == "external_formal_artifact"
     assert any("egress" in r for r in result.fail_closed_reasons)
     assert result.evidence["kind"] == "external_formal_artifact"
+    assert result.evidence["basis"] == "machine_result"
+    assert result.evidence["asserted_by"] == "significance-ci"
     assert "artifact_build" not in result.evidence  # no build claims for a reported artifact
 
 

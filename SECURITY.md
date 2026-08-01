@@ -133,12 +133,10 @@ job's own copy of the scan.
   the base layer is not guaranteed reproducible byte-for-byte across
   rebuilds the way a hardcoded digest pin would be. Tightening this
   (e.g. a periodic pin-refresh job) is future work.
-- **GitHub Actions pins are by version tag** (`actions/checkout@v4`,
-  `actions/upload-artifact@v4`, `actions/download-artifact@v4`,
-  `peter-evans/create-pull-request@v6`), not by commit SHA. Pinning
-  third-party Actions by SHA is standard supply-chain hardening this
-  repository has not yet done; treat it as a prerequisite for anything
-  beyond a research preview.
+- **Third-party GitHub Actions are pinned to full commit SHAs.** The adjacent
+  comments retain the reviewed major version for readability. Updating an
+  Action requires reviewing and replacing the immutable SHA rather than moving
+  a version tag implicitly.
 - **The dependency-acquisition step (`fetch.sh`) has network access** and
   is not itself resource- or time-limited the way the build step is —
   it runs `git fetch` and `lake update`/`elan toolchain install` against

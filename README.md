@@ -43,7 +43,9 @@ otherwise.
 ## Repository layout
 
 - `schema/` — the record JSON Schema (draft 2020-12) and its changelog.
-- `records/` — example records.
+- `records/` — published, source-inspected claim-state records.
+- `examples/` — explicitly synthetic schema demonstrations; production builds
+  never render this directory.
 - `src/significance/` — the Python package (`cli.py`, `validate.py`,
   `diff.py`, `init.py`, `render.py`, plus `templates/` and `static/` for
   the renderer).

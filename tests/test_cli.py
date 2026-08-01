@@ -9,11 +9,12 @@ from significance.cli import main
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 RECORDS_DIR = REPO_ROOT / "records"
+OPENAI_RECORD = RECORDS_DIR / "2026-openai-nonsofic-groups.yaml"
 BROKEN_DIR = REPO_ROOT / "tests" / "fixtures" / "broken"
 
 
 def test_validate_clean_record_exits_zero(capsys):
-    code = main(["validate", str(RECORDS_DIR / "2026-sandoval-ramsey-k7.yaml")])
+    code = main(["validate", str(OPENAI_RECORD)])
     out = capsys.readouterr().out
     assert code == 0
     assert "OK" in out

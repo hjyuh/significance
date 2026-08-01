@@ -12,7 +12,7 @@ import pytest
 from significance.validate import validate_paths
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-RECORDS_DIR = REPO_ROOT / "records"
+EXAMPLE_RECORD = REPO_ROOT / "examples" / "synthetic-ramsey-k7.yaml"
 BROKEN_DIR = REPO_ROOT / "tests" / "fixtures" / "broken"
 
 
@@ -21,7 +21,7 @@ def _rules(violations):
 
 
 def test_valid_record_has_no_violations():
-    violations = validate_paths([str(RECORDS_DIR / "2026-sandoval-ramsey-k7.yaml")])
+    violations = validate_paths([str(EXAMPLE_RECORD)])
     assert violations == [], "\n".join(str(v) for v in violations)
 
 
@@ -93,7 +93,7 @@ def test_base_as_missing_file_is_ignored_not_crashed():
     # A record with no prior revision (new record) shouldn't error just because
     # --base points at a ref/file that doesn't resolve.
     violations = validate_paths(
-        [str(RECORDS_DIR / "2026-sandoval-ramsey-k7.yaml")],
+        [str(EXAMPLE_RECORD)],
         base=str(BROKEN_DIR / "does-not-exist.yaml"),
     )
     assert violations == []
@@ -112,7 +112,7 @@ def test_base_as_git_ref_with_non_ascii_content_is_clean(tmp_path):
     repo = tmp_path / "scratch-repo"
     records_dir = repo / "records"
     records_dir.mkdir(parents=True)
-    record_text = (RECORDS_DIR / "2026-sandoval-ramsey-k7.yaml").read_text(encoding="utf-8")
+    record_text = EXAMPLE_RECORD.read_text(encoding="utf-8")
     assert "—" in record_text  # confirm the fixture actually has an em dash
     (records_dir / "r.yaml").write_text(record_text, encoding="utf-8")
 

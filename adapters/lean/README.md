@@ -71,5 +71,5 @@ built in. Concretely:
 
 Before trusting this beyond a research preview: run it end-to-end against
 a real adversarial repository on an actual GitHub-hosted runner, and pin
-third-party Actions and the sandbox base image by digest/SHA rather than
-tag (see Known limitations in `SECURITY.md`).
+the sandbox base image by digest rather than tag (third-party Actions are
+already pinned to full commit SHAs; see Known limitations in `SECURITY.md`).

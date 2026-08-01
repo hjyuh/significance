@@ -18,6 +18,8 @@ from significance.records import load_record, load_schema, validator
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 RECORDS_DIR = REPO_ROOT / "records"
+EXAMPLES_DIR = REPO_ROOT / "examples"
+EXAMPLE_RECORD = EXAMPLES_DIR / "synthetic-ramsey-k7.yaml"
 BROKEN_DIR = REPO_ROOT / "tests" / "fixtures" / "broken"
 
 
@@ -31,7 +33,9 @@ def test_schema_forbids_additional_top_level_properties():
 
 
 @pytest.mark.parametrize(
-    "record_path", sorted(RECORDS_DIR.glob("*.yaml")), ids=lambda p: p.name
+    "record_path",
+    sorted(RECORDS_DIR.glob("*.yaml")) + sorted(EXAMPLES_DIR.glob("*.yaml")),
+    ids=lambda p: p.name,
 )
 def test_example_records_are_valid(record_path):
     record = load_record(record_path)
@@ -56,7 +60,7 @@ def _prose_strings(node):
 
 def test_example_record_has_no_forbidden_language():
     # Invariant 1: no rendered/authored prose may assert verified/proven truth.
-    record = load_record(RECORDS_DIR / "2026-sandoval-ramsey-k7.yaml")
+    record = load_record(EXAMPLE_RECORD)
     for prose in _prose_strings(record):
         lowered = prose.lower()
         assert "verified" not in lowered, prose
