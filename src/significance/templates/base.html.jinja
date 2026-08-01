@@ -8,10 +8,16 @@
 <link rel="stylesheet" href="{{ root_prefix }}static/style.css">
 </head>
 <body>
-<header class="site-header"><a href="{{ root_prefix }}index.html">Significance</a></header>
+<header class="topline">
+<a class="wordmark" href="{{ root_prefix }}index.html">SIGNIFICANCE</a>
+<p class="topline-meta">{% block topline_meta %}Claim-state records for AI-assisted mathematics{% endblock %}</p>
+</header>
+<div class="shell{% block shell_class %}{% endblock %}">
 <main>
 {% block content %}{% endblock %}
 </main>
+{% block rail %}{% endblock %}
+</div>
 <footer class="site-footer">
 <p>Significance mechanically validates provenance and a narrow set of evidence predicates. It does not mechanically determine mathematical truth.</p>
 </footer>

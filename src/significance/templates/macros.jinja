@@ -18,13 +18,13 @@
 {%- endif -%}
 {%- endmacro %}
 
-{% macro receipt(r) -%}
-<dl class="receipt">
-  <dt>tool</dt><dd>{{ r.get('tool', '?') }} {{ r.get('tool_version', '') }}</dd>
-  <dt>runner image</dt><dd><code>{{ r.get('runner_image_digest', '?') }}</code></dd>
-  <dt>executed at</dt><dd>{{ r.get('executed_at', '?') }}</dd>
-  <dt>result</dt><dd>{{ r.get('result', '?') }}</dd>
-  <dt>log sha256</dt><dd><code>{{ r.get('log_sha256', '?') }}</code></dd>
-  <dt>asserted by</dt><dd>{{ r.get('asserted_by', '?') }}</dd>
-</dl>
+{# One receipt, one row. `label` names the checked predicate; the result is
+   printed as plain text with no styling of its own, because a receipt
+   result is a fact about an execution, not a verdict on a claim. #}
+{% macro receipt_row(label, r) -%}
+<div class="row"><span class="k">{{ label }}</span><span class="v">{{ r.get('result', '?') }} · {{ r.get('executed_at', '?') }} · log sha256 <code>{{ r.get('log_sha256', '?') }}</code></span></div>
+{%- endmacro %}
+
+{% macro runner_row(r) -%}
+<div class="row"><span class="k">runner</span><span class="v">{{ r.get('tool', '?') }} {{ r.get('tool_version', '') }} · image <code>{{ r.get('runner_image_digest', '?') }}</code> · asserted by {{ r.get('asserted_by', '?') }}</span></div>
 {%- endmacro %}

@@ -7,13 +7,13 @@ export default function Home() {
     <main>
       <header className="masthead">
         <Link className="wordmark" href="/" aria-label="Significance home">
-          Significance<span>.</span>
+          SIGNIFICANCE
         </Link>
         <p>Claim-state records for AI-assisted mathematics</p>
       </header>
 
       <section className="hero">
-        <p className="eyebrow">A public evidence ledger</p>
+        <p className="lbl">A public evidence ledger</p>
         <h1>Know exactly what was claimed—and what remains open.</h1>
         <p className="lede">
           Significance makes mathematical claims, artifacts, interpretations,
@@ -23,19 +23,22 @@ export default function Home() {
       </section>
 
       <section className="records" aria-labelledby="records-heading">
-        <div className="section-heading">
-          <p className="eyebrow">Current records</p>
-          <h2 id="records-heading">One claim, shown honestly</h2>
-        </div>
+        <p className="lbl" id="records-heading">
+          Current records — 1
+        </p>
         <a className="record-card" href={recordPath}>
           <div className="record-topline">
-            <span className="state">Current</span>
-            <span className="date">August 1, 2026</span>
+            <span>2026-openai-nonsofic-groups / v1 / active</span>
+            <span>freshness current · checked 2026-08-01</span>
           </div>
-          <h3>Nonsofic groups exist</h3>
+          <h3>
+            The unit group L_F2(1,2)× of the binary Leavitt algebra is not
+            sofic.
+          </h3>
           <p>
-            OpenAI’s manuscript, public Lean artifact, exact version hashes,
-            provenance, and three scoped invitations for independent work.
+            OpenAI’s official manuscript, public Lean artifact—reported here,
+            not independently reproduced—exact version hashes, provenance, and
+            three scoped invitations for independent work.
           </p>
           <span className="open-record">Open the claim-state record →</span>
         </a>
