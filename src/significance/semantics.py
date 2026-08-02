@@ -106,6 +106,43 @@ def check_freshness_recomputation(record: dict) -> list[Violation]:
     ]
 
 
+_EXECUTION_RECEIPT_KEYS = {
+    "tool", "tool_version", "runner_image_digest", "executed_at",
+    "result", "log_sha256", "asserted_by",
+}
+
+
+def check_execution_receipt_asserted_by_automation(record: dict) -> list[Violation]:
+    """`execution_receipt` is used in three places (evidence_formal_artifact.artifact_build,
+    evidence_formal_artifact.axiom_policy.execution, evidence_computational_reproduction.execution)
+    with no discriminator key, so this detects the shape rather than a `kind` field: any dict
+    carrying every execution_receipt key is treated as one."""
+    parties = record.get("parties") or {}
+    violations = []
+    for path, node in walk(record):
+        if not isinstance(node, dict):
+            continue
+        if not _EXECUTION_RECEIPT_KEYS.issubset(node.keys()):
+            continue
+        party_id = node.get("asserted_by")
+        if not isinstance(party_id, str):
+            continue
+        party = parties.get(party_id)
+        if not isinstance(party, dict):
+            continue  # unknown-party is check_asserted_by_parties's job, not this check's
+        kind = (party.get("verification_method") or {}).get("kind")
+        if kind != "automation":
+            violations.append(
+                Violation(
+                    "execution-receipt-not-automation",
+                    f"execution_receipt asserted_by '{party_id}' has verification_method.kind "
+                    f"{kind!r}, expected 'automation'",
+                    format_path(path + ("asserted_by",)),
+                )
+            )
+    return violations
+
+
 def check_uniqueness(loaded: list[tuple[str, dict]]) -> list[Violation]:
     groups: dict[str, list[str]] = defaultdict(list)
     for file, record in loaded:
@@ -189,4 +226,5 @@ def semantic_violations(record: dict) -> list[Violation]:
         *check_source_quote_locators(record),
         *check_forbidden_language(record),
         *check_freshness_recomputation(record),
+        *check_execution_receipt_asserted_by_automation(record),
     ]
