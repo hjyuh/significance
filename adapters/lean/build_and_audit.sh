@@ -1,7 +1,7 @@
 #!/bin/sh
 # Build + axiom-audit phase: runs with --network none, resource limits, and
 # a read-only root filesystem (see lean-adapter-untrusted-build.yml) --
-# the only writable path is the bind-mounted /workspace/build-out (its
+# the only writable path is the bind-mounted /build-out (its
 # size is polled and enforced by the workflow, not by Docker itself).
 # Source is mounted read-only at /workspace/src; Lake needs a writable
 # project directory to build into, so the first step copies the source
@@ -18,7 +18,7 @@ while [ $# -gt 0 ]; do
   esac
 done
 
-out=/workspace/build-out
+out=/build-out
 log="$out/build.log"
 : > "$log"
 

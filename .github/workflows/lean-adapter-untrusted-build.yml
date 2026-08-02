@@ -129,7 +129,7 @@ jobs:
             --pids-limit "$BUILD_PIDS_LIMIT" \
             --read-only \
             -v "$GITHUB_WORKSPACE/workspace:/workspace:ro" \
-            -v "$GITHUB_WORKSPACE/out:/workspace/build-out" \
+            -v "$GITHUB_WORKSPACE/out:/build-out" \
             -e ALLOWLIST="$INPUT_CUSTOM_ALLOWLIST" \
             sig-lean-sandbox:local \
             /adapter/build_and_audit.sh \

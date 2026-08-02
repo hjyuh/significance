@@ -17,7 +17,7 @@
     "terminated_by_timeout": false
   },
   "filesystem": {
-    "read_only_except": ["/workspace/build-out"],
+    "read_only_except": ["/build-out"],
     "unauthorized_write_attempts": []
   }
 }

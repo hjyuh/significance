@@ -86,7 +86,7 @@ def main(argv: list[str] | None = None) -> int:
             "terminated_by_timeout": terminated_by_timeout,
         },
         "filesystem": {
-            "read_only_except": ["/workspace/build-out"],
+            "read_only_except": ["/build-out"],
             "unauthorized_write_attempts": unauthorized_writes,
         },
     }
