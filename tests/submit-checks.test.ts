@@ -9,8 +9,9 @@ import {
   runIntraRecordChecks,
 } from "../app/submit/intra-record-checks.ts";
 import { buildPrComposeUrl } from "../app/submit/github-link.ts";
-import { recordToYaml } from "../app/submit/build-yaml.ts";
+import { buildRecord, recordToYaml } from "../app/submit/build-yaml.ts";
 import { validateAgainstSchema } from "../app/submit/schema-validate.ts";
+import { emptyWizardState } from "../app/submit/types.ts";
 
 function baseRecord(overrides: Record<string, unknown> = {}) {
   return {
@@ -162,4 +163,30 @@ test("recordToYaml renders actual YAML content (guards against js-yaml's default
 test("validateAgainstSchema returns [] in a plain Node context with no window (SSR-safe by design)", () => {
   assert.equal(typeof window, "undefined");
   assert.deepEqual(validateAgainstSchema({}), []);
+});
+
+test("buildRecord passes ai_provenance.roles through with no locator key when none was given", () => {
+  const state = emptyWizardState();
+  state.aiRoles = [
+    { role: "proof_generation", model: "test-model", basis: "author_attestation", assertedBy: "author-x" },
+  ];
+  const record = buildRecord(state) as { ai_provenance: { roles: Record<string, unknown>[] } };
+  assert.equal(record.ai_provenance.roles.length, 1);
+  assert.equal(record.ai_provenance.roles[0].basis, "author_attestation");
+  assert.ok(!("locator" in record.ai_provenance.roles[0]));
+});
+
+test("buildRecord includes a locator on ai_provenance.roles when one was given", () => {
+  const state = emptyWizardState();
+  state.aiRoles = [
+    {
+      role: "proof_generation",
+      model: "test-model",
+      basis: "author_attestation",
+      assertedBy: "author-x",
+      locator: { url: "https://example.com/correspondence" },
+    },
+  ];
+  const record = buildRecord(state) as { ai_provenance: { roles: Record<string, unknown>[] } };
+  assert.deepEqual(record.ai_provenance.roles[0].locator, { url: "https://example.com/correspondence" });
 });

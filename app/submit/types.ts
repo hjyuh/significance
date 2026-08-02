@@ -62,6 +62,7 @@ export interface AiRoleDraft {
   model: string;
   basis: Basis;
   assertedBy: string;
+  locator?: LocatorDraft;
 }
 
 export interface WizardState {

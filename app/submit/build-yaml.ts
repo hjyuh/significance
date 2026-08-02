@@ -1,8 +1,12 @@
 import { dump } from "js-yaml";
-import type { AttributedDraft, EvidenceDraft, WizardState } from "./types";
+import type { AttributedDraft, EvidenceDraft, LocatorDraft, WizardState } from "./types";
 
 function nowIso(): string {
   return new Date().toISOString();
+}
+
+function hasLocatorValue(locator?: LocatorDraft): boolean {
+  return !!(locator && (locator.section || locator.url || locator.quote));
 }
 
 function attributedValue(draft: AttributedDraft, nowText: string) {
@@ -12,7 +16,7 @@ function attributedValue(draft: AttributedDraft, nowText: string) {
     asserted_by: draft.assertedBy,
     asserted_at: nowText,
   };
-  if (draft.locator && (draft.locator.section || draft.locator.url || draft.locator.quote)) {
+  if (hasLocatorValue(draft.locator)) {
     out.locator = { ...draft.locator };
   }
   return out;
@@ -20,9 +24,7 @@ function attributedValue(draft: AttributedDraft, nowText: string) {
 
 function evidenceItem(draft: EvidenceDraft, nowText: string): Record<string, unknown> {
   const base = { id: draft.id, kind: draft.kind, basis: draft.basis, asserted_by: draft.assertedBy, asserted_at: nowText };
-  const locator = draft.locator && (draft.locator.section || draft.locator.url || draft.locator.quote)
-    ? { locator: { ...draft.locator } }
-    : {};
+  const locator = hasLocatorValue(draft.locator) ? { locator: { ...draft.locator } } : {};
   switch (draft.kind) {
     case "external_formal_artifact":
       return { ...base, repo: draft.repo, ...(draft.commit ? { commit: draft.commit } : {}), description: draft.description, ...locator };
@@ -68,7 +70,13 @@ export function buildRecord(state: WizardState): Record<string, unknown> {
     evidence: state.evidence.map((e) => evidenceItem(e, nowText)),
     ai_provenance: {
       disclosure: attributedValue(state.aiDisclosure, nowText),
-      roles: state.aiRoles.map((r) => ({ role: r.role, model: r.model, basis: r.basis, asserted_by: r.assertedBy })),
+      roles: state.aiRoles.map((r) => ({
+        role: r.role,
+        model: r.model,
+        basis: r.basis,
+        asserted_by: r.assertedBy,
+        ...(hasLocatorValue(r.locator) ? { locator: { ...r.locator } } : {}),
+      })),
     },
     history: [
       { id: "evt-created", type: "created", at: nowText, by: state.submitterPartyId || Object.keys(parties)[0] || "unknown" },

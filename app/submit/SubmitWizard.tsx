@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import type { AttributedDraft, Basis, EvidenceDraft, LocatorDraft, PartyDraft, VerificationKind, WizardState } from "./types";
+import type { AiRoleDraft, AttributedDraft, Basis, EvidenceDraft, LocatorDraft, PartyDraft, VerificationKind, WizardState } from "./types";
 import { AI_PROVENANCE_ROLES, emptyWizardState } from "./types";
 import { buildRecord, recordToYaml } from "./build-yaml";
 import { validateAgainstSchema } from "./schema-validate";
@@ -29,6 +29,41 @@ function hasLocator(l?: LocatorDraft): boolean {
   return !!(l && (l.section || l.url || l.quote));
 }
 
+// Shared by AttributedFields and the ai_provenance.roles fieldset below —
+// same rule everywhere an attributed value can carry basis+locator:
+// source_quote always needs one, and a third-party submitter's
+// author_attestation needs one too.
+function needsLocatorFor(basis: Basis, thirdPartyLocked: boolean): boolean {
+  return basis === "source_quote" || (thirdPartyLocked && basis === "author_attestation");
+}
+
+function LocatorFields({
+  basis, locator, onChange,
+}: {
+  basis: Basis;
+  locator: LocatorDraft | undefined;
+  onChange: (next: LocatorDraft) => void;
+}) {
+  return (
+    <div className="wizard-locator">
+      <p className="wizard-hint">
+        {basis === "source_quote"
+          ? "source_quote requires a locator — where in the source this comes from."
+          : "Recording someone else's author_attestation requires a locator pointing at how they told you — a correspondence link or public statement."}
+      </p>
+      <label>
+        Section <input value={locator?.section ?? ""} onChange={(e) => onChange({ ...locator, section: e.target.value })} />
+      </label>
+      <label>
+        URL <input value={locator?.url ?? ""} onChange={(e) => onChange({ ...locator, url: e.target.value })} />
+      </label>
+      <label>
+        Quote <input value={locator?.quote ?? ""} onChange={(e) => onChange({ ...locator, quote: e.target.value })} />
+      </label>
+    </div>
+  );
+}
+
 function AttributedFields({
   label, draft, onChange, thirdPartyLocked,
 }: {
@@ -37,8 +72,7 @@ function AttributedFields({
   onChange: (next: AttributedDraft) => void;
   thirdPartyLocked: boolean;
 }) {
-  const needsLocator = draft.basis === "source_quote" ||
-    (thirdPartyLocked && draft.basis === "author_attestation");
+  const needsLocator = needsLocatorFor(draft.basis, thirdPartyLocked);
   return (
     <fieldset className="wizard-fieldset">
       <legend>{label}</legend>
@@ -64,22 +98,7 @@ function AttributedFields({
         <input value={draft.assertedBy} onChange={(e) => onChange({ ...draft, assertedBy: e.target.value })} />
       </label>
       {needsLocator ? (
-        <div className="wizard-locator">
-          <p className="wizard-hint">
-            {draft.basis === "source_quote"
-              ? "source_quote requires a locator — where in the source this comes from."
-              : "Recording someone else's author_attestation requires a locator pointing at how they told you — a correspondence link or public statement."}
-          </p>
-          <label>
-            Section <input value={draft.locator?.section ?? ""} onChange={(e) => onChange({ ...draft, locator: { ...draft.locator, section: e.target.value } })} />
-          </label>
-          <label>
-            URL <input value={draft.locator?.url ?? ""} onChange={(e) => onChange({ ...draft, locator: { ...draft.locator, url: e.target.value } })} />
-          </label>
-          <label>
-            Quote <input value={draft.locator?.quote ?? ""} onChange={(e) => onChange({ ...draft, locator: { ...draft.locator, quote: e.target.value } })} />
-          </label>
-        </div>
+        <LocatorFields basis={draft.basis} locator={draft.locator} onChange={(next) => onChange({ ...draft, locator: next })} />
       ) : null}
     </fieldset>
   );
@@ -129,6 +148,10 @@ export default function SubmitWizard() {
     setState((s) => ({ ...s, evidence: s.evidence.filter((_, i) => i !== index) }));
   }
 
+  function updateAiRole(index: number, next: AiRoleDraft) {
+    setState((s) => ({ ...s, aiRoles: s.aiRoles.map((r, i) => (i === index ? next : r)) }));
+  }
+
   async function onManuscriptFilePicked(file: File | null) {
     if (!file) return;
     setHashing(true);
@@ -157,14 +180,16 @@ export default function SubmitWizard() {
   const thirdPartyAttestationGaps = useMemo(() => {
     if (!thirdParty) return [];
     // Only basis/locator matter here, so this is typed as that narrower
-    // shape rather than the full AttributedDraft — EvidenceDraft (via
-    // EvidenceDraftBase) has both fields but isn't otherwise assignable
-    // to AttributedDraft (it has no `value`).
+    // shape rather than the full AttributedDraft — EvidenceDraft and
+    // AiRoleDraft (via EvidenceDraftBase and AiRoleDraft itself) both have
+    // basis/locator but aren't otherwise assignable to AttributedDraft
+    // (neither has `value`).
     const attributedFields: { location: string; draft: Pick<AttributedDraft, "basis" | "locator"> }[] = [
       { location: "claim.text", draft: state.claimText },
       { location: "claim.scope", draft: state.claimScope },
       { location: "ai_provenance.disclosure", draft: state.aiDisclosure },
       ...state.evidence.map((e, i) => ({ location: `evidence[${i}]`, draft: e })),
+      ...state.aiRoles.map((r, i) => ({ location: `ai_provenance.roles[${i}]`, draft: r })),
     ];
     return attributedFields
       .filter((f) => f.draft.basis === "author_attestation" && !hasLocator(f.draft.locator))
@@ -173,7 +198,7 @@ export default function SubmitWizard() {
         location: f.location,
         message: "author_attestation from a third-party submitter needs a locator (a correspondence link or public statement) before this can be exported.",
       }));
-  }, [thirdParty, state.claimText, state.claimScope, state.aiDisclosure, state.evidence]);
+  }, [thirdParty, state.claimText, state.claimScope, state.aiDisclosure, state.evidence, state.aiRoles]);
 
   const canExport = thirdPartyAttestationGaps.length === 0;
 
@@ -293,43 +318,49 @@ export default function SubmitWizard() {
             not typed by hand.
           </p>
 
-          {state.evidence.map((ev, i) => (
-            <fieldset className="wizard-fieldset" key={i}>
-              <legend>{ev.kind} — {ev.id}</legend>
-              <label>Id <input value={ev.id} onChange={(e) => updateEvidence(i, { ...ev, id: e.target.value })} /></label>
-              {ev.kind === "external_formal_artifact" ? (
-                <>
-                  <label>Repo URL <input value={ev.repo} onChange={(e) => updateEvidence(i, { ...ev, repo: e.target.value })} /></label>
-                  <label>Commit (optional) <input value={ev.commit} onChange={(e) => updateEvidence(i, { ...ev, commit: e.target.value })} /></label>
-                  <label>Description <textarea value={ev.description} onChange={(e) => updateEvidence(i, { ...ev, description: e.target.value })} /></label>
-                </>
-              ) : null}
-              {ev.kind === "informal_review" ? (
-                <>
-                  <label>Reviewer (party id) <input value={ev.reviewer} onChange={(e) => updateEvidence(i, { ...ev, reviewer: e.target.value })} /></label>
-                  <label>Text <textarea value={ev.text} onChange={(e) => updateEvidence(i, { ...ev, text: e.target.value })} /></label>
-                </>
-              ) : null}
-              {ev.kind === "mathematical_assessment" ? (
-                <>
-                  <label>Target statement (e.g. &quot;Theorem 1.2&quot;) <input value={ev.target} onChange={(e) => updateEvidence(i, { ...ev, target: e.target.value })} /></label>
-                  <label>Report URL <input value={ev.reportUrl} onChange={(e) => updateEvidence(i, { ...ev, reportUrl: e.target.value })} /></label>
-                  <label>Report inline text <textarea value={ev.reportInline} onChange={(e) => updateEvidence(i, { ...ev, reportInline: e.target.value })} /></label>
-                  {!ev.reportUrl && !ev.reportInline ? (
-                    <p className="wizard-hint wizard-warning">A mathematical_assessment needs at least a report URL or inline text — the schema requires one.</p>
-                  ) : null}
-                </>
-              ) : null}
-              <label>
-                Basis
-                <select value={ev.basis} onChange={(e) => updateEvidence(i, { ...ev, basis: e.target.value as Basis })}>
-                  {BASIS_OPTIONS.map((b) => <option key={b} value={b}>{b}</option>)}
-                </select>
-              </label>
-              <label>Asserted by (party id) <input value={ev.assertedBy} onChange={(e) => updateEvidence(i, { ...ev, assertedBy: e.target.value })} /></label>
-              <button type="button" onClick={() => removeEvidence(i)}>Remove</button>
-            </fieldset>
-          ))}
+          {state.evidence.map((ev, i) => {
+            const needsLocator = needsLocatorFor(ev.basis, thirdParty);
+            return (
+              <fieldset className="wizard-fieldset" key={i}>
+                <legend>{ev.kind} — {ev.id}</legend>
+                <label>Id <input value={ev.id} onChange={(e) => updateEvidence(i, { ...ev, id: e.target.value })} /></label>
+                {ev.kind === "external_formal_artifact" ? (
+                  <>
+                    <label>Repo URL <input value={ev.repo} onChange={(e) => updateEvidence(i, { ...ev, repo: e.target.value })} /></label>
+                    <label>Commit (optional) <input value={ev.commit} onChange={(e) => updateEvidence(i, { ...ev, commit: e.target.value })} /></label>
+                    <label>Description <textarea value={ev.description} onChange={(e) => updateEvidence(i, { ...ev, description: e.target.value })} /></label>
+                  </>
+                ) : null}
+                {ev.kind === "informal_review" ? (
+                  <>
+                    <label>Reviewer (party id) <input value={ev.reviewer} onChange={(e) => updateEvidence(i, { ...ev, reviewer: e.target.value })} /></label>
+                    <label>Text <textarea value={ev.text} onChange={(e) => updateEvidence(i, { ...ev, text: e.target.value })} /></label>
+                  </>
+                ) : null}
+                {ev.kind === "mathematical_assessment" ? (
+                  <>
+                    <label>Target statement (e.g. &quot;Theorem 1.2&quot;) <input value={ev.target} onChange={(e) => updateEvidence(i, { ...ev, target: e.target.value })} /></label>
+                    <label>Report URL <input value={ev.reportUrl} onChange={(e) => updateEvidence(i, { ...ev, reportUrl: e.target.value })} /></label>
+                    <label>Report inline text <textarea value={ev.reportInline} onChange={(e) => updateEvidence(i, { ...ev, reportInline: e.target.value })} /></label>
+                    {!ev.reportUrl && !ev.reportInline ? (
+                      <p className="wizard-hint wizard-warning">A mathematical_assessment needs at least a report URL or inline text — the schema requires one.</p>
+                    ) : null}
+                  </>
+                ) : null}
+                <label>
+                  Basis
+                  <select value={ev.basis} onChange={(e) => updateEvidence(i, { ...ev, basis: e.target.value as Basis })}>
+                    {BASIS_OPTIONS.map((b) => <option key={b} value={b}>{b}</option>)}
+                  </select>
+                </label>
+                <label>Asserted by (party id) <input value={ev.assertedBy} onChange={(e) => updateEvidence(i, { ...ev, assertedBy: e.target.value })} /></label>
+                {needsLocator ? (
+                  <LocatorFields basis={ev.basis} locator={ev.locator} onChange={(next) => updateEvidence(i, { ...ev, locator: next })} />
+                ) : null}
+                <button type="button" onClick={() => removeEvidence(i)}>Remove</button>
+              </fieldset>
+            );
+          })}
         </section>
       ) : null}
 
@@ -337,20 +368,32 @@ export default function SubmitWizard() {
         <section className="wizard-section">
           <h2>AI provenance</h2>
           <AttributedFields label="Disclosure" draft={state.aiDisclosure} onChange={(v) => setState((s) => ({ ...s, aiDisclosure: v }))} thirdPartyLocked={thirdParty} />
-          {state.aiRoles.map((r, i) => (
-            <fieldset className="wizard-fieldset" key={i}>
-              <legend>Role {i + 1}</legend>
-              <label>
-                Role
-                <select value={r.role} onChange={(e) => setState((s) => ({ ...s, aiRoles: s.aiRoles.map((x, j) => (j === i ? { ...x, role: e.target.value } : x)) }))}>
-                  {AI_PROVENANCE_ROLES.map((role) => <option key={role} value={role}>{role}</option>)}
-                </select>
-              </label>
-              <label>Model <input value={r.model} onChange={(e) => setState((s) => ({ ...s, aiRoles: s.aiRoles.map((x, j) => (j === i ? { ...x, model: e.target.value } : x)) }))} /></label>
-              <label>Asserted by <input value={r.assertedBy} onChange={(e) => setState((s) => ({ ...s, aiRoles: s.aiRoles.map((x, j) => (j === i ? { ...x, assertedBy: e.target.value } : x)) }))} /></label>
-              <button type="button" onClick={() => setState((s) => ({ ...s, aiRoles: s.aiRoles.filter((_, j) => j !== i) }))}>Remove</button>
-            </fieldset>
-          ))}
+          {state.aiRoles.map((r, i) => {
+            const needsLocator = needsLocatorFor(r.basis, thirdParty);
+            return (
+              <fieldset className="wizard-fieldset" key={i}>
+                <legend>Role {i + 1}</legend>
+                <label>
+                  Role
+                  <select value={r.role} onChange={(e) => updateAiRole(i, { ...r, role: e.target.value })}>
+                    {AI_PROVENANCE_ROLES.map((role) => <option key={role} value={role}>{role}</option>)}
+                  </select>
+                </label>
+                <label>Model <input value={r.model} onChange={(e) => updateAiRole(i, { ...r, model: e.target.value })} /></label>
+                <label>
+                  Basis
+                  <select value={r.basis} onChange={(e) => updateAiRole(i, { ...r, basis: e.target.value as Basis })}>
+                    {BASIS_OPTIONS.map((b) => <option key={b} value={b}>{b}</option>)}
+                  </select>
+                </label>
+                <label>Asserted by <input value={r.assertedBy} onChange={(e) => updateAiRole(i, { ...r, assertedBy: e.target.value })} /></label>
+                {needsLocator ? (
+                  <LocatorFields basis={r.basis} locator={r.locator} onChange={(next) => updateAiRole(i, { ...r, locator: next })} />
+                ) : null}
+                <button type="button" onClick={() => setState((s) => ({ ...s, aiRoles: s.aiRoles.filter((_, j) => j !== i) }))}>Remove</button>
+              </fieldset>
+            );
+          })}
           <button type="button" onClick={() => setState((s) => ({ ...s, aiRoles: [...s.aiRoles, { role: AI_PROVENANCE_ROLES[0], model: "", basis: "author_attestation", assertedBy: "" }] }))}>
             Add role
           </button>
