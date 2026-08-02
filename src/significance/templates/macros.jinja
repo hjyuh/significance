@@ -1,0 +1,30 @@
+{% macro external_link(url, text=None) -%}
+{%- set safe = url|safe_href -%}
+{%- if safe -%}
+<a href="{{ safe }}">{{ text or url }}</a>
+{%- else -%}
+{{ text or url }}
+{%- endif -%}
+{%- endmacro %}
+
+{% macro attribution(node) -%}
+<span class="attribution">[{{ node.get('basis', '?') }}, asserted by {{ node.get('asserted_by', '?') }}{% if node.get('asserted_at') %} at {{ node.get('asserted_at') }}{% endif %}]</span>
+{%- if node.get('locator') %}
+<span class="locator">
+{%- if node.locator.get('section') %} §{{ node.locator.section }}{% endif -%}
+{%- if node.locator.get('page') %}, p.{{ node.locator.page }}{% endif -%}
+{%- if node.locator.get('quote') %}: "{{ node.locator.quote }}"{% endif -%}
+</span>
+{%- endif -%}
+{%- endmacro %}
+
+{# One receipt, one row. `label` names the checked predicate; the result is
+   printed as plain text with no styling of its own, because a receipt
+   result is a fact about an execution, not a verdict on a claim. #}
+{% macro receipt_row(label, r) -%}
+<div class="row"><span class="k">{{ label }}</span><span class="v">{{ r.get('result', '?') }} · {{ r.get('executed_at', '?') }} · log sha256 <code>{{ r.get('log_sha256', '?') }}</code></span></div>
+{%- endmacro %}
+
+{% macro runner_row(r) -%}
+<div class="row"><span class="k">runner</span><span class="v">{{ r.get('tool', '?') }} {{ r.get('tool_version', '') }} · image <code>{{ r.get('runner_image_digest', '?') }}</code> · asserted by {{ r.get('asserted_by', '?') }}</span></div>
+{%- endmacro %}

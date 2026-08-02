@@ -1,0 +1,4 @@
+A maintainer adds "<commit-sha>.json" here (an attributed correspondence
+claim: {value, basis, asserted_by, asserted_at}) before the trusted-ingest
+workflow will record a submission as formal_artifact evidence. See
+adapters/lean/README.md.

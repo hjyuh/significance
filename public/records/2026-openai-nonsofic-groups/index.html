@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none';">
+<title>2026-openai-nonsofic-groups — Significance</title>
+<link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+<header class="topline">
+<a class="wordmark" href="../index.html">SIGNIFICANCE</a>
+<p class="topline-meta">RECORD 2026-openai-nonsofic-groups / v1 / active / freshness current</p>
+</header>
+<div class="shell with-rail">
+<main>
+<article class="record">
+
+  <div class="band claim-band">
+    <p class="lbl">Claim / source_quote / openai</p>
+    <h1 class="claim-text">The unit group L_F2(1,2)× of the binary Leavitt algebra is not sofic.</h1>
+    <p><span class="attribution">[source_quote, asserted by openai at 2026-08-01T13:53:00Z]</span><span class="locator">, p.78: "Theorem 1.1. The unit group L_F2(1,2)× is not sofic."</span></p>
+  </div>
+
+  <div class="band">
+    <dl class="facts">
+      <dt>Scope</dt>
+      <dd>The manuscript identifies a concrete countable unit group; its public Comparator target separately states existence of a finitely presented non-sofic group. <span class="attribution">[editorial_inference, asserted by significance-editor at 2026-08-01T13:57:00Z]</span></dd>
+      <dt>Excluded</dt>
+      <dd>
+        <div>The manuscript says this result does not determine whether the unit group is hyperlinear. <span class="attribution">[source_quote, asserted by openai at 2026-08-01T13:53:00Z]</span><span class="locator">, p.80: "Theorem 1.1 does not determine whether L_F2(1,2)× is hyperlinear."</span></div>
+      </dd>
+      <dt>Source</dt>
+      <dd>
+        <a href="https://cdn.openai.com/pdf/ten-proofs-oai.pdf">OpenAI, Ten Advances in Mathematics and Theoretical Computer Science</a>
+        <span class="meta"> · official-release-2026-08-01 · retrieved 2026-08-01T14:09:51Z</span>
+        <div class="meta">sha256 <code>f318c6508c9d49ef876a5a26cd73928705f96c07bb43e92a0cb35bd3f666ea53</code></div>
+      </dd>
+    </dl>
+  </div>
+
+  <section class="band">
+    <p class="lbl">Evidence — 1 entry</p>
+    <ol class="ledger">
+      <li class="evidence-card evidence-external_formal_artifact">
+        <div>
+          <div class="evidence-head">
+            <h3>ev-openai-lean-artifact</h3>
+            <span class="kind">external_formal_artifact · no qualifying receipt</span>
+          </div>
+
+          <p class="reported-note">Reported, not reproduced.</p>
+          <p class="prose">OpenAI publishes NonSoficGroup.lean and a Comparator challenge targeting existence of a finitely presented non-sofic group. Significance has not yet attached an independent execution receipt.</p>
+          <p class="meta"><a href="https://github.com/openai/ten-proofs">https://github.com/openai/ten-proofs</a> @ <code>c510a55434c0935cde446e5a372699a4671438f6</code> · <span class="attribution">[source_quote, asserted by openai at 2026-08-01T13:57:00Z]</span><span class="locator"></span></p>
+
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section class="band">
+    <p class="lbl">Digestion — general_mathematician — editorial_inference / significance-editor</p>
+    <p class="digestion-text">The manuscript proposes an explicit boundary for finite-permutation approximation: a concrete group built from the binary Leavitt algebra that is claimed not to admit sofic approximations. The public Lean target records a related existential finite-presentation statement, so correspondence between the concrete and formal claims remains a useful, separate audit task.</p>
+    <p class="lbl">Importance</p>
+    <p class="prose">The announcement describes the result as addressing a central open question in group theory. <span class="attribution">[source_quote, asserted by openai]</span></p>
+  </section>
+
+  <section class="band what-this-does-not-establish">
+    <p class="lbl">What this does not establish</p>
+    <ul>
+      <li>Correspondence between formal and informal statements is attested, not machine-checked.</li>
+      <li>A formalization may omit hypotheses present in the informal statement.</li>
+      <li>The adapter is not a general mathematical verifier — it performs narrow evidence checks.</li>
+    </ul>
+  </section>
+
+</article>
+</main>
+<aside class="rail">
+
+  <div class="band">
+    <p class="lbl">State</p>
+    <dl class="state-list">
+      <div><dt>record_state</dt><dd>active</dd></div>
+      <div><dt>version</dt><dd>v1</dd></div>
+      <div><dt>freshness.result</dt><dd>current</dd></div>
+      <div><dt>observed_version</dt><dd>official-release-2026-08-01</dd></div>
+      <div><dt>confirmed_version</dt><dd>official-release-2026-08-01</dd></div>
+      <div><dt>checked_at</dt><dd>2026-08-01T14:09:51Z</dd></div>
+    </dl>
+  </div>
+
+  <div class="band">
+    <p class="lbl">Open work — 3</p>
+    <p class="lbl-sub">Bounded tasks another person can take.</p>
+    <ul class="invitations">
+      <li>
+        <p class="invitation-kind">reproduction</p>
+        <p class="invitation-target">Reproduce NonSoficGroup at commit c510a55434c0935cde446e5a372699a4671438f6 under Lean 4.32.0 and run its Comparator/Nanoda challenge.</p>
+        <p class="invitation-origin">significance-editor · 2026-08-01T13:57:00Z</p>
+      </li>
+      <li>
+        <p class="invitation-kind">correspondence</p>
+        <p class="invitation-target">Trace the declaration chain between manuscript Theorem 1.1 and the Comparator target exists_finitelyPresented_nonsofic_group.</p>
+        <p class="invitation-origin">significance-editor · 2026-08-01T13:57:00Z</p>
+      </li>
+      <li>
+        <p class="invitation-kind">mathematical review</p>
+        <p class="invitation-target">Assess the expander-matching criterion in Proposition 2.3 or the Thompson-group step in Proposition 3.2, naming the exact artifact revision reviewed.</p>
+        <p class="invitation-origin">significance-editor · 2026-08-01T13:57:00Z</p>
+      </li>
+    </ul>
+  </div>
+
+  <div class="band">
+    <p class="lbl">AI provenance</p>
+    <p class="prose">The results were achieved by an internal version of Astra, our next major model.</p>
+    <p class="meta"><span class="attribution">[source_quote, asserted by openai at 2026-08-01T13:53:00Z]</span><span class="locator">: "The results were achieved by an internal version of Astra, our next major model."</span></p>
+    <ul class="roles">
+      <li><span class="role">proof generation</span><span class="role-meta"> — internal version of Astra · source_quote · openai</span></li>
+      <li><span class="role">formalization</span><span class="role-meta"> — internal version of Astra · source_quote · openai</span></li>
+      <li><span class="role">prose editing</span><span class="role-meta"> — internal version of Astra · source_quote · openai</span></li>
+    </ul>
+  </div>
+
+  <div class="band">
+    <p class="lbl">History — append-only</p>
+    <ul class="history">
+      <li>
+        <span class="event-id">evt-created</span>
+        <span class="event-meta">created · 2026-08-01T13:57:00Z · significance-editor<br>Created from the official OpenAI release, the byte-matched 249-page manuscript, and the public Lean repository.</span>
+      </li>
+    </ul>
+  </div>
+
+</aside>
+</div>
+<footer class="site-footer">
+<p>Significance mechanically validates provenance and a narrow set of evidence predicates. It does not mechanically determine mathematical truth.</p>
+</footer>
+</body>
+</html>

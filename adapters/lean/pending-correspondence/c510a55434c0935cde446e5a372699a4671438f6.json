@@ -1,0 +1,6 @@
+{
+  "value": "OpenAI's formalization metadata identifies ComparatorChallenges/D_NonSoficGroup.json as the configuration for its named main result 'Existence of a finitely presented non-sofic group'. This attests the repository-level association; it does not independently establish full correspondence with the manuscript's concrete Leavitt-algebra statement.",
+  "basis": "author_attestation",
+  "asserted_by": "openai",
+  "asserted_at": "2026-08-01T13:55:58Z"
+}

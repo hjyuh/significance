@@ -1,0 +1,210 @@
+@import "tailwindcss";
+
+/* Ledger styling, shared vocabulary with the rendered record pages in
+   src/significance/static/style.css: monospace scaffolding, one system sans
+   display face, hairline rules, no status colors. */
+
+:root {
+  color-scheme: dark light;
+
+  --bg: #111311;
+  --bg-inset: #0c0e0c;
+  --fg: #dfe2dd;
+  --fg-strong: #ffffff;
+  --fg-body: #eceeeb;
+  --dim: #a8afa6;
+  --muted: #7d857c;
+  --rule: #2b2f2b;
+  --hair: #212521;
+  --edge: #3d4a3f;
+  --note: #9ec4ad;
+
+  --mono: ui-monospace, "SFMono-Regular", "SF Mono", Menlo, Consolas, monospace;
+  --sans: system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f7f7f4;
+    --bg-inset: #eeeeea;
+    --fg: #1d201c;
+    --fg-strong: #000000;
+    --fg-body: #1d201c;
+    --dim: #3f453e;
+    --muted: #6b7269;
+    --rule: #d2d5cd;
+    --hair: #e3e5de;
+    --edge: #a9b6ab;
+    --note: #2c5c44;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { background: var(--bg); }
+
+body {
+  margin: 0;
+  color: var(--fg);
+  background: var(--bg);
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+a { color: inherit; }
+h1, h2, h3, p { text-wrap: pretty; }
+
+main { width: min(1080px, 100%); margin: 0 auto; }
+
+.lbl {
+  margin: 0 0 14px;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.masthead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding: 14px 28px;
+  border-bottom: 1px solid var(--rule);
+  font-size: 11.5px;
+}
+
+.wordmark {
+  color: var(--fg-strong);
+  letter-spacing: 0.14em;
+  text-decoration: none;
+}
+
+.masthead p { margin: 0; color: var(--muted); }
+
+.hero { padding: 64px 28px 60px; border-bottom: 1px solid var(--rule); }
+
+.hero h1 {
+  margin: 0;
+  max-width: 24ch;
+  font-family: var(--sans);
+  font-size: clamp(2.1rem, 5.2vw, 3.9rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--fg-strong);
+}
+
+.lede {
+  max-width: 62ch;
+  margin: 28px 0 0;
+  font-family: var(--sans);
+  font-size: clamp(0.95rem, 1.6vw, 1.1rem);
+  line-height: 1.6;
+  color: var(--dim);
+}
+
+.records { padding: 34px 28px 46px; border-bottom: 1px solid var(--rule); }
+
+.records-list { display: grid; gap: 14px; }
+
+.record-card {
+  display: block;
+  padding: 28px 30px 30px;
+  border: 1px solid var(--rule);
+  background: var(--bg-inset);
+  text-decoration: none;
+}
+
+.record-card:hover { border-color: var(--edge); }
+
+.record-topline {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 16px;
+  color: var(--muted);
+  font-size: 11.5px;
+}
+
+.record-card h3 {
+  margin: 24px 0 12px;
+  font-family: var(--sans);
+  font-size: clamp(1.5rem, 3.4vw, 2.3rem);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--fg-strong);
+}
+
+.record-card p {
+  max-width: 68ch;
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--dim);
+}
+
+.open-record {
+  display: block;
+  margin-top: 22px;
+  padding-top: 12px;
+  border-top: 1px solid var(--rule);
+  color: var(--note);
+  font-size: 12px;
+}
+
+.empty-records { margin: 0; color: var(--muted); }
+
+.principles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-bottom: 1px solid var(--rule);
+}
+
+.principles article { padding: 30px 28px 34px; }
+.principles article + article { border-left: 1px solid var(--rule); }
+.principles span { color: var(--muted); font-size: 11px; letter-spacing: 0.16em; }
+
+.principles h2 {
+  margin: 16px 0 8px;
+  font-family: var(--sans);
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--fg-strong);
+}
+
+.principles p {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--dim);
+}
+
+footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 16px 32px;
+  padding: 22px 28px 40px;
+  color: var(--muted);
+  font-size: 11.5px;
+}
+
+footer p { margin: 0; max-width: 72ch; }
+footer a { color: var(--note); }
+
+@media (max-width: 900px) {
+  .hero { padding: 44px 20px 40px; }
+  .records { padding: 26px 20px 34px; }
+  .record-card { padding: 22px 20px 24px; }
+  .principles { grid-template-columns: 1fr; }
+  .principles article { padding: 24px 20px 26px; }
+  .principles article + article { border-left: 0; border-top: 1px solid var(--rule); }
+  footer { padding: 20px 20px 34px; }
+}

@@ -1,0 +1,174 @@
+name: lean-adapter-trusted-ingest
+
+# Trusted side of the two-workflow privilege separation. This workflow
+# NEVER checks out and NEVER executes anything from the untrusted repo the
+# submission is about: it downloads the untrusted-build workflow's JSON
+# artifacts (not its container, not its code), and separately does its
+# own read-only `git clone` of the pinned commit purely to re-run the
+# kernel-bypass source scan itself rather than trust the untrusted job's
+# self-reported copy of that scan -- no build command is ever run against
+# that clone.
+#
+# workflow_run only ever references workflows already present in this
+# repository, but the explicit repository-full-name check below is a
+# belt-and-suspenders guard against this job ever being invoked in the
+# context of a fork.
+#
+# As in lean-adapter-untrusted-build.yml, every value that flows from a
+# prior step's output is passed through a step-level `env:` and read as a
+# shell variable, not interpolated directly as `${{ ... }}` into `run:`
+# text. `commit` is guaranteed 40-hex-char (validated in the untrusted
+# workflow before it was ever written to metadata.json), but `repo` is a
+# free-form URL, and there's no reason not to apply the same discipline
+# uniformly.
+
+on:
+  workflow_run:
+    workflows: ["lean-adapter-untrusted-build"]
+    types: [completed]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  ingest:
+    if: github.event.workflow_run.repository.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out significance
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Download untrusted build artifacts
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: lean-adapter-result
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: untrusted-result
+        continue-on-error: true
+
+      - name: Read submission metadata and build results
+        id: meta
+        run: |
+          set -euo pipefail
+          if [ ! -f untrusted-result/metadata.json ]; then
+            echo "no metadata.json artifact was produced -- nothing to ingest" >&2
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "skip=false" >> "$GITHUB_OUTPUT"
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+
+          meta = json.load(open("untrusted-result/metadata.json"))
+          for k, v in meta.items():
+              print(f"{k}={v}")
+
+          env = {}
+          try:
+              for line in open("untrusted-result/build-result.env", encoding="utf-8"):
+                  if "=" in line:
+                      k, _, v = line.strip().partition("=")
+                      env[k] = v
+          except FileNotFoundError:
+              pass
+          print(f"allowlist={env.get('allowlist', '')}")
+          print(f"lockfile_hash={env.get('lockfile_hash', '')}")
+          PY
+
+      - name: Re-clone pinned commit (read-only; scanned, never executed)
+        if: steps.meta.outputs.skip != 'true'
+        env:
+          REPO: ${{ steps.meta.outputs.repo }}
+          COMMIT: ${{ steps.meta.outputs.commit }}
+        run: |
+          set -euo pipefail
+          mkdir -p scan-checkout
+          git clone --no-checkout --depth 1 "$REPO" scan-checkout
+          cd scan-checkout
+          git fetch --depth 1 origin "$COMMIT"
+          git checkout -q FETCH_HEAD
+
+      - name: Require a human-authored correspondence file for this commit
+        if: steps.meta.outputs.skip != 'true'
+        env:
+          COMMIT: ${{ steps.meta.outputs.commit }}
+        run: |
+          set -euo pipefail
+          path="adapters/lean/pending-correspondence/$COMMIT.json"
+          if [ ! -f "$path" ]; then
+            echo "::error::No correspondence file at $path. A maintainer must author one" \
+                 "(claiming, with basis author_attestation, that the target Lean declaration" \
+                 "corresponds to a specific informal claim) before this commit can become" \
+                 "formal_artifact evidence -- correspondence is attested, never machine-" \
+                 "generated. See adapters/lean/README.md." >&2
+            exit 1
+          fi
+          echo "CORRESPONDENCE_PATH=$path" >> "$GITHUB_ENV"
+
+      - name: Run trusted ingest (fail-closed decision + kernel-bypass re-scan)
+        if: steps.meta.outputs.skip != 'true'
+        id: ingest
+        env:
+          REPO: ${{ steps.meta.outputs.repo }}
+          COMMIT: ${{ steps.meta.outputs.commit }}
+          TRUST_PROFILE: ${{ steps.meta.outputs.trust_profile }}
+          ALLOWLIST: ${{ steps.meta.outputs.allowlist }}
+          LOCKFILE_HASH: ${{ steps.meta.outputs.lockfile_hash }}
+        run: |
+          set -euo pipefail
+          asserted_at="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          toolchain_pin="$(python3 -c "
+          import json
+          print(json.load(open('untrusted-result/build-receipt.json'))['runner_image_digest'])
+          ")"
+          python3 adapters/lean/run_ingest.py \
+            --evidence-id "ev-lean-$COMMIT" \
+            --repo "$REPO" \
+            --commit "$COMMIT" \
+            --isolation-evidence untrusted-result/isolation-evidence.json \
+            --build-receipt untrusted-result/build-receipt.json \
+            --axiom-execution-receipt untrusted-result/axiom-execution.json \
+            --trust-profile "$TRUST_PROFILE" \
+            --allowlist "$ALLOWLIST" \
+            --allowlist-version "1" \
+            --toolchain-pin "$toolchain_pin" \
+            --lockfile-hash "$LOCKFILE_HASH" \
+            --correspondence "$CORRESPONDENCE_PATH" \
+            --asserted-at "$asserted_at" \
+            --source-root scan-checkout \
+            --out ingest-result.json
+
+      - name: Write the evidence fragment
+        if: steps.meta.outputs.skip != 'true'
+        env:
+          COMMIT: ${{ steps.meta.outputs.commit }}
+        run: |
+          set -euo pipefail
+          mkdir -p evidence-fragments
+          python3 -c "
+          import json, os
+          r = json.load(open('ingest-result.json'))
+          out = f\"evidence-fragments/{os.environ['COMMIT']}.json\"
+          json.dump(r['evidence'], open(out, 'w'), indent=2)
+          print(out)
+          "
+
+      - name: Open a PR proposing the evidence addition
+        if: steps.meta.outputs.skip != 'true'
+        uses: peter-evans/create-pull-request@c5a7806660adbe173f04e3e038b0ccdcd758773c # v6
+        with:
+          add-paths: evidence-fragments/*.json
+          commit-message: "Lean adapter: evidence for ${{ steps.meta.outputs.commit }}"
+          branch: "lean-adapter/${{ steps.meta.outputs.commit }}"
+          title: "Lean evidence for ${{ steps.meta.outputs.repo }}@${{ steps.meta.outputs.commit }}"
+          body: |
+            Machine-proposed evidence fragment from the Lean adapter. This is
+            not committed automatically -- it is a proposal for a maintainer
+            to merge into the target record's `evidence[]` array by hand,
+            after review. See ingest-result.json in the workflow run's
+            artifacts for the full decision (fail-closed reasons and rule
+            violations, if any).
+          labels: lean-adapter

@@ -1,0 +1,37 @@
+{% extends "base.html.jinja" %}
+{% block title %}Significance — records{% endblock %}
+{% block topline_meta %}{{ records|length }} record{{ '' if records|length == 1 else 's' }} · claim-state records for AI-assisted mathematics{% endblock %}
+
+{% block content %}
+<section class="band">
+  <p class="lbl">Records</p>
+  {% if records %}
+  <ul class="records-index">
+    {% for r in records %}
+    <li>
+      <div>
+        <p class="record-claim"><a href="{{ r.record_id }}/index.html">{{ r.claim.text.value }}</a></p>
+        <p class="record-id">{{ r.record_id }} · v{{ r.record_version }} · {{ r.claim.text.get('basis', '?') }} / {{ r.claim.text.get('asserted_by', '?') }}</p>
+      </div>
+      <p class="record-state">
+        <span>{{ r.record_state }}</span>
+        <span>freshness {{ r.get('freshness', {}).get('result', 'unknown') }}</span>
+        <span>{{ r.get('evidence', [])|length }} evidence · {{ r.get('open_invitations', [])|length }} open</span>
+      </p>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="prose">No records built.</p>
+  {% endif %}
+</section>
+
+<section class="band what-this-does-not-establish">
+  <p class="lbl">What a record does not establish</p>
+  <ul>
+    <li>No field or rendered element asserts that a claim is verified, correct, or refuted.</li>
+    <li>Evidence predicates are narrow: schema shape, attribution, execution receipts, append-only history.</li>
+    <li>record_state describes the record, never the standing of the mathematics.</li>
+  </ul>
+</section>
+{% endblock %}
