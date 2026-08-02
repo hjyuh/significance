@@ -8,6 +8,7 @@ import {
   checkExecutionReceiptAssertedByAutomation,
   runIntraRecordChecks,
 } from "../app/submit/intra-record-checks.ts";
+import { buildPrComposeUrl } from "../app/submit/github-link.ts";
 
 function baseRecord(overrides: Record<string, unknown> = {}) {
   return {
@@ -136,4 +137,17 @@ test("checkExecutionReceiptAssertedByAutomation passes when asserted by an autom
 test("runIntraRecordChecks aggregates all five checks", () => {
   const violations = runIntraRecordChecks(baseRecord());
   assert.deepEqual(violations, []);
+});
+
+test("buildPrComposeUrl returns a URL under the length ceiling", () => {
+  const result = buildPrComposeUrl("2026-test-example", "schema_version: 1\n");
+  assert.equal(result.tooLong, false);
+  assert.match(result.url ?? "", /^https:\/\/github\.com\/hjyuh\/significance\/new\/main\?filename=records\/2026-test-example\.yaml&value=/);
+});
+
+test("buildPrComposeUrl refuses an oversized record rather than truncating", () => {
+  const hugeYaml = "x".repeat(10000);
+  const result = buildPrComposeUrl("2026-test-example", hugeYaml);
+  assert.equal(result.url, null);
+  assert.equal(result.tooLong, true);
 });
