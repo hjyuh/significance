@@ -105,7 +105,7 @@ def _scaffold_parties(prompt_fn) -> dict:
         name = _ask(prompt_fn, f"  {name_key}")
         vm_kind = _ask_choice(
             prompt_fn, "  verification method",
-            ["github_identity", "orcid", "email_confirmation", "pseudonymous"],
+            ["github_identity", "orcid", "email_confirmation", "pseudonymous", "automation"],
         )
         identifier = _ask(prompt_fn, "  verification identifier", default="", required=False)
         vm = {"kind": vm_kind}

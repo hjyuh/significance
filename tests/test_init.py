@@ -64,6 +64,14 @@ def test_scaffold_record_produces_schema_valid_record():
     assert record["ai_provenance"]["roles"] == []
 
 
+def test_scaffold_accepts_automation_verification_kind():
+    answers = list(_ANSWERS)
+    # index 4 is the first party's verification method in _ANSWERS
+    answers[4] = "automation"
+    record = scaffold_record(_canned_prompt(answers))
+    assert record["parties"]["author-x"]["verification_method"]["kind"] == "automation"
+
+
 def test_write_record_round_trips(tmp_path):
     record = scaffold_record(_canned_prompt(_ANSWERS))
     records_dir = tmp_path / "records"
