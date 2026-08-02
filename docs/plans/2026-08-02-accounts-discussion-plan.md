@@ -233,9 +233,16 @@ export default {
   schema: "./db/schema.ts",
   out: "./drizzle",
   dialect: "sqlite",
-  driver: "d1-http",
 } satisfies Config;
 ```
+
+**Do not add `driver: "d1-http"`.** In drizzle-kit's types
+(`node_modules/drizzle-kit/index.d.mts:188-194`) that variant is a
+discriminated-union member which also *mandates*
+`dbCredentials: { accountId, databaseId, token }`, so the config would
+fail to type-check. `driver` gates remote operations (`push`, `studio`,
+`migrate`); `generate` needs only `schema`, `out`, and `dialect`, and
+requires no credentials.
 
 **Step 5: Verify the long-standing tsc error is gone**
 
