@@ -8,6 +8,7 @@ import { buildRecord, recordToYaml } from "./build-yaml";
 import { validateAgainstSchema } from "./schema-validate";
 import { runIntraRecordChecks } from "./intra-record-checks";
 import { buildMailtoUrl, buildPrComposeUrl, triggerYamlDownload } from "./github-link";
+import { computeThirdPartyAttestationGaps } from "./attestation-gaps";
 
 const STEPS = ["role", "claim", "manuscript", "parties", "evidence", "provenance", "review"] as const;
 type Step = (typeof STEPS)[number];
@@ -23,10 +24,6 @@ async function sha256OfFile(file: File): Promise<string> {
   const buf = await file.arrayBuffer();
   const digest = await crypto.subtle.digest("SHA-256", buf);
   return Array.from(new Uint8Array(digest)).map((b) => b.toString(16).padStart(2, "0")).join("");
-}
-
-function hasLocator(l?: LocatorDraft): boolean {
-  return !!(l && (l.section || l.url || l.quote));
 }
 
 // Shared by AttributedFields and the ai_provenance.roles fieldset below —
@@ -172,33 +169,10 @@ export default function SubmitWizard() {
   const intraRecordViolations = useMemo(() => runIntraRecordChecks(record), [record]);
   const prCompose = useMemo(() => buildPrComposeUrl(state.recordId, yamlText), [state.recordId, yamlText]);
 
-  // Wizard-only enforcement of the design's core consent mechanism: a
-  // third-party submitter must not be able to export an unlocated
-  // author_attestation. This can't live in intra-record-checks.ts because
-  // it needs state.submitterRole, which isn't part of the assembled
-  // record — the record has no notion of "who is submitting this PR."
-  const thirdPartyAttestationGaps = useMemo(() => {
-    if (!thirdParty) return [];
-    // Only basis/locator matter here, so this is typed as that narrower
-    // shape rather than the full AttributedDraft — EvidenceDraft and
-    // AiRoleDraft (via EvidenceDraftBase and AiRoleDraft itself) both have
-    // basis/locator but aren't otherwise assignable to AttributedDraft
-    // (neither has `value`).
-    const attributedFields: { location: string; draft: Pick<AttributedDraft, "basis" | "locator"> }[] = [
-      { location: "claim.text", draft: state.claimText },
-      { location: "claim.scope", draft: state.claimScope },
-      { location: "ai_provenance.disclosure", draft: state.aiDisclosure },
-      ...state.evidence.map((e, i) => ({ location: `evidence[${i}]`, draft: e })),
-      ...state.aiRoles.map((r, i) => ({ location: `ai_provenance.roles[${i}]`, draft: r })),
-    ];
-    return attributedFields
-      .filter((f) => f.draft.basis === "author_attestation" && !hasLocator(f.draft.locator))
-      .map((f) => ({
-        rule: "third-party-attestation-missing-locator",
-        location: f.location,
-        message: "author_attestation from a third-party submitter needs a locator (a correspondence link or public statement) before this can be exported.",
-      }));
-  }, [thirdParty, state.claimText, state.claimScope, state.aiDisclosure, state.evidence, state.aiRoles]);
+  const thirdPartyAttestationGaps = useMemo(
+    () => computeThirdPartyAttestationGaps(state, thirdParty),
+    [state, thirdParty]
+  );
 
   const canExport = thirdPartyAttestationGaps.length === 0;
 

@@ -12,6 +12,7 @@ import { buildPrComposeUrl } from "../app/submit/github-link.ts";
 import { buildRecord, recordToYaml } from "../app/submit/build-yaml.ts";
 import { validateAgainstSchema } from "../app/submit/schema-validate.ts";
 import { emptyWizardState } from "../app/submit/types.ts";
+import { computeThirdPartyAttestationGaps } from "../app/submit/attestation-gaps.ts";
 
 function baseRecord(overrides: Record<string, unknown> = {}) {
   return {
@@ -189,4 +190,62 @@ test("buildRecord includes a locator on ai_provenance.roles when one was given",
   ];
   const record = buildRecord(state) as { ai_provenance: { roles: Record<string, unknown>[] } };
   assert.deepEqual(record.ai_provenance.roles[0].locator, { url: "https://example.com/correspondence" });
+});
+
+test("computeThirdPartyAttestationGaps flags third-party claim.text author_attestation with no locator", () => {
+  const state = emptyWizardState();
+  state.claimText = { value: "x", basis: "author_attestation", assertedBy: "author-x" };
+  const gaps = computeThirdPartyAttestationGaps(state, true);
+  assert.equal(gaps.length, 1);
+  assert.equal(gaps[0].location, "claim.text");
+  assert.equal(gaps[0].rule, "third-party-attestation-missing-locator");
+});
+
+test("computeThirdPartyAttestationGaps passes third-party claim.text author_attestation with a locator", () => {
+  const state = emptyWizardState();
+  state.claimText = {
+    value: "x", basis: "author_attestation", assertedBy: "author-x",
+    locator: { url: "https://example.com/correspondence" },
+  };
+  assert.deepEqual(computeThirdPartyAttestationGaps(state, true), []);
+});
+
+test("computeThirdPartyAttestationGaps flags a third-party evidence item's author_attestation with no locator", () => {
+  const state = emptyWizardState();
+  state.evidence = [
+    { id: "ev-1", kind: "informal_review", basis: "author_attestation", assertedBy: "author-x", reviewer: "r", text: "t" },
+  ];
+  const gaps = computeThirdPartyAttestationGaps(state, true);
+  assert.equal(gaps.length, 1);
+  assert.equal(gaps[0].location, "evidence[0]");
+});
+
+test("computeThirdPartyAttestationGaps flags a third-party AI role's author_attestation with no locator", () => {
+  const state = emptyWizardState();
+  state.aiRoles = [
+    { role: "proof_generation", model: "m", basis: "author_attestation", assertedBy: "author-x" },
+  ];
+  const gaps = computeThirdPartyAttestationGaps(state, true);
+  assert.equal(gaps.length, 1);
+  assert.equal(gaps[0].location, "ai_provenance.roles[0]");
+});
+
+test("computeThirdPartyAttestationGaps is a no-op on the author path, even with unlocated author_attestation everywhere", () => {
+  const state = emptyWizardState();
+  state.claimText = { value: "x", basis: "author_attestation", assertedBy: "author-x" };
+  state.claimScope = { value: "x", basis: "author_attestation", assertedBy: "author-x" };
+  state.aiDisclosure = { value: "x", basis: "author_attestation", assertedBy: "author-x" };
+  state.evidence = [
+    { id: "ev-1", kind: "informal_review", basis: "author_attestation", assertedBy: "author-x", reviewer: "r", text: "t" },
+  ];
+  state.aiRoles = [
+    { role: "proof_generation", model: "m", basis: "author_attestation", assertedBy: "author-x" },
+  ];
+  assert.deepEqual(computeThirdPartyAttestationGaps(state, false), []);
+});
+
+test("computeThirdPartyAttestationGaps does not flag source_quote — that's checkSourceQuoteLocators's job", () => {
+  const state = emptyWizardState();
+  state.claimText = { value: "x", basis: "source_quote", assertedBy: "author-x" };
+  assert.deepEqual(computeThirdPartyAttestationGaps(state, true), []);
 });

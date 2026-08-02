@@ -1,12 +1,9 @@
 import { dump } from "js-yaml";
-import type { AttributedDraft, EvidenceDraft, LocatorDraft, WizardState } from "./types";
+import type { AttributedDraft, EvidenceDraft, WizardState } from "./types";
+import { hasLocatorValue } from "./types";
 
 function nowIso(): string {
   return new Date().toISOString();
-}
-
-function hasLocatorValue(locator?: LocatorDraft): boolean {
-  return !!(locator && (locator.section || locator.url || locator.quote));
 }
 
 function attributedValue(draft: AttributedDraft, nowText: string) {

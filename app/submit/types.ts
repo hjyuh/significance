@@ -13,6 +13,16 @@ export interface LocatorDraft {
   quote?: string;
 }
 
+// Shared by every place a draft-level basis+locator pair needs checking
+// (SubmitWizard.tsx's per-field locator gating, build-yaml.ts's
+// locator-inclusion-on-export logic, and the attestation-gap scan). Not
+// the same thing as intra-record-checks.ts's own hasLocator, which checks
+// post-assembly dict truthiness on the built record — different input
+// shape, different job, deliberately not unified with this one.
+export function hasLocatorValue(locator: LocatorDraft | undefined): boolean {
+  return !!(locator && (locator.section || locator.url || locator.quote));
+}
+
 export interface AttributedDraft {
   value: string;
   basis: Basis;
