@@ -36,6 +36,13 @@ on:
       target_declaration:
         description: "Fully-qualified Lean declaration name the axiom audit runs #print axioms against"
         required: true
+      target_module:
+        description: "Lean module imported before #print axioms (for example NonSoficGroup)"
+        required: true
+      build_target:
+        description: "Lake target to build; defaults to target_module"
+        required: false
+        default: ""
       custom_allowlist:
         description: "Comma-separated axiom allowlist, used only when trust_profile is 'custom'"
         required: false
@@ -57,6 +64,8 @@ env:
   INPUT_COMMIT: ${{ github.event.inputs.commit }}
   INPUT_TRUST_PROFILE: ${{ github.event.inputs.trust_profile }}
   INPUT_TARGET_DECLARATION: ${{ github.event.inputs.target_declaration }}
+  INPUT_TARGET_MODULE: ${{ github.event.inputs.target_module }}
+  INPUT_BUILD_TARGET: ${{ github.event.inputs.build_target }}
   INPUT_CUSTOM_ALLOWLIST: ${{ github.event.inputs.custom_allowlist }}
 
 jobs:
@@ -142,7 +151,9 @@ jobs:
             sig-lean-sandbox:local \
             /adapter/build_and_audit.sh \
               --trust-profile "$INPUT_TRUST_PROFILE" \
-              --target "$INPUT_TARGET_DECLARATION"
+              --target "$INPUT_TARGET_DECLARATION" \
+              --module "$INPUT_TARGET_MODULE" \
+              --build-target "${INPUT_BUILD_TARGET:-$INPUT_TARGET_MODULE}"
 
           terminated_by_timeout=false
           disk_violation=false
@@ -202,6 +213,8 @@ jobs:
                   'commit': os.environ['INPUT_COMMIT'],
                   'trust_profile': os.environ['INPUT_TRUST_PROFILE'],
                   'target_declaration': os.environ['INPUT_TARGET_DECLARATION'],
+                  'target_module': os.environ['INPUT_TARGET_MODULE'],
+                  'build_target': os.environ.get('INPUT_BUILD_TARGET') or os.environ['INPUT_TARGET_MODULE'],
               },
               open('out/metadata.json', 'w'),
               indent=2,

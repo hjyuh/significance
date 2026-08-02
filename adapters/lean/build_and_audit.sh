@@ -10,10 +10,14 @@ set -eu
 
 trust_profile="lean_standard_classical"
 target=""
+target_module=""
+build_target=""
 while [ $# -gt 0 ]; do
   case "$1" in
     --trust-profile) trust_profile="$2"; shift 2 ;;
     --target) target="$2"; shift 2 ;;
+    --module) target_module="$2"; shift 2 ;;
+    --build-target) build_target="$2"; shift 2 ;;
     *) echo "unknown argument: $1" >&2; exit 1 ;;
   esac
 done
@@ -39,12 +43,21 @@ esac
 executed_at="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 echo "executed_at=$executed_at" > "$out/build-result.env"
 
-cp -r /workspace/src "$out/src"
+# Keep dependency sources and downloaded Mathlib caches on the read-only
+# acquisition mount. Only the submitted project and its own build products
+# are copied into the writable output area. If a dependency cache is missing
+# and Lake tries to mutate a dependency, the read-only mount fails closed.
+mkdir -p "$out/src"
+tar -C /workspace/src --exclude='./.git' --exclude='./.lake' -cf "$out/source.tar" .
+tar -C "$out/src" -xf "$out/source.tar"
+rm "$out/source.tar"
+mkdir -p "$out/src/.lake"
+ln -s /workspace/src/.lake/packages "$out/src/.lake/packages"
 cd "$out/src"
 
-echo "== lake build =="
+echo "== lake build $build_target =="
 build_result=passed
-if ! lake build; then
+if ! lake build "$build_target"; then
   build_result=failed
 fi
 echo "build_result=$build_result" >> "$out/build-result.env"
@@ -54,8 +67,8 @@ if [ "$build_result" = passed ]; then
   if [ -z "$target" ]; then
     echo "no --target declaration given; cannot run an axiom audit"
   else
-    echo "== #print axioms $target =="
-    printf '#print axioms %s\n' "$target" > "$out/AxiomCheck.lean"
+    echo "== import $target_module; #print axioms $target =="
+    printf 'import %s\n#print axioms %s\n' "$target_module" "$target" > "$out/AxiomCheck.lean"
     if lake env lean "$out/AxiomCheck.lean" > "$out/axiom-output.txt" 2>&1; then
       cat "$out/axiom-output.txt"
       # `#print axioms` prints either "'decl' does not depend on any axioms"
