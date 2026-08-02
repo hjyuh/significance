@@ -51,6 +51,48 @@ of failure:
 
 ---
 
+## Task 1 findings (spike complete — read before Task 2)
+
+The gate passed: D1 is confirmed working locally. Three findings
+correct this plan as originally written.
+
+**1. `env` does not arrive via the Worker entry.** `worker/index.ts`
+receives `env` and vinext discards it — `app-router-entry` uses it only
+for the `ASSETS` static-asset fallback and threads only `ctx`
+downstream. The working access pattern, documented in
+`node_modules/vinext/README.md:230-259`, is:
+
+```ts
+import { env } from "cloudflare:workers";
+```
+
+valid in any server component, route handler, or server action. No
+custom worker entry and no `getPlatformProxy()` needed. Confirmed to
+survive `vinext build` as an externalized bare import, so it is safe in
+the production path, not just dev.
+
+**2. Underscore-prefixed route directories 404.** `app/api/_spike/` was
+unreachable — Next/vinext treat `_`-prefixed folders as private folders
+opted out of routing. `app/api/spike/` worked immediately. No API route
+in this feature may use that prefix.
+
+**3. The binding config works verbatim.** The `d1_databases` entry in
+`localBindingConfig` needs no `wrangler.toml`, no `compatibility_date`,
+and no change to `worker/index.ts`. Note that in the RSC environment
+`Object.keys(env)` is `["DB"]` — `ASSETS` is not present there.
+
+**Still unknown: production.** Nothing in the repo corroborates that the
+Sites platform provisions D1, what it names the binding, or whether it
+applies `dist/.openai/drizzle/` migrations. `build/sites-vite-plugin.ts`
+is project-authored with no platform documentation behind it, CI has no
+deploy step, and there is no Sites SDK in `node_modules`. Consequences
+for this plan: keep the binding name in exactly one place (`db/client.ts`)
+so a rename is a one-line change, and do not build anything that
+*requires* auto-applied production migrations until a real deploy
+confirms the behaviour.
+
+---
+
 ## Baseline
 
 Before Task 1, confirm a green starting point:
@@ -158,31 +200,27 @@ npm install -D drizzle-kit
 Apply the same `d1_databases` change to `vite.config.ts` as in Task 1
 Step 1 — this time keeping it.
 
-**Step 3: Declare it on the Worker's Env**
+**Step 3: Install Cloudflare types (do NOT extend the Worker's Env)**
 
-In `worker/index.ts`, extend the interface (currently lines 4-6):
+Task 1 established that vinext discards the Worker's `env`, so adding
+`DB` to `worker/index.ts`'s `Env` interface would be dead code implying
+an access path that does not work. Leave that interface alone.
 
-```ts
-interface Env {
-  ASSETS: Fetcher;
-  DB: D1Database;
-}
-```
-
-`D1Database` comes from `@cloudflare/workers-types`. Note that
-`worker/index.ts:5` already has a pre-existing `Cannot find name
-'Fetcher'` type error for exactly this reason — the types package isn't
-installed. Fix that now:
+What is still needed is the types package, which fixes the
+long-standing `worker/index.ts:5: Cannot find name 'Fetcher'` error:
 
 ```sh
 npm install -D @cloudflare/workers-types
 ```
 
-and add to `tsconfig.json`'s `compilerOptions`:
+and in `tsconfig.json`'s `compilerOptions`:
 
 ```json
 "types": ["@cloudflare/workers-types"]
 ```
+
+This also supplies the `D1Database` type that `db/client.ts` will need
+in Task 6.
 
 **Step 4: Drizzle config**
 
@@ -547,8 +585,13 @@ access actually work in this framework, which Task 1 determines. Expand
 each into concrete steps once Task 1 has reported.
 
 ## Task 6: Database client helper
-`db/client.ts` — wraps `drizzle(env.DB, { schema })`, one place that
-knows how to turn a Worker `Env` into a typed Drizzle instance.
+`db/client.ts` — the single place that does
+`import { env } from "cloudflare:workers"`, reads the `DB` binding, and
+returns `drizzle(env.DB, { schema })`. Isolating both the env-access
+mechanism and the binding name here is what makes the unresolved
+production question (Task 1 findings) a one-line fix rather than a
+sweep. Nothing else in the codebase should import from
+`cloudflare:workers` directly.
 
 ## Task 7: Input validation (TDD)
 `db/validate.ts` — username rules (length, allowed characters,
