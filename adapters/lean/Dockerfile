@@ -31,11 +31,12 @@ RUN curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-ini
     && rm /tmp/elan-init.sh
 ENV PATH="/root/.elan/bin:${PATH}"
 
-# This mountpoint is populated during the networked acquisition phase and
-# mounted read-only into the later no-network build container. Creating it
-# in the image is required because the build container's root filesystem is
-# read-only and Docker must not need to create a nested mountpoint at start.
-RUN mkdir -p /root/.elan/toolchains
+# This alternate Elan home is populated during the networked acquisition
+# phase and mounted read-only into the later no-network build container.
+# It carries both the installed toolchain and Elan's settings; persisting
+# only `toolchains/` makes Elan try to create settings under the read-only
+# `/root`. The proxy binaries remain in /root/.elan/bin via PATH.
+RUN mkdir -p /elan-home
 
 COPY fetch.sh build_and_audit.sh /adapter/
 RUN chmod +x /adapter/fetch.sh /adapter/build_and_audit.sh

@@ -84,10 +84,11 @@ jobs:
       - name: Fetch target repo + Lean toolchain (network - dependency acquisition only)
         run: |
           set -euo pipefail
-          mkdir -p workspace workspace/elan-toolchains
+          mkdir -p workspace workspace/elan-home
           docker run --rm \
             -v "$GITHUB_WORKSPACE/workspace:/workspace" \
-            -v "$GITHUB_WORKSPACE/workspace/elan-toolchains:/root/.elan/toolchains" \
+            -v "$GITHUB_WORKSPACE/workspace/elan-home:/elan-home" \
+            -e ELAN_HOME=/elan-home \
             sig-lean-sandbox:local \
             /adapter/fetch.sh "$INPUT_REPO" "$INPUT_COMMIT"
 
@@ -134,8 +135,9 @@ jobs:
             --pids-limit "$BUILD_PIDS_LIMIT" \
             --read-only \
             -v "$GITHUB_WORKSPACE/workspace:/workspace:ro" \
-            -v "$GITHUB_WORKSPACE/workspace/elan-toolchains:/root/.elan/toolchains:ro" \
+            -v "$GITHUB_WORKSPACE/workspace/elan-home:/elan-home:ro" \
             -v "$GITHUB_WORKSPACE/out:/build-out" \
+            -e ELAN_HOME=/elan-home \
             -e ALLOWLIST="$INPUT_CUSTOM_ALLOWLIST" \
             sig-lean-sandbox:local \
             /adapter/build_and_audit.sh \
