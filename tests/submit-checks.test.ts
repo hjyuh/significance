@@ -9,6 +9,8 @@ import {
   runIntraRecordChecks,
 } from "../app/submit/intra-record-checks.ts";
 import { buildPrComposeUrl } from "../app/submit/github-link.ts";
+import { recordToYaml } from "../app/submit/build-yaml.ts";
+import { validateAgainstSchema } from "../app/submit/schema-validate.ts";
 
 function baseRecord(overrides: Record<string, unknown> = {}) {
   return {
@@ -150,4 +152,14 @@ test("buildPrComposeUrl refuses an oversized record rather than truncating", () 
   const result = buildPrComposeUrl("2026-test-example", hugeYaml);
   assert.equal(result.url, null);
   assert.equal(result.tooLong, true);
+});
+
+test("recordToYaml renders actual YAML content (guards against js-yaml's default-export trap)", () => {
+  const result = recordToYaml({ a: 1 });
+  assert.match(result, /a: 1/);
+});
+
+test("validateAgainstSchema returns [] in a plain Node context with no window (SSR-safe by design)", () => {
+  assert.equal(typeof window, "undefined");
+  assert.deepEqual(validateAgainstSchema({}), []);
 });
