@@ -1,6 +1,6 @@
 schema_version: 1
 record_id: 2026-openai-nonsofic-groups
-record_version: 1
+record_version: 2
 record_state: active
 
 freshness:
@@ -24,6 +24,11 @@ parties:
     verification_method:
       kind: pseudonymous
       identifier: "significance-project"
+  significance-ci:
+    name: "Significance CI"
+    verification_method:
+      kind: automation
+      identifier: "github-actions:hjyuh/significance"
 
 claim:
   id: claim-main
@@ -67,6 +72,43 @@ evidence:
     asserted_at: "2026-08-01T13:57:00Z"
     locator:
       url: "https://github.com/openai/ten-proofs/tree/c510a55434c0935cde446e5a372699a4671438f6"
+
+  - id: ev-lean-c510a55434c0935cde446e5a372699a4671438f6
+    kind: formal_artifact
+    repo: "https://github.com/openai/ten-proofs"
+    commit: "c510a55434c0935cde446e5a372699a4671438f6"
+    toolchain:
+      name: lean4
+      pin_kind: digest
+      pin: "sha256:e18db1519e04134512c50930c1ea4d4c9b339b37f4939e287b4e22dd752624a6"
+    lockfile_hash: "a6faf8302fe77f77f499446c27b8829b1af8dbc7847298b682556baa2a0b135e"
+    artifact_build:
+      tool: significance-lean
+      tool_version: "0.1.0"
+      runner_image_digest: "sha256:e18db1519e04134512c50930c1ea4d4c9b339b37f4939e287b4e22dd752624a6"
+      executed_at: "2026-08-02T02:46:07Z"
+      log_sha256: "d0eb06613908791427cfbbac2027dfcb88286a79abc917b6acebfb8b95819ed3"
+      asserted_by: significance-ci
+      result: passed
+    axiom_policy:
+      trust_profile: lean_standard_classical
+      allowlist: [propext, Classical.choice, Quot.sound]
+      allowlist_version: "1"
+      execution:
+        tool: significance-lean
+        tool_version: "0.1.0"
+        runner_image_digest: "sha256:e18db1519e04134512c50930c1ea4d4c9b339b37f4939e287b4e22dd752624a6"
+        executed_at: "2026-08-02T02:46:07Z"
+        log_sha256: "d0eb06613908791427cfbbac2027dfcb88286a79abc917b6acebfb8b95819ed3"
+        asserted_by: significance-ci
+        result: passed
+    correspondence:
+      value: "At the pinned commit, ComparatorChallenges/D_NonSoficGroup.json maps solution module NonSoficGroup to SoficGroups.SourceTopLevelCompressionFinal.exists_finitelyPresented_nonsofic_group. This identifies the declaration the repository asks Comparator to check; it does not independently establish correspondence with the manuscript's concrete Leavitt-algebra theorem."
+      basis: editorial_inference
+      asserted_by: significance-editor
+      asserted_at: "2026-08-02T19:33:28Z"
+      locator:
+        url: "https://github.com/openai/ten-proofs/blob/c510a55434c0935cde446e5a372699a4671438f6/ComparatorChallenges/D_NonSoficGroup.json"
 
 ai_provenance:
   disclosure:
@@ -132,3 +174,8 @@ history:
     at: "2026-08-01T13:57:00Z"
     by: significance-editor
     note: "Created from the official OpenAI release, the byte-matched 249-page manuscript, and the public Lean repository."
+  - id: evt-lean-reproduced
+    type: evidence_added
+    at: "2026-08-02T19:33:28Z"
+    by: significance-editor
+    note: "Added the independent Significance CI build and axiom-policy receipts from the maiden Lean adapter run; the earlier reported-artifact entry is retained as history."

@@ -1,5 +1,5 @@
 const REPO_URL = "https://github.com/hjyuh/significance";
-// GitHub's /new/ compose endpoint has no documented hard limit, but very
+// GitHub's /new/ file-editor endpoint has no documented hard limit, but very
 // long query strings silently fail or get truncated by browsers/proxies
 // well before typical URL-length ceilings (~8k chars). 6000 leaves margin.
 const PR_COMPOSE_LENGTH_CEILING = 6000;

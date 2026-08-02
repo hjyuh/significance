@@ -32,7 +32,11 @@ function formatPath(path: (string | number)[]): string {
   const parts: string[] = [];
   for (const p of path) {
     if (typeof p === "number") {
-      parts.length ? (parts[parts.length - 1] += `[${p}]`) : parts.push(`[${p}]`);
+      if (parts.length) {
+        parts[parts.length - 1] += `[${p}]`;
+      } else {
+        parts.push(`[${p}]`);
+      }
     } else {
       parts.push(p);
     }

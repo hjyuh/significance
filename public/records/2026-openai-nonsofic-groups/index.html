@@ -10,7 +10,7 @@
 <body>
 <header class="topline">
 <a class="wordmark" href="../index.html">SIGNIFICANCE</a>
-<p class="topline-meta">RECORD 2026-openai-nonsofic-groups / v1 / active / freshness current</p>
+<p class="topline-meta">RECORD 2026-openai-nonsofic-groups / v2 / active / freshness current</p>
 </header>
 <div class="shell with-rail">
 <main>
@@ -40,7 +40,7 @@
   </div>
 
   <section class="band">
-    <p class="lbl">Evidence — 1 entry</p>
+    <p class="lbl">Evidence — 2 entries</p>
     <ol class="ledger">
       <li class="evidence-card evidence-external_formal_artifact">
         <div>
@@ -52,6 +52,34 @@
           <p class="reported-note">Reported, not reproduced.</p>
           <p class="prose">OpenAI publishes NonSoficGroup.lean and a Comparator challenge targeting existence of a finitely presented non-sofic group. Significance has not yet attached an independent execution receipt.</p>
           <p class="meta"><a href="https://github.com/openai/ten-proofs">https://github.com/openai/ten-proofs</a> @ <code>c510a55434c0935cde446e5a372699a4671438f6</code> · <span class="attribution">[source_quote, asserted by openai at 2026-08-01T13:57:00Z]</span><span class="locator"></span></p>
+
+        </div>
+      </li>
+      <li class="evidence-card evidence-formal_artifact">
+        <div>
+          <div class="evidence-head">
+            <h3>ev-lean-c510a55434c0935cde446e5a372699a4671438f6</h3>
+            <span class="kind">formal_artifact · receipts attached</span>
+          </div>
+
+          <div class="side-by-side">
+            <div class="informal">
+              <h4>Informal — manuscript</h4>
+              <p>The unit group L_F2(1,2)× of the binary Leavitt algebra is not sofic.</p>
+            </div>
+            <div class="formal">
+              <h4>Formal — lean4</h4>
+              <p><a href="https://github.com/openai/ten-proofs">https://github.com/openai/ten-proofs</a> @ <code>c510a55434c0935cde446e5a372699a4671438f6</code></p>
+              <p>At the pinned commit, ComparatorChallenges/D_NonSoficGroup.json maps solution module NonSoficGroup to SoficGroups.SourceTopLevelCompressionFinal.exists_finitelyPresented_nonsofic_group. This identifies the declaration the repository asks Comparator to check; it does not independently establish correspondence with the manuscript&#39;s concrete Leavitt-algebra theorem.</p>
+              <p><span class="attribution">[editorial_inference, asserted by significance-editor at 2026-08-02T19:33:28Z]</span><span class="locator"></span> Attested, not machine-checked.</p>
+            </div>
+          </div>
+          <div class="rows">
+            <div class="row"><span class="k">axiom policy</span><span class="v">lean_standard_classical (allowlist v1) — <code>propext</code>, <code>Classical.choice</code>, <code>Quot.sound</code></span></div>
+            <div class="row"><span class="k">build</span><span class="v">passed · 2026-08-02T02:46:07Z · log sha256 <code>d0eb06613908791427cfbbac2027dfcb88286a79abc917b6acebfb8b95819ed3</code></span></div>
+            <div class="row"><span class="k">axiom closure</span><span class="v">passed · 2026-08-02T02:46:07Z · log sha256 <code>d0eb06613908791427cfbbac2027dfcb88286a79abc917b6acebfb8b95819ed3</code></span></div>
+            <div class="row"><span class="k">runner</span><span class="v">significance-lean 0.1.0 · image <code>sha256:e18db1519e04134512c50930c1ea4d4c9b339b37f4939e287b4e22dd752624a6</code> · asserted by significance-ci</span></div>
+          </div>
 
         </div>
       </li>
@@ -82,7 +110,7 @@
     <p class="lbl">State</p>
     <dl class="state-list">
       <div><dt>record_state</dt><dd>active</dd></div>
-      <div><dt>version</dt><dd>v1</dd></div>
+      <div><dt>version</dt><dd>v2</dd></div>
       <div><dt>freshness.result</dt><dd>current</dd></div>
       <div><dt>observed_version</dt><dd>official-release-2026-08-01</dd></div>
       <div><dt>confirmed_version</dt><dd>official-release-2026-08-01</dd></div>
@@ -126,6 +154,10 @@
   <div class="band">
     <p class="lbl">History — append-only</p>
     <ul class="history">
+      <li>
+        <span class="event-id">evt-lean-reproduced</span>
+        <span class="event-meta">evidence_added · 2026-08-02T19:33:28Z · significance-editor<br>Added the independent Significance CI build and axiom-policy receipts from the maiden Lean adapter run; the earlier reported-artifact entry is retained as history.</span>
+      </li>
       <li>
         <span class="event-id">evt-created</span>
         <span class="event-meta">created · 2026-08-01T13:57:00Z · significance-editor<br>Created from the official OpenAI release, the byte-matched 249-page manuscript, and the public Lean repository.</span>

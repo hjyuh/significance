@@ -9,6 +9,7 @@ import { validateAgainstSchema } from "./schema-validate";
 import { runIntraRecordChecks } from "./intra-record-checks";
 import { buildMailtoUrl, buildPrComposeUrl, triggerYamlDownload } from "./github-link";
 import { computeThirdPartyAttestationGaps } from "./attestation-gaps";
+import { isSubmissionReady } from "./submission-readiness";
 
 const STEPS = ["role", "claim", "manuscript", "parties", "evidence", "provenance", "review"] as const;
 type Step = (typeof STEPS)[number];
@@ -174,7 +175,12 @@ export default function SubmitWizard() {
     [state, thirdParty]
   );
 
-  const canExport = thirdPartyAttestationGaps.length === 0;
+  const canSubmit = isSubmissionReady({
+    submitterRole: state.submitterRole,
+    schemaErrorCount: schemaErrors.length,
+    intraRecordViolationCount: intraRecordViolations.length,
+    attestationGapCount: thirdPartyAttestationGaps.length,
+  });
 
   return (
     <main className="wizard">
@@ -407,18 +413,22 @@ export default function SubmitWizard() {
           <pre className="wizard-yaml">{yamlText}</pre>
 
           <div className="wizard-actions">
-            <button type="button" disabled={!canExport} onClick={() => triggerYamlDownload(state.recordId, yamlText)}>
-              Download record.yaml
+            <button type="button" onClick={() => triggerYamlDownload(state.recordId, yamlText)}>
+              Download draft YAML
             </button>
 
-            {!canExport ? (
-              <p className="wizard-hint wizard-warning">Resolve the blocking issues above before exporting.</p>
+            {!canSubmit ? (
+              <p className="wizard-hint wizard-warning">
+                You can keep the draft, but resolve every issue above before submitting it.
+              </p>
             ) : prCompose.url ? (
               <>
                 <a className="wizard-pr-link" href={prCompose.url} target="_blank" rel="noreferrer">
-                  Open as pull request
+                  Continue submission on GitHub
                 </a>
                 <p className="wizard-hint">
+                  GitHub opens a pre-filled new-file editor. After you propose the
+                  file, GitHub will guide you through creating the pull request. {" "}
                   This puts the record&apos;s content — including any named parties —
                   in the URL, which lands in browser history and referrer headers.
                   Fine for a record you intend to publish; if it names someone who
@@ -427,13 +437,13 @@ export default function SubmitWizard() {
               </>
             ) : (
               <p className="wizard-hint">
-                This record is too large for a pre-filled PR link. Download the
-                file and open the PR by hand at{" "}
+                This record is too large for a pre-filled GitHub editor link.
+                Download the file and propose it by hand at{" "}
                 <a href="https://github.com/hjyuh/significance/new/main">github.com/hjyuh/significance</a>.
               </p>
             )}
 
-            <a href={buildMailtoUrl(state.recordId)}>Email it instead</a>
+            {canSubmit ? <a href={buildMailtoUrl(state.recordId)}>Email the valid record instead</a> : null}
           </div>
         </section>
       ) : null}

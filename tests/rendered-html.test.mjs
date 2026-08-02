@@ -19,6 +19,8 @@ test("the public corpus contains only the source-inspected OpenAI record", () =>
 test("the rendered record preserves the project's epistemic boundary", () => {
   const record = readFileSync(recordPath, "utf8");
   assert.match(record, /Reported, not reproduced\./);
+  assert.match(record, /build<\/span><span class="v">passed/);
+  assert.match(record, /does not independently establish correspondence/i);
   assert.match(record, /does not mechanically determine mathematical truth/i);
   assert.doesNotMatch(record, /mathematically verified|proof verified/i);
 });
@@ -33,7 +35,7 @@ test("the homepage derives its record facts from the generated index", () => {
   assert.equal(summaries.length, 1);
   assert.equal(summaries[0].record_id, "2026-openai-nonsofic-groups");
   assert.equal(summaries[0].freshness, "current");
-  assert.equal(summaries[0].evidence_count, 1);
+  assert.equal(summaries[0].evidence_count, 2);
   assert.equal(summaries[0].open_invitation_count, 3);
 
   // Record facts must not be copied into JSX. The generated JSON is their

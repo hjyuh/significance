@@ -10,14 +10,20 @@ import schema from "../../schema/record.schema.json";
 // returns no errors; the client re-runs it for real once mounted, and
 // since this component is entirely client-driven (`useState`), nothing
 // treats the transient SSR-time result as final.
-let validateSchema: ReturnType<Ajv2020["compile"]> | null = null;
+type CompiledValidator = ReturnType<Ajv2020["compile"]>;
+
+let validateSchema: CompiledValidator | null = null;
+
+function compileValidator(): CompiledValidator {
+  const ajv = new Ajv2020({ allErrors: true, strict: true, strictRequired: false, strictTypes: false });
+  addFormats(ajv);
+  return ajv.compile(schema);
+}
 
 function getValidator() {
   if (typeof window === "undefined") return null;
   if (!validateSchema) {
-    const ajv = new Ajv2020({ allErrors: true, strict: true, strictRequired: false, strictTypes: false });
-    addFormats(ajv);
-    validateSchema = ajv.compile(schema);
+    validateSchema = compileValidator();
   }
   return validateSchema;
 }
@@ -28,9 +34,7 @@ export interface SchemaError {
   keyword: string;
 }
 
-export function validateAgainstSchema(record: unknown): SchemaError[] {
-  const validate = getValidator();
-  if (!validate) return [];
+function collectSchemaErrors(validate: CompiledValidator, record: unknown): SchemaError[] {
   const valid = validate(record);
   if (valid) return [];
   return (validate.errors ?? []).map((e) => ({
@@ -38,4 +42,18 @@ export function validateAgainstSchema(record: unknown): SchemaError[] {
     message: e.message ?? "invalid",
     keyword: e.keyword,
   }));
+}
+
+export function validateAgainstSchema(record: unknown): SchemaError[] {
+  const validate = getValidator();
+  if (!validate) return [];
+  return collectSchemaErrors(validate, record);
+}
+
+/**
+ * Exercises the same Ajv compilation and validation path without relying on a
+ * browser global. This is intentionally called by tests, never during SSR.
+ */
+export function validateAgainstSchemaNow(record: unknown): SchemaError[] {
+  return collectSchemaErrors(compileValidator(), record);
 }

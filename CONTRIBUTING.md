@@ -5,8 +5,8 @@ as ordinary GitHub pull requests — there is no separate submission
 system, account, or database. The easiest way to build one is the
 submission wizard on the project's site (linked from the homepage): it
 walks the schema, validates structurally as you type, and hands you a
-pre-filled "open as pull request" link so your GitHub burden is clicking
-"Propose new file."
+pre-filled GitHub new-file editor. After you click "Propose new file,"
+GitHub guides you through opening the pull request.
 
 You can also write the YAML by hand against `schema/record.schema.json`
 (see `significance init` for a guided CLI scaffold) and open the PR

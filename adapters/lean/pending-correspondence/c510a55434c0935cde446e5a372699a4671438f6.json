@@ -1,6 +1,9 @@
 {
-  "value": "OpenAI's formalization metadata identifies ComparatorChallenges/D_NonSoficGroup.json as the configuration for its named main result 'Existence of a finitely presented non-sofic group'. This attests the repository-level association; it does not independently establish full correspondence with the manuscript's concrete Leavitt-algebra statement.",
-  "basis": "author_attestation",
-  "asserted_by": "openai",
-  "asserted_at": "2026-08-01T13:55:58Z"
+  "value": "At the pinned commit, ComparatorChallenges/D_NonSoficGroup.json maps solution module NonSoficGroup to SoficGroups.SourceTopLevelCompressionFinal.exists_finitelyPresented_nonsofic_group. This identifies the declaration the repository asks Comparator to check; it does not independently establish correspondence with the manuscript's concrete Leavitt-algebra theorem.",
+  "basis": "editorial_inference",
+  "asserted_by": "significance-editor",
+  "asserted_at": "2026-08-02T19:33:28Z",
+  "locator": {
+    "url": "https://github.com/openai/ten-proofs/blob/c510a55434c0935cde446e5a372699a4671438f6/ComparatorChallenges/D_NonSoficGroup.json"
+  }
 }

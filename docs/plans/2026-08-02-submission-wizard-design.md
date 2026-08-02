@@ -140,10 +140,14 @@ not typed by hand,"* linking to `adapters/lean/README.md`.
 
 ## 7. Output actions
 
-- **Download (primary).** Produces the `.yaml` file. Always available,
-  always correct, no length limits, no URL exposure.
-- **Open as pull request (secondary, with an inline caveat).** Builds
+- **Download draft (primary).** Produces the `.yaml` file. Always available,
+  with no length limits or URL exposure; the file remains explicitly a draft
+  while any browser-side check is failing.
+- **Continue submission on GitHub (secondary, with an inline caveat).** Enabled
+  only after schema, semantic, role, and third-party attestation checks pass. It builds
   `https://github.com/hjyuh/significance/new/main?filename=records/<id>.yaml&value=<url-encoded-yaml>`.
+  This opens GitHub's pre-filled new-file editor; after the user proposes the
+  file, GitHub guides them through opening the pull request.
   Below the button: *"This puts the record's content — including any named
   parties — in the URL, which lands in browser history and referrer
   headers. Fine for a record you intend to publish; if it names someone who
@@ -206,7 +210,7 @@ receipt binding (roadmap only).
   known-broken YAML to catch drift between `semantics.py` and
   `intra-record-checks.ts` — not full parity, just a canary.
 - Manual: run the dev server, complete the wizard end-to-end on both the
-  author and third-party paths, confirm the PR-compose link opens with a
+  author and third-party paths, confirm the GitHub editor link opens with a
   pre-filled file, confirm the length-ceiling fallback triggers on an
   oversized record, confirm `aria-disabled` controls are screen-reader
   reachable.

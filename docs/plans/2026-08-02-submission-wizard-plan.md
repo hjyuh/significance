@@ -1,5 +1,11 @@
 # Submission Wizard Implementation Plan
 
+> **Implementation note (2026-08-02):** The shipped flow deliberately differs
+> from early snippets below: downloading an explicitly labelled draft remains
+> available at all times, while GitHub/email submission is gated on a selected
+> role and zero schema, semantic, or attestation errors. The GitHub URL opens a
+> pre-filled new-file editor, not a pull request directly.
+
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
 
 **Goal:** Build a browser `/submit` wizard that assembles a schema-valid Significance record and hands the submitter a pre-filled GitHub PR, plus the validator-side automation-identity check that makes the wizard's evidence-kind gating an honest promise rather than UI theater.
