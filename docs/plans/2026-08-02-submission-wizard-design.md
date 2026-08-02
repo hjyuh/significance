@@ -21,15 +21,18 @@ Before any content field, the wizard asks: **"Are you an author of this
 claim, or recording someone else's public work?"** This is not framing copy —
 it changes what the rest of the form allows:
 
-- **Author path.** The submitter is pre-added as a claim party. `basis:
-  author_attestation` is available on any attributed value without
-  friction. A note explains their PR's GitHub identity will be checked
-  against this party's `verification_method` at review time — attribution
-  arrives from the PR plumbing itself, not from anything the wizard asserts.
-- **Third-party path.** The submitter is added as a reporter/editor party,
-  not a claimant. Claim and scope basis defaults to `source_quote` /
-  `editorial_inference`. If the submitter selects `author_attestation`
-  anywhere in the form on this path — i.e. "the author told me X" — the
+- **Author path.** `basis: author_attestation` is available on any
+  attributed value without friction. The submitter adds themselves as a
+  party in the Parties step and records that party id as the submitter —
+  the PR's GitHub identity is checked against it at review time.
+  Attribution arrives from the PR plumbing itself, not from anything the
+  wizard asserts.
+- **Third-party path.** The submitter is not implicitly a claimant on this
+  path — if they add themselves as a party in the Parties step, it's as a
+  reporter/editor, not an asserting author. Claim and scope basis defaults
+  to `source_quote` / `editorial_inference`. If the submitter selects
+  `author_attestation` anywhere in the form on this path — i.e. "the
+  author told me X" — the
   wizard requires a `locator` (or equivalent pointer: correspondence link,
   public statement URL) before that field validates. There is no way to
   produce a wizard-generated YAML file with an unlocated third-party
