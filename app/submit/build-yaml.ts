@@ -1,4 +1,4 @@
-import yaml from "js-yaml";
+import { dump } from "js-yaml";
 import type { AttributedDraft, EvidenceDraft, WizardState } from "./types";
 
 function nowIso(): string {
@@ -77,5 +77,5 @@ export function buildRecord(state: WizardState): Record<string, unknown> {
 }
 
 export function recordToYaml(record: Record<string, unknown>): string {
-  return yaml.dump(record, { noRefs: true, lineWidth: -1 });
+  return dump(record, { noRefs: true, lineWidth: -1 });
 }
