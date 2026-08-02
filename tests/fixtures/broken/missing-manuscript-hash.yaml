@@ -30,7 +30,7 @@ parties:
   significance-ci:
     name: "significance-ci"
     verification_method:
-      kind: github_identity
+      kind: automation
       identifier: "significance-ci[bot]"
 
 claim:
