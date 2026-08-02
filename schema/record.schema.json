@@ -111,7 +111,7 @@
           "properties": {
             "kind": {
               "type": "string",
-              "enum": ["github_identity", "orcid", "email_confirmation", "pseudonymous"]
+              "enum": ["github_identity", "orcid", "email_confirmation", "pseudonymous", "automation"]
             },
             "identifier": { "type": "string" },
             "verified_at": { "$ref": "#/$defs/iso_datetime" }
