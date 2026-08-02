@@ -31,5 +31,11 @@ RUN curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-ini
     && rm /tmp/elan-init.sh
 ENV PATH="/root/.elan/bin:${PATH}"
 
+# This mountpoint is populated during the networked acquisition phase and
+# mounted read-only into the later no-network build container. Creating it
+# in the image is required because the build container's root filesystem is
+# read-only and Docker must not need to create a nested mountpoint at start.
+RUN mkdir -p /root/.elan/toolchains
+
 COPY fetch.sh build_and_audit.sh /adapter/
 RUN chmod +x /adapter/fetch.sh /adapter/build_and_audit.sh

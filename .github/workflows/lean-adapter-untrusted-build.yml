@@ -84,9 +84,10 @@ jobs:
       - name: Fetch target repo + Lean toolchain (network - dependency acquisition only)
         run: |
           set -euo pipefail
-          mkdir -p workspace
+          mkdir -p workspace workspace/elan-toolchains
           docker run --rm \
             -v "$GITHUB_WORKSPACE/workspace:/workspace" \
+            -v "$GITHUB_WORKSPACE/workspace/elan-toolchains:/root/.elan/toolchains" \
             sig-lean-sandbox:local \
             /adapter/fetch.sh "$INPUT_REPO" "$INPUT_COMMIT"
 
@@ -121,7 +122,10 @@ jobs:
           set -euo pipefail
           mkdir -p out
           container="sig-lean-build-$GITHUB_RUN_ID"
-          disk_cap_bytes=$((2*1024*1024*1024))
+          # Mathlib's pinned source dependencies plus build products exceed
+          # 2 GiB. Keep a hard cap, sized for a real Mathlib build rather
+          # than for the tiny adapter fixtures.
+          disk_cap_bytes=$((8*1024*1024*1024))
 
           docker run -d --name "$container" \
             --network none \
@@ -130,6 +134,7 @@ jobs:
             --pids-limit "$BUILD_PIDS_LIMIT" \
             --read-only \
             -v "$GITHUB_WORKSPACE/workspace:/workspace:ro" \
+            -v "$GITHUB_WORKSPACE/workspace/elan-toolchains:/root/.elan/toolchains:ro" \
             -v "$GITHUB_WORKSPACE/out:/build-out" \
             -e ALLOWLIST="$INPUT_CUSTOM_ALLOWLIST" \
             sig-lean-sandbox:local \
@@ -214,9 +219,18 @@ jobs:
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: lean-adapter-result
-          # Upload the directory contents as the artifact root so trusted
-          # ingest sees untrusted-result/metadata.json, not
-          # untrusted-result/out/metadata.json.
-          path: out/
+          # The copied repository and build products remain under out/src,
+          # but only these bounded receipt files leave the untrusted job.
+          # Because every selected path is under out/, upload-artifact uses
+          # that directory as the common root and trusted ingest receives a
+          # flat artifact (untrusted-result/metadata.json, etc.).
+          path: |
+            out/isolation-evidence.json
+            out/build-receipt.json
+            out/axiom-execution.json
+            out/build.log
+            out/build-result.env
+            out/metadata.json
+            out/kernel-bypass-scan.json
           if-no-files-found: warn
           retention-days: 30
