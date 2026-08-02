@@ -1,0 +1,188 @@
+# SYNTHETIC EXAMPLE ONLY. Every person, paper, identifier, receipt, and URL in
+# this file is fictional. Production builds render records/ and never examples/.
+schema_version: 1
+record_id: 0000-example-execution-receipt-human
+record_version: 2
+record_state: active
+
+freshness:
+  result: current
+  observed_source_version: "v2"
+  confirmed_source_version: "v2"
+  checked_at: "2026-07-28T09:00:00Z"
+
+parties:
+  author-as:
+    name: "Example Author"
+    verification_method:
+      kind: orcid
+      identifier: "0000-0000-0000-0000"
+      verified_at: "2026-01-05T00:00:00Z"
+  editor-mz:
+    name: "Example Editor"
+    verification_method:
+      kind: github_identity
+      identifier: "example-editor"
+      verified_at: "2026-01-10T00:00:00Z"
+  reviewer-ok:
+    pseudonym: "reviewer-ok"
+    verification_method:
+      kind: pseudonymous
+      identifier: "reviewer-ok"
+  significance-ci:
+    name: "significance-ci"
+    verification_method:
+      kind: automation
+      identifier: "significance-ci[bot]"
+
+claim:
+  id: claim-main
+  text:
+    value: "Every 2-coloring of the edges of K_18 contains a monochromatic K_7 minus a perfect matching."
+    basis: source_quote
+    asserted_by: author-as
+    asserted_at: "2026-06-01T12:00:00Z"
+    locator:
+      section: "1.1"
+      quote: "Theorem 1.2. Every 2-colouring of E(K_18) admits a monochromatic K_7 minus a perfect matching."
+  scope:
+    value: "Applies to complete graphs on 18 or more vertices; the construction in Section 4 is specific to n = 18."
+    basis: author_attestation
+    asserted_by: author-as
+    asserted_at: "2026-06-01T12:00:00Z"
+  exclusions:
+    - value: "Does not address the n = 17 boundary case, left open in Section 6."
+      basis: source_quote
+      asserted_by: author-as
+      asserted_at: "2026-06-01T12:00:00Z"
+      locator:
+        section: "6"
+
+manuscript:
+  url: "https://example.org/papers/synthetic-ramsey-k7"
+  label: "Synthetic example paper — not a real publication"
+  immutable_version_id: "v2"
+  sha256: "8f10a68d54a88afcb6369c01da9ddfb6881d754e5ece210541f8656783692941"
+  retrieved_at: "2026-07-28T09:00:00Z"
+
+evidence:
+  - id: ev-lean-formalization
+    kind: formal_artifact
+    repo: "https://example.org/repos/synthetic-ramsey-k7-lean"
+    commit: "a1b2c3d4e5f60718293a4b5c6d7e8f9a0b1c2d3"
+    toolchain:
+      name: lean4
+      pin_kind: digest
+      pin: "sha256:c1a2b3c4d5e6f7081920a1b2c3d4e5f60718293a4b5c6d7e8f9a0b1c2d3e4f5"
+    lockfile_hash: "d6f5483103ee386e1f3453bff6da949b7d95fe942218d3774a449e38bbd9317f"
+    artifact_build:
+      tool: significance-lean
+      tool_version: "0.1.0"
+      runner_image_digest: "sha256:a67b1bd9119bb55b576dddf936701424ec527e2ec17bd671019a9481e2a8fe68"
+      executed_at: "2026-07-20T03:14:00Z"
+      result: passed
+      log_sha256: "c46928bc87de23b9a8bd235aa1fe67ccb1542c8389ad3f02bf4ab5cff506e98f"
+      asserted_by: significance-ci
+    axiom_policy:
+      trust_profile: lean_standard_classical
+      allowlist: ["propext", "Classical.choice", "Quot.sound"]
+      allowlist_version: "1"
+      execution:
+        tool: significance-lean
+        tool_version: "0.1.0"
+        runner_image_digest: "sha256:a67b1bd9119bb55b576dddf936701424ec527e2ec17bd671019a9481e2a8fe68"
+        executed_at: "2026-07-20T03:15:00Z"
+        result: passed
+        log_sha256: "73aaa5071d9f861550d51469cbd89e0a6e5371486fd94c9675281d1cefbd5117"
+        asserted_by: author-as
+    correspondence:
+      value: "The Lean statement `ramsey_k7_near_matching` in Ramsey/K7.lean corresponds to Theorem 1.2 of the manuscript, modulo restating the coloring as a Sym2-indexed function."
+      basis: author_attestation
+      asserted_by: author-as
+      asserted_at: "2026-07-20T10:00:00Z"
+
+  - id: ev-prior-partial-result
+    kind: external_formal_artifact
+    repo: "https://example.org/repos/synthetic-ramsey-partial"
+    commit: "9f8e7d6c5b4a392817263544352617f8e9d0a1b"
+    description: "An independent, unreproduced Coq formalization of the n = 20 special case, reported by its authors in the linked repository's README."
+    basis: author_attestation
+    asserted_by: author-as
+    asserted_at: "2026-06-01T12:00:00Z"
+
+  - id: ev-assessment-reviewer-ok
+    kind: mathematical_assessment
+    target: "Theorem 1.2"
+    report:
+      inline: "The case split in Lemma 3.4 covers all colorings up to the symmetry group action claimed in Section 3; I checked the n=18 base case by hand and it is consistent with the stated bound."
+    basis: author_attestation
+    asserted_by: reviewer-ok
+    asserted_at: "2026-07-25T14:00:00Z"
+    author_response:
+      - text: "Thank you — Lemma 3.4's symmetry argument is elaborated further in the v2 revision, Appendix B."
+        asserted_by: author-as
+        asserted_at: "2026-07-26T09:00:00Z"
+
+ai_provenance:
+  disclosure:
+    value: "An LLM was used for literature search and for generating candidate case splits in the proof of Lemma 3.4, which the author then worked through by hand and in Lean."
+    basis: source_quote
+    asserted_by: author-as
+    asserted_at: "2026-06-01T12:00:00Z"
+    locator:
+      section: "Acknowledgements"
+      quote: "We used a large language model for literature search and for generating candidate case splits, which were independently worked through by the author."
+  roles:
+    - role: literature_search
+      model: "claude-opus-4"
+      basis: author_attestation
+      asserted_by: author-as
+    - role: candidate_generation
+      model: "claude-opus-4"
+      basis: author_attestation
+      asserted_by: author-as
+    - role: formalization
+      model: "claude-sonnet-4"
+      basis: author_attestation
+      asserted_by: author-as
+
+digestions:
+  - audience: general_mathematician
+    text: "This paper pins down a small but stubborn Ramsey-type number: it shows 18 vertices are enough to force a large monochromatic near-clique in any red/blue edge coloring, matching a construction that shows 17 is not enough."
+    basis: editorial_inference
+    asserted_by: editor-mz
+    source_claims: [claim-main]
+
+importance_claims:
+  - text: "Closes a gap between the previously known bounds of 17 and 19 for this Ramsey-type quantity, reported open since a 2019 survey."
+    basis: source_quote
+    asserted_by: author-as
+    source:
+      section: "1.1"
+
+open_invitations:
+  - kind: formalization
+    target: "Theorem 1.2, n = 17 boundary case (Section 6)"
+    created_by: editor-mz
+    created_at: "2026-07-28T09:30:00Z"
+
+history:
+  - id: evt-created
+    type: created
+    at: "2026-06-01T12:00:00Z"
+    by: author-as
+  - id: evt-lean-added
+    type: evidence_added
+    at: "2026-07-20T10:00:00Z"
+    by: author-as
+    note: "Added Lean formalization evidence (ev-lean-formalization)."
+  - id: evt-assessment-added
+    type: evidence_added
+    at: "2026-07-25T14:00:00Z"
+    by: reviewer-ok
+    note: "Added mathematical assessment of Theorem 1.2."
+  - id: evt-freshness-recheck
+    type: freshness_checked
+    at: "2026-07-28T09:00:00Z"
+    by: significance-ci
+    note: "Routine freshness check against arXiv v2; unchanged."

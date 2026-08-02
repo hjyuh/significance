@@ -35,6 +35,7 @@ def test_valid_record_has_no_violations():
         ("correspondence-machine-asserted.yaml", "correspondence-unattested"),
         ("derived-value-not-matching-recomputation.yaml", "derived-value-mismatch"),
         ("bare-result-passed-no-receipt.yaml", "bare-machine-result"),
+        ("execution-receipt-asserted-by-human.yaml", "execution-receipt-not-automation"),
     ],
 )
 def test_single_record_broken_fixture(fixture_name, expected_rule):
