@@ -146,26 +146,35 @@ jobs:
 
           terminated_by_timeout=false
           disk_violation=false
-          elapsed=0
+          started_at_epoch="$(date +%s)"
           # The two things a --network none / --read-only / cgroup-limited
           # container cannot be stopped from doing on its own: running
           # forever, and filling an unbounded writable volume. Both are
           # polled and enforced here, since Docker has no single flag for
           # either on a bind-mounted (not tmpfs) output directory.
           while [ "$(docker inspect -f '{{.State.Running}}' "$container" 2>/dev/null || echo false)" = "true" ]; do
+            elapsed=$(( $(date +%s) - started_at_epoch ))
+            if [ "$elapsed" -ge "$WALL_CLOCK_LIMIT_SECONDS" ]; then
+              terminated_by_timeout=true
+              docker kill "$container" >/dev/null 2>&1 || true
+              break
+            fi
             size="$(du -sb "$GITHUB_WORKSPACE/out" 2>/dev/null | cut -f1 || echo 0)"
             if [ "$size" -gt "$disk_cap_bytes" ]; then
               disk_violation=true
               docker kill "$container" >/dev/null 2>&1 || true
               break
             fi
+            # Account for time spent walking a large Mathlib build tree;
+            # incrementing a counter by the sleep interval understates real
+            # elapsed time when this disk scan itself takes seconds.
+            elapsed=$(( $(date +%s) - started_at_epoch ))
             if [ "$elapsed" -ge "$WALL_CLOCK_LIMIT_SECONDS" ]; then
               terminated_by_timeout=true
               docker kill "$container" >/dev/null 2>&1 || true
               break
             fi
             sleep 5
-            elapsed=$((elapsed + 5))
           done
 
           exit_code="$(docker wait "$container" 2>/dev/null || echo 137)"

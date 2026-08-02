@@ -30,4 +30,9 @@ fi
 
 if [ -f lakefile.lean ] || [ -f lakefile.toml ]; then
   lake update || true
+  # Mathlib projects publish pinned compiled caches specifically so a clean
+  # verifier need not rebuild all of Mathlib. This remains part of the
+  # networked, secret-free acquisition phase; the later proof build still
+  # runs with --network none and consumes the cache read-only as input.
+  lake exe cache get || true
 fi
