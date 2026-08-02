@@ -159,3 +159,15 @@ job's own copy of the scan.
   Lean/Lake version changing that output format would need this updated;
   it would fail closed to `axiom_result=failed` on a parse miss (no
   bracketed axiom list recognized), not silently pass.
+- **The automation-identity check on execution receipts is a consistency
+  check, not an authenticity guarantee.** `significance validate` requires
+  any `execution_receipt`'s `asserted_by` — including the ones this
+  adapter's trusted workflow writes — to resolve to a party declared with
+  `verification_method.kind: automation`. That catches accidental or
+  confused authorship (a human party can't be the asserter of a machine
+  result), but it is not cryptographic: nothing stops a submitter from
+  declaring themselves an `automation` party and hand-typing a receipt
+  with plausible-shaped but fabricated `runner_image_digest`/`log_sha256`
+  values. Real authenticity would require binding a receipt to a specific
+  CI workflow run (OIDC/sigstore-style provenance, SLSA-shaped) — not
+  implemented. PR review is the actual backstop for now.

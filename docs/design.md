@@ -130,6 +130,23 @@ Machine receipts bind the tool and version, runner image digest, execution
 time, result, log hash, and asserting automation identity. A manually authored
 `result: passed` is rejected.
 
+An execution receipt's `asserted_by` must resolve to a party whose
+`verification_method.kind` is `automation` — enforced by
+`significance validate`. This is a consistency check, not an authenticity
+one: nothing stops a party from self-declaring as `automation`. Binding a
+receipt to a real, specific CI run (OIDC/sigstore-style provenance) is a
+roadmap item, not implemented in v0.1.
+
+**Evidence promotion.** When an `external_formal_artifact` is later backed
+by a real build (e.g. via the Lean adapter), add a new `formal_artifact`
+evidence item under a new id and record a `history` event noting the
+supersession — never mutate the existing item's `kind` in place. Evidence
+items are not schema-enforced append-only the way `history[]` is, so
+nothing stops an in-place edit, but doing so leaves the record looking
+cleanly CI-attested from the start, with the self-reported origin visible
+only by reading history. Keeping both items preserves that trail on the
+record itself.
+
 Correspondence between a formal declaration and an informal theorem is not
 machine-checkable in general. It remains an attested assertion and both
 statements should be displayed where readers can compare them.
