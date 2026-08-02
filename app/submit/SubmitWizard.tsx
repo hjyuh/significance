@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import type { AttributedDraft, Basis, EvidenceDraft, PartyDraft, VerificationKind, WizardState } from "./types";
+import type { AttributedDraft, Basis, EvidenceDraft, LocatorDraft, PartyDraft, VerificationKind, WizardState } from "./types";
 import { AI_PROVENANCE_ROLES, emptyWizardState } from "./types";
 import { buildRecord, recordToYaml } from "./build-yaml";
 import { validateAgainstSchema } from "./schema-validate";
@@ -23,6 +23,10 @@ async function sha256OfFile(file: File): Promise<string> {
   const buf = await file.arrayBuffer();
   const digest = await crypto.subtle.digest("SHA-256", buf);
   return Array.from(new Uint8Array(digest)).map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+function hasLocator(l?: LocatorDraft): boolean {
+  return !!(l && (l.section || l.url || l.quote));
 }
 
 function AttributedFields({
@@ -144,6 +148,34 @@ export default function SubmitWizard() {
   const schemaErrors = useMemo(() => validateAgainstSchema(record), [record]);
   const intraRecordViolations = useMemo(() => runIntraRecordChecks(record), [record]);
   const prCompose = useMemo(() => buildPrComposeUrl(state.recordId, yamlText), [state.recordId, yamlText]);
+
+  // Wizard-only enforcement of the design's core consent mechanism: a
+  // third-party submitter must not be able to export an unlocated
+  // author_attestation. This can't live in intra-record-checks.ts because
+  // it needs state.submitterRole, which isn't part of the assembled
+  // record — the record has no notion of "who is submitting this PR."
+  const thirdPartyAttestationGaps = useMemo(() => {
+    if (!thirdParty) return [];
+    // Only basis/locator matter here, so this is typed as that narrower
+    // shape rather than the full AttributedDraft — EvidenceDraft (via
+    // EvidenceDraftBase) has both fields but isn't otherwise assignable
+    // to AttributedDraft (it has no `value`).
+    const attributedFields: { location: string; draft: Pick<AttributedDraft, "basis" | "locator"> }[] = [
+      { location: "claim.text", draft: state.claimText },
+      { location: "claim.scope", draft: state.claimScope },
+      { location: "ai_provenance.disclosure", draft: state.aiDisclosure },
+      ...state.evidence.map((e, i) => ({ location: `evidence[${i}]`, draft: e })),
+    ];
+    return attributedFields
+      .filter((f) => f.draft.basis === "author_attestation" && !hasLocator(f.draft.locator))
+      .map((f) => ({
+        rule: "third-party-attestation-missing-locator",
+        location: f.location,
+        message: "author_attestation from a third-party submitter needs a locator (a correspondence link or public statement) before this can be exported.",
+      }));
+  }, [thirdParty, state.claimText, state.claimScope, state.aiDisclosure, state.evidence]);
+
+  const canExport = thirdPartyAttestationGaps.length === 0;
 
   return (
     <main className="wizard">
@@ -329,10 +361,17 @@ export default function SubmitWizard() {
         <section className="wizard-section">
           <h2>Review and export</h2>
           <p className="wizard-banner">
-            These are structural checks plus a narrow intra-record subset.
-            Full validation, including cross-record and attribution rules,
-            runs when the PR opens.
+            These are structural checks plus a narrow intra-record subset. Not checked here (they need sibling
+            records or git history this browser doesn&apos;t have): record_id uniqueness, append-only history.
+            Full validation, including those, runs when the PR opens.
           </p>
+
+          {thirdPartyAttestationGaps.length ? (
+            <div className="wizard-errors">
+              <p>Blocking: unlocated third-party attestations ({thirdPartyAttestationGaps.length}):</p>
+              <ul>{thirdPartyAttestationGaps.map((v, i) => <li key={i}>{v.location}: {v.message}</li>)}</ul>
+            </div>
+          ) : null}
 
           {schemaErrors.length ? (
             <div className="wizard-errors">
@@ -351,11 +390,13 @@ export default function SubmitWizard() {
           <pre className="wizard-yaml">{yamlText}</pre>
 
           <div className="wizard-actions">
-            <button type="button" onClick={() => triggerYamlDownload(state.recordId, yamlText)}>
+            <button type="button" disabled={!canExport} onClick={() => triggerYamlDownload(state.recordId, yamlText)}>
               Download record.yaml
             </button>
 
-            {prCompose.url ? (
+            {!canExport ? (
+              <p className="wizard-hint wizard-warning">Resolve the blocking issues above before exporting.</p>
+            ) : prCompose.url ? (
               <>
                 <a className="wizard-pr-link" href={prCompose.url} target="_blank" rel="noreferrer">
                   Open as pull request
