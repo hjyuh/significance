@@ -53,23 +53,25 @@ not security rationale.
 
 ## What "research preview" means here
 
-This has been reviewed, unit-tested at the decision-logic layer, and
-syntax-checked, but **not run end-to-end** — GitHub-hosted runners and
-Docker network isolation aren't available in the environment this was
-built in. Concretely:
+This has been reviewed, unit-tested at the decision-logic layer, and run
+end-to-end once on a GitHub-hosted runner against OpenAI's `ten-proofs`
+commit `c510a55434c0935cde446e5a372699a4671438f6`. The maiden successful
+run built `NonSoficGroup`, audited the exact named declaration, passed the
+`lean_standard_classical` axiom profile, and produced the evidence proposal
+in [PR #1](https://github.com/hjyuh/significance/pull/1). Concretely:
 
 - `isolation.py`, `scan_kernel_bypass.py`, and `ingest.py` (the trusted-
   side decision logic) are exercised by `tests/test_lean_adapter.py`
   against synthetic isolation-evidence fixtures covering all four
   adversarial scenarios from the design doc, plus a clean-success
   control. Run `uv run pytest tests/test_lean_adapter.py -v`.
-- The workflow YAML and every embedded shell script have been validated
-  for syntax (valid YAML; `bash -n` clean on every `run:` step) and
-  manually reviewed against the threat model, but the actual sandboxing
-  (Docker `--network none`, cgroup limits, the wall-clock/disk poll
-  loop) has not been exercised on a real runner.
+- The real run exercised Docker `--network none`, read-only root,
+  CPU/memory/PID limits, the wall-clock/disk monitor, artifact transfer,
+  trusted re-scan, and PR creation. It found no kernel-bypass hits or
+  unauthorized writes and completed below both resource ceilings.
 
-Before trusting this beyond a research preview: run it end-to-end against
-a real adversarial repository on an actual GitHub-hosted runner, and pin
-the sandbox base image by digest rather than tag (third-party Actions are
-already pinned to full commit SHAs; see Known limitations in `SECURITY.md`).
+It remains a research preview: one cooperative repository is not an
+adversarial test corpus. Before treating it as hardened, exercise malicious
+fixtures on real runners and pin the sandbox base image by digest rather than
+tag (third-party Actions are already pinned to full commit SHAs; see Known
+limitations in `SECURITY.md`).

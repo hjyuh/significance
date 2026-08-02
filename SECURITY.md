@@ -140,23 +140,20 @@ job's own copy of the scan.
   Action requires reviewing and replacing the immutable SHA rather than moving
   a version tag implicitly.
 - **The dependency-acquisition step (`fetch.sh`) has network access** and
-  is not itself resource- or time-limited the way the build step is —
-  it runs `git fetch` and `lake update`/`elan toolchain install` against
-  whatever the untrusted repo's manifest points at. A malicious manifest
-  could attempt a large or slow download here. This step never executes
-  the untrusted repo's own code, though (no build commands run), which
-  bounds the blast radius to resource consumption, not code execution.
-- **This has not been run.** GitHub-hosted runners, Docker network
-  isolation, and cgroup enforcement are not available in the environment
-  these files were authored and tested in. `isolation.py`,
-  `scan_kernel_bypass.py`, and `ingest.py` — the trusted-side decision
-  logic — are unit-tested against synthetic isolation-evidence fixtures
-  (`tests/test_lean_adapter.py`) covering all four adversarial scenarios
-  named in the design doc. The workflow YAML and shell scripts have been
-  syntax-checked (valid YAML, valid bash for every `run:` step) and
-  manually reviewed, but not executed end-to-end. Treat this as a
-  reviewed design, not a battle-tested one, until it has actually run on
-  a real GitHub-hosted runner against a real adversarial repository.
+  is not itself resource- or time-limited the way the proof build is. It
+  runs `git fetch`, `elan toolchain install`, `lake update`, and
+  `lake exe cache get` against the submitted manifest. Lake hooks and the
+  dependency-provided cache executable may run code in this phase. The job
+  is ephemeral and has no secrets or write token, but a malicious manifest
+  can still consume resources or make arbitrary network requests. Hardening
+  acquisition is required before accepting untrusted public submissions.
+- **One real end-to-end run is not battle-testing.** The adapter ran on a
+  GitHub-hosted runner against OpenAI `ten-proofs` commit
+  `c510a55434c0935cde446e5a372699a4671438f6`; the offline build, cgroup
+  limits, deadline/disk monitor, trusted source re-scan, and PR handoff all
+  completed successfully. The decision logic is also unit-tested against
+  synthetic adversarial fixtures, but malicious repositories have not yet
+  been exercised end to end on real runners.
 - **The axiom audit's `#print axioms` output parsing is a plain regex**
   over Lean's pretty-printed output, not a structured API call. A future
   Lean/Lake version changing that output format would need this updated;
