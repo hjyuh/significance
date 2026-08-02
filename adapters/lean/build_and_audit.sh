@@ -43,16 +43,13 @@ esac
 executed_at="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 echo "executed_at=$executed_at" > "$out/build-result.env"
 
-# Keep dependency sources and downloaded Mathlib caches on the read-only
-# acquisition mount. Only the submitted project and its own build products
-# are copied into the writable output area. If a dependency cache is missing
-# and Lake tries to mutate a dependency, the read-only mount fails closed.
+# Copy the pinned project, dependency sources, and acquired caches into the
+# sole writable output mount. Some pinned Mathlib dependencies (notably
+# proofwidgets) generate small bookkeeping files even when their compiled
+# cache is present, so a read-only dependency tree cannot reproduce a normal
+# offline `lake build`.
 mkdir -p "$out/src"
-tar -C /workspace/src --exclude='./.git' --exclude='./.lake' -cf "$out/source.tar" .
-tar -C "$out/src" -xf "$out/source.tar"
-rm "$out/source.tar"
-mkdir -p "$out/src/.lake"
-ln -s /workspace/src/.lake/packages "$out/src/.lake/packages"
+cp -a /workspace/src/. "$out/src/"
 cd "$out/src"
 
 echo "== lake build $build_target =="
