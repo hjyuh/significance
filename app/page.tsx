@@ -28,6 +28,7 @@ export default function Home() {
           SIGNIFICANCE
         </Link>
         <p>Claim-state records for AI-assisted mathematics</p>
+        <Link href="/submit">Submit a record →</Link>
       </header>
 
       <section className="hero">
