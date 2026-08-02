@@ -19,8 +19,6 @@ while [ $# -gt 0 ]; do
 done
 
 out=/build-out
-log="$out/build.log"
-: > "$log"
 
 case "$trust_profile" in
   lean_standard_classical)
@@ -44,9 +42,9 @@ echo "executed_at=$executed_at" > "$out/build-result.env"
 cp -r /workspace/src "$out/src"
 cd "$out/src"
 
-echo "== lake build ==" >> "$log"
+echo "== lake build =="
 build_result=passed
-if ! lake build >> "$log" 2>&1; then
+if ! lake build; then
   build_result=failed
 fi
 echo "build_result=$build_result" >> "$out/build-result.env"
@@ -54,21 +52,22 @@ echo "build_result=$build_result" >> "$out/build-result.env"
 axiom_result=failed
 if [ "$build_result" = passed ]; then
   if [ -z "$target" ]; then
-    echo "no --target declaration given; cannot run an axiom audit" >> "$log"
+    echo "no --target declaration given; cannot run an axiom audit"
   else
-    echo "== #print axioms $target ==" >> "$log"
-    printf '#print axioms %s\n' "$target" > /tmp/AxiomCheck.lean
-    if lake env lean /tmp/AxiomCheck.lean >> "$log" 2>&1; then
+    echo "== #print axioms $target =="
+    printf '#print axioms %s\n' "$target" > "$out/AxiomCheck.lean"
+    if lake env lean "$out/AxiomCheck.lean" > "$out/axiom-output.txt" 2>&1; then
+      cat "$out/axiom-output.txt"
       # `#print axioms` prints either "'decl' does not depend on any axioms"
       # or "'decl' depends on axioms: [a, b, c]". These are the only two
       # recognized outcomes; anything else (a future Lean version changing
       # this wording, an unexpected error) is NOT treated as "no axioms" --
       # axiom_result stays at its failed default so a format change fails
       # closed instead of silently passing.
-      if grep -q 'does not depend on any axioms' "$log"; then
+      if grep -q 'does not depend on any axioms' "$out/axiom-output.txt"; then
         axiom_result=passed
-      elif grep -q 'depends on axioms' "$log"; then
-        printed="$(grep 'depends on axioms' "$log" | tail -n1)"
+      elif grep -q 'depends on axioms' "$out/axiom-output.txt"; then
+        printed="$(grep 'depends on axioms' "$out/axiom-output.txt" | tail -n1)"
         used="$(printf '%s' "$printed" | sed -n 's/.*\[\(.*\)\].*/\1/p' | tr -d ' ')"
         bad=""
         if [ -n "$used" ]; then
@@ -85,11 +84,13 @@ if [ "$build_result" = passed ]; then
         if [ -z "$bad" ]; then
           axiom_result=passed
         else
-          echo "axioms outside the $trust_profile allowlist:$bad" >> "$log"
+          echo "axioms outside the $trust_profile allowlist:$bad"
         fi
       else
-        echo "could not parse #print axioms output; treating as a failing audit" >> "$log"
+        echo "could not parse #print axioms output; treating as a failing audit"
       fi
+    else
+      cat "$out/axiom-output.txt"
     fi
   fi
 fi
@@ -100,7 +101,7 @@ if [ -f lake-manifest.json ]; then
   lockfile_hash="$(sha256sum lake-manifest.json | cut -d' ' -f1)"
 else
   lockfile_hash=""
-  echo "no lake-manifest.json found; lockfile_hash left empty" >> "$log"
+  echo "no lake-manifest.json found; lockfile_hash left empty"
 fi
 echo "lockfile_hash=$lockfile_hash" >> "$out/build-result.env"
 

@@ -112,7 +112,8 @@ jobs:
         # only surfaces an early signal in this job's own log.
         run: |
           set -euo pipefail
-          python3 adapters/lean/scan_kernel_bypass.py --source-root workspace/src --out kernel-bypass-scan.json || true
+          mkdir -p out
+          python3 adapters/lean/scan_kernel_bypass.py --source-root workspace/src --out out/kernel-bypass-scan.json || true
 
       - name: Build + axiom-audit (network none, resource-limited, wall-clock + disk monitored)
         id: sandboxed_build
@@ -161,7 +162,11 @@ jobs:
           done
 
           exit_code="$(docker wait "$container" 2>/dev/null || echo 137)"
-          docker logs "$container" >> out/build.log 2>&1 || true
+          # Capture stdout/stderr into a runner-owned file. Files created
+          # inside the container are root-owned on the bind mount, so asking
+          # the runner shell to append to one can fail and hide the actual
+          # build error.
+          docker logs "$container" > out/build.log 2>&1 || true
           docker rm -f "$container" >/dev/null 2>&1 || true
 
           {
@@ -209,13 +214,9 @@ jobs:
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: lean-adapter-result
-          path: |
-            out/isolation-evidence.json
-            out/build-receipt.json
-            out/axiom-execution.json
-            out/build.log
-            out/build-result.env
-            out/metadata.json
-            kernel-bypass-scan.json
+          # Upload the directory contents as the artifact root so trusted
+          # ingest sees untrusted-result/metadata.json, not
+          # untrusted-result/out/metadata.json.
+          path: out/
           if-no-files-found: warn
           retention-days: 30
