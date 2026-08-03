@@ -181,13 +181,45 @@ the content of someone who asked to leave would cut against them.
 
 ## 9. Security and privacy
 
-- **Password hashing.** PBKDF2-HMAC-SHA256 via Web Crypto, ≥310,000
-  iterations (OWASP floor), per-user 16-byte salt, iteration count
-  stored alongside the hash so it can be raised later. Native
-  bcrypt/argon2 are unavailable on Workers; a WASM argon2 build is the
-  alternative if PBKDF2's CPU cost proves unacceptable under the
-  Worker's billed-CPU model, which should be measured rather than
-  assumed.
+- **Password hashing.** PBKDF2-HMAC-SHA256 via Web Crypto, per-user
+  16-byte salt, iteration count stored alongside each hash. Native
+  bcrypt/argon2 are unavailable on Workers.
+
+  **The work factor is deliberately below the OWASP floor, and this
+  document will not pretend otherwise.** Measured cost is roughly
+  76ms at 310,000 iterations, against a 10ms CPU ceiling on a
+  free-tier Worker — about 8x over budget. The default is therefore
+  25,000 iterations (~6ms), which is roughly 24x weaker than the
+  current OWASP recommendation of 600,000. This was an explicit,
+  informed choice to keep the project free to run, not an oversight.
+
+  Three things bound the consequences:
+
+  1. **It is reversible.** Because the iteration count lives in each
+     stored hash, raising the default leaves existing hashes verifying
+     at their old count while new ones use the higher value. Accounts
+     upgrade silently once a rehash-on-verify path exists.
+  2. **A server-side pepper compensates.** The PBKDF2 output is
+     HMAC-SHA256'd with a secret held in Worker configuration before
+     storage, at a cost of microseconds. A database-only breach is
+     therefore not exploitable without also compromising the secret,
+     which is the specific risk a low iteration count exposes.
+  3. **Rate limiting matters more here than the work factor.** Against
+     online guessing — the likely threat for a site this size — login
+     rate limiting is the real control, and iteration count is
+     irrelevant. The work factor only governs offline cracking after a
+     dump, which layer 2 already degrades.
+
+  What is honestly given up: against an attacker holding both the
+  database and the pepper, weak and reused passwords fall roughly 24x
+  faster than they would at the OWASP floor. Users should not reuse
+  passwords here. That is true of any site, and more true of this one.
+
+  **Unverified assumption.** The 10ms ceiling is Cloudflare's Workers
+  Free limit. This project deploys via OpenAI Sites, whose actual CPU
+  limit has not been measured. If Sites provides more headroom, the
+  default should be raised — see point 1; nothing about that is
+  difficult.
 - **Sessions.** 32 random bytes, stored SHA-256'd, so a database leak
   does not hand over live sessions. Cookies `httpOnly; Secure;
   SameSite=Lax`, with an origin check on every mutation.
