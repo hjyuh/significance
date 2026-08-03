@@ -199,11 +199,30 @@ the content of someone who asked to leave would cut against them.
      stored hash, raising the default leaves existing hashes verifying
      at their old count while new ones use the higher value. Accounts
      upgrade silently once a rehash-on-verify path exists.
-  2. **A server-side pepper compensates.** The PBKDF2 output is
+  2. **A server-side pepper carries the load.** The PBKDF2 output is
      HMAC-SHA256'd with a secret held in Worker configuration before
      storage, at a cost of microseconds. A database-only breach is
-     therefore not exploitable without also compromising the secret,
-     which is the specific risk a low iteration count exposes.
+     therefore not exploitable without also compromising the secret.
+
+     State this precisely rather than comfortably: at 25,000
+     iterations the pepper is **a primary control, not defence in
+     depth**. An offline attacker holding the database alone is
+     stopped by it. An attacker holding the database *and* the secret
+     — an environment dump, a log line, a compromised Worker — is
+     facing roughly 2 million guesses per second per GPU, where the
+     OWASP floor would have given about 160,000. Common and reused
+     passwords fall quickly at that rate.
+
+     Operationally this means the pepper must never be logged, never
+     appear in an error message or exception payload, and its
+     exposure must be treated as a full credential-reset event, not
+     as a secret-rotation chore.
+
+     The pepper is versioned (`pbkdf2-hmac$<key_id>$…`) so it can
+     actually be rotated. Without a key id, rotating would render
+     every stored row permanently unverifiable — and the situation
+     that most demands rotation is precisely the one where the pepper
+     has leaked, which is when it is doing the most work.
   3. **Rate limiting matters more here than the work factor.** Against
      online guessing — the likely threat for a site this size — login
      rate limiting is the real control, and iteration count is
