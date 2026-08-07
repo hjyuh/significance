@@ -1,6 +1,6 @@
 schema_version: 1
 record_id: 2026-openai-nonsofic-groups
-record_version: 3
+record_version: 4
 record_state: active
 
 freshness:
@@ -163,6 +163,24 @@ ai_provenance:
         url: "https://openai.com/index/ten-advances-in-mathematics/"
 
 digestions:
+  - audience: non_specialist
+    kind: plain_language
+    stratum: editor
+    text: >-
+      A group here is a set of reversible operations you can undo and combine.
+      Soficity asks whether an infinite group can be imitated, to any accuracy
+      you like, by shuffling a finite deck of cards: every product you can form
+      in the group is matched by a shuffle that agrees almost everywhere. Most
+      groups anyone writes down can be imitated this way, and for decades
+      nobody produced one that provably cannot. The manuscript names a
+      candidate: the reversible elements of a small algebra built from two
+      symbols. Its claim is that no finite shuffle imitates this group well
+      enough. What Significance holds is the artifacts around that claim -- the
+      manuscript file, the formal code, the logs of rebuilding it -- not a
+      reading of the argument itself.
+    basis: digest
+    asserted_by: significance-editor
+    source_claims: [claim-main]
   - audience: general_mathematician
     text: "The manuscript proposes an explicit boundary for finite-permutation approximation: a concrete group built from the binary Leavitt algebra that is claimed not to admit sofic approximations. The public Lean target records a related existential finite-presentation statement, so correspondence between the concrete and formal claims remains a useful, separate audit task."
     basis: editorial_inference
@@ -207,3 +225,8 @@ history:
     at: "2026-08-07T00:00:00Z"
     by: significance-editor
     note: "Added a plain-language summary restating this record's claim, its strongest evidence, and its open work. No claim, evidence entry, or attribution was changed."
+  - id: evt-plain-language-added
+    type: digest_added
+    at: "2026-08-07T00:00:00Z"
+    by: significance-editor
+    note: "Added an editor-stratum plain-language explanation of what the claimed result says. It restates the claim already recorded here and adds no evidence."

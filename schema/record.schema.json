@@ -466,14 +466,38 @@
       }
     },
 
+    "digestion_basis": {
+      "description": "Basis values permitted for any digestion. The record-wide set plus `digest`, because every digestion is a restatement of material already in the record — that is what makes it a digestion rather than an evidence entry. A conditional below narrows this further for plain-language entries. Both this and the narrowing are needed: JSON Schema applies a property schema and its `then` branch together, so a base enum that excluded `digest` would refuse the value the conditional exists to permit.",
+      "type": "string",
+      "enum": ["source_quote", "author_attestation", "editorial_inference", "machine_result", "digest"]
+    },
+
+    "plain_language_basis": {
+      "description": "Basis values permitted for a plain-language explanation. Everything except machine_result: a machine did not write an explanation for a human audience, and if one drafted it, the party publishing it is the one asserting it and their use of a model belongs in ai_provenance.",
+      "type": "string",
+      "enum": ["digest", "editorial_inference", "author_attestation", "source_quote"]
+    },
+
+    "stratum": {
+      "description": "Which layer is speaking. Strata are always labeled and never blended: an author's explanation of their own result and an editor's explanation of it are different objects, rendered separately, even when they say the same thing.",
+      "type": "string",
+      "enum": ["author", "editor", "community"]
+    },
+
     "digestion": {
       "type": "object",
       "additionalProperties": false,
       "required": ["audience", "text", "basis", "asserted_by", "source_claims"],
       "properties": {
         "audience": { "type": "string", "minLength": 1 },
+        "kind": {
+          "type": "string",
+          "enum": ["plain_language"],
+          "description": "Absent for an ordinary digestion. `plain_language` marks an entry that explains what the result means, in words a non-specialist can follow — distinct from the plain_summary block, which reports status rather than meaning. The validator caps its length and refuses verdict language in it."
+        },
+        "stratum": { "$ref": "#/$defs/stratum" },
         "text": { "type": "string", "minLength": 1 },
-        "basis": { "$ref": "#/$defs/basis" },
+        "basis": { "$ref": "#/$defs/digestion_basis" },
         "asserted_by": { "$ref": "#/$defs/party_id" },
         "locator": { "$ref": "#/$defs/locator" },
         "source_claims": {
@@ -481,6 +505,14 @@
           "items": { "type": "string" },
           "minItems": 1
         }
+      },
+      "if": {
+        "properties": { "kind": { "const": "plain_language" } },
+        "required": ["kind"]
+      },
+      "then": {
+        "required": ["stratum"],
+        "properties": { "basis": { "$ref": "#/$defs/plain_language_basis" } }
       }
     },
 

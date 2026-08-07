@@ -156,8 +156,22 @@
   </section>
 
   {% if record.get('digestions') or record.get('importance_claims') %}
+  {% set digestions = record.get('digestions', []) %}
+  {% set plain_language = digestions|selectattr('kind', 'defined')|selectattr('kind', 'equalto', 'plain_language')|list %}
+  {% set specialist = digestions|rejectattr('kind', 'defined')|list %}
   <section class="band">
-    {% for d in record.get('digestions', []) %}
+    {# Plain-language explanations first, because the reader who needs one is
+       the reader least likely to scroll past a paragraph written for a
+       general mathematician. Each stratum is rendered as its own block with
+       its own attribution: an author's explanation of their own result and an
+       editor's explanation of it are different objects even when they agree,
+       and merging them would produce an unsigned consensus nobody wrote. #}
+    {% for d in plain_language %}
+    <p class="lbl">What this result says — {{ d.stratum }} — {{ d.get('basis', '?') }} / {{ d.get('asserted_by', '?') }}</p>
+    <p class="digestion-text plain-language">{{ d.text }}</p>
+    <p class="meta">{{ m.attribution(d) }}</p>
+    {% endfor %}
+    {% for d in specialist %}
     <p class="lbl">Digestion — {{ d.audience }} — {{ d.get('basis', '?') }} / {{ d.get('asserted_by', '?') }}</p>
     <p class="digestion-text">{{ d.text }}</p>
     {% endfor %}

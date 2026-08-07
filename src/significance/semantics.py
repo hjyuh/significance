@@ -171,6 +171,42 @@ def check_plain_summary(record: dict) -> list[Violation]:
     return violations
 
 
+# One paragraph. Longer than the strip's fields because this one has to
+# explain a piece of mathematics rather than report a status, and shorter than
+# the existing audience-targeted digestions because those may assume a
+# mathematician is reading.
+PLAIN_LANGUAGE_MAX_WORDS = 150
+
+
+def check_plain_language_digestions(record: dict) -> list[Violation]:
+    """Plain-language digestions explain meaning; they still may not judge it."""
+    violations: list[Violation] = []
+    digestions = record.get("digestions")
+    if not isinstance(digestions, list):
+        return violations
+
+    for index, entry in enumerate(digestions):
+        if not isinstance(entry, dict) or entry.get("kind") != "plain_language":
+            continue
+        text = entry.get("text")
+        if not isinstance(text, str):
+            continue  # presence and type are the schema's job
+        location = f"digestions[{index}].text"
+        count = word_count(text)
+        if count > PLAIN_LANGUAGE_MAX_WORDS:
+            violations.append(
+                Violation(
+                    "plain-language-too-long",
+                    f"{count} words, over the {PLAIN_LANGUAGE_MAX_WORDS}-word cap for a "
+                    "plain-language explanation",
+                    location,
+                )
+            )
+        violations.extend(verdict_violations(text, location))
+
+    return violations
+
+
 def check_freshness_recomputation(record: dict) -> list[Violation]:
     freshness = record.get("freshness")
     if not isinstance(freshness, dict):
@@ -323,6 +359,7 @@ def semantic_violations(record: dict) -> list[Violation]:
         *check_source_quote_locators(record),
         *check_forbidden_language(record),
         *check_plain_summary(record),
+        *check_plain_language_digestions(record),
         *check_freshness_recomputation(record),
         *check_execution_receipt_asserted_by_automation(record),
     ]

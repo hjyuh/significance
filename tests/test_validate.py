@@ -9,8 +9,13 @@ from pathlib import Path
 
 import pytest
 
-from significance.records import load_record
-from significance.semantics import PLAIN_SUMMARY_MAX_WORDS, semantic_violations
+from significance.records import load_record, validator
+from significance.schema_checks import schema_violations
+from significance.semantics import (
+    PLAIN_LANGUAGE_MAX_WORDS,
+    PLAIN_SUMMARY_MAX_WORDS,
+    semantic_violations,
+)
 from significance.validate import validate_paths
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -39,6 +44,7 @@ def test_valid_record_has_no_violations():
         ("bare-result-passed-no-receipt.yaml", "bare-machine-result"),
         ("execution-receipt-asserted-by-human.yaml", "execution-receipt-not-automation"),
         ("plain-summary-verdict.yaml", "verdict-language"),
+        ("plain-language-verdict.yaml", "verdict-language"),
     ],
 )
 def test_single_record_broken_fixture(fixture_name, expected_rule):
@@ -185,3 +191,56 @@ def test_verdict_violation_is_reported_once_per_word():
     violations = semantic_violations(record)
     assert {v.rule for v in violations} == {"verdict-language"}
     assert len(violations) == 2, [str(v) for v in violations]
+
+
+# --- plain-language digestions (Feature 2) ----------------------------------
+
+
+def _record_with_plain_language(text):
+    record = load_record(EXAMPLE_RECORD)
+    record.setdefault("digestions", []).insert(
+        0,
+        {
+            "audience": "non_specialist",
+            "kind": "plain_language",
+            "stratum": "editor",
+            "text": text,
+            "basis": "digest",
+            "asserted_by": "editor-mz",
+            "source_claims": ["claim-main"],
+        },
+    )
+    return record
+
+
+def test_plain_language_word_cap_is_enforced():
+    record = _record_with_plain_language(" ".join(["word"] * (PLAIN_LANGUAGE_MAX_WORDS + 1)))
+    assert {v.rule for v in semantic_violations(record)} == {"plain-language-too-long"}
+
+
+def test_plain_language_at_the_cap_is_allowed():
+    record = _record_with_plain_language(" ".join(["word"] * PLAIN_LANGUAGE_MAX_WORDS))
+    assert semantic_violations(record) == []
+
+
+def test_plain_language_may_not_state_a_verdict():
+    record = _record_with_plain_language("Having read the code, the argument is correct.")
+    assert {v.rule for v in semantic_violations(record)} == {"verdict-language"}
+
+
+def test_ordinary_digestions_keep_the_looser_record_wide_rule():
+    # An audience-targeted digestion may assume a mathematician is reading and
+    # is not subject to the plain-language caps. Only the record-wide ban on
+    # "verified"/"proven" applies to it, as before this feature.
+    record = load_record(EXAMPLE_RECORD)
+    record["digestions"][0]["text"] = " ".join(["word"] * (PLAIN_LANGUAGE_MAX_WORDS + 50))
+    assert semantic_violations(record) == []
+
+
+def test_a_plain_language_entry_must_say_which_stratum_is_speaking():
+    # Strata are always labeled and never blended, so an entry that does not
+    # name one cannot be rendered without inventing an author for it.
+    record = _record_with_plain_language("A short plain explanation.")
+    del record["digestions"][0]["stratum"]
+    violations = schema_violations(record, validator())
+    assert any("stratum" in v.message for v in violations), [str(v) for v in violations]
