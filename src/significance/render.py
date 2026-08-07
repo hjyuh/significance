@@ -21,6 +21,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader
+from ruamel.yaml import YAML
 
 from significance.records import load_record
 from significance.validate import collect_yaml_files, validate_paths
@@ -28,8 +29,19 @@ from significance.violations import Violation
 
 _TEMPLATES_DIR = Path(__file__).resolve().parent / "templates"
 _STATIC_DIR = Path(__file__).resolve().parent / "static"
+_REPO_ROOT = Path(__file__).resolve().parents[2]
+_DATA_DIR = _REPO_ROOT / "data"
+
+_yaml = YAML(typ="safe")
 
 _SAFE_URL_RE = re.compile(r"^https?://", re.IGNORECASE)
+
+# One "@", something either side, no whitespace and no characters that would
+# let a crafted value break out of the mailto URL into extra headers. This is
+# not address validation — the real test of an address is that mail to it
+# arrives — it is the same narrow question safe_href asks: may this string
+# become a link?
+_SAFE_EMAIL_RE = re.compile(r"^[^\s@,;<>?&\"']+@[^\s@,;<>?&\"']+\.[^\s@,;<>?&\"']+$")
 
 
 def safe_href(url) -> str | None:
@@ -41,6 +53,19 @@ def safe_href(url) -> str | None:
     return None
 
 
+def safe_email(address) -> str | None:
+    """An address usable in a mailto: link, or None.
+
+    The unset value in data/site.yaml carries a [FILL] marker and fails this,
+    which is the intended behaviour: the request page then shows the message
+    as copyable text and says the address is not configured, rather than
+    rendering a link that goes nowhere.
+    """
+    if isinstance(address, str) and _SAFE_EMAIL_RE.match(address.strip()):
+        return address.strip()
+    return None
+
+
 def _environment() -> Environment:
     env = Environment(
         loader=FileSystemLoader(str(_TEMPLATES_DIR)),
@@ -49,19 +74,105 @@ def _environment() -> Environment:
         lstrip_blocks=True,
     )
     env.filters["safe_href"] = safe_href
+    env.filters["safe_email"] = safe_email
     return env
+
+
+def load_site_config(path: str | Path | None = None) -> dict:
+    """Site-level configuration (repository URL, contact address).
+
+    Missing file is not an error: the auxiliary pages degrade to describing
+    what they cannot link to, which is the same posture as an unconfigured
+    contact address.
+    """
+    config_path = Path(path) if path is not None else _DATA_DIR / "site.yaml"
+    if not config_path.is_file():
+        return {}
+    with open(config_path, "r", encoding="utf-8") as f:
+        return _yaml.load(f) or {}
+
+
+def site_links(
+    root_prefix: str,
+    *,
+    deployed: bool,
+    board_ids: list[str] | None = None,
+    has_glossary: bool = False,
+) -> dict:
+    """Where the auxiliary pages live, from the point of view of one page.
+
+    Two layouts, and the difference is forced by where the output goes.
+
+    Self-contained (`significance build records/ -o site/`): everything lands
+    under one root, so links are relative and a built directory can be opened
+    from the filesystem or served from any prefix.
+
+    Deployed (`-o public/records/ --pages-out public/`): record pages sit
+    under /records/ while the auxiliary pages sit at the site root, so no
+    relative path spans both reliably and the links are absolute.
+
+    Absolute paths are used only in the layout that requires them, and they
+    are site-root paths written here — never derived from a request, which is
+    the rule db/config.ts states for the other half of this project.
+    """
+    boards = board_ids or []
+    # Only pages this build actually writes appear here. A nav entry pointing
+    # at a page that was not built is a 404 the visitor blames on themselves,
+    # and it is the failure mode of adding links to pages that "will exist
+    # soon" — so the link and the page arrive together or not at all.
+    if deployed:
+        links = {
+            "records_index": "/records/",
+            "request": "/request/",
+            "boards": {b: f"/boards/{b}/" for b in boards},
+        }
+        if has_glossary:
+            links["glossary"] = "/glossary/"
+        return links
+
+    links = {
+        "records_index": f"{root_prefix}index.html",
+        "request": f"{root_prefix}request/index.html",
+        "boards": {b: f"{root_prefix}boards/{b}/index.html" for b in boards},
+    }
+    if has_glossary:
+        links["glossary"] = f"{root_prefix}glossary/index.html"
+    return links
 
 
 @dataclass
 class BuildResult:
     built: list[str] = field(default_factory=list)
     skipped: dict[str, list[Violation]] = field(default_factory=dict)
+    #: Auxiliary pages written, by name ("request", "glossary", "board:<id>").
+    pages: list[str] = field(default_factory=list)
 
 
-def build_site(records_dir: str | Path, out_dir: str | Path) -> BuildResult:
+def _write_page(directory: Path, html: str) -> None:
+    directory.mkdir(parents=True, exist_ok=True)
+    (directory / "index.html").write_text(html, encoding="utf-8")
+
+
+def build_site(
+    records_dir: str | Path,
+    out_dir: str | Path,
+    *,
+    pages_out: str | Path | None = None,
+    site_config: str | Path | None = None,
+) -> BuildResult:
     records_dir = Path(records_dir)
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
+
+    # Auxiliary pages (/request/, /glossary/, /boards/…) default to living
+    # beside the record pages, so a plain `build` still produces a site whose
+    # every link resolves. The deployed layout passes --pages-out to put them
+    # at the site root instead; see site_links for why that changes the links.
+    pages_dir = Path(pages_out) if pages_out is not None else out_dir
+    deployed = pages_dir.resolve() != out_dir.resolve()
+    pages_dir.mkdir(parents=True, exist_ok=True)
+
+    config = load_site_config(site_config)
 
     static_out = out_dir / "static"
     static_out.mkdir(parents=True, exist_ok=True)
@@ -89,17 +200,40 @@ def build_site(records_dir: str | Path, out_dir: str | Path) -> BuildResult:
 
         record = load_record(f)
         record_id = record["record_id"]
-        page_dir = out_dir / record_id
-        page_dir.mkdir(parents=True, exist_ok=True)
-        html = record_template.render(record=record, root_prefix="../")
-        (page_dir / "index.html").write_text(html, encoding="utf-8")
+        html = record_template.render(
+            record=record,
+            root_prefix="../",
+            links=site_links("../", deployed=deployed),
+        )
+        _write_page(out_dir / record_id, html)
 
         result.built.append(record_id)
         built_records.append(record)
 
     built_records.sort(key=lambda r: r["record_id"])
-    index_html = index_template.render(records=built_records, root_prefix="")
+    index_html = index_template.render(
+        records=built_records,
+        root_prefix="",
+        links=site_links("", deployed=deployed),
+    )
     (out_dir / "index.html").write_text(index_html, encoding="utf-8")
+
+    # An auxiliary page sits one directory below its own root, so its stylesheet
+    # is "../static/…" in the self-contained layout. In the deployed layout the
+    # stylesheet lives under the records root, which no relative path reaches
+    # from the site root, so it is addressed absolutely.
+    pages_prefix = "/records/" if deployed else "../"
+    pages_links = site_links("../", deployed=deployed)
+
+    _write_page(
+        pages_dir / "request",
+        env.get_template("request.html.jinja").render(
+            root_prefix=pages_prefix,
+            links=pages_links,
+            site=config,
+        ),
+    )
+    result.pages.append("request")
 
     # This is the only record-data interface consumed by the React homepage.
     # Keeping it beside the Python-rendered index makes validation and record

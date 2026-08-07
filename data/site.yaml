@@ -1,0 +1,22 @@
+# Site-level configuration for the Python-rendered pages.
+#
+# Deliberately tiny, and deliberately not derived from the request: a page
+# built here is served from wherever it is served from, and a value read out of
+# a Host header would let whoever set that header decide where a "contact us"
+# link points.
+#
+# `contact_email` ships unset. Nothing in this repository records a maintainer
+# address, and inventing one would produce a mailto link that silently goes
+# nowhere -- worse than no link, because a person who used it would believe
+# they had asked. While it carries the [FILL] marker the renderer omits the
+# mailto action and shows the same message as copyable text instead, saying
+# plainly that the address is not configured yet.
+
+repository_url: "https://github.com/hjyuh/significance"
+
+# The GitHub issue form at .github/ISSUE_TEMPLATE/record-request.yml. Kept as a
+# separate key rather than built by string-concatenation in a template, so that
+# moving or renaming the template is one edit in one place.
+record_request_template: "record-request.yml"
+
+contact_email: "[FILL: maintainer address, or leave as-is to omit the mailto link]"

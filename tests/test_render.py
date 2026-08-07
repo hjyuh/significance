@@ -136,3 +136,106 @@ def test_hostile_content_is_fully_escaped(tmp_path):
 
     assert "Content-Security-Policy" in html
     assert "script-src" not in html.lower() or "'none'" in html  # no permissive script-src
+
+
+# --- auxiliary pages (Feature 3 onward) -------------------------------------
+#
+# /request/, and the two output layouts every auxiliary page has to work in.
+
+
+def test_request_page_is_built_beside_the_records_by_default(tmp_path):
+    out = tmp_path / "site"
+    result = build_site(RECORDS_DIR, out)
+
+    assert "request" in result.pages
+    page = (out / "request" / "index.html").read_text(encoding="utf-8")
+    # Self-contained: every link is relative, so the directory works when
+    # opened from disk or served from any prefix.
+    assert 'href="../index.html"' in page
+    assert 'href="../static/style.css"' in page
+    assert 'href="/request/"' not in page
+
+
+def test_pages_out_moves_auxiliary_pages_to_the_site_root(tmp_path):
+    records_out = tmp_path / "public" / "records"
+    pages_out = tmp_path / "public"
+    build_site(RECORDS_DIR, records_out, pages_out=pages_out)
+
+    page = (pages_out / "request" / "index.html").read_text(encoding="utf-8")
+    # Deployed: record pages live under /records/ and these do not, so no
+    # relative path spans both and the links are absolute.
+    assert 'href="/records/"' in page
+    assert 'href="/records/static/style.css"' in page
+
+    record_page = (records_out / PUBLIC_RECORD_ID / "index.html").read_text(encoding="utf-8")
+    assert 'href="/request/"' in record_page
+
+
+def test_nav_omits_a_page_this_build_did_not_write(tmp_path):
+    # A nav entry pointing at a page that was not built is a 404 the visitor
+    # blames on themselves. The link and the page arrive together or not at all.
+    out = tmp_path / "site"
+    build_site(RECORDS_DIR, out)
+    index = (out / "index.html").read_text(encoding="utf-8")
+    assert "Request a record" in index
+    assert "glossary" not in index.lower()
+
+
+def test_request_page_carries_the_consent_rule_and_the_issue_link(tmp_path):
+    out = tmp_path / "site"
+    build_site(RECORDS_DIR, out)
+    page = (out / "request" / "index.html").read_text(encoding="utf-8")
+
+    assert "issues/new?template=record-request.yml" in page
+    # The moderation policy's outreach rule, restated where a requester will
+    # actually meet it rather than only in a docs file they will not read.
+    assert "contacted" in page
+    assert "no decline list" in page
+
+
+def test_an_unconfigured_contact_address_produces_no_mailto(tmp_path):
+    # A link to an invented address would let somebody believe they had asked
+    # when nobody received anything. The message body is offered as text
+    # instead, and the page says why.
+    out = tmp_path / "site"
+    config = tmp_path / "site.yaml"
+    config.write_text(
+        'repository_url: "https://example.org/repo"\n'
+        'contact_email: "[FILL: maintainer address]"\n',
+        encoding="utf-8",
+    )
+    build_site(RECORDS_DIR, out, site_config=config)
+
+    page = (out / "request" / "index.html").read_text(encoding="utf-8")
+    assert "mailto:" not in page
+    assert "No contact address is configured" in page
+
+
+def test_a_configured_contact_address_produces_a_templated_mailto(tmp_path):
+    out = tmp_path / "site"
+    config = tmp_path / "site.yaml"
+    config.write_text(
+        'repository_url: "https://example.org/repo"\n'
+        'contact_email: "records@example.org"\n',
+        encoding="utf-8",
+    )
+    build_site(RECORDS_DIR, out, site_config=config)
+
+    page = (out / "request" / "index.html").read_text(encoding="utf-8")
+    assert "mailto:records@example.org?subject=" in page
+    # The same three fields as the issue form, in the same order.
+    assert "Link%20to%20the%20claim" in page
+    assert "Your%20role" in page
+    assert "What%20you%20want%20tracked" in page
+
+
+def test_safe_email_refuses_anything_that_could_break_out_of_a_mailto():
+    from significance.render import safe_email
+
+    assert safe_email("records@example.org") == "records@example.org"
+    assert safe_email("  records@example.org  ") == "records@example.org"
+    assert safe_email("[FILL: maintainer address]") is None
+    assert safe_email("records@example.org?bcc=someone@else.test") is None
+    assert safe_email("records@example.org&body=x") is None
+    assert safe_email("not-an-address") is None
+    assert safe_email(None) is None

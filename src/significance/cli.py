@@ -36,6 +36,19 @@ def _build_parser() -> argparse.ArgumentParser:
     p_build = sub.add_parser("build", help="render a directory of records to a static site")
     p_build.add_argument("records_dir")
     p_build.add_argument("-o", "--out", default="site")
+    p_build.add_argument(
+        "--pages-out",
+        help=(
+            "where the auxiliary pages (/request/, /glossary/, /boards/) go. "
+            "Defaults to --out, which keeps a built directory self-contained. "
+            "The deployed layout passes the site root here, because record "
+            "pages live under /records/ and those pages do not."
+        ),
+    )
+    p_build.add_argument(
+        "--site-config",
+        help="path to site.yaml (repository URL, contact address). Defaults to data/site.yaml.",
+    )
 
     return parser
 
@@ -74,7 +87,12 @@ def _cmd_diff(args) -> int:
 
 
 def _cmd_build(args) -> int:
-    result = build_site(args.records_dir, args.out)
+    result = build_site(
+        args.records_dir,
+        args.out,
+        pages_out=args.pages_out,
+        site_config=args.site_config,
+    )
     for f, violations in result.skipped.items():
         print(f"skipped {f}: {len(violations)} violation(s)", file=sys.stderr)
         for v in violations:

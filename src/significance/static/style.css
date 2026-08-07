@@ -511,3 +511,34 @@ ul.history .event-meta { display: block; color: var(--muted); }
   }
   .plain-summary dt { margin-top: 10px; }
 }
+
+/* --- site nav ---------------------------------------------------------------
+   Text links, no buttons, no accent. Sits under the wordmark rather than
+   beside it so that a narrow screen does not have to choose between the
+   project name and the way out of the page. */
+.topline-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  margin-top: 8px;
+  font-size: 12px;
+}
+
+.topline-nav a { color: var(--dim); }
+.topline-nav a:hover { color: var(--fg-strong); }
+
+/* The message body offered when no contact address is configured. Rendered as
+   text to be copied, not as a link, because there is nowhere for a link to
+   go. */
+pre.mail-template {
+  margin: 12px 0 0;
+  padding: 14px 16px;
+  border: 1px solid var(--hair);
+  background: var(--bg-rail);
+  color: var(--fg-body);
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-x: auto;
+}

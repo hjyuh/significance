@@ -1,0 +1,65 @@
+name: Record request
+description: Ask for a claim-state record about a mathematical claim.
+title: "Record request: "
+labels: ["record-request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A record tracks what was claimed, what evidence exists, and what
+        remains open. It does not say whether the mathematics is right, and
+        nothing in it will.
+
+        **If the claim is someone else's and they are alive and reachable,
+        say so below.** A record about a living person's claim is only filed
+        after they have been contacted. If they decline, that is the end of
+        it: no record is filed, and nothing anywhere in this project will
+        note that they were asked or that they said no.
+
+  - type: input
+    id: claim-link
+    attributes:
+      label: Link to the claim
+      description: >-
+        A paper, preprint, repository, announcement, or post. Whatever the
+        claim actually lives in. If it exists in more than one place, the most
+        stable one.
+      placeholder: https://arxiv.org/abs/...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: role
+    attributes:
+      label: Your role
+      description: >-
+        Asked because it changes what happens next, not to rank the request.
+        An author can attest to their own work; a reader asking about someone
+        else's claim starts the contact step described above.
+      options:
+        - I am an author of this claim
+        - I am a reader with no involvement
+        - Other (explain below)
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-tracked
+    attributes:
+      label: What do you want tracked
+      description: >-
+        In your own words. Useful things to say: which specific statement
+        matters, what evidence already exists, what you think nobody has
+        checked yet. Plain language is fine — the vocabulary is our job.
+      placeholder: |
+        The statement I care about is Theorem 3.2. There is a Lean
+        formalization at <link>, but I do not think anyone has checked whether
+        it proves the same thing the paper states.
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        Filing this does not commit anyone to creating a record, and a request
+        that goes nowhere is closed without a public judgement attached to it.

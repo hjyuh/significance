@@ -1,0 +1,127 @@
+{% extends "base.html.jinja" %}
+{% import "macros.jinja" as m %}
+
+{% block title %}Request a record — Significance{% endblock %}
+{% block topline_meta %}Ask for a claim-state record{% endblock %}
+
+{#
+  Two actions, no backend. The site is static and stays static: a form posting
+  somewhere would need a server, a store, and a policy about what happens to
+  what people type into it, none of which this project has. A GitHub issue and
+  an email are both places where the request is visible to the person making it
+  and can be withdrawn by them.
+
+  The GitHub link carries `?template=`, which opens the form at
+  .github/ISSUE_TEMPLATE/record-request.yml with its three fields already
+  labelled. The mailto carries the same three fields as a body, so somebody who
+  will not open a GitHub account is not asked to answer a different set of
+  questions.
+#}
+{% set repo = site.get('repository_url') %}
+{% set template_name = site.get('record_request_template', 'record-request.yml') %}
+{% set issue_url = (repo ~ '/issues/new?template=' ~ template_name) if repo else None %}
+{% set contact = site.get('contact_email')|safe_email %}
+{% set mail_subject = 'Record request' %}
+{% set mail_body -%}
+Link to the claim:
+
+Your role (author / reader / other):
+
+What you want tracked:
+
+{% endset %}
+
+{% block content %}
+
+<section class="band">
+  <p class="lbl">Request a record</p>
+  <h1 class="claim-text">Ask for a claim to be tracked.</h1>
+  <p class="prose">
+    A record says what was claimed, who asserted it, what evidence exists, and
+    what nobody has checked yet. It does not say whether the mathematics is
+    right, and nothing in it ever will. If that is the thing you need, this is
+    how to ask for it — you do not need to know any of this project's
+    vocabulary to file the request. Putting it in plain words is our job.
+  </p>
+</section>
+
+<section class="band">
+  <p class="lbl">Before you ask — records about other people</p>
+  <p class="prose">
+    A record about a living person's claim is filed only after that person has
+    been contacted. If they decline, no record is filed, and nothing anywhere
+    in this project records that they were asked or that they said no: there is
+    no decline list, in public, in private, or in maintainer notes. Aggregate
+    counts of outreach may be published; individuals who said no never appear
+    in them. This mirrors the outreach rules in the project's moderation
+    policy, and it applies to requests as much as to anything the maintainers
+    initiate themselves.
+  </p>
+  <p class="prose">
+    Asking about your own claim skips all of that. You are the person who would
+    otherwise be contacted.
+  </p>
+</section>
+
+<section class="band">
+  <p class="lbl">Three things we need</p>
+  <dl class="facts">
+    <dt>The claim</dt>
+    <dd>A link to where it actually lives — paper, preprint, repository, announcement, post. The most stable one, if it is in several places.</dd>
+    <dt>Your role</dt>
+    <dd>Author, reader, or something else. This changes what happens next rather than how the request is ranked: an author can attest to their own work, and a reader asking about someone else's claim starts the contact step above.</dd>
+    <dt>What to track</dt>
+    <dd>In your own words. Which statement matters, what evidence you know of, what you think nobody has checked.</dd>
+  </dl>
+</section>
+
+<section class="band">
+  <p class="lbl">Action — open an issue</p>
+  {% if issue_url %}
+  <p class="prose">
+    {{ m.external_link(issue_url, 'Open a prefilled record request on GitHub') }} —
+    the three fields above, already labelled. Needs a GitHub account.
+  </p>
+  {% else %}
+  <p class="prose">
+    No repository URL is configured for this build, so the prefilled issue link
+    is not shown. It is a one-line value in <code>data/site.yaml</code>.
+  </p>
+  {% endif %}
+</section>
+
+<section class="band">
+  <p class="lbl">Action — send it by email</p>
+  {% if contact %}
+  <p class="prose">
+    <a href="mailto:{{ contact }}?subject={{ mail_subject|urlencode }}&amp;body={{ mail_body|urlencode }}">Email the same three fields</a>,
+    already templated in the message body. No account needed.
+  </p>
+  {% else %}
+  <p class="prose">
+    No contact address is configured for this build, so there is no email link
+    to offer. Rather than link somewhere that goes nowhere, here is the message
+    to send once an address exists — the same three fields, in the same order:
+  </p>
+  <pre class="mail-template">Subject: {{ mail_subject }}
+
+{{ mail_body }}</pre>
+  <p class="meta">
+    Setting <code>contact_email</code> in <code>data/site.yaml</code> turns this
+    into a mailto link. It is deliberately unset rather than guessed: a link to
+    an invented address would let somebody believe they had asked when nobody
+    received anything.
+  </p>
+  {% endif %}
+</section>
+
+<section class="band what-this-does-not-establish">
+  <p class="lbl">What filing a request does not do</p>
+  <ul>
+    <li>It does not commit anyone to creating a record.</li>
+    <li>A request that goes nowhere is closed without a public judgement attached to it.</li>
+    <li>A record, if one is created, still asserts nothing about whether the mathematics is right.</li>
+  </ul>
+</section>
+
+{% endblock %}

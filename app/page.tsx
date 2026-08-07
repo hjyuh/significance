@@ -28,7 +28,12 @@ export default function Home() {
           SIGNIFICANCE
         </Link>
         <p>Claim-state records for AI-assisted mathematics</p>
-        <Link href="/submit">Submit a record →</Link>
+        <nav className="masthead-nav" aria-label="Site">
+          <Link href="/submit">Submit a record →</Link>
+          {/* Rendered by the Python renderer, not by this shell. The shell
+              links to it; it never restates what the page says. */}
+          <a href="/request/">Request a record →</a>
+        </nav>
       </header>
 
       <section className="hero">
