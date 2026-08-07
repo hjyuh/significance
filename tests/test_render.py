@@ -426,3 +426,19 @@ def test_a_definition_stating_a_verdict_is_refused(tmp_path):
     assert any(
         v.rule == "verdict-language" for violations in result.skipped.values() for v in violations
     )
+
+
+def test_placeholder_fill_slots_never_reach_the_page(tmp_path):
+    # The [FILL] artifact slots exist so an editor can see which values a row
+    # wants. They are not for readers: the renderer's placeholder branch prints
+    # the row's name and the "nobody has looked" line and nothing else, so the
+    # page never shows a half-filled table of markers.
+    out = tmp_path / "site"
+    build_site(RECORDS_DIR, out)
+    page = (out / "boards" / "ten-results" / "index.html").read_text(encoding="utf-8")
+
+    board = load_board(REPO_ROOT / "boards" / "ten-results.yaml")
+    placeholders = [r for r in board["rows"] if r["state"] == "placeholder"]
+    # One marker per row, from its name slot -- not three.
+    assert page.count("[FILL: verify from release]") == len(placeholders)
+    assert "Manuscript" not in page.split("Nobody here has researched")[1]

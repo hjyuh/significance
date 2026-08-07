@@ -104,49 +104,80 @@ rows:
       asserted_by: significance-editor
       asserted_at: "2026-08-07T00:00:00Z"
 
-  # Nine rows nobody here has researched. They carry a name slot and nothing
-  # else: no claim, no artifact links, no status. See the note at the top.
+  # Nine rows nobody here has researched. They carry the slots an editor has
+  # to fill -- a name and two artifact links, all marked [FILL] -- and no
+  # claim and no status, because those two carry attribution and a signed
+  # placeholder is a signature on nothing. None of these slots reaches the
+  # page: the renderer prints the row's name and says nobody has looked yet.
+  # See the note at the top.
   - id: row-02
     state: placeholder
     result: "[FILL: verify from release]"
     record: null
+    artifacts:
+      manuscript: "[FILL: verify from release]"
+      lean_target: "[FILL: verify from release]"
 
   - id: row-03
     state: placeholder
     result: "[FILL: verify from release]"
     record: null
+    artifacts:
+      manuscript: "[FILL: verify from release]"
+      lean_target: "[FILL: verify from release]"
 
   - id: row-04
     state: placeholder
     result: "[FILL: verify from release]"
     record: null
+    artifacts:
+      manuscript: "[FILL: verify from release]"
+      lean_target: "[FILL: verify from release]"
 
   - id: row-05
     state: placeholder
     result: "[FILL: verify from release]"
     record: null
+    artifacts:
+      manuscript: "[FILL: verify from release]"
+      lean_target: "[FILL: verify from release]"
 
   - id: row-06
     state: placeholder
     result: "[FILL: verify from release]"
     record: null
+    artifacts:
+      manuscript: "[FILL: verify from release]"
+      lean_target: "[FILL: verify from release]"
 
   - id: row-07
     state: placeholder
     result: "[FILL: verify from release]"
     record: null
+    artifacts:
+      manuscript: "[FILL: verify from release]"
+      lean_target: "[FILL: verify from release]"
 
   - id: row-08
     state: placeholder
     result: "[FILL: verify from release]"
     record: null
+    artifacts:
+      manuscript: "[FILL: verify from release]"
+      lean_target: "[FILL: verify from release]"
 
   - id: row-09
     state: placeholder
     result: "[FILL: verify from release]"
     record: null
+    artifacts:
+      manuscript: "[FILL: verify from release]"
+      lean_target: "[FILL: verify from release]"
 
   - id: row-10
     state: placeholder
     result: "[FILL: verify from release]"
     record: null
+    artifacts:
+      manuscript: "[FILL: verify from release]"
+      lean_target: "[FILL: verify from release]"

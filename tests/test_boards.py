@@ -43,9 +43,13 @@ def test_the_shipped_board_fills_exactly_one_row():
     for row in board["rows"]:
         if row["state"] != "placeholder":
             continue
+        # Slots an editor fills, all marked, and nothing that carries a
+        # signature: claim and status are attributed, and a signed placeholder
+        # is a signature on nothing.
         assert "claim" not in row, "a placeholder row must assert nothing"
         assert "status" not in row
         assert row["result"].lower().startswith("[fill")
+        assert all(v.lower().startswith("[fill") for v in row["artifacts"].values())
 
 
 def test_the_board_row_matches_the_record_it_links():
