@@ -473,3 +473,41 @@ ul.history .event-meta { display: block; color: var(--muted); }
   .row .k { width: auto; }
   .records-index > li { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* --- plain-language summary -------------------------------------------------
+   The first block on a record page, for a reader who does not know this
+   project's vocabulary. Deliberately the calmest thing on the page: no
+   accent border, no background tint, no colour that could be read as a
+   status light. It reads as prose because it is prose — a restatement, not
+   a finding. The only visual weight it carries is being first. */
+.plain-summary dl.plain-summary-list {
+  display: grid;
+  grid-template-columns: minmax(0, 200px) minmax(0, 1fr);
+  gap: 10px 24px;
+  margin: 0 0 14px;
+}
+
+.plain-summary dl.plain-summary-list > div {
+  display: contents;
+}
+
+.plain-summary dt {
+  margin: 0;
+  font-size: 13px;
+  color: var(--dim);
+}
+
+.plain-summary dd {
+  margin: 0;
+  max-width: 62ch;
+  color: var(--fg-body);
+  line-height: 1.6;
+}
+
+@media (max-width: 720px) {
+  .plain-summary dl.plain-summary-list {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2px 0;
+  }
+  .plain-summary dt { margin-top: 10px; }
+}

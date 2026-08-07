@@ -48,6 +48,7 @@
       "description": "Map of party id to identity. Every asserted_by elsewhere in the record must reference a key declared here (enforced by the validator, not this schema)."
     },
     "claim": { "$ref": "#/$defs/claim" },
+    "plain_summary": { "$ref": "#/$defs/plain_summary" },
     "manuscript": { "$ref": "#/$defs/manuscript" },
     "evidence": {
       "type": "array",
@@ -79,6 +80,11 @@
     "basis": {
       "type": "string",
       "enum": ["source_quote", "author_attestation", "editorial_inference", "machine_result"]
+    },
+    "digest_basis": {
+      "description": "Basis values permitted for a plain-language restatement. A digest asserts no new fact: it restates material already present in this record, in fewer and plainer words, and is attributable to whoever wrote the restatement. It is deliberately a separate enum rather than a new member of `basis`, so that nothing carrying evidentiary weight — a correspondence claim, an execution receipt, a claim text — can ever be asserted on the strength of a restatement.",
+      "type": "string",
+      "enum": ["digest", "editorial_inference"]
     },
     "attested_basis": {
       "description": "Basis values permitted for claims of correspondence between formal and informal statements. Correspondence is attested, never machine-asserted.",
@@ -193,6 +199,30 @@
           "type": "array",
           "items": { "$ref": "#/$defs/attributed_value" }
         }
+      }
+    },
+
+    "plain_summary": {
+      "description": "A four-question plain-words restatement for a reader who does not know this project's vocabulary: what is claimed, what has been checked, what has not been checked, and as of when. It is optional, it is signed like everything else, and it is a digest — it may restate what the record already says and may never add to it. The word caps and the refusal of verdict language are enforced by `significance validate`, not by this schema.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["claimed", "checked", "not_checked", "basis", "asserted_by", "asserted_at"],
+      "properties": {
+        "claimed": { "type": "string", "minLength": 1 },
+        "checked": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A plain restatement of the strongest evidence in this record. Not a judgement about whether the claim is right — the strongest evidence a record holds may still be 'reported, not reproduced'."
+        },
+        "not_checked": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A plain restatement of what remains open: the record's open invitations and the gaps its evidence entries name. Required rather than optional, because a summary that lists only what was checked reads as an endorsement."
+        },
+        "basis": { "$ref": "#/$defs/digest_basis" },
+        "asserted_by": { "$ref": "#/$defs/party_id" },
+        "asserted_at": { "$ref": "#/$defs/iso_datetime" },
+        "locator": { "$ref": "#/$defs/locator" }
       }
     },
 

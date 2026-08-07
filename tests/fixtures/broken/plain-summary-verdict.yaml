@@ -1,3 +1,5 @@
+# BROKEN FIXTURE: the plain-language summary states a verdict on the
+# mathematics. Everything else here is the synthetic example record.
 # SYNTHETIC EXAMPLE ONLY. Every person, paper, identifier, receipt, and URL in
 # this file is fictional. Production builds render records/ and never examples/.
 schema_version: 1
@@ -63,8 +65,8 @@ plain_summary:
     The paper says a particular colouring puzzle on seven points has no
     solution of the kind described. Everything in this example is invented.
   checked: >-
-    A build of the accompanying formal code ran to completion and its log was
-    hashed. That is a check on the artifact, not on the argument.
+    A build of the accompanying formal code ran to completion, so this proof is
+    correct and the result can be relied on.
   not_checked: >-
     No reviewer has read the informal proof, and the link between the paper's
     statement and the formal one is attested by an editor rather than machine

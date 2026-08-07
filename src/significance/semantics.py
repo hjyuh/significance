@@ -7,6 +7,7 @@ a base revision.
 
 from __future__ import annotations
 
+import re
 from collections import defaultdict
 
 from significance.pathfmt import format_path, walk
@@ -14,6 +15,52 @@ from significance.violations import Violation
 
 _PROSE_KEYS = {"text", "value", "inline", "quote", "description", "note"}
 _FORBIDDEN_WORDS = ("verified", "proven")
+
+# Plain-language blocks get a stricter rule than the record-wide one above,
+# and it applies only to them.
+#
+# The record-wide check bans "verified" and "proven" anywhere in rendered prose.
+# It cannot be widened to the words below without breaking legitimate record
+# content: a claim's own text may perfectly well be "...if and only if the
+# conjecture is false", and a locator quote reproduces whatever the source
+# actually said, verdict words and all. Quoting someone else's verdict is
+# reporting; writing your own is what this project does not do.
+#
+# The plain-language blocks are different in kind. They are *ours* — a digest
+# written by an editor in their own words, with no locator to answer for — and
+# they are the first thing a non-specialist reads, which is exactly where a
+# stray "this looks correct" would be taken as the site's finding. So in those
+# blocks the words are refused outright.
+#
+# `valid` and `invalid` are deliberately absent: "a valid locator", "an invalid
+# record" are ordinary vocabulary here and banning them would produce false
+# refusals in the one place the writer is trying hardest to be plain.
+_VERDICT_WORDS = ("correct", "incorrect", "true", "false", "proven", "verified", "refuted")
+_VERDICT_RE = re.compile(rf"\b({'|'.join(_VERDICT_WORDS)})(ly|ness)?\b", re.IGNORECASE)
+
+
+def verdict_violations(text: str, location: str) -> list[Violation]:
+    """Verdict words found in a plain-language field.
+
+    Reported per distinct word rather than per occurrence, so a paragraph using
+    "correct" three times produces one actionable message instead of three
+    identical ones.
+    """
+    found = sorted({m.group(0).lower() for m in _VERDICT_RE.finditer(text)})
+    return [
+        Violation(
+            "verdict-language",
+            f"plain-language field contains the verdict word '{word}'. This block is a "
+            "restatement of the record, not a finding about the mathematics — if the source "
+            "itself uses this word, quote it in a field that carries a locator instead.",
+            location,
+        )
+        for word in found
+    ]
+
+
+def word_count(text: str) -> int:
+    return len(text.split())
 
 
 def check_asserted_by_parties(record: dict) -> list[Violation]:
@@ -71,6 +118,56 @@ def check_forbidden_language(record: dict) -> list[Violation]:
                             format_path(path + (key,)),
                         )
                     )
+    return violations
+
+
+# Roughly two sentences. The cap is a drafting discipline rather than a
+# measurement: the block exists to be read in thirty seconds by somebody who
+# does not know this vocabulary, and a paragraph that runs longer has stopped
+# being that. Enforced here rather than in the schema because JSON Schema
+# cannot count words.
+PLAIN_SUMMARY_MAX_WORDS = 60
+
+PLAIN_SUMMARY_FIELDS = ("claimed", "checked", "not_checked")
+
+
+def check_plain_summary(record: dict) -> list[Violation]:
+    """The thirty-second strip may restate the record and may never exceed it."""
+    summary = record.get("plain_summary")
+    if not isinstance(summary, dict):
+        return []
+
+    violations: list[Violation] = []
+    for field in PLAIN_SUMMARY_FIELDS:
+        value = summary.get(field)
+        if not isinstance(value, str):
+            continue  # presence and type are the schema's job
+        location = f"plain_summary.{field}"
+        count = word_count(value)
+        if count > PLAIN_SUMMARY_MAX_WORDS:
+            violations.append(
+                Violation(
+                    "plain-summary-too-long",
+                    f"{count} words, over the {PLAIN_SUMMARY_MAX_WORDS}-word cap for a "
+                    "plain-language summary field",
+                    location,
+                )
+            )
+        violations.extend(verdict_violations(value, location))
+
+    # The strip must never claim more than the record. A record carrying open
+    # invitations has, by its own account, unfinished work in it; a summary of
+    # that record whose "not checked" line is blank has quietly dropped the one
+    # part a reader most needs.
+    if record.get("open_invitations") and not (summary.get("not_checked") or "").strip():
+        violations.append(
+            Violation(
+                "plain-summary-understates-open-work",
+                "the record carries open invitations but plain_summary.not_checked is empty",
+                "plain_summary.not_checked",
+            )
+        )
+
     return violations
 
 
@@ -225,6 +322,7 @@ def semantic_violations(record: dict) -> list[Violation]:
         *check_asserted_by_parties(record),
         *check_source_quote_locators(record),
         *check_forbidden_language(record),
+        *check_plain_summary(record),
         *check_freshness_recomputation(record),
         *check_execution_receipt_asserted_by_automation(record),
     ]

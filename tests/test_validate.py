@@ -9,6 +9,8 @@ from pathlib import Path
 
 import pytest
 
+from significance.records import load_record
+from significance.semantics import PLAIN_SUMMARY_MAX_WORDS, semantic_violations
 from significance.validate import validate_paths
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -36,6 +38,7 @@ def test_valid_record_has_no_violations():
         ("derived-value-not-matching-recomputation.yaml", "derived-value-mismatch"),
         ("bare-result-passed-no-receipt.yaml", "bare-machine-result"),
         ("execution-receipt-asserted-by-human.yaml", "execution-receipt-not-automation"),
+        ("plain-summary-verdict.yaml", "verdict-language"),
     ],
 )
 def test_single_record_broken_fixture(fixture_name, expected_rule):
@@ -126,3 +129,59 @@ def test_base_as_git_ref_with_non_ascii_content_is_clean(tmp_path):
 
     violations = validate_paths([str(records_dir / "r.yaml")], base="HEAD")
     assert violations == []
+
+
+# --- the plain-language summary (Feature 1) ---------------------------------
+#
+# The strip is the first thing a non-specialist reads, so the rules on it are
+# about what it may not do: exceed the record, run long enough to stop being a
+# summary, or state a verdict. The verdict fixture is in the parametrized list
+# above; these cover the two rules a fixture cannot express as neatly.
+
+
+def _record_with_plain_summary(**overrides):
+    record = load_record(EXAMPLE_RECORD)
+    record["plain_summary"] = {**record["plain_summary"], **overrides}
+    return record
+
+
+def test_plain_summary_word_cap_is_enforced():
+    record = _record_with_plain_summary(claimed=" ".join(["word"] * (PLAIN_SUMMARY_MAX_WORDS + 1)))
+    rules = {v.rule for v in semantic_violations(record)}
+    assert rules == {"plain-summary-too-long"}
+
+
+def test_plain_summary_at_the_cap_is_allowed():
+    record = _record_with_plain_summary(claimed=" ".join(["word"] * PLAIN_SUMMARY_MAX_WORDS))
+    assert semantic_violations(record) == []
+
+
+def test_plain_summary_may_not_hide_open_work():
+    # A record carrying open invitations has unfinished work in it by its own
+    # account. A summary of that record whose "not checked" line is blank has
+    # dropped the part a reader most needs, which is the one way this block
+    # could claim more than the record it summarises.
+    record = _record_with_plain_summary(not_checked="   ")
+    assert record.get("open_invitations"), "fixture must carry open invitations"
+    rules = {v.rule for v in semantic_violations(record)}
+    assert rules == {"plain-summary-understates-open-work"}
+
+
+def test_verdict_words_are_refused_only_in_plain_language_blocks():
+    # The record-wide rule cannot be widened to these words: a claim's own text
+    # may legitimately be "...if and only if the conjecture is false", and a
+    # locator quote reproduces whatever the source said. Quoting someone else's
+    # verdict is reporting; writing your own is what this project does not do.
+    record = load_record(EXAMPLE_RECORD)
+    record["claim"]["text"]["value"] = "The conjecture is false for every n > 3."
+    assert semantic_violations(record) == []
+
+    record["plain_summary"]["claimed"] = "The conjecture is false for every n > 3."
+    assert {v.rule for v in semantic_violations(record)} == {"verdict-language"}
+
+
+def test_verdict_violation_is_reported_once_per_word():
+    record = _record_with_plain_summary(checked="Correct, correct, and correct again; also true.")
+    violations = semantic_violations(record)
+    assert {v.rule for v in violations} == {"verdict-language"}
+    assert len(violations) == 2, [str(v) for v in violations]

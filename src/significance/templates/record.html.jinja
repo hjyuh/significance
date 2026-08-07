@@ -12,6 +12,42 @@
 {% block content %}
 <article class="record">
 
+  {% set ps = record.get('plain_summary') %}
+  {% if ps %}
+  {# First content block on the page, above the formal dossier, because the
+     reader this is for stops reading before they reach the ledger. It is
+     styled calm on purpose: no banner, no colour, nothing that could be read
+     as a status light. The label names the writer, because an unsigned plain
+     summary would read as the site speaking. #}
+  <section class="band plain-summary" aria-labelledby="plain-summary-heading">
+    <p class="lbl" id="plain-summary-heading">
+      Plain-language summary — written by {{ ps.asserted_by }}, not a verdict
+    </p>
+    <dl class="plain-summary-list">
+      <div>
+        <dt>What is claimed</dt>
+        <dd>{{ ps.claimed }}</dd>
+      </div>
+      <div>
+        <dt>What has been checked</dt>
+        <dd>{{ ps.checked }}</dd>
+      </div>
+      <div>
+        <dt>What has not been checked</dt>
+        <dd>{{ ps.not_checked }}</dd>
+      </div>
+      <div>
+        <dt>As of</dt>
+        <dd>
+          {{ fr.get('checked_at', '?') }}
+          {%- if fr.get('result') %} · freshness {{ fr.result }}{% endif %}
+        </dd>
+      </div>
+    </dl>
+    <p class="meta">{{ m.attribution(ps) }} This block restates the record below in plainer words. It adds nothing to it.</p>
+  </section>
+  {% endif %}
+
   <div class="band claim-band">
     {% if fr.get('result') in ('stale', 'unknown') %}
     <div class="banner banner-{{ fr.result }}">

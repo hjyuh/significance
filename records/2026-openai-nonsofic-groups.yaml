@@ -1,6 +1,6 @@
 schema_version: 1
 record_id: 2026-openai-nonsofic-groups
-record_version: 2
+record_version: 3
 record_state: active
 
 freshness:
@@ -53,6 +53,29 @@ claim:
       locator:
         page: 80
         quote: "Theorem 1.1 does not determine whether L_F2(1,2)× is hyperlinear."
+
+# A restatement of this record in plain words, for a reader who does not know
+# what a "correspondence attestation" or an "axiom policy" is. Every sentence
+# below points at something further down this file; none of it adds a fact.
+plain_summary:
+  claimed: >-
+    OpenAI says one specific infinite group — the unit group of a small algebra
+    built from two symbols — cannot be approximated by finite shuffles. That
+    property is called soficity, and the manuscript states this group does not
+    have it.
+  checked: >-
+    Significance rebuilt the published Lean code at a pinned commit and recorded
+    that the build and the axiom check ran to completion, with both logs hashed.
+    The manuscript file was downloaded and hashed. These are checks on
+    artifacts, not on the mathematics.
+  not_checked: >-
+    Nobody has traced the manuscript's Theorem 1.1 to the statement the Lean
+    code actually contains; the repository's formal target is a broader
+    existence statement. No mathematician's assessment of the argument is
+    recorded here. The three open invitations name this work.
+  basis: digest
+  asserted_by: significance-editor
+  asserted_at: "2026-08-07T00:00:00Z"
 
 manuscript:
   url: "https://cdn.openai.com/pdf/ten-proofs-oai.pdf"
@@ -179,3 +202,8 @@ history:
     at: "2026-08-02T19:33:28Z"
     by: significance-editor
     note: "Added the independent Significance CI build and axiom-policy receipts from the maiden Lean adapter run; the earlier reported-artifact entry is retained as history."
+  - id: evt-plain-summary-added
+    type: digest_added
+    at: "2026-08-07T00:00:00Z"
+    by: significance-editor
+    note: "Added a plain-language summary restating this record's claim, its strongest evidence, and its open work. No claim, evidence entry, or attribution was changed."
