@@ -1,0 +1,120 @@
+# The project's vocabulary, in one sentence each.
+#
+# Location note: the build prompt specified site/glossary.yaml. `site/` is the
+# renderer's default output directory and is gitignored, so a source file put
+# there would never be committed and would sit inside generated output. It
+# lives beside data/site.yaml instead, which is where the other hand-written
+# non-record data already is.
+#
+# Every definition is written for somebody who has just met the word on a
+# record page and wants to keep reading. That means: no other jargon inside the
+# definition unless that word is also in this file, and no definition that
+# quietly asserts more than the thing it defines. The same verdict lint that
+# governs the plain-language blocks runs over these.
+
+terms:
+  - slug: record
+    term: "record"
+    definition: >-
+      One page about one mathematical claim, holding what was claimed, who said
+      it, what evidence exists, and what nobody has done yet.
+
+  - slug: claim
+    term: "claim"
+    definition: >-
+      The specific mathematical statement a record is about, quoted from
+      wherever its author actually stated it.
+
+  - slug: manuscript-hash
+    term: "manuscript hash"
+    definition: >-
+      A fingerprint of the exact file a record was built from, so that a later
+      reader can tell whether they are looking at the same document.
+
+  - slug: manuscript-version
+    term: "manuscript version"
+    definition: >-
+      The publisher's own name for a revision, such as an arXiv v3, which is
+      compared before hashes because a regenerated file can differ byte for
+      byte without anything having changed.
+
+  - slug: evidence-entry
+    term: "evidence entry"
+    definition: >-
+      One piece of material a record holds about its claim — a formal
+      artifact, a rebuild, a review — each with its own attribution and its own
+      limits.
+
+  - slug: basis
+    term: "basis"
+    definition: >-
+      What kind of thing a statement in a record is: a quote from a source,
+      something an author attested, an editor's inference, a machine's output,
+      or a restatement of material already in the record.
+
+  - slug: asserted-by
+    term: "asserted_by"
+    definition: >-
+      Which named party is answerable for a statement. Nothing in a record is
+      unattributed, including the plain-language parts.
+
+  - slug: attestation
+    term: "attestation"
+    definition: >-
+      A person putting their name to a statement that no machine can settle,
+      such as whether formal code says the same thing as a paper.
+
+  - slug: execution-receipt
+    term: "execution receipt"
+    definition: >-
+      The record of a program actually having been run: which tool, which
+      version, on what, when, and the fingerprint of the log it produced.
+
+  - slug: freshness
+    term: "freshness"
+    definition: >-
+      Whether the record has been checked against the version of the source
+      that is currently published. It is computed, not chosen.
+
+  - slug: stale
+    term: "stale"
+    definition: >-
+      The source has moved on since this record was last checked against it.
+      It says nothing about whether the mathematics changed.
+
+  - slug: lifecycle
+    term: "lifecycle"
+    definition: >-
+      The state the record's author has put it in — active, superseded, or
+      withdrawn — which describes the record and never the standing of the
+      mathematics.
+
+  - slug: withdrawn
+    term: "withdrawn"
+    definition: >-
+      The record has been taken out of use by whoever maintains it. The page
+      and its history stay where they are.
+
+  - slug: open-invitation
+    term: "open invitation"
+    definition: >-
+      A bounded task nobody has done yet, named in the record so that somebody
+      else can pick it up.
+
+  - slug: digestion
+    term: "digestion"
+    definition: >-
+      A restatement of a claim for a particular audience, signed by whoever
+      wrote it and kept separate from the claim itself.
+
+  - slug: stratum
+    term: "stratum"
+    definition: >-
+      Which layer a statement comes from — the author, an editor, or the wider
+      community. Layers are always labelled and never merged into one voice.
+
+  - slug: coverage
+    term: "coverage"
+    definition: >-
+      How much of a claim the evidence actually reaches. Formal code covering
+      one lemma of a paper is real coverage of that lemma and no more.

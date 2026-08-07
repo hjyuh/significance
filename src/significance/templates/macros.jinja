@@ -28,3 +28,25 @@
 {% macro runner_row(r) -%}
 <div class="row"><span class="k">runner</span><span class="v">{{ r.get('tool', '?') }} {{ r.get('tool_version', '') }} · image <code>{{ r.get('runner_image_digest', '?') }}</code> · asserted by {{ r.get('asserted_by', '?') }}</span></div>
 {%- endmacro %}
+
+{# A glossary term where it is actually met, rather than only on the glossary
+   page nobody visits first.
+
+   A link, not an <abbr>. `title` alone shows a tooltip on hover and is
+   unreachable by keyboard in every major browser, so it fails the one group
+   most likely to need it; and <details> cannot legally sit inside a
+   paragraph. A link is focusable, works with no JavaScript at all, and its
+   `title` still gives the hover definition for a mouse user. The definition
+   itself is the tooltip, so a reader gets the answer without leaving the page
+   and can follow the link if one sentence was not enough.
+
+   Falls back to plain text when there is no glossary in this build, so a
+   build without one has no dead links. #}
+{% macro term(slug, label, glossary, links) -%}
+{%- set entry = glossary.get(slug) if glossary else None -%}
+{%- if entry and links and links.get('glossary') -%}
+<a class="term" href="{{ links.glossary }}#term-{{ slug }}" title="{{ entry.definition }}">{{ label or entry.term }}</a>
+{%- else -%}
+{{ label or slug }}
+{%- endif -%}
+{%- endmacro %}

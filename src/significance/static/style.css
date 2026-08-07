@@ -632,3 +632,41 @@ ol.board-rows {
   font-family: var(--mono);
   font-size: 14px;
 }
+
+/* --- glossary ---------------------------------------------------------------
+   Terms in the page are links, not <abbr>: `title` alone is unreachable by
+   keyboard in every major browser, so it fails exactly the readers most likely
+   to need the definition. The dotted underline says "there is more here"
+   without turning the label into a call to action. */
+a.term {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px dotted var(--edge);
+}
+
+a.term:hover,
+a.term:focus { color: var(--fg-strong); border-bottom-color: var(--fg-strong); }
+
+dl.glossary { margin: 0; }
+
+dl.glossary > div {
+  padding: 12px 0;
+  border-top: 1px solid var(--hair);
+}
+
+dl.glossary > div:first-child { border-top: none; }
+dl.glossary > div:target { border-left: 2px solid var(--note); padding-left: 12px; }
+
+dl.glossary dt {
+  margin: 0 0 4px;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--fg-strong);
+}
+
+dl.glossary dd {
+  margin: 0;
+  max-width: 66ch;
+  color: var(--fg-body);
+  line-height: 1.6;
+}

@@ -31,6 +31,7 @@ from significance.boards import (
     load_board,
 )
 from significance.records import load_record
+from significance.semantics import verdict_violations
 from significance.validate import collect_yaml_files, validate_paths
 from significance.violations import Violation
 
@@ -97,6 +98,42 @@ def load_site_config(path: str | Path | None = None) -> dict:
         return {}
     with open(config_path, "r", encoding="utf-8") as f:
         return _yaml.load(f) or {}
+
+
+def load_glossary(path: str | Path | None = None) -> dict:
+    """Term slug -> {term, definition}, or empty when there is no glossary.
+
+    Empty is a working state: the nav omits the page and the term links in the
+    record templates fall back to plain text, so a build without a glossary
+    produces no dead links and no bare tooltips.
+    """
+    glossary_path = Path(path) if path is not None else _DATA_DIR / "glossary.yaml"
+    if not glossary_path.is_file():
+        return {}
+    with open(glossary_path, "r", encoding="utf-8") as f:
+        document = _yaml.load(f) or {}
+    entries = document.get("terms") or []
+    return {
+        entry["slug"]: entry
+        for entry in entries
+        if isinstance(entry, dict)
+        and isinstance(entry.get("slug"), str)
+        and isinstance(entry.get("term"), str)
+        and isinstance(entry.get("definition"), str)
+    }
+
+
+def glossary_violations(glossary: dict) -> list[Violation]:
+    """Definitions answer to the same verdict rule as the plain-language blocks.
+
+    They are the same kind of writing — ours, in our own words, aimed at
+    somebody who has just met the vocabulary — and a definition that slipped a
+    verdict in would put it on every page the term appears on.
+    """
+    violations: list[Violation] = []
+    for slug, entry in sorted(glossary.items()):
+        violations.extend(verdict_violations(entry["definition"], f"terms[{slug}].definition"))
+    return violations
 
 
 def site_links(
@@ -167,6 +204,7 @@ def build_site(
     pages_out: str | Path | None = None,
     site_config: str | Path | None = None,
     boards_dir: str | Path | None = None,
+    glossary_path: str | Path | None = None,
 ) -> BuildResult:
     records_dir = Path(records_dir)
     out_dir = Path(out_dir)
@@ -204,10 +242,29 @@ def build_site(
     boards.sort(key=lambda b: b["board_id"])
     board_ids = [b["board_id"] for b in boards]
 
+    glossary = load_glossary(glossary_path)
+    glossary_problems = glossary_violations(glossary)
+    if glossary_problems:
+        # Same rule as a board or a record that does not validate: not
+        # rendered. A definition carrying a verdict would put it on every
+        # page its term appears on, which is the widest blast radius of
+        # anything in this build.
+        result_skipped_boards[str(glossary_path or _DATA_DIR / 'glossary.yaml')] = glossary_problems
+        glossary = {}
+
     static_out = out_dir / "static"
     static_out.mkdir(parents=True, exist_ok=True)
     for asset in _STATIC_DIR.glob("*"):
         shutil.copy(asset, static_out / asset.name)
+
+    def links_for(prefix: str) -> dict:
+        """This build's nav, from the point of view of a page at `prefix`."""
+        return site_links(
+            prefix,
+            deployed=deployed,
+            board_ids=board_ids,
+            has_glossary=bool(glossary),
+        )
 
     env = _environment()
     record_template = env.get_template("record.html.jinja")
@@ -232,8 +289,9 @@ def build_site(
         record_id = record["record_id"]
         html = record_template.render(
             record=record,
+            glossary=glossary,
             root_prefix="../",
-            links=site_links("../", deployed=deployed, board_ids=board_ids),
+            links=links_for("../"),
         )
         _write_page(out_dir / record_id, html)
 
@@ -244,7 +302,7 @@ def build_site(
     index_html = index_template.render(
         records=built_records,
         root_prefix="",
-        links=site_links("", deployed=deployed, board_ids=board_ids),
+        links=links_for(""),
     )
     (out_dir / "index.html").write_text(index_html, encoding="utf-8")
 
@@ -253,7 +311,7 @@ def build_site(
     # stylesheet lives under the records root, which no relative path reaches
     # from the site root, so it is addressed absolutely.
     pages_prefix = "/records/" if deployed else "../"
-    pages_links = site_links("../", deployed=deployed, board_ids=board_ids)
+    pages_links = links_for("../")
 
     _write_page(
         pages_dir / "request",
@@ -265,6 +323,18 @@ def build_site(
     )
     result.pages.append("request")
 
+    if glossary:
+        _write_page(
+            pages_dir / "glossary",
+            env.get_template("glossary.html.jinja").render(
+                glossary=glossary,
+                terms=sorted(glossary.values(), key=lambda e: e["term"].lower()),
+                root_prefix=pages_prefix,
+                links=pages_links,
+            ),
+        )
+        result.pages.append("glossary")
+
     # A board page sits two directories below its root (boards/<id>/), so its
     # relative prefix is one level deeper than the other auxiliary pages.
     board_prefix = "/records/" if deployed else "../../"
@@ -275,7 +345,7 @@ def build_site(
             board_template.render(
                 board=board,
                 root_prefix=board_prefix,
-                links=site_links(board_prefix, deployed=deployed, board_ids=board_ids),
+                links=links_for(board_prefix),
             ),
         )
         result.pages.append(f"board:{board['board_id']}")

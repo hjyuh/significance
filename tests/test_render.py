@@ -16,7 +16,7 @@ from pathlib import Path
 
 from significance.boards import load_board
 from significance.records import load_record
-from significance.render import build_site, safe_href
+from significance.render import build_site, load_glossary, safe_href
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 RECORDS_DIR = REPO_ROOT / "records"
@@ -180,10 +180,24 @@ def test_nav_omits_a_page_this_build_did_not_write(tmp_path):
     # A nav entry pointing at a page that was not built is a 404 the visitor
     # blames on themselves. The link and the page arrive together or not at all.
     out = tmp_path / "site"
-    build_site(RECORDS_DIR, out)
+    build_site(
+        RECORDS_DIR,
+        out,
+        glossary_path=tmp_path / "absent.yaml",
+        boards_dir=tmp_path / "none",
+    )
     index = (out / "index.html").read_text(encoding="utf-8")
-    assert "Request a record" in index
-    assert "glossary" not in index.lower()
+
+    assert "Request a record" in index  # built, so linked
+    assert "glossary" not in index.lower()  # not built, so not linked
+    assert "boards/" not in index
+
+    # And with both present, both are linked.
+    full = tmp_path / "full"
+    build_site(RECORDS_DIR, full)
+    full_index = (full / "index.html").read_text(encoding="utf-8")
+    assert "glossary/index.html" in full_index
+    assert "boards/ten-results/index.html" in full_index
 
 
 def test_request_page_carries_the_consent_rule_and_the_issue_link(tmp_path):
@@ -346,3 +360,69 @@ def test_an_invalid_board_is_skipped_rather_than_rendered(tmp_path):
     assert not (out / "boards" / "broken").exists()
     assert any("broken.yaml" in f for f in result.skipped)
     assert not any(p.startswith("board:") for p in result.pages)
+
+
+# --- glossary ----------------------------------------------------------------
+
+
+def test_glossary_page_lists_every_term_with_an_anchor(tmp_path):
+    out = tmp_path / "site"
+    result = build_site(RECORDS_DIR, out)
+
+    assert "glossary" in result.pages
+    page = (out / "glossary" / "index.html").read_text(encoding="utf-8")
+
+    glossary = load_glossary()
+    assert len(glossary) >= 17
+    for slug, entry in glossary.items():
+        assert f'id="term-{slug}"' in page
+        assert entry["definition"].split()[0] in page
+
+
+def test_terms_in_a_record_page_are_keyboard_reachable_links(tmp_path):
+    # Not <abbr title>: a title tooltip is unreachable by keyboard in every
+    # major browser, so it fails exactly the readers most likely to need the
+    # definition. A link is focusable, needs no JavaScript, and still gives the
+    # hover definition to a mouse user.
+    out = tmp_path / "site"
+    build_site(RECORDS_DIR, out)
+    page = (out / PUBLIC_RECORD_ID / "index.html").read_text(encoding="utf-8")
+
+    assert 'class="term"' in page
+    assert "<abbr" not in page
+    glossary = load_glossary()
+    definition = glossary["claim"]["definition"].strip()
+    assert f'href="../glossary/index.html#term-claim" title="{definition}"' in page
+
+
+def test_a_build_without_a_glossary_has_no_dead_term_links(tmp_path):
+    out = tmp_path / "site"
+    missing = tmp_path / "no-glossary.yaml"
+    build_site(RECORDS_DIR, out, glossary_path=missing)
+
+    assert not (out / "glossary").exists()
+    page = (out / PUBLIC_RECORD_ID / "index.html").read_text(encoding="utf-8")
+    assert 'class="term"' not in page
+    assert "glossary" not in page.lower()
+    # And the label the term would have carried is still there as plain text.
+    assert "Evidence" in page
+
+
+def test_a_definition_stating_a_verdict_is_refused(tmp_path):
+    # Widest blast radius in the build: a definition carrying a verdict would
+    # put it on every page its term appears on.
+    out = tmp_path / "site"
+    bad = tmp_path / "glossary.yaml"
+    bad.write_text(
+        "terms:\n"
+        "  - slug: claim\n"
+        "    term: claim\n"
+        '    definition: "A statement the site has checked and found correct."\n',
+        encoding="utf-8",
+    )
+    result = build_site(RECORDS_DIR, out, glossary_path=bad)
+
+    assert not (out / "glossary").exists()
+    assert any(
+        v.rule == "verdict-language" for violations in result.skipped.values() for v in violations
+    )

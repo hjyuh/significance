@@ -1,0 +1,39 @@
+{% extends "base.html.jinja" %}
+
+{% block title %}Glossary — Significance{% endblock %}
+{% block topline_meta %}{{ terms|length }} terms, one sentence each{% endblock %}
+
+{% block content %}
+
+<section class="band">
+  <p class="lbl">Glossary</p>
+  <h1 class="claim-text">The vocabulary, in one sentence each.</h1>
+  <p class="prose">
+    A record page uses a handful of words in narrower senses than usual. None
+    of them is meant to keep anybody out, and none of them is required to file
+    a request or read a plain-language summary. Terms are linked from the pages
+    they appear on, so this page is somewhere to arrive rather than somewhere
+    to read first.
+  </p>
+</section>
+
+<section class="band">
+  <dl class="glossary">
+    {% for entry in terms %}
+    <div id="term-{{ entry.slug }}">
+      <dt>{{ entry.term }}</dt>
+      <dd>{{ entry.definition }}</dd>
+    </div>
+    {% endfor %}
+  </dl>
+</section>
+
+<section class="band what-this-does-not-establish">
+  <p class="lbl">What these definitions are</p>
+  <ul>
+    <li>They describe how this project uses each word, which is sometimes narrower than the field's ordinary usage.</li>
+    <li>None of them defines a word for whether a claim is right, because the project has no such word.</li>
+  </ul>
+</section>
+
+{% endblock %}
