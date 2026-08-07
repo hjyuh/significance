@@ -14,6 +14,7 @@ import json
 import re
 from pathlib import Path
 
+from significance.boards import load_board
 from significance.records import load_record
 from significance.render import build_site, safe_href
 
@@ -48,7 +49,11 @@ def test_build_produces_index_and_record_page(tmp_path):
 
     source = load_record(RECORDS_DIR / f"{PUBLIC_RECORD_ID}.yaml")
     summaries = json.loads((out / "index.json").read_text(encoding="utf-8"))
-    assert summaries == [
+    # `records` and `boards`. The file was a bare array until the board needed
+    # somewhere to be linked from and the rule that the React shell may only
+    # present generated data left exactly one place to put it.
+    assert sorted(summaries) == ["boards", "records"]
+    assert summaries["records"] == [
         {
             "record_id": source["record_id"],
             "record_version": source["record_version"],
@@ -270,3 +275,74 @@ def test_invitation_instructions_name_the_revision_the_record_pins(tmp_path):
     assert formal["commit"] in page
     assert formal["toolchain"]["pin"] in page
     assert record["manuscript"]["sha256"] in page
+
+
+# --- status boards (Feature 5) ----------------------------------------------
+
+
+def test_board_renders_with_its_rows_and_is_linked_from_the_index(tmp_path):
+    out = tmp_path / "site"
+    result = build_site(RECORDS_DIR, out)
+
+    assert "board:ten-results" in result.pages
+    page = (out / "boards" / "ten-results" / "index.html").read_text(encoding="utf-8")
+
+    board = load_board(REPO_ROOT / "boards" / "ten-results.yaml")
+    assert board["title"] in page
+    for row in board["rows"]:
+        assert row["result"] in page
+
+    summaries = json.loads((out / "index.json").read_text(encoding="utf-8"))
+    assert summaries["boards"] == [
+        {
+            "board_id": "ten-results",
+            "title": board["title"],
+            "as_of": board["as_of"],
+            "row_count": len(board["rows"]),
+            "recorded_row_count": len([r for r in board["rows"] if r["state"] == "recorded"]),
+        }
+    ]
+
+
+def test_board_states_no_verdict_and_uses_no_status_colour(tmp_path):
+    # Every colour-coded status light is a verdict wearing a colour, which is
+    # the one thing this project does not render. The rows say what was
+    # checked in words or say nothing.
+    out = tmp_path / "site"
+    build_site(RECORDS_DIR, out)
+    page = (out / "boards" / "ten-results" / "index.html").read_text(encoding="utf-8").lower()
+
+    for word in ("verified", "refuted", "confirmed", "passed ✓", "status-green", "status-red"):
+        assert word not in page, f"board page contains {word!r}"
+    assert "empty row means nobody has looked" in page
+
+
+def test_placeholder_rows_say_so_rather_than_being_hidden(tmp_path):
+    # Nine empty rows is the honest picture of how much of the release anyone
+    # here has examined. A board showing only its one filled row would be more
+    # flattering and much less useful.
+    out = tmp_path / "site"
+    build_site(RECORDS_DIR, out)
+    page = (out / "boards" / "ten-results" / "index.html").read_text(encoding="utf-8")
+
+    board = load_board(REPO_ROOT / "boards" / "ten-results.yaml")
+    placeholders = [r for r in board["rows"] if r["state"] == "placeholder"]
+    assert len(placeholders) == 9
+    assert page.count("Nobody here has researched this result yet") == len(placeholders)
+
+
+def test_an_invalid_board_is_skipped_rather_than_rendered(tmp_path):
+    # Same rule as an invalid record: a page rendered from a document nobody
+    # checked is worse than a missing page, because it looks the same as a
+    # checked one.
+    boards_dir = tmp_path / "boards"
+    boards_dir.mkdir()
+    (boards_dir / "broken.yaml").write_text(
+        "kind: board\nschema_version: 1\nboard_id: broken\n", encoding="utf-8"
+    )
+    out = tmp_path / "site"
+    result = build_site(RECORDS_DIR, out, boards_dir=boards_dir)
+
+    assert not (out / "boards" / "broken").exists()
+    assert any("broken.yaml" in f for f in result.skipped)
+    assert not any(p.startswith("board:") for p in result.pages)

@@ -29,14 +29,28 @@ test("the homepage derives its record facts from the generated index", () => {
   const homepage = readFileSync("app/page.tsx", "utf8");
   const summaries = JSON.parse(readFileSync("public/records/index.json", "utf8"));
 
-  assert.match(homepage, /import generatedRecords from "\.\.\/public\/records\/index\.json"/);
+  assert.match(homepage, /import generatedIndex from "\.\.\/public\/records\/index\.json"/);
   assert.match(homepage, /records\.length/);
   assert.match(homepage, /records\.map/);
-  assert.equal(summaries.length, 1);
-  assert.equal(summaries[0].record_id, "2026-openai-nonsofic-groups");
-  assert.equal(summaries[0].freshness, "current");
-  assert.equal(summaries[0].evidence_count, 2);
-  assert.equal(summaries[0].open_invitation_count, 3);
+
+  // The index carries records and boards. It was a bare array until the board
+  // needed somewhere to be linked from, and the rule that the shell may only
+  // present generated data left exactly one place to put it.
+  assert.deepEqual(Object.keys(summaries).sort(), ["boards", "records"]);
+  assert.equal(summaries.records.length, 1);
+  assert.equal(summaries.records[0].record_id, "2026-openai-nonsofic-groups");
+  assert.equal(summaries.records[0].freshness, "current");
+  assert.equal(summaries.records[0].evidence_count, 2);
+  assert.equal(summaries.records[0].open_invitation_count, 3);
+
+  // Board counts are generated, not counted in JSX: the homepage must not be
+  // able to disagree with the board about how much of it is filled in.
+  assert.equal(summaries.boards.length, 1);
+  assert.equal(summaries.boards[0].board_id, "ten-results");
+  assert.equal(summaries.boards[0].row_count, 10);
+  assert.equal(summaries.boards[0].recorded_row_count, 1);
+  assert.match(homepage, /boards\.map/);
+  assert.doesNotMatch(homepage, /ten-results|The ten results/);
 
   // Record facts must not be copied into JSX. The generated JSON is their
   // sole interface to React.

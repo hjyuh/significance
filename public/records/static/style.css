@@ -575,3 +575,60 @@ pre.mail-template {
   margin: 8px 0 0;
   font-size: 13px;
 }
+
+/* --- status board -----------------------------------------------------------
+   No status dots, no green, no red, no ordering by how well a row is doing.
+   Every one of those is a verdict wearing a colour, and a reader who wants a
+   ranking has to make it themselves — which is the correct amount of work for
+   a judgement this project does not make.
+
+   Placeholder rows are dimmed slightly and nothing more. They are not hidden:
+   nine empty rows is the honest picture of how much of the release anyone here
+   has examined. */
+ol.board-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1px;
+  background: var(--hair);
+  border: 1px solid var(--hair);
+}
+
+.board-row {
+  padding: 18px 20px;
+  background: var(--bg);
+}
+
+.board-row-head h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--fg-strong);
+}
+
+.board-row-record { margin: 4px 0 10px; font-size: 13px; }
+
+.board-row-claim {
+  margin: 8px 0 4px;
+  max-width: 68ch;
+  color: var(--fg-body);
+  line-height: 1.6;
+}
+
+.board-row-artifacts,
+.board-row-status { margin: 10px 0 6px; }
+
+.board-row-empty {
+  margin: 8px 0 0;
+  max-width: 68ch;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.board-row-placeholder .board-row-head h2 {
+  color: var(--muted);
+  font-weight: 400;
+  font-family: var(--mono);
+  font-size: 14px;
+}

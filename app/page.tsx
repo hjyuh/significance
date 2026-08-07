@@ -1,5 +1,5 @@
 import Link from "next/link";
-import generatedRecords from "../public/records/index.json";
+import generatedIndex from "../public/records/index.json";
 
 type RecordSummary = {
   record_id: string;
@@ -14,7 +14,22 @@ type RecordSummary = {
   open_invitation_count: number;
 };
 
-const records = generatedRecords as RecordSummary[];
+type BoardSummary = {
+  board_id: string;
+  title: string;
+  as_of: string;
+  row_count: number;
+  recorded_row_count: number;
+};
+
+// The Python builder is the only source of record and board facts. This shell
+// presents what it generated and computes nothing of its own -- including the
+// "researched" counts below, which come from the file rather than from
+// counting anything here, so the page cannot arrive at a different number from
+// the board it links to.
+const generated = generatedIndex as { records: RecordSummary[]; boards: BoardSummary[] };
+const records = generated.records;
+const boards = generated.boards;
 
 function countLabel(count: number, singular: string, plural = `${singular}s`) {
   return `${count} ${count === 1 ? singular : plural}`;
@@ -91,6 +106,25 @@ export default function Home() {
           <p className="empty-records">No records built.</p>
         )}
       </section>
+
+      {boards.length ? (
+        <section className="boards" aria-labelledby="boards-heading">
+          <p className="lbl" id="boards-heading">
+            Status boards
+          </p>
+          {boards.map((board) => (
+            <a className="board-card" href={`/boards/${board.board_id}/`} key={board.board_id}>
+              <h3>{board.title}</h3>
+              <p>
+                {board.recorded_row_count} of {board.row_count} rows researched
+                {" · as of "}
+                <time dateTime={board.as_of}>{board.as_of.slice(0, 10)}</time>
+              </p>
+              <span className="open-record">Open the board →</span>
+            </a>
+          ))}
+        </section>
+      ) : null}
 
       <section className="principles" aria-label="What a record provides">
         <article>

@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://significance.dev/schema/board.schema.json",
+  "title": "Significance status board",
+  "description": "A board answers one question across several results at once — 'are these real?' — in claim-state terms. It holds no evidence of its own: every row either links a record, which is where evidence lives, or quotes a source directly. It is a separate schema rather than a record variant precisely so it cannot accumulate evidence fields and quietly become a second, weaker kind of record. Word caps, verdict language, and the row rule are enforced by `significance validate`, not by this schema alone.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["kind", "schema_version", "board_id", "title", "intro", "as_of", "parties", "rows"],
+  "properties": {
+    "kind": {
+      "const": "board",
+      "description": "Discriminator. `significance validate` reads this to decide which schema a file answers to, so a board and a record can sit in the same directory without either being checked against the wrong one."
+    },
+    "schema_version": { "type": "integer", "const": 1 },
+    "board_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "Becomes the URL: /boards/<board_id>/."
+    },
+    "title": { "type": "string", "minLength": 1 },
+    "intro": { "$ref": "#/$defs/attributed_text" },
+    "as_of": {
+      "$ref": "#/$defs/iso_datetime",
+      "description": "When the board as a whole was last gone over. Distinct from each row's own as_of, which may be older: a board reviewed today may contain a row nobody has revisited in a month, and collapsing the two would present the stale row as fresh."
+    },
+    "parties": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "$ref": "#/$defs/party" },
+      "propertyNames": { "$ref": "#/$defs/party_id" },
+      "description": "Same rule as a record: every asserted_by on this board must resolve to a key declared here, enforced by the validator."
+    },
+    "rows": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/row" }
+    }
+  },
+
+  "$defs": {
+    "party_id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+    "iso_datetime": { "type": "string", "format": "date-time" },
+
+    "party": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["verification_method"],
+      "oneOf": [{ "required": ["name"] }, { "required": ["pseudonym"] }],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "pseudonym": { "type": "string", "minLength": 1 },
+        "verification_method": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind"],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": ["github_identity", "orcid", "email_confirmation", "pseudonymous", "automation"]
+            },
+            "identifier": { "type": "string" },
+            "verified_at": { "$ref": "#/$defs/iso_datetime" }
+          }
+        }
+      }
+    },
+
+    "locator": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "section": { "type": "string" },
+        "page": { "type": "integer", "minimum": 1 },
+        "url": { "type": "string", "format": "uri" },
+        "quote": { "type": "string" }
+      }
+    },
+
+    "attributed_text": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "basis", "asserted_by", "asserted_at"],
+      "properties": {
+        "value": { "type": "string", "minLength": 1 },
+        "basis": {
+          "type": "string",
+          "enum": ["source_quote", "author_attestation", "editorial_inference", "digest"]
+        },
+        "asserted_by": { "$ref": "#/$defs/party_id" },
+        "asserted_at": { "$ref": "#/$defs/iso_datetime" },
+        "locator": { "$ref": "#/$defs/locator" }
+      }
+    },
+
+    "row_state": {
+      "description": "`recorded` means somebody has done the work of finding out what this row says. `placeholder` means the row exists and nobody has. The distinction is load-bearing: a placeholder row may carry no claim and no status at all, so the board cannot present an unresearched result as though it had been looked at.",
+      "type": "string",
+      "enum": ["recorded", "placeholder"]
+    },
+
+    "row": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "state", "result"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+        "state": { "$ref": "#/$defs/row_state" },
+        "result": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The result's name. On a placeholder row this carries a [FILL] marker, and the validator requires it to, so a half-finished row cannot look finished."
+        },
+        "record": {
+          "type": ["string", "null"],
+          "description": "The record_id this row links, or null where no record exists yet. Not a foreign key the schema can check — records live in files, and a board may legitimately be built before them."
+        },
+        "claim": {
+          "$ref": "#/$defs/attributed_text",
+          "description": "The claim as the source states it, quoted. A row that links no record must have one, or the row asserts something on nobody's authority."
+        },
+        "artifacts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "manuscript": { "type": "string" },
+            "lean_target": { "type": "string" }
+          },
+          "description": "Links, or [FILL] markers where the value is not yet known. Plain strings rather than URLs, because a [FILL] marker is not a URI and the renderer decides what may become a link (see safe_href)."
+        },
+        "status": { "$ref": "#/$defs/row_status" }
+      },
+      "if": {
+        "properties": { "state": { "const": "placeholder" } },
+        "required": ["state"]
+      },
+      "then": {
+        "not": { "anyOf": [{ "required": ["claim"] }, { "required": ["status"] }] },
+        "description": "A placeholder row carries no assertions. This is what stops the board fabricating a claim or a status for a result nobody has researched."
+      }
+    },
+
+    "row_status": {
+      "description": "The same three questions the record-page strip answers, at row scale: what has been checked, what has not, as of when. Attributed as one block, because the three are a single reading by a single person at a single time.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["checked", "not_checked", "as_of", "basis", "asserted_by", "asserted_at"],
+      "properties": {
+        "checked": { "type": "string", "minLength": 1 },
+        "not_checked": { "type": "string", "minLength": 1 },
+        "as_of": { "$ref": "#/$defs/iso_datetime" },
+        "basis": { "type": "string", "enum": ["digest", "editorial_inference"] },
+        "asserted_by": { "$ref": "#/$defs/party_id" },
+        "asserted_at": { "$ref": "#/$defs/iso_datetime" }
+      }
+    }
+  }
+}

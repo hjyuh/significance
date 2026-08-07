@@ -1,0 +1,152 @@
+# The ten-results board.
+#
+# ONE ROW IS FILLED IN. The other nine are placeholders, and that is the
+# intended state of this file, not an unfinished draft. Everything in the
+# non-sofic row below was taken from records/2026-openai-nonsofic-groups.yaml,
+# which was built from source-inspected material. Nothing in this repository
+# evidences the other nine results, so nothing here says anything about them:
+# no claim, no link, no status. A board that guessed would be doing the exact
+# thing the project exists not to do, one layer up.
+#
+# TO FILL A ROW IN, an editor replaces `state: placeholder` with the shape the
+# non-sofic row uses:
+#
+#   - id: row-<slug>
+#     state: recorded
+#     result: "<the result's name, as the release gives it>"
+#     record: <record_id, or null if no record exists yet>
+#     claim:
+#       value: "<the claim, quoted from the release>"
+#       basis: source_quote
+#       asserted_by: openai
+#       asserted_at: "<when they said it>"
+#       locator:
+#         url: "<where>"
+#         quote: "<the same words again, verbatim>"
+#     artifacts:
+#       manuscript: "<url or [FILL: verify from release]>"
+#       lean_target: "<url or [FILL: verify from release]>"
+#     status:
+#       checked: "<what has actually been checked, plainly>"
+#       not_checked: "<what has not, plainly — never blank>"
+#       as_of: "<when this row was last looked at>"
+#       basis: digest
+#       asserted_by: significance-editor
+#       asserted_at: "<now>"
+#
+# A row with `state: recorded` must link a record or carry a source-quoted
+# claim; the validator refuses one that does neither. A row with
+# `state: placeholder` may carry neither, and may not carry a claim or a status
+# at all — which is what stops a half-filled row from reading as a finished
+# one.
+
+kind: board
+schema_version: 1
+board_id: ten-results
+
+title: "The ten results: what is actually recorded"
+
+intro:
+  value: >-
+    One row per result in the August 2026 OpenAI release, answering the
+    question people keep asking — are these real? — in the only terms this
+    project can answer it: what has been checked, what has not, and as of when.
+    Nine of the ten rows are empty because nobody here has done that work yet.
+    An empty row means nobody has looked, not that nothing is there.
+  basis: digest
+  asserted_by: significance-editor
+  asserted_at: "2026-08-07T00:00:00Z"
+
+as_of: "2026-08-07T00:00:00Z"
+
+parties:
+  openai:
+    name: "OpenAI"
+    verification_method:
+      kind: github_identity
+      identifier: "openai"
+      verified_at: "2026-08-01T13:57:00Z"
+  significance-editor:
+    pseudonym: "Significance editor"
+    verification_method:
+      kind: pseudonymous
+      identifier: "significance-project"
+
+rows:
+  # The one row backed by a record. Every value below appears in
+  # records/2026-openai-nonsofic-groups.yaml; none of it was sourced elsewhere.
+  - id: row-nonsofic-group
+    state: recorded
+    result: "A non-sofic group"
+    record: 2026-openai-nonsofic-groups
+    claim:
+      value: "The unit group L_F2(1,2)× of the binary Leavitt algebra is not sofic."
+      basis: source_quote
+      asserted_by: openai
+      asserted_at: "2026-08-01T13:53:00Z"
+      locator:
+        page: 78
+        quote: "Theorem 1.1. The unit group L_F2(1,2)× is not sofic."
+    artifacts:
+      manuscript: "https://cdn.openai.com/pdf/ten-proofs-oai.pdf"
+      lean_target: "https://github.com/openai/ten-proofs/blob/c510a55434c0935cde446e5a372699a4671438f6/ComparatorChallenges/D_NonSoficGroup.json"
+    status:
+      checked: >-
+        The manuscript file was downloaded and hashed. The published Lean code
+        was rebuilt at a pinned commit and its axiom closure recorded, both
+        logs hashed. Checks on artifacts, not on the argument.
+      not_checked: >-
+        Nobody has traced the manuscript's Theorem 1.1 to the statement the
+        Lean code contains; the formal target is a broader existence
+        statement. No mathematician's assessment is recorded.
+      as_of: "2026-08-02T19:33:28Z"
+      basis: digest
+      asserted_by: significance-editor
+      asserted_at: "2026-08-07T00:00:00Z"
+
+  # Nine rows nobody here has researched. They carry a name slot and nothing
+  # else: no claim, no artifact links, no status. See the note at the top.
+  - id: row-02
+    state: placeholder
+    result: "[FILL: verify from release]"
+    record: null
+
+  - id: row-03
+    state: placeholder
+    result: "[FILL: verify from release]"
+    record: null
+
+  - id: row-04
+    state: placeholder
+    result: "[FILL: verify from release]"
+    record: null
+
+  - id: row-05
+    state: placeholder
+    result: "[FILL: verify from release]"
+    record: null
+
+  - id: row-06
+    state: placeholder
+    result: "[FILL: verify from release]"
+    record: null
+
+  - id: row-07
+    state: placeholder
+    result: "[FILL: verify from release]"
+    record: null
+
+  - id: row-08
+    state: placeholder
+    result: "[FILL: verify from release]"
+    record: null
+
+  - id: row-09
+    state: placeholder
+    result: "[FILL: verify from release]"
+    record: null
+
+  - id: row-10
+    state: placeholder
+    result: "[FILL: verify from release]"
+    record: null

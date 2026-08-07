@@ -1,0 +1,99 @@
+{% extends "base.html.jinja" %}
+{% import "macros.jinja" as m %}
+
+{% block title %}{{ board.title }} — Significance{% endblock %}
+{% block topline_meta %}BOARD {{ board.board_id }} / as of {{ board.as_of }}{% endblock %}
+
+{#
+  Ten calm rows. There are no status dots, no green, no red, and no ordering by
+  how well a result is doing, because every one of those is a verdict wearing a
+  colour. A row states in words what has been checked and what has not, and a
+  reader who wants a ranking has to make it themselves — which is the correct
+  amount of work for a judgement this project does not make.
+
+  Placeholder rows say so plainly rather than being hidden. Nine empty rows is
+  the honest picture of how much of this release anyone here has examined, and
+  a board that showed only its one filled row would be a more flattering and
+  much less useful page.
+#}
+
+{% block content %}
+
+<section class="band">
+  <p class="lbl">Board — as of {{ board.as_of }}</p>
+  <h1 class="claim-text">{{ board.title }}</h1>
+  <p class="prose">{{ board.intro.value }}</p>
+  <p class="meta">{{ m.attribution(board.intro) }}</p>
+</section>
+
+<section class="band">
+  <p class="lbl">
+    {{ board.rows|length }} rows ·
+    {{ board.rows|selectattr('state', 'equalto', 'recorded')|list|length }} researched
+  </p>
+  <ol class="board-rows">
+    {% for row in board.rows %}
+    <li class="board-row board-row-{{ row.state }}">
+      <div class="board-row-head">
+        <h2>{{ row.result }}</h2>
+        {% if row.get('record') %}
+        <p class="board-row-record">
+          <a href="{{ links.records_index }}{{ row.record }}/index.html">Open the record → {{ row.record }}</a>
+        </p>
+        {% endif %}
+      </div>
+
+      {% if row.state == 'placeholder' %}
+      <p class="board-row-empty">
+        Nobody here has researched this result yet. There is no claim, no link
+        and no status recorded for it — an empty row means nobody has looked,
+        not that nothing is there.
+      </p>
+
+      {% else %}
+      {% if row.get('claim') %}
+      <p class="board-row-claim">{{ row.claim.value }}</p>
+      <p class="meta">{{ m.attribution(row.claim) }}</p>
+      {% endif %}
+
+      {% if row.get('artifacts') %}
+      <dl class="facts board-row-artifacts">
+        {% if row.artifacts.get('manuscript') %}
+        <dt>Manuscript</dt>
+        <dd>{{ m.external_link(row.artifacts.manuscript) }}</dd>
+        {% endif %}
+        {% if row.artifacts.get('lean_target') %}
+        <dt>Lean target</dt>
+        <dd>{{ m.external_link(row.artifacts.lean_target) }}</dd>
+        {% endif %}
+      </dl>
+      {% endif %}
+
+      {% if row.get('status') %}
+      <dl class="facts board-row-status">
+        <dt>Checked</dt>
+        <dd>{{ row.status.checked }}</dd>
+        <dt>Not checked</dt>
+        <dd>{{ row.status.not_checked }}</dd>
+        <dt>As of</dt>
+        <dd>{{ row.status.as_of }}</dd>
+      </dl>
+      <p class="meta">{{ m.attribution(row.status) }}</p>
+      {% endif %}
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ol>
+</section>
+
+<section class="band what-this-does-not-establish">
+  <p class="lbl">What this board does not establish</p>
+  <ul>
+    <li>No row says whether a result is right. "Checked" describes artifacts — files hashed, code rebuilt — not arguments read.</li>
+    <li>A row with more text in it is not doing better than a row with less. The rows are not ranked and are not ordered by anything but their place in the release.</li>
+    <li>An empty row means nobody here has looked at that result yet, and nothing more than that.</li>
+    <li>The board's own as-of date is when the board was gone over; each row carries its own, which may be older.</li>
+  </ul>
+</section>
+
+{% endblock %}

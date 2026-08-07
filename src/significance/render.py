@@ -23,6 +23,13 @@ from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 from ruamel.yaml import YAML
 
+from significance.boards import (
+    board_summary,
+    board_validator,
+    board_violations,
+    collect_board_files,
+    load_board,
+)
 from significance.records import load_record
 from significance.validate import collect_yaml_files, validate_paths
 from significance.violations import Violation
@@ -159,6 +166,7 @@ def build_site(
     *,
     pages_out: str | Path | None = None,
     site_config: str | Path | None = None,
+    boards_dir: str | Path | None = None,
 ) -> BuildResult:
     records_dir = Path(records_dir)
     out_dir = Path(out_dir)
@@ -172,7 +180,29 @@ def build_site(
     deployed = pages_dir.resolve() != out_dir.resolve()
     pages_dir.mkdir(parents=True, exist_ok=True)
 
+    result_skipped_boards: dict[str, list[Violation]] = {}
+
     config = load_site_config(site_config)
+
+    # Boards are resolved before anything renders, because every page's nav
+    # needs to know which ones exist. A board that does not validate is skipped
+    # exactly as an invalid record is: the same rule, for the same reason --
+    # a page rendered from a document nobody checked is worse than a missing
+    # page, because it looks the same as a checked one.
+    boards_path = Path(boards_dir) if boards_dir is not None else _REPO_ROOT / "boards"
+    boards: list[dict] = []
+    board_schema = board_validator()
+    for board_file in collect_board_files(boards_path):
+        board = load_board(board_file)
+        board_problems = board_violations(board, board_schema)
+        if board_problems:
+            for v in board_problems:
+                v.file = str(board_file)
+            result_skipped_boards[str(board_file)] = board_problems
+            continue
+        boards.append(board)
+    boards.sort(key=lambda b: b["board_id"])
+    board_ids = [b["board_id"] for b in boards]
 
     static_out = out_dir / "static"
     static_out.mkdir(parents=True, exist_ok=True)
@@ -203,7 +233,7 @@ def build_site(
         html = record_template.render(
             record=record,
             root_prefix="../",
-            links=site_links("../", deployed=deployed),
+            links=site_links("../", deployed=deployed, board_ids=board_ids),
         )
         _write_page(out_dir / record_id, html)
 
@@ -214,7 +244,7 @@ def build_site(
     index_html = index_template.render(
         records=built_records,
         root_prefix="",
-        links=site_links("", deployed=deployed),
+        links=site_links("", deployed=deployed, board_ids=board_ids),
     )
     (out_dir / "index.html").write_text(index_html, encoding="utf-8")
 
@@ -223,7 +253,7 @@ def build_site(
     # stylesheet lives under the records root, which no relative path reaches
     # from the site root, so it is addressed absolutely.
     pages_prefix = "/records/" if deployed else "../"
-    pages_links = site_links("../", deployed=deployed)
+    pages_links = site_links("../", deployed=deployed, board_ids=board_ids)
 
     _write_page(
         pages_dir / "request",
@@ -235,11 +265,27 @@ def build_site(
     )
     result.pages.append("request")
 
+    # A board page sits two directories below its root (boards/<id>/), so its
+    # relative prefix is one level deeper than the other auxiliary pages.
+    board_prefix = "/records/" if deployed else "../../"
+    board_template = env.get_template("board.html.jinja")
+    for board in boards:
+        _write_page(
+            pages_dir / "boards" / board["board_id"],
+            board_template.render(
+                board=board,
+                root_prefix=board_prefix,
+                links=site_links(board_prefix, deployed=deployed, board_ids=board_ids),
+            ),
+        )
+        result.pages.append(f"board:{board['board_id']}")
+    result.skipped.update(result_skipped_boards)
+
     # This is the only record-data interface consumed by the React homepage.
     # Keeping it beside the Python-rendered index makes validation and record
     # selection Python's responsibility; the JS layer only presents the
     # already-validated summaries and cannot invent a second freshness state.
-    index_data = [
+    record_summaries = [
         {
             "record_id": record["record_id"],
             "record_version": record["record_version"],
@@ -254,6 +300,18 @@ def build_site(
         }
         for record in built_records
     ]
+
+    # Shape change: this file was a bare array of record summaries and is now
+    # an object with `records` and `boards`. The React shell has to be able to
+    # link the board, and the rule that it may only present what this builder
+    # generated leaves exactly one place to put that — here. A second generated
+    # file would have been the smaller diff and the worse answer: two files
+    # mean two loading paths and an eventual disagreement about which one is
+    # current.
+    index_data = {
+        "records": record_summaries,
+        "boards": [board_summary(board) for board in boards],
+    }
     (out_dir / "index.json").write_text(
         json.dumps(index_data, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",

@@ -1,0 +1,27 @@
+# BROKEN FIXTURE: a recorded row whose status says what was checked and does
+# not say who checked it. Every other part of this board is well-formed.
+kind: board
+schema_version: 1
+board_id: broken-attribution
+title: "A board whose row asserts on nobody's authority"
+intro:
+  value: "A fixture board. Its one row omits the attribution on its status block."
+  basis: digest
+  asserted_by: significance-editor
+  asserted_at: "2026-08-07T00:00:00Z"
+as_of: "2026-08-07T00:00:00Z"
+parties:
+  significance-editor:
+    pseudonym: "Significance editor"
+    verification_method:
+      kind: pseudonymous
+      identifier: "significance-project"
+rows:
+  - id: row-one
+    state: recorded
+    result: "An example result"
+    record: 0000-example-synthetic-ramsey-k7
+    status:
+      checked: "A build ran to completion and its log was hashed."
+      not_checked: "Nobody has read the argument."
+      as_of: "2026-08-07T00:00:00Z"

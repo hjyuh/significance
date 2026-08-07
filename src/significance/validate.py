@@ -11,6 +11,7 @@ from pathlib import Path
 
 from ruamel.yaml import YAML
 
+from significance.boards import board_validator, board_violations, is_board
 from significance.records import load_record, validator
 from significance.schema_checks import schema_violations
 from significance.semantics import check_append_only, check_uniqueness, semantic_violations
@@ -72,6 +73,7 @@ def resolve_base(ref_or_file: str, record_path: Path) -> dict | None:
 def validate_paths(paths: list[str], base: str | None = None) -> list[Violation]:
     files = collect_yaml_files(paths)
     schema_validator = validator()
+    board_schema_validator = board_validator()
     loaded: list[tuple[str, dict]] = []
     violations: list[Violation] = []
 
@@ -81,6 +83,17 @@ def validate_paths(paths: list[str], base: str | None = None) -> list[Violation]
             record = load_record(f)
         except Exception as exc:  # malformed YAML, not a record shape issue
             violations.append(Violation("parse-error", str(exc), "$", file=file_str))
+            continue
+
+        # A board answers to a different schema and different rules. The
+        # discriminator is explicit (`kind: board`) rather than sniffed, so a
+        # record with an unusual shape is never quietly checked against the
+        # wrong schema -- it fails as the record it is.
+        if is_board(record):
+            file_violations = board_violations(record, board_schema_validator)
+            for v in file_violations:
+                v.file = file_str
+            violations.extend(file_violations)
             continue
 
         loaded.append((file_str, record))

@@ -46,6 +46,10 @@ def _build_parser() -> argparse.ArgumentParser:
         ),
     )
     p_build.add_argument(
+        "--boards",
+        help="directory of status boards to render. Defaults to boards/ at the repo root.",
+    )
+    p_build.add_argument(
         "--site-config",
         help="path to site.yaml (repository URL, contact address). Defaults to data/site.yaml.",
     )
@@ -92,6 +96,7 @@ def _cmd_build(args) -> int:
         args.out,
         pages_out=args.pages_out,
         site_config=args.site_config,
+        boards_dir=args.boards,
     )
     for f, violations in result.skipped.items():
         print(f"skipped {f}: {len(violations)} violation(s)", file=sys.stderr)

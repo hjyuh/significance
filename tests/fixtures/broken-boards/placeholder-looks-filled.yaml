@@ -1,0 +1,23 @@
+# BROKEN FIXTURE: a placeholder row whose name has been filled in and whose
+# research has not, so it reads as a finished row carrying nothing.
+kind: board
+schema_version: 1
+board_id: broken-placeholder
+title: "A board with a half-filled row"
+intro:
+  value: "A fixture board. Its one row is a placeholder wearing a real result name."
+  basis: digest
+  asserted_by: significance-editor
+  asserted_at: "2026-08-07T00:00:00Z"
+as_of: "2026-08-07T00:00:00Z"
+parties:
+  significance-editor:
+    pseudonym: "Significance editor"
+    verification_method:
+      kind: pseudonymous
+      identifier: "significance-project"
+rows:
+  - id: row-one
+    state: placeholder
+    result: "A specific named result somebody started on"
+    record: null

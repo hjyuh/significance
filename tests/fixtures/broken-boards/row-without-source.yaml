@@ -1,0 +1,23 @@
+# BROKEN FIXTURE: a recorded row that links no record and quotes no source, so
+# nothing on it is attributable to anyone.
+kind: board
+schema_version: 1
+board_id: broken-source
+title: "A board whose row rests on nothing"
+intro:
+  value: "A fixture board. Its one row has neither a record link nor a quoted claim."
+  basis: digest
+  asserted_by: significance-editor
+  asserted_at: "2026-08-07T00:00:00Z"
+as_of: "2026-08-07T00:00:00Z"
+parties:
+  significance-editor:
+    pseudonym: "Significance editor"
+    verification_method:
+      kind: pseudonymous
+      identifier: "significance-project"
+rows:
+  - id: row-one
+    state: recorded
+    result: "An example result"
+    record: null
