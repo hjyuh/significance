@@ -12,3 +12,6 @@ tmp/
 .openai/hosting.json
 .worktrees/
 *.tsbuildinfo
+
+# Scratch prompt file kept at the repo root by the author, not part of the build.
+read.txt
