@@ -207,6 +207,34 @@ def check_plain_language_digestions(record: dict) -> list[Violation]:
     return violations
 
 
+def check_invitation_instructions(record: dict) -> list[Violation]:
+    """`how` is optional; a `how` that is there and says nothing is not.
+
+    The renderer keys its "take this task" affordance off the presence of this
+    field, so a blank one produces a button promising instructions that do not
+    exist — worse than the plain invitation it replaced.
+    """
+    violations: list[Violation] = []
+    invitations = record.get("open_invitations")
+    if not isinstance(invitations, list):
+        return violations
+
+    for index, invitation in enumerate(invitations):
+        if not isinstance(invitation, dict) or "how" not in invitation:
+            continue
+        how = invitation.get("how")
+        if not isinstance(how, str) or not how.strip():
+            violations.append(
+                Violation(
+                    "empty-invitation-instructions",
+                    "open_invitations[].how is present but empty; omit the field entirely "
+                    "rather than rendering an actionable task with no instructions",
+                    f"open_invitations[{index}].how",
+                )
+            )
+    return violations
+
+
 def check_freshness_recomputation(record: dict) -> list[Violation]:
     freshness = record.get("freshness")
     if not isinstance(freshness, dict):
@@ -360,6 +388,7 @@ def semantic_violations(record: dict) -> list[Violation]:
         *check_forbidden_language(record),
         *check_plain_summary(record),
         *check_plain_language_digestions(record),
+        *check_invitation_instructions(record),
         *check_freshness_recomputation(record),
         *check_execution_receipt_asserted_by_automation(record),
     ]

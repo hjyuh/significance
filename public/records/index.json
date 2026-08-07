@@ -1,7 +1,7 @@
 [
   {
     "record_id": "2026-openai-nonsofic-groups",
-    "record_version": 4,
+    "record_version": 5,
     "record_state": "active",
     "claim": "The unit group L_F2(1,2)× of the binary Leavitt algebra is not sofic.",
     "claim_basis": "source_quote",

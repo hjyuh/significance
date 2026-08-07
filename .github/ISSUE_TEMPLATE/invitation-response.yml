@@ -1,0 +1,52 @@
+name: Response to an open invitation
+description: Report work you did on a bounded task named in a record.
+title: "Invitation response: "
+labels: ["invitation-response"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        An open invitation is a bounded task a record says nobody has done
+        yet. This is where the answer goes.
+
+        A negative result is as useful here as a positive one: "I ran this and
+        it did not build", "I traced the declarations and they do not match",
+        "I read the proposition and could not follow step 4" are all things
+        the record should carry. None of them is a verdict on the
+        mathematics, and none will be rendered as one.
+
+  - type: input
+    id: record
+    attributes:
+      label: Which record and which invitation
+      placeholder: 2026-openai-nonsofic-groups — the reproduction invitation
+    validations:
+      required: true
+
+  - type: input
+    id: revision
+    attributes:
+      label: What exact revision did you work against
+      description: >-
+        The commit, the manuscript hash, the toolchain version — whatever the
+        invitation's instructions pinned. A review that does not name its
+        revision cannot be attached to one.
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: >-
+        What you ran or read, and what came out. Logs, hashes, and exact
+        declaration names are more useful than a summary of them.
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        What you write here becomes an attributed entry in the record if it is
+        added — signed with your name and basis, never merged into an
+        anonymous consensus.

@@ -542,3 +542,36 @@ pre.mail-template {
   white-space: pre-wrap;
   overflow-x: auto;
 }
+
+/* --- actionable invitations -------------------------------------------------
+   The instructions are expanded rather than hidden behind a disclosure
+   control: the rail is the place a helper looks for something to do, and a
+   task whose contents are one click away is a task most people never read.
+   The action is a text link, not a button — nothing here is urgent and
+   nothing is a call to action. */
+.invitation-task {
+  margin: 8px 0 0;
+  padding: 10px 0 0;
+  border-top: 1px solid var(--hair);
+}
+
+.invitation-how-label {
+  margin: 0 0 6px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--note);
+}
+
+.invitation-how {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--fg-body);
+  overflow-wrap: anywhere;
+}
+
+.invitation-respond {
+  margin: 8px 0 0;
+  font-size: 13px;
+}

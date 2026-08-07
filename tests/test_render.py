@@ -239,3 +239,34 @@ def test_safe_email_refuses_anything_that_could_break_out_of_a_mailto():
     assert safe_email("records@example.org&body=x") is None
     assert safe_email("not-an-address") is None
     assert safe_email(None) is None
+
+
+def test_take_this_task_appears_only_where_instructions_exist(tmp_path):
+    # The affordance is keyed off `how`. A record whose invitations carry none
+    # renders exactly as it did before the feature: no button over an empty
+    # task, which promises help that is not there.
+    out = tmp_path / "site"
+    build_site(RECORDS_DIR, out)
+    page = (out / PUBLIC_RECORD_ID / "index.html").read_text(encoding="utf-8")
+
+    record = load_record(RECORDS_DIR / f"{PUBLIC_RECORD_ID}.yaml")
+    with_how = [i for i in record["open_invitations"] if i.get("how")]
+    assert len(with_how) == 3
+    assert page.count("Take this task") == len(with_how)
+    assert "Report what you found" in page
+
+
+def test_invitation_instructions_name_the_revision_the_record_pins(tmp_path):
+    # The point of the instructions is that somebody can act on them without
+    # asking us anything. That means the exact commit and the toolchain, and
+    # both must be the ones this record already carries rather than a second,
+    # drifting copy.
+    out = tmp_path / "site"
+    build_site(RECORDS_DIR, out)
+    page = (out / PUBLIC_RECORD_ID / "index.html").read_text(encoding="utf-8")
+
+    record = load_record(RECORDS_DIR / f"{PUBLIC_RECORD_ID}.yaml")
+    formal = next(e for e in record["evidence"] if e["kind"] == "formal_artifact")
+    assert formal["commit"] in page
+    assert formal["toolchain"]["pin"] in page
+    assert record["manuscript"]["sha256"] in page

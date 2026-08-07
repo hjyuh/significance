@@ -45,6 +45,7 @@ def test_valid_record_has_no_violations():
         ("execution-receipt-asserted-by-human.yaml", "execution-receipt-not-automation"),
         ("plain-summary-verdict.yaml", "verdict-language"),
         ("plain-language-verdict.yaml", "verdict-language"),
+        ("invitation-empty-how.yaml", "empty-invitation-instructions"),
     ],
 )
 def test_single_record_broken_fixture(fixture_name, expected_rule):
@@ -244,3 +245,33 @@ def test_a_plain_language_entry_must_say_which_stratum_is_speaking():
     del record["digestions"][0]["stratum"]
     violations = schema_violations(record, validator())
     assert any("stratum" in v.message for v in violations), [str(v) for v in violations]
+
+
+# --- actionable invitations (Feature 4) -------------------------------------
+
+
+def test_an_invitation_without_instructions_is_still_valid():
+    # `how` is optional on purpose: an invitation nobody has written
+    # instructions for is a real invitation, and the renderer shows it exactly
+    # as it did before this feature rather than inventing an affordance.
+    record = load_record(EXAMPLE_RECORD)
+    for invitation in record["open_invitations"]:
+        invitation.pop("how", None)
+    assert semantic_violations(record) == []
+
+
+def test_a_blank_how_is_refused_rather_than_rendered():
+    record = load_record(EXAMPLE_RECORD)
+    record["open_invitations"][0]["how"] = "\n  \t "
+    assert {v.rule for v in semantic_violations(record)} == {"empty-invitation-instructions"}
+
+
+def test_respond_requires_at_least_one_channel():
+    # An invitation that says what to do and not where to say you did it is a
+    # dead end, so an empty `respond` object is a schema error rather than a
+    # silently omitted link.
+    record = load_record(EXAMPLE_RECORD)
+    record["open_invitations"][0]["how"] = "Run the thing at the pinned commit."
+    record["open_invitations"][0]["respond"] = {}
+    violations = schema_violations(record, validator())
+    assert violations, "expected an empty respond object to be refused"

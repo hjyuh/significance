@@ -224,6 +224,27 @@
       <li>
         <p class="invitation-kind">{{ oi.kind|replace('_', ' ') }}</p>
         <p class="invitation-target">{{ oi.target }}</p>
+        {# The affordance appears only where instructions exist. An invitation
+           without `how` renders exactly as it did before this feature: a
+           "take this task" control on a task with no instructions promises
+           help that is not there, which is worse than the plain line it
+           replaced. #}
+        {% if oi.get('how') %}
+        <div class="invitation-task">
+          <p class="invitation-how-label">Take this task</p>
+          <p class="invitation-how">{{ oi.how }}</p>
+          {% set respond = oi.get('respond') or {} %}
+          {% set respond_url = respond.get('url')|safe_href %}
+          {% set respond_mail = respond.get('mailto')|safe_email %}
+          {% if respond_url or respond_mail %}
+          <p class="invitation-respond">
+            {% if respond_url %}<a href="{{ respond_url }}">Report what you found</a>{% endif %}
+            {% if respond_url and respond_mail %} · {% endif %}
+            {% if respond_mail %}<a href="mailto:{{ respond_mail }}?subject={{ ('Invitation response: ' ~ record.record_id)|urlencode }}">Report it by email</a>{% endif %}
+          </p>
+          {% endif %}
+        </div>
+        {% endif %}
         <p class="invitation-origin">{{ oi.created_by }} · {{ oi.created_at }}</p>
       </li>
       {% endfor %}

@@ -10,7 +10,7 @@
 <body>
 <header class="topline">
 <a class="wordmark" href="/records/">SIGNIFICANCE</a>
-<p class="topline-meta">RECORD 2026-openai-nonsofic-groups / v4 / active / freshness current</p>
+<p class="topline-meta">RECORD 2026-openai-nonsofic-groups / v5 / active / freshness current</p>
 <nav class="topline-nav" aria-label="Site">
 <a href="/request/">Request a record</a>
 </nav>
@@ -142,7 +142,7 @@
     <p class="lbl">State</p>
     <dl class="state-list">
       <div><dt>record_state</dt><dd>active</dd></div>
-      <div><dt>version</dt><dd>v4</dd></div>
+      <div><dt>version</dt><dd>v5</dd></div>
       <div><dt>freshness.result</dt><dd>current</dd></div>
       <div><dt>observed_version</dt><dd>official-release-2026-08-01</dd></div>
       <div><dt>confirmed_version</dt><dd>official-release-2026-08-01</dd></div>
@@ -157,16 +157,34 @@
       <li>
         <p class="invitation-kind">reproduction</p>
         <p class="invitation-target">Reproduce NonSoficGroup at commit c510a55434c0935cde446e5a372699a4671438f6 under Lean 4.32.0 and run its Comparator/Nanoda challenge.</p>
+        <div class="invitation-task">
+          <p class="invitation-how-label">Take this task</p>
+          <p class="invitation-how">Clone https://github.com/openai/ten-proofs and check out c510a55434c0935cde446e5a372699a4671438f6. Build under Lean 4.32.0; this record&#39;s own run pinned its toolchain by digest sha256:e18db1519e04134512c50930c1ea4d4c9b339b37f4939e287b4e22dd752624a6, so a run that wants to be comparable pins the same one. Then run the Comparator challenge at ComparatorChallenges/D_NonSoficGroup.json. Report the sha256 of your build log and whether the axiom closure stayed inside propext, Classical.choice and Quot.sound. A build that fails is a result worth reporting, not a wasted afternoon.</p>
+          <p class="invitation-respond">
+<a href="https://github.com/hjyuh/significance/issues/new?template=invitation-response.yml">Report what you found</a>          </p>
+        </div>
         <p class="invitation-origin">significance-editor · 2026-08-01T13:57:00Z</p>
       </li>
       <li>
         <p class="invitation-kind">correspondence</p>
         <p class="invitation-target">Trace the declaration chain between manuscript Theorem 1.1 and the Comparator target exists_finitelyPresented_nonsofic_group.</p>
+        <div class="invitation-task">
+          <p class="invitation-how-label">Take this task</p>
+          <p class="invitation-how">Read Theorem 1.1 on page 78 of the manuscript hashed in this record (sha256 f318c6508c9d49ef876a5a26cd73928705f96c07bb43e92a0cb35bd3f666ea53), then read SoficGroups.SourceTopLevelCompressionFinal.exists_finitelyPresented_nonsofic_group, the declaration ComparatorChallenges/D_NonSoficGroup.json names at the pinned commit. Walk the declarations between them and write down each one. The specific thing to look for: the manuscript states a property of one concrete group, the formal target states that some finitely presented group exists. Say where those two part company, and whether anything in between closes the gap.</p>
+          <p class="invitation-respond">
+<a href="https://github.com/hjyuh/significance/issues/new?template=invitation-response.yml">Report what you found</a>          </p>
+        </div>
         <p class="invitation-origin">significance-editor · 2026-08-01T13:57:00Z</p>
       </li>
       <li>
         <p class="invitation-kind">mathematical review</p>
         <p class="invitation-target">Assess the expander-matching criterion in Proposition 2.3 or the Thompson-group step in Proposition 3.2, naming the exact artifact revision reviewed.</p>
+        <div class="invitation-task">
+          <p class="invitation-how-label">Take this task</p>
+          <p class="invitation-how">Pick one: the expander-matching criterion in Proposition 2.3, or the Thompson-group step in Proposition 3.2. Work from the manuscript hashed here (sha256 f318c6508c9d49ef876a5a26cd73928705f96c07bb43e92a0cb35bd3f666ea53) and name that hash in what you write, so the assessment stays attached to the revision you actually read. &#34;I could not follow step 4&#34; is a useful report and will be recorded as what it is: your reading, signed by you.</p>
+          <p class="invitation-respond">
+<a href="https://github.com/hjyuh/significance/issues/new?template=invitation-response.yml">Report what you found</a>          </p>
+        </div>
         <p class="invitation-origin">significance-editor · 2026-08-01T13:57:00Z</p>
       </li>
     </ul>
@@ -186,6 +204,10 @@
   <div class="band">
     <p class="lbl">History — append-only</p>
     <ul class="history">
+      <li>
+        <span class="event-id">evt-invitations-actionable</span>
+        <span class="event-meta">invitations_updated · 2026-08-07T00:00:00Z · significance-editor<br>Added instructions and a response channel to the three open invitations. Every value in them was already present in this record: the commit and toolchain digest from the evidence entries, the page and manuscript hash from the claim and manuscript blocks, the declaration name from the correspondence entry. No invitation&#39;s target was changed.</span>
+      </li>
       <li>
         <span class="event-id">evt-plain-language-added</span>
         <span class="event-meta">digest_added · 2026-08-07T00:00:00Z · significance-editor<br>Added an editor-stratum plain-language explanation of what the claimed result says. It restates the claim already recorded here and adds no evidence.</span>

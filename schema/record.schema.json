@@ -539,7 +539,21 @@
           "$ref": "#/$defs/party_id",
           "description": "Any named party, not restricted to authors."
         },
-        "created_at": { "$ref": "#/$defs/iso_datetime" }
+        "created_at": { "$ref": "#/$defs/iso_datetime" },
+        "how": {
+          "type": "string",
+          "description": "What somebody would actually do: the exact commit, the toolchain, the command, the file to read. Optional, because an invitation whose instructions nobody has written down is still a real invitation — and rendering it with a 'take this task' button anyway would promise help that is not there. Non-emptiness is enforced by `significance validate`, which owns the rule so the failure has one name."
+        },
+        "respond": {
+          "description": "Where the answer goes. At least one channel, because an invitation that says what to do and not where to say you did it is a dead end.",
+          "type": "object",
+          "additionalProperties": false,
+          "minProperties": 1,
+          "properties": {
+            "url": { "type": "string", "format": "uri" },
+            "mailto": { "type": "string", "minLength": 1 }
+          }
+        }
       }
     },
 
