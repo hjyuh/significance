@@ -48,8 +48,9 @@ produces:
 
 - static record pages and their static index under `public/records/` for the
   hosted app (or another directory supplied with `-o`); and
-- `public/records/index.json`, a deliberately narrow list of validated record
-  summaries.
+- `public/records/index.json`, a deliberately narrow set of validated summaries:
+  `records` and `boards`, and nothing the presentation layer could recompute
+  differently.
 
 The React/vinext homepage imports that generated JSON and only presents it. It
 does not parse YAML, restate record facts, or independently calculate freshness.
@@ -57,10 +58,52 @@ The Cloudflare Worker serves the React shell and static Python output; it does
 not render record content and declares no database, object-storage, or image
 transformation capability.
 
+## Reading a record without knowing the vocabulary
+
+Five things exist so that a stranger with a genuine need can get somewhere
+without learning this project's dialect first. None of them renders a verdict,
+a score, or a colour-coded truth state; all of them are attributed.
+
+Pages:
+
+- `/request/` — how to ask for a record, with a prefilled GitHub issue and an
+  email fallback asking the same three questions. States the consent rule: a
+  record about a living person's claim is filed only after they are contacted,
+  and a decline is recorded nowhere.
+- `/glossary/` — the vocabulary, one sentence per term. Terms are also links
+  from the pages where they appear.
+- `/boards/ten-results/` — one row per result in the August 2026 release,
+  stating what has been checked and what has not. Nine of its ten rows are
+  deliberately empty: nothing here evidences those results yet, and an empty
+  row means nobody has looked.
+
+Two optional blocks in a record's YAML:
+
+- `plain_summary` — four plain sentences above the dossier: what is claimed,
+  what has been checked, what has not, as of when. `basis: digest`, capped at
+  60 words a field, and refused if it states a verdict or leaves `not_checked`
+  empty while the record carries open invitations.
+- `digestions[].kind: plain_language` — a signed paragraph explaining what the
+  result says, labelled with the stratum speaking (author, editor, community).
+  Strata are rendered separately and never merged.
+
+Open invitations may also carry `how` (what somebody would actually do, pinned
+to an exact revision) and `respond` (where the answer goes). Both are optional;
+an invitation without them renders exactly as it did before.
+
+`significance validate` checks boards as well as records, choosing by the
+`kind: board` discriminator. `significance build` gains `--pages-out` for the
+deployed layout, `--boards`, and `--site-config`.
+
 ## Repository layout
 
-- `schema/` — the record JSON Schema (draft 2020-12) and its changelog.
+- `schema/` — the record JSON Schema (draft 2020-12) and its changelog, plus
+  `board.schema.json` for status boards.
 - `records/` — published, source-inspected claim-state records.
+- `boards/` — status boards: one page answering a question across several
+  results, holding no evidence of its own.
+- `data/` — hand-written non-record data: `site.yaml` (repository URL and
+  contact address) and `glossary.yaml`.
 - `examples/` — explicitly synthetic schema demonstrations; production builds
   never render this directory.
 - `src/significance/` — the Python package (`cli.py`, `validate.py`,
