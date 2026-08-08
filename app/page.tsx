@@ -47,6 +47,7 @@ export default function Home() {
           <Link href="/submit">Submit a record →</Link>
           {/* Rendered by the Python renderer, not by this shell. The shell
               links to it; it never restates what the page says. */}
+          <a href="/orientation/">What is going on →</a>
           <a href="/request/">Request a record →</a>
           <a href="/glossary/">Glossary →</a>
         </nav>

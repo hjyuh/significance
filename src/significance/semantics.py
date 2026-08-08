@@ -36,17 +36,71 @@ _FORBIDDEN_WORDS = ("verified", "proven")
 # record" are ordinary vocabulary here and banning them would produce false
 # refusals in the one place the writer is trying hardest to be plain.
 _VERDICT_WORDS = ("correct", "incorrect", "true", "false", "proven", "verified", "refuted")
-_VERDICT_RE = re.compile(rf"\b({'|'.join(_VERDICT_WORDS)})(ly|ness)?\b", re.IGNORECASE)
+
+# The lint has to speak every language the strips do.
+#
+# Found by writing the French translation and watching "la preuve est correcte"
+# sail straight through: the English pattern needs a word boundary after
+# "correct", and the French adjective agrees with a feminine noun, so one
+# character of inflection defeated the whole check. A translated summary is
+# exactly where that failure costs most — it is read by fewer reviewers, and
+# the reader who would have caught it is the one who does not read English.
+#
+# Inflected forms are written out rather than derived from stems with optional
+# endings, because a loose pattern in a language its maintainer reads less
+# fluently produces false refusals nobody present can adjudicate.
+_VERDICT_WORDS_BY_LANG = {
+    "fr": (
+        "correct", "correcte", "corrects", "correctes",
+        "exact", "exacte", "exacts", "exactes",
+        "vrai", "vraie", "vrais", "vraies",
+        "faux", "fausse", "fausses",
+        "prouvé", "prouvée", "prouvés", "prouvées",
+        "démontré", "démontrée", "démontrés", "démontrées",
+        "vérifié", "vérifiée", "vérifiés", "vérifiées",
+        "réfuté", "réfutée", "réfutés", "réfutées",
+        "valide", "valides", "invalide", "invalides",
+    ),
+    "ar": (
+        "صحيح", "صحيحة", "صحيحان",
+        "خطأ", "خاطئ", "خاطئة",
+        "مثبت", "مثبتة", "مبرهن", "مبرهنة",
+        "مؤكد", "مؤكدة",
+        "مفند", "مفندة",
+        "سليم", "سليمة",
+    ),
+}
 
 
-def verdict_violations(text: str, location: str) -> list[Violation]:
+def _verdict_pattern(words) -> re.Pattern:
+    return re.compile(rf"\b({'|'.join(words)})(ly|ness)?\b", re.IGNORECASE | re.UNICODE)
+
+
+_VERDICT_RE = _verdict_pattern(_VERDICT_WORDS)
+_VERDICT_RE_BY_LANG = {
+    lang: _verdict_pattern(words) for lang, words in _VERDICT_WORDS_BY_LANG.items()
+}
+
+
+def verdict_violations(text: str, location: str, lang: str = "en") -> list[Violation]:
     """Verdict words found in a plain-language field.
+
+    The English list applies whatever the language, since a French paragraph may
+    quote an English headline; the language's own list applies on top. A
+    language with no list gets the English check alone, which is weaker than it
+    looks — so it is written down here that this is not coverage, and a new
+    translation language means a new list.
 
     Reported per distinct word rather than per occurrence, so a paragraph using
     "correct" three times produces one actionable message instead of three
     identical ones.
     """
-    found = sorted({m.group(0).lower() for m in _VERDICT_RE.finditer(text)})
+    patterns = [_VERDICT_RE]
+    base_lang = lang.split("-")[0].lower()
+    if base_lang in _VERDICT_RE_BY_LANG:
+        patterns.append(_VERDICT_RE_BY_LANG[base_lang])
+
+    found = sorted({m.group(0).lower() for pattern in patterns for m in pattern.finditer(text)})
     return [
         Violation(
             "verdict-language",
@@ -176,6 +230,97 @@ def check_plain_summary(record: dict) -> list[Violation]:
 # the existing audience-targeted digestions because those may assume a
 # mathematician is reading.
 PLAIN_LANGUAGE_MAX_WORDS = 150
+
+
+# The line is written to be pasted into a headline or a forum post, so it has
+# to fit in one. Shorter than a plain_summary field on purpose.
+ACCURATE_WORDING_MAX_WORDS = 40
+
+
+def check_accurate_wording(record: dict) -> list[Violation]:
+    """The suggested sentence is the one most likely to travel, so it is the
+    one held tightest.
+
+    It exists to stop overstatement, which makes a verdict inside it the exact
+    failure the field was built to prevent — and unlike the other
+    plain-language blocks, this one is written to be copied somewhere this
+    project has no control over, where nobody will see the attribution that
+    would have qualified it.
+    """
+    wording = record.get("accurate_wording")
+    if not isinstance(wording, dict):
+        return []
+
+    value = wording.get("value")
+    if not isinstance(value, str):
+        return []
+
+    violations = list(verdict_violations(value, "accurate_wording.value"))
+    count = word_count(value)
+    if count > ACCURATE_WORDING_MAX_WORDS:
+        violations.append(
+            Violation(
+                "accurate-wording-too-long",
+                f"{count} words, over the {ACCURATE_WORDING_MAX_WORDS}-word cap. A sentence "
+                "somebody can paste into a post has to fit in one",
+                "accurate_wording.value",
+            )
+        )
+    return violations
+
+
+def check_plain_summary_translations(record: dict) -> list[Violation]:
+    """A translation is a second summary and answers to the summary's rules.
+
+    Including the one about not exceeding the record: a translation that
+    quietly drops the not-checked line is the easiest way for a strip in a
+    language the maintainer reads less fluently to become an endorsement.
+    """
+    summary = record.get("plain_summary")
+    if not isinstance(summary, dict):
+        return []
+
+    violations: list[Violation] = []
+    seen: set[str] = set()
+    for index, translation in enumerate(summary.get("translations") or []):
+        if not isinstance(translation, dict):
+            continue
+        lang = translation.get("lang")
+        if isinstance(lang, str):
+            if lang in seen:
+                violations.append(
+                    Violation(
+                        "duplicate-translation-language",
+                        f"two translations declare lang {lang!r}; the page would render both "
+                        "and a reader could not tell which one the record stands behind",
+                        f"plain_summary.translations[{index}].lang",
+                    )
+                )
+            seen.add(lang)
+
+        for field in PLAIN_SUMMARY_FIELDS:
+            value = translation.get(field)
+            if not isinstance(value, str):
+                continue
+            location = f"plain_summary.translations[{index}].{field}"
+            count = word_count(value)
+            # Word counts do not transfer between scripts -- Arabic says in
+            # four words what English says in seven -- so the cap is applied
+            # with room rather than exactly, and it is here to catch a
+            # translation that grew into an essay, not to police style.
+            if count > PLAIN_SUMMARY_MAX_WORDS * 2:
+                violations.append(
+                    Violation(
+                        "plain-summary-too-long",
+                        f"{count} words in the {translation.get('lang', '?')} translation, far "
+                        f"over the {PLAIN_SUMMARY_MAX_WORDS}-word cap the English fields answer to",
+                        location,
+                    )
+                )
+            lang_tag = lang if isinstance(lang, str) else "en"
+            violations.extend(verdict_violations(value, location, lang=lang_tag))
+
+    return violations
 
 
 def check_plain_language_digestions(record: dict) -> list[Violation]:
@@ -387,6 +532,8 @@ def semantic_violations(record: dict) -> list[Violation]:
         *check_source_quote_locators(record),
         *check_forbidden_language(record),
         *check_plain_summary(record),
+        *check_plain_summary_translations(record),
+        *check_accurate_wording(record),
         *check_plain_language_digestions(record),
         *check_invitation_instructions(record),
         *check_freshness_recomputation(record),

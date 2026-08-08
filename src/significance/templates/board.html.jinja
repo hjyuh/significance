@@ -81,6 +81,10 @@
       <p class="meta">{{ m.attribution(row.status) }}</p>
       {% endif %}
       {% endif %}
+
+      {% if row_status_text and row_status_text.get(row.id) %}
+      {{ m.copy_status(row_status_text[row.id], 'Copy this row into a thread') }}
+      {% endif %}
     </li>
     {% endfor %}
   </ol>

@@ -670,3 +670,83 @@ dl.glossary dd {
   color: var(--fg-body);
   line-height: 1.6;
 }
+
+/* --- copy-status export -----------------------------------------------------
+   Selectable text, not a button: these pages ship default-src 'none' with no
+   script, and a copy button would mean admitting JavaScript to every record
+   page to save one keystroke. The box makes the boundaries of the selection
+   obvious, which is the part a person actually needs. */
+details.copy-status { margin: 0; }
+
+details.copy-status > summary {
+  cursor: pointer;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--note);
+}
+
+.copy-status-help {
+  margin: 8px 0 6px;
+  font-size: 13px;
+  color: var(--muted);
+  max-width: 62ch;
+}
+
+pre.copy-status-text {
+  margin: 0;
+  padding: 14px 16px;
+  border: 1px solid var(--hair);
+  background: var(--bg-rail);
+  color: var(--fg-body);
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  overflow-x: auto;
+  user-select: all;
+}
+
+/* --- suggested wording ------------------------------------------------------
+   Set as a quotation rather than a headline: it is a sentence offered for
+   someone else's prose, not a statement the site is making in its own voice. */
+.accurate-wording-value {
+  margin: 0 0 8px;
+  padding-left: 14px;
+  border-left: 2px solid var(--edge);
+  max-width: 66ch;
+  color: var(--fg-body);
+  line-height: 1.6;
+}
+
+/* --- translated summaries ---------------------------------------------------
+   Each is its own block with its own attribution. dir="rtl" is set from the
+   record's lang tag, so an Arabic strip reads right-to-left while the English
+   attribution line under it stays left-to-right. */
+.plain-summary-translation {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--hair);
+}
+
+.plain-summary-translation[dir="rtl"] dl.plain-summary-list { text-align: right; }
+
+/* --- orientation ------------------------------------------------------------
+   Long-form prose for somebody who arrived from a headline. Wider measure than
+   a record's fields and no columns: this page is read top to bottom, which is
+   the one page here that is. */
+.orientation-heading {
+  margin: 0 0 10px;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--fg-strong);
+}
+
+.orientation-section .prose { max-width: 68ch; line-height: 1.7; }
+
+ul.orientation-next {
+  margin: 0;
+  padding-left: 18px;
+  max-width: 68ch;
+  line-height: 1.7;
+}

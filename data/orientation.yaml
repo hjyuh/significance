@@ -1,0 +1,117 @@
+# The orientation page: what is going on, in plain words.
+#
+# For the reader arriving from a news cycle who does not need a record yet.
+# They need the situation explained first, or no record on this site will mean
+# anything to them.
+#
+# Every section is attributed, like everything else here. That is not
+# ceremony: this page makes claims about the world — what a formal checker
+# does, what "independently verified" ought to mean — and those are an
+# editor's reading, not facts the site discovered. Somebody who disagrees
+# should be able to see whose reading they are disagreeing with.
+#
+# The same verdict lint that governs the plain-language blocks runs over these
+# bodies. A page written to calm people down is exactly where a confident
+# sentence would do the most damage.
+
+title: "AI and mathematics right now, in plain words"
+
+as_of: "2026-08-07T00:00:00Z"
+
+intro:
+  value: >-
+    If you arrived here because of a headline, this page is the place to
+    start. It explains what is actually happening, what the technical words in
+    the coverage do and do not guarantee, and where to look if you want to
+    check something specific yourself. It takes about four minutes and assumes
+    you know no mathematics.
+  basis: digest
+  asserted_by: significance-editor
+  asserted_at: "2026-08-07T00:00:00Z"
+
+sections:
+  - id: what-is-happening
+    heading: "What is actually happening"
+    body: >-
+      Large AI systems have started producing proofs of mathematical statements
+      that no human had settled, and some of those proofs come with machine
+      checkable files attached. That is genuinely new. What has not changed is
+      how mathematics gets accepted: other mathematicians read an argument,
+      work out whether it does what it says, and say so publicly under their
+      own names. That process takes months and has barely started for most of
+      the results being announced. Both things are ordinary at once — a real
+      advance, and a settled question still open.
+    basis: editorial_inference
+    asserted_by: significance-editor
+    asserted_at: "2026-08-07T00:00:00Z"
+
+  - id: what-lean-does
+    heading: "What a Lean certificate does guarantee"
+    body: >-
+      Lean is a program that checks proofs. Given a statement written in its
+      language and a proof written in its language, it confirms that the proof
+      really does establish that statement, down to the logical steps. When it
+      accepts a proof, the chance that the reasoning has a gap is very small —
+      much smaller than for a proof only humans have read. That is a strong
+      guarantee and it is worth taking seriously.
+    basis: editorial_inference
+    asserted_by: significance-editor
+    asserted_at: "2026-08-07T00:00:00Z"
+
+  - id: what-lean-does-not
+    heading: "What it does not guarantee"
+    body: >-
+      Lean checks the statement it was given, not the statement in the paper.
+      Somebody has to write the paper's theorem in Lean's language, and that
+      translation is done by a person or a model and checked by nobody in
+      particular. If the translation quietly drops a hypothesis, weakens the
+      conclusion, or proves a related-but-different statement, Lean will
+      cheerfully accept it and report success. Reading the two statements side
+      by side and confirming they say the same thing is a separate job, done by
+      hand, and it is the job most often left undone. On this site that job has
+      a name — correspondence — and where nobody has done it, the record says
+      so.
+    basis: editorial_inference
+    asserted_by: significance-editor
+    asserted_at: "2026-08-07T00:00:00Z"
+
+  - id: independently-verified
+    heading: "What 'independently verified' should mean"
+    body: >-
+      The phrase gets used for at least three different things: that the
+      authors ran their own checker, that somebody else re-ran it, and that a
+      mathematician unconnected to the work read the argument and agreed with
+      it. Only the third is what most readers hear. When you meet the phrase,
+      the useful question is who did the checking, whether they were the same
+      people who produced the result, and what exactly they checked — the file,
+      the translation, or the mathematics.
+    basis: editorial_inference
+    asserted_by: significance-editor
+    asserted_at: "2026-08-07T00:00:00Z"
+
+  - id: what-to-ask
+    heading: "What to ask when you see a claim"
+    body: >-
+      Four questions cover most of it. Which exact statement is being claimed?
+      What was checked, by whom, and does the checker's name differ from the
+      author's? What has nobody checked yet? And as of when — because a claim
+      checked against a paper that has since been revised has been checked
+      against something that no longer exists. Every record on this site is
+      built to answer those four, and to say plainly where the answer is
+      "nobody has".
+    basis: digest
+    asserted_by: significance-editor
+    asserted_at: "2026-08-07T00:00:00Z"
+
+  - id: what-this-site-is
+    heading: "What this site is, and is not"
+    body: >-
+      It records what was claimed, who said it, what evidence exists, and what
+      remains open — with a name and a date against every line. It has no field
+      for whether a claim is right, and it will not be growing one. If you want
+      to know whether some result holds, this site cannot tell you; what it can
+      tell you is exactly how much has been established so far, which is
+      usually the thing people were really asking.
+    basis: digest
+    asserted_by: significance-editor
+    asserted_at: "2026-08-07T00:00:00Z"

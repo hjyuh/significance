@@ -1,6 +1,6 @@
 schema_version: 1
 record_id: 2026-openai-nonsofic-groups
-record_version: 5
+record_version: 6
 record_state: active
 
 freshness:
@@ -73,6 +73,62 @@ plain_summary:
     code actually contains; the repository's formal target is a broader
     existence statement. No mathematician's assessment of the argument is
     recorded here. The three open invitations name this work.
+  basis: digest
+  asserted_by: significance-editor
+  asserted_at: "2026-08-07T00:00:00Z"
+  # A translation is a second summary with its own asserter. These were drafted
+  # by the editor and must be read by somebody fluent before anyone leans on
+  # them: the record puts a name against every sentence, including these.
+  translations:
+    - lang: fr
+      claimed: >-
+        OpenAI affirme qu'un groupe infini précis — le groupe des éléments
+        inversibles d'une petite algèbre construite à partir de deux symboles —
+        ne peut pas être approché par des permutations finies. Cette propriété
+        s'appelle la soficité, et le manuscrit soutient que ce groupe ne la
+        possède pas.
+      checked: >-
+        Significance a reconstruit le code Lean publié à un commit fixé et a
+        enregistré que la compilation et la vérification des axiomes sont
+        allées à leur terme, les deux journaux étant empreintés. Le fichier du
+        manuscrit a été téléchargé et empreinté. Ce sont des vérifications
+        portant sur des artefacts, pas sur les mathématiques.
+      not_checked: >-
+        Personne n'a établi le lien entre le théorème 1.1 du manuscrit et
+        l'énoncé que contient réellement le code Lean ; la cible formelle du
+        dépôt est un énoncé d'existence plus large. Aucune évaluation par un
+        mathématicien n'est consignée ici. Les trois invitations ouvertes
+        désignent ce travail.
+      basis: digest
+      asserted_by: significance-editor
+      asserted_at: "2026-08-07T00:00:00Z"
+    - lang: ar
+      claimed: >-
+        تؤكد OpenAI أن زمرة لا نهائية محددة — زمرة العناصر القابلة للعكس في
+        جبر صغير مبني من رمزين — لا يمكن تقريبها بتباديل منتهية. تسمّى هذه
+        الخاصية الصوفية، ويذهب المخطوط إلى أن هذه الزمرة لا تتمتع بها.
+      checked: >-
+        أعادت Significance بناء شيفرة Lean المنشورة عند إصدار مثبّت، وسجّلت أن
+        عملية البناء وفحص البديهيات اكتملتا، مع بصمة رقمية لكلا السجلّين. كما
+        جرى تنزيل ملف المخطوط وحساب بصمته. هذه فحوص على المصنوعات الرقمية لا
+        على الرياضيات نفسها.
+      not_checked: >-
+        لم يتتبع أحد الصلة بين المبرهنة 1.1 في المخطوط والعبارة التي تتضمنها
+        شيفرة Lean فعلياً؛ فالهدف الصوري في المستودع عبارة وجود أوسع. ولا
+        يتضمن هذا السجل أي تقييم من رياضي. والدعوات المفتوحة الثلاث تشير إلى
+        هذا العمل.
+      basis: digest
+      asserted_by: significance-editor
+      asserted_at: "2026-08-07T00:00:00Z"
+
+# One sentence for somebody writing about this claim who does not want to
+# overstate it. A suggestion, never a requirement.
+accurate_wording:
+  value: >-
+    OpenAI has published a claimed proof with a Lean formalisation checked by
+    its own pipeline; the link between the paper's theorem and the formal
+    statement has not been traced by anyone else, and no independent
+    mathematical assessment is on record.
   basis: digest
   asserted_by: significance-editor
   asserted_at: "2026-08-07T00:00:00Z"
@@ -270,3 +326,8 @@ history:
     at: "2026-08-07T00:00:00Z"
     by: significance-editor
     note: "Added instructions and a response channel to the three open invitations. Every value in them was already present in this record: the commit and toolchain digest from the evidence entries, the page and manuscript hash from the claim and manuscript blocks, the declaration name from the correspondence entry. No invitation's target was changed."
+  - id: evt-wording-and-translations
+    type: digest_added
+    at: "2026-08-07T00:00:00Z"
+    by: significance-editor
+    note: "Added a suggested accurate-wording sentence and French and Arabic translations of the plain-language summary. All restate material already in this record; the translations are drafted by the editor and carry the editor's name pending review by a fluent reader."

@@ -45,6 +45,45 @@
       </div>
     </dl>
     <p class="meta">{{ m.attribution(ps) }} This block restates the record below in plainer words. It adds nothing to it.</p>
+
+    {% for tr in ps.get('translations', []) %}
+    {# A translation is a second summary with its own asserter, so it renders
+       as its own block with its own attribution rather than as a toggle on the
+       first. lang and dir are set from the record, which is what lets a screen
+       reader pronounce it correctly instead of reading French as broken
+       English. #}
+    {# dir is written as template markup, not as an expression returning an
+       attribute string: autoescape turns the quotes in such a string into
+       &#34; and the browser sees a broken attribute, so the Arabic block
+       renders left-to-right while looking correct in the source. Caught by a
+       test that asserted the rendered attribute rather than the intent. #}
+    <div class="plain-summary-translation" lang="{{ tr.lang }}"{% if tr.lang.split('-')[0] in ('ar', 'fa', 'he', 'ur') %} dir="rtl"{% endif %}>
+      <dl class="plain-summary-list">
+        <div><dt>{{ m.term('claim', 'Claim', glossary, links) }}</dt><dd>{{ tr.claimed }}</dd></div>
+        <div><dt>Checked</dt><dd>{{ tr.checked }}</dd></div>
+        <div><dt>Not checked</dt><dd>{{ tr.not_checked }}</dd></div>
+      </dl>
+      <p class="meta" lang="en" dir="ltr">{{ m.attribution(tr) }} Translation into {{ tr.lang }}, asserted by whoever wrote it.</p>
+    </div>
+    {% endfor %}
+  </section>
+  {% endif %}
+
+  {% set aw = record.get('accurate_wording') %}
+  {% if aw %}
+  {# The line written to be pasted into someone else's sentence. It sits with
+     the strip because it answers the same reader's question, and it is marked
+     a suggestion because this project does not tell anyone what to write. #}
+  <section class="band accurate-wording">
+    <p class="lbl">How to describe this accurately — a suggestion, not a requirement</p>
+    <p class="accurate-wording-value">{{ aw.value }}</p>
+    <p class="meta">{{ m.attribution(aw) }}</p>
+  </section>
+  {% endif %}
+
+  {% if status_text %}
+  <section class="band">
+    {{ m.copy_status(status_text) }}
   </section>
   {% endif %}
 

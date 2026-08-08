@@ -50,3 +50,20 @@
 {{ label or slug }}
 {%- endif -%}
 {%- endmacro %}
+
+{# The status paragraph, rendered for pasting.
+
+   No copy button: these pages ship default-src 'none' with no script, and a
+   button would mean admitting JavaScript to every record page to save one
+   keystroke. Selectable text in a bounded box does the same job. See
+   src/significance/export_text.py.
+
+   Inside <details> so it does not compete with the page for attention, and
+   open on the board where the row is otherwise three lines long. #}
+{% macro copy_status(text, summary_label='Copy this into a thread', open=false) -%}
+<details class="copy-status"{% if open %} open{% endif %}>
+<summary>{{ summary_label }}</summary>
+<p class="copy-status-help">Select all of this and paste it. It carries the link back, so whoever reads it can check the record themselves.</p>
+<pre class="copy-status-text">{{ text }}</pre>
+</details>
+{%- endmacro %}

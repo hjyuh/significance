@@ -1,0 +1,55 @@
+{% extends "base.html.jinja" %}
+{% import "macros.jinja" as m %}
+
+{% block title %}{{ orientation.title }} — Significance{% endblock %}
+{% block topline_meta %}Orientation — as of {{ orientation.as_of }}{% endblock %}
+
+{#
+  For the reader who arrived from a headline and does not need a record yet.
+  Written to be linked at anyone who asks what is going on, which is why it
+  explains the vocabulary rather than using it, and why every section carries
+  an asserter: this page makes claims about the world, and somebody who
+  disagrees should be able to see whose reading they are disagreeing with.
+#}
+
+{% block content %}
+
+<section class="band">
+  <p class="lbl">Orientation — as of {{ orientation.as_of }}</p>
+  <h1 class="claim-text">{{ orientation.title }}</h1>
+  <p class="prose">{{ orientation.intro.value }}</p>
+  <p class="meta">{{ m.attribution(orientation.intro) }}</p>
+</section>
+
+{% for section in orientation.sections %}
+<section class="band orientation-section" id="{{ section.id }}">
+  <h2 class="orientation-heading">{{ section.heading }}</h2>
+  <p class="prose">{{ section.body }}</p>
+  <p class="meta">{{ m.attribution(section) }}</p>
+</section>
+{% endfor %}
+
+<section class="band">
+  <p class="lbl">Where to go next</p>
+  <ul class="orientation-next">
+    <li><a href="{{ links.records_index }}">The records</a> — one page per claim, with evidence and open work.</li>
+    {% for board_id, board_url in links.boards.items() %}
+    <li><a href="{{ board_url }}">The {{ board_id|replace('-', ' ') }} board</a> — the same questions across every result at once.</li>
+    {% endfor %}
+    {% if links.get('glossary') %}
+    <li><a href="{{ links.glossary }}">The glossary</a> — every term above, one sentence each.</li>
+    {% endif %}
+    <li><a href="{{ links.request }}">Request a record</a> — if the claim you care about is not here.</li>
+  </ul>
+</section>
+
+<section class="band what-this-does-not-establish">
+  <p class="lbl">What this page is not</p>
+  <ul>
+    <li>It is one editor's reading of the situation, dated and signed, not a neutral summary of the field.</li>
+    <li>It says nothing about whether any particular result is right.</li>
+    <li>It will go out of date. The date at the top is when it was last gone over.</li>
+  </ul>
+</section>
+
+{% endblock %}

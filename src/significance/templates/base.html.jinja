@@ -16,6 +16,7 @@
    for a template rendered directly in a test. #}
 {% if links %}
 <nav class="topline-nav" aria-label="Site">
+{% if links.get('orientation') %}<a href="{{ links.orientation }}">What is going on</a>{% endif %}
 <a href="{{ links.request }}">Request a record</a>
 {% if links.get('glossary') %}<a href="{{ links.glossary }}">Glossary</a>{% endif %}
 {% for board_id, board_url in links.boards.items() %}

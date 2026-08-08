@@ -24,12 +24,14 @@ from jinja2 import Environment, FileSystemLoader
 from ruamel.yaml import YAML
 
 from significance.boards import (
+    FILL_MARKER,
     board_summary,
     board_validator,
     board_violations,
     collect_board_files,
     load_board,
 )
+from significance.export_text import board_row_status_text, record_status_text
 from significance.records import load_record
 from significance.semantics import verdict_violations
 from significance.validate import collect_yaml_files, validate_paths
@@ -136,12 +138,36 @@ def glossary_violations(glossary: dict) -> list[Violation]:
     return violations
 
 
+def load_orientation(path: str | Path | None = None) -> dict:
+    """The orientation page's content, or {} when there is none."""
+    orientation_path = Path(path) if path is not None else _DATA_DIR / "orientation.yaml"
+    if not orientation_path.is_file():
+        return {}
+    with open(orientation_path, "r", encoding="utf-8") as f:
+        return _yaml.load(f) or {}
+
+
+def orientation_violations(orientation: dict) -> list[Violation]:
+    """A page written to calm people down is exactly where a confident sentence
+    would do the most damage, so it answers to the same verdict lint as every
+    other plain-language block."""
+    violations: list[Violation] = []
+    intro = orientation.get("intro") or {}
+    if isinstance(intro.get("value"), str):
+        violations.extend(verdict_violations(intro["value"], "intro.value"))
+    for index, section in enumerate(orientation.get("sections") or []):
+        if isinstance(section, dict) and isinstance(section.get("body"), str):
+            violations.extend(verdict_violations(section["body"], f"sections[{index}].body"))
+    return violations
+
+
 def site_links(
     root_prefix: str,
     *,
     deployed: bool,
     board_ids: list[str] | None = None,
     has_glossary: bool = False,
+    has_orientation: bool = False,
 ) -> dict:
     """Where the auxiliary pages live, from the point of view of one page.
 
@@ -172,6 +198,8 @@ def site_links(
         }
         if has_glossary:
             links["glossary"] = "/glossary/"
+        if has_orientation:
+            links["orientation"] = "/orientation/"
         return links
 
     links = {
@@ -181,6 +209,8 @@ def site_links(
     }
     if has_glossary:
         links["glossary"] = f"{root_prefix}glossary/index.html"
+    if has_orientation:
+        links["orientation"] = f"{root_prefix}orientation/index.html"
     return links
 
 
@@ -205,6 +235,7 @@ def build_site(
     site_config: str | Path | None = None,
     boards_dir: str | Path | None = None,
     glossary_path: str | Path | None = None,
+    orientation_path: str | Path | None = None,
 ) -> BuildResult:
     records_dir = Path(records_dir)
     out_dir = Path(out_dir)
@@ -221,6 +252,12 @@ def build_site(
     result_skipped_boards: dict[str, list[Violation]] = {}
 
     config = load_site_config(site_config)
+
+    # Only an http(s) URL may become the link in a pasted paragraph. The
+    # shipped value carries a [FILL] marker and fails this, which is the
+    # intended behaviour: the paragraph renders without a link rather than with
+    # a guessed one.
+    public_url = safe_href(config.get("site_url"))
 
     # Boards are resolved before anything renders, because every page's nav
     # needs to know which ones exist. A board that does not validate is skipped
@@ -241,6 +278,14 @@ def build_site(
         boards.append(board)
     boards.sort(key=lambda b: b["board_id"])
     board_ids = [b["board_id"] for b in boards]
+
+    orientation = load_orientation(orientation_path)
+    orientation_problems = orientation_violations(orientation) if orientation else []
+    if orientation_problems:
+        result_skipped_boards[str(orientation_path or _DATA_DIR / "orientation.yaml")] = (
+            orientation_problems
+        )
+        orientation = {}
 
     glossary = load_glossary(glossary_path)
     glossary_problems = glossary_violations(glossary)
@@ -264,6 +309,7 @@ def build_site(
             deployed=deployed,
             board_ids=board_ids,
             has_glossary=bool(glossary),
+            has_orientation=bool(orientation),
         )
 
     env = _environment()
@@ -287,9 +333,11 @@ def build_site(
 
         record = load_record(f)
         record_id = record["record_id"]
+        record_url = f"{public_url}/records/{record_id}/" if public_url else None
         html = record_template.render(
             record=record,
             glossary=glossary,
+            status_text=record_status_text(record, record_url),
             root_prefix="../",
             links=links_for("../"),
         )
@@ -323,6 +371,17 @@ def build_site(
     )
     result.pages.append("request")
 
+    if orientation:
+        _write_page(
+            pages_dir / "orientation",
+            env.get_template("orientation.html.jinja").render(
+                orientation=orientation,
+                root_prefix=pages_prefix,
+                links=pages_links,
+            ),
+        )
+        result.pages.append("orientation")
+
     if glossary:
         _write_page(
             pages_dir / "glossary",
@@ -344,6 +403,19 @@ def build_site(
             pages_dir / "boards" / board["board_id"],
             board_template.render(
                 board=board,
+                # No paste for a row that has no name yet. "Nobody has
+                # looked at this" is a real answer to "is this real?" — but
+                # only when the paragraph can say which result it is about,
+                # and a placeholder row cannot.
+                row_status_text={
+                    row["id"]: board_row_status_text(
+                        board,
+                        row,
+                        f"{public_url}/boards/{board['board_id']}/" if public_url else None,
+                    )
+                    for row in board["rows"]
+                    if not row.get("result", "").strip().lower().startswith(FILL_MARKER)
+                },
                 root_prefix=board_prefix,
                 links=links_for(board_prefix),
             ),

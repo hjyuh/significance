@@ -49,6 +49,7 @@
     },
     "claim": { "$ref": "#/$defs/claim" },
     "plain_summary": { "$ref": "#/$defs/plain_summary" },
+    "accurate_wording": { "$ref": "#/$defs/accurate_wording" },
     "manuscript": { "$ref": "#/$defs/manuscript" },
     "evidence": {
       "type": "array",
@@ -202,6 +203,20 @@
       }
     },
 
+    "accurate_wording": {
+      "description": "One sentence somebody writing about this claim can use without overstating it. It exists because overstatement is mostly a symptom of precise language being work: a journalist, blogger or forum poster on a deadline takes the nearest available phrasing, and this hands them a better one. It is a suggestion and never a requirement — this project does not tell anyone what to write — and it is the field most likely to drift into a verdict and the field where a verdict would travel furthest, since it is written to be pasted. The validator holds it to the same lint as every other plain-language block.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "basis", "asserted_by", "asserted_at"],
+      "properties": {
+        "value": { "type": "string", "minLength": 1 },
+        "basis": { "$ref": "#/$defs/digest_basis" },
+        "asserted_by": { "$ref": "#/$defs/party_id" },
+        "asserted_at": { "$ref": "#/$defs/iso_datetime" },
+        "locator": { "$ref": "#/$defs/locator" }
+      }
+    },
+
     "plain_summary": {
       "description": "A four-question plain-words restatement for a reader who does not know this project's vocabulary: what is claimed, what has been checked, what has not been checked, and as of when. It is optional, it is signed like everything else, and it is a digest — it may restate what the record already says and may never add to it. The word caps and the refusal of verdict language are enforced by `significance validate`, not by this schema.",
       "type": "object",
@@ -222,7 +237,31 @@
         "basis": { "$ref": "#/$defs/digest_basis" },
         "asserted_by": { "$ref": "#/$defs/party_id" },
         "asserted_at": { "$ref": "#/$defs/iso_datetime" },
-        "locator": { "$ref": "#/$defs/locator" }
+        "locator": { "$ref": "#/$defs/locator" },
+        "translations": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/plain_summary_translation" },
+          "description": "The same four questions in another language. A translation is a second summary with its own asserter, not a presentation setting on the first: whoever translated it is answerable for it, and a record that renders a sentence in Arabic has somebody's name against that sentence."
+        }
+      }
+    },
+
+    "plain_summary_translation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["lang", "claimed", "checked", "not_checked", "basis", "asserted_by", "asserted_at"],
+      "properties": {
+        "lang": {
+          "type": "string",
+          "pattern": "^[a-z]{2,3}(-[A-Za-z0-9]+)*$",
+          "description": "BCP 47 language tag. Rendered into the lang attribute, so a screen reader pronounces the block in the right language rather than reading French as mangled English."
+        },
+        "claimed": { "type": "string", "minLength": 1 },
+        "checked": { "type": "string", "minLength": 1 },
+        "not_checked": { "type": "string", "minLength": 1 },
+        "basis": { "$ref": "#/$defs/digest_basis" },
+        "asserted_by": { "$ref": "#/$defs/party_id" },
+        "asserted_at": { "$ref": "#/$defs/iso_datetime" }
       }
     },
 
