@@ -125,7 +125,8 @@ deployed layout, `--boards`, and `--site-config`.
   fixtures; see `adapters/lean/README.md`.
 - `docs/` — `design.md` (rationale), `export.md` (integration proposal
   for existing trackers), `moderation.md` (assessment admissibility and
-  outreach ethics).
+  outreach ethics), and `plans/` (design notes and roadmaps, dated; nothing
+  in there is committed or built unless it says so).
 - `.github/workflows/` — CI (lint, test, validate, build, deploy Pages on
   `main`) and the two privilege-separated Lean adapter workflows.
 - `SECURITY.md` — the Lean adapter's threat model and known limitations.
