@@ -25,6 +25,8 @@ function evidenceItem(draft: EvidenceDraft, nowText: string): Record<string, unk
   switch (draft.kind) {
     case "external_formal_artifact":
       return { ...base, repo: draft.repo, ...(draft.commit ? { commit: draft.commit } : {}), description: draft.description, ...locator };
+    case "source_inspection":
+      return { ...base, description: draft.description, ...locator };
     case "informal_review":
       return { ...base, reviewer: draft.reviewer, text: draft.text, ...locator };
     case "mathematical_assessment": {

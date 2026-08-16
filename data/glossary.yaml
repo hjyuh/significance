@@ -118,3 +118,27 @@ terms:
     definition: >-
       How much of a claim the evidence actually reaches. Formal code covering
       one lemma of a paper is real coverage of that lemma and no more.
+
+  - slug: taken
+    term: "taken"
+    definition: >-
+      A reviewer has named themselves as working on a bounded invitation. It
+      remains open work until a recorded entry points to what they did.
+
+  - slug: reviewer-page
+    term: "reviewer page"
+    definition: >-
+      A static page listing one identity's attributed entries across records.
+      It is a census, not a rating.
+
+  - slug: backlog
+    term: "backlog"
+    definition: >-
+      An activity-sorted view of active records. Older recorded activity means
+      only that less has been recorded recently, not that a claim is weaker.
+
+  - slug: depends-on
+    term: "depends_on"
+    definition: >-
+      An attributed link saying that a record cites, builds on, or uses a
+      result from another record or an external source.

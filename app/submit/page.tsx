@@ -1,8 +1,8 @@
 import SubmitWizard from "./SubmitWizard";
 
 export const metadata = {
-  title: "Submit a record — Significance",
-  description: "Assemble a Significance claim-state record and open it as a pull request.",
+  title: "Advanced record builder — Significance",
+  description: "Technical contributor tool for assembling a schema-valid Significance record.",
 };
 
 export default function SubmitPage() {

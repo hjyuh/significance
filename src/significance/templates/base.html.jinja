@@ -5,19 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none';">
 <title>{% block title %}Significance{% endblock %}</title>
-<link rel="stylesheet" href="{{ root_prefix }}static/style.css">
+<link rel="stylesheet" href="{{ root_prefix }}static/style.css?v={{ style_version }}">
 </head>
 <body>
 <header class="topline">
 <a class="wordmark" href="{{ links.records_index if links else root_prefix ~ 'index.html' }}">SIGNIFICANCE</a>
-<p class="topline-meta">{% block topline_meta %}Claim-state records for AI-assisted mathematics{% endblock %}</p>
+<p class="topline-meta">{% block topline_meta %}Clear records for AI-assisted mathematics{% endblock %}</p>
 {# Where the two layouts' links come from, and why they differ, is in
    render.site_links. `links` is always supplied by the renderer; the guard is
    for a template rendered directly in a test. #}
 {% if links %}
 <nav class="topline-nav" aria-label="Site">
 {% if links.get('orientation') %}<a href="{{ links.orientation }}">What is going on</a>{% endif %}
-<a href="{{ links.request }}">Request a record</a>
+<a href="{{ links.request }}">Request or correct a record</a>
+{% if links.get('intake') %}<a href="{{ links.intake }}">How to file a claim</a>{% endif %}
+{% if links.get('reviewers') %}<a href="{{ links.reviewers }}">Reviewers</a>{% endif %}
+{% if links.get('backlog') %}<a href="{{ links.backlog }}">Backlog</a>{% endif %}
 {% if links.get('glossary') %}<a href="{{ links.glossary }}">Glossary</a>{% endif %}
 {% for board_id, board_url in links.boards.items() %}
 <a href="{{ board_url }}">{{ board_id|replace('-', ' ') }}</a>

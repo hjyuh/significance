@@ -1,0 +1,12 @@
+schema_version: 1
+record_id: 2026-fixture-taken-without-who
+record_version: 1
+record_state: active
+freshness: {result: unknown, checked_at: "2026-08-16T00:00:00Z"}
+parties: {editor: {name: Editor, verification_method: {kind: email_confirmation}}}
+claim: {id: c, text: {value: x, basis: editorial_inference, asserted_by: editor, asserted_at: "2026-08-16T00:00:00Z"}, scope: {value: x, basis: editorial_inference, asserted_by: editor, asserted_at: "2026-08-16T00:00:00Z"}}
+manuscript: {url: "https://example.org/p.pdf", label: v1, sha256: "0000000000000000000000000000000000000000000000000000000000000000", retrieved_at: "2026-08-16T00:00:00Z"}
+evidence: [{id: ev, kind: source_inspection, description: x, basis: editorial_inference, asserted_by: editor, asserted_at: "2026-08-16T00:00:00Z"}]
+ai_provenance: {disclosure: {value: none, basis: editorial_inference, asserted_by: editor, asserted_at: "2026-08-16T00:00:00Z"}, roles: []}
+open_invitations: [{kind: reading, target: x, created_by: editor, created_at: "2026-08-16T00:00:00Z", status: taken}]
+history: [{id: created, type: created, at: "2026-08-16T00:00:00Z", by: editor}]

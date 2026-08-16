@@ -1,32 +1,79 @@
 {% macro external_link(url, text=None) -%}
 {%- set safe = url|safe_href -%}
 {%- if safe -%}
-<a href="{{ safe }}">{{ text or url }}</a>
+<a href="{{ safe }}">{{ text or 'Open link' }}</a>
 {%- else -%}
 {{ text or url }}
 {%- endif -%}
 {%- endmacro %}
 
+{% macro basis_label(basis) -%}
+{%- if basis == 'source_quote' -%}Quoted from the source
+{%- elif basis == 'author_attestation' -%}Stated by the author
+{%- elif basis == 'editorial_inference' -%}Significance’s interpretation
+{%- elif basis == 'machine_result' -%}Automated result
+{%- elif basis == 'digest' -%}Plain-language restatement
+{%- else -%}{{ basis|replace('_', ' ') }}
+{%- endif -%}
+{%- endmacro %}
+
+{% macro party_label(party) -%}
+{%- if party == 'significance-editor' -%}Significance editor
+{%- elif party == 'significance-ci' -%}Significance automated check
+{%- elif party == 'claude-paper' -%}Claude (paper author)
+{%- elif party == 'openai' -%}OpenAI
+{%- elif party == 'anthropic' -%}Anthropic
+{%- elif party == 'rafik-zeraoulia' -%}Rafik Zeraoulia
+{%- else -%}{{ party|replace('-', ' ') }}
+{%- endif -%}
+{%- endmacro %}
+
+{% macro evidence_label(kind) -%}
+{%- if kind == 'formal_artifact' -%}Independent formal-code run
+{%- elif kind == 'external_formal_artifact' -%}Formal code published by the source
+{%- elif kind == 'computational_reproduction' -%}Independent computation
+{%- elif kind == 'source_inspection' -%}Source inspection
+{%- elif kind == 'informal_review' -%}Written review
+{%- elif kind == 'mathematical_assessment' -%}Mathematical assessment
+{%- else -%}{{ kind|replace('_', ' ') }}
+{%- endif -%}
+{%- endmacro %}
+
+{% macro role_label(role) -%}
+{%- if role == 'proof_generation' -%}Developing the proof
+{%- elif role == 'formalization' -%}Writing the formal proof
+{%- elif role == 'prose_editing' -%}Writing and editing
+{%- elif role == 'literature_search' -%}Literature search
+{%- elif role == 'computation' -%}Computation
+{%- elif role == 'criticism' -%}Critiquing the proof
+{%- else -%}{{ role|replace('_', ' ') }}
+{%- endif -%}
+{%- endmacro %}
+
 {% macro attribution(node) -%}
-<span class="attribution">[{{ node.get('basis', '?') }}, asserted by {{ node.get('asserted_by', '?') }}{% if node.get('asserted_at') %} at {{ node.get('asserted_at') }}{% endif %}]</span>
+<span class="attribution">{{ basis_label(node.get('basis', '?')) }}{% if node.get('asserted_by') %} · {{ party_label(node.asserted_by) }}{% endif %}{% if node.get('asserted_at') %} · {{ node.asserted_at[:10] }}{% endif %}</span>
 {%- if node.get('locator') %}
 <span class="locator">
 {%- if node.locator.get('section') %} §{{ node.locator.section }}{% endif -%}
 {%- if node.locator.get('page') %}, p.{{ node.locator.page }}{% endif -%}
-{%- if node.locator.get('quote') %}: "{{ node.locator.quote }}"{% endif -%}
+{%- if node.locator.get('url') %} · {{ external_link(node.locator.url, 'View source') }}{% endif -%}
 </span>
 {%- endif -%}
+{%- endmacro %}
+
+{% macro credit(node, label) -%}
+<span class="credit">{{ label }} · {% if node.get('asserted_by') == 'significance-editor' %}Significance{% else %}{{ party_label(node.get('asserted_by', '?')) }}{% endif %}{% if node.get('asserted_at') %} · {{ node.asserted_at[:10] }}{% endif %}</span>
 {%- endmacro %}
 
 {# One receipt, one row. `label` names the checked predicate; the result is
    printed as plain text with no styling of its own, because a receipt
    result is a fact about an execution, not a verdict on a claim. #}
 {% macro receipt_row(label, r) -%}
-<div class="row"><span class="k">{{ label }}</span><span class="v">{{ r.get('result', '?') }} · {{ r.get('executed_at', '?') }} · log sha256 <code>{{ r.get('log_sha256', '?') }}</code></span></div>
+<div class="row"><span class="k">{{ label }}</span><span class="v">{% if r.get('result') == 'passed' %}Completed{% elif r.get('result') == 'failed' %}Did not complete{% else %}{{ r.get('result', '?') }}{% endif %} · {{ r.get('executed_at', '?')[:10] }} · log fingerprint <code>{{ r.get('log_sha256', '?')|short_hash }}</code></span></div>
 {%- endmacro %}
 
 {% macro runner_row(r) -%}
-<div class="row"><span class="k">runner</span><span class="v">{{ r.get('tool', '?') }} {{ r.get('tool_version', '') }} · image <code>{{ r.get('runner_image_digest', '?') }}</code> · asserted by {{ r.get('asserted_by', '?') }}</span></div>
+<div class="row"><span class="k">Environment</span><span class="v">{{ r.get('tool', '?') }} {{ r.get('tool_version', '') }} · image fingerprint <code>{{ r.get('runner_image_digest', '?')|short_hash }}</code> · {{ party_label(r.get('asserted_by', '?')) }}</span></div>
 {%- endmacro %}
 
 {# A glossary term where it is actually met, rather than only on the glossary
@@ -60,10 +107,10 @@
 
    Inside <details> so it does not compete with the page for attention, and
    open on the board where the row is otherwise three lines long. #}
-{% macro copy_status(text, summary_label='Copy this into a thread', open=false) -%}
+{% macro copy_status(text, summary_label='Copy for sharing', open=false) -%}
 <details class="copy-status"{% if open %} open{% endif %}>
 <summary>{{ summary_label }}</summary>
-<p class="copy-status-help">Select all of this and paste it. It carries the link back, so whoever reads it can check the record themselves.</p>
+<p class="copy-status-help">Copy and paste this summary.</p>
 <pre class="copy-status-text">{{ text }}</pre>
 </details>
 {%- endmacro %}

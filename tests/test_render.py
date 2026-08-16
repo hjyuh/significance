@@ -16,14 +16,16 @@ from pathlib import Path
 
 from significance.boards import load_board
 from significance.records import load_record
-from significance.render import build_site, load_glossary, safe_href
+from significance.render import build_site, load_glossary, mathml, safe_href
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 RECORDS_DIR = REPO_ROOT / "records"
 EXAMPLE_RECORD = REPO_ROOT / "examples" / "synthetic-ramsey-k7.yaml"
 PUBLIC_RECORD_ID = "2026-openai-nonsofic-groups"
+PUBLIC_RECORD_IDS = ["2026-anthropic-zeta-two-thirds", PUBLIC_RECORD_ID]
 BROKEN_DIR = REPO_ROOT / "tests" / "fixtures" / "broken"
 HOSTILE_DIR = REPO_ROOT / "tests" / "fixtures" / "hostile"
+DRAFTS_DIR = REPO_ROOT / "drafts" / "records"
 
 
 def test_safe_href_allows_only_http_https():
@@ -40,25 +42,27 @@ def test_build_produces_index_and_record_page(tmp_path):
     out = tmp_path / "site"
     result = build_site(RECORDS_DIR, out)
 
-    assert result.built == [PUBLIC_RECORD_ID]
+    assert result.built == PUBLIC_RECORD_IDS
     assert result.skipped == {}
     assert (out / "index.html").exists()
     assert (out / "index.json").exists()
-    assert (out / PUBLIC_RECORD_ID / "index.html").exists()
+    for record_id in PUBLIC_RECORD_IDS:
+        assert (out / record_id / "index.html").exists()
     assert (out / "static" / "style.css").exists()
 
-    source = load_record(RECORDS_DIR / f"{PUBLIC_RECORD_ID}.yaml")
     summaries = json.loads((out / "index.json").read_text(encoding="utf-8"))
     # `records` and `boards`. The file was a bare array until the board needed
     # somewhere to be linked from and the rule that the React shell may only
     # present generated data left exactly one place to put it.
     assert sorted(summaries) == ["boards", "records"]
+    sources = [load_record(RECORDS_DIR / f"{record_id}.yaml") for record_id in PUBLIC_RECORD_IDS]
     assert summaries["records"] == [
         {
             "record_id": source["record_id"],
             "record_version": source["record_version"],
-            "record_state": source["record_state"],
-            "claim": source["claim"]["text"]["value"],
+                "record_state": source["record_state"],
+                "claim": source["claim"]["text"]["value"],
+                "claim_mathml": str(mathml(source["claim"].get("display_math", ""))) if source["claim"].get("display_math") else None,
             "claim_basis": source["claim"]["text"]["basis"],
             "claim_asserted_by": source["claim"]["text"]["asserted_by"],
             "freshness": source["freshness"]["result"],
@@ -66,17 +70,38 @@ def test_build_produces_index_and_record_page(tmp_path):
             "evidence_count": len(source["evidence"]),
             "open_invitation_count": len(source["open_invitations"]),
         }
+        for source in sources
     ]
 
     record_html = (out / PUBLIC_RECORD_ID / "index.html").read_text(encoding="utf-8")
     assert all(line == line.rstrip() for line in record_html.splitlines())
     assert "Content-Security-Policy" in record_html
-    assert "What this does not establish" in record_html
+    assert "Limits" in record_html
+    assert "Author involvement" in record_html
+    assert "Review activity" in record_html
+    assert "OpenAI did not participate in or confirm this Significance record" in record_html
+    assert "Math assessments</dt><dd>0" in record_html
+    assert "Summary" in record_html and "Significance" in record_html
+    assert "Record note" in record_html and "Significance" in record_html
+    assert "Confirming a description would not confirm the mathematics" not in record_html
     # No scores/badges/verdict language (word-boundary: "ai_provenance" is a
     # legitimate heading and contains "proven" as a substring).
     lower = record_html.lower()
     for banned in ("verified", "proven", "score", "badge"):
         assert not re.search(rf"\b{banned}\b", lower), banned
+
+
+def test_source_inspection_does_not_count_as_written_review(tmp_path):
+    out = tmp_path / "draft-site"
+    result = build_site(DRAFTS_DIR, out)
+
+    assert result.skipped == {}
+    page = (out / "2026-zeraoulia-erdos-653" / "index.html").read_text(encoding="utf-8")
+    assert "Source inspection" in page
+    assert "This is not a mathematical review." in page
+    assert "Written reviews</dt><dd>0" in page
+    assert "Non-public editorial draft." in page
+    assert "Publication state</dt><dd>Editorial draft" in page
 
 
 def test_build_skips_invalid_records_but_still_builds_valid_ones(tmp_path):
@@ -157,7 +182,7 @@ def test_request_page_is_built_beside_the_records_by_default(tmp_path):
     # Self-contained: every link is relative, so the directory works when
     # opened from disk or served from any prefix.
     assert 'href="../index.html"' in page
-    assert 'href="../static/style.css"' in page
+    assert 'href="../static/style.css?v=' in page
     assert 'href="/request/"' not in page
 
 
@@ -169,11 +194,11 @@ def test_pages_out_moves_auxiliary_pages_to_the_site_root(tmp_path):
     page = (pages_out / "request" / "index.html").read_text(encoding="utf-8")
     # Deployed: record pages live under /records/ and these do not, so no
     # relative path spans both and the links are absolute.
-    assert 'href="/records/"' in page
-    assert 'href="/records/static/style.css"' in page
+    assert 'href="/records/index.html"' in page
+    assert 'href="/records/static/style.css?v=' in page
 
     record_page = (records_out / PUBLIC_RECORD_ID / "index.html").read_text(encoding="utf-8")
-    assert 'href="/request/"' in record_page
+    assert 'href="/request/index.html"' in record_page
 
 
 def test_nav_omits_a_page_this_build_did_not_write(tmp_path):
@@ -188,7 +213,7 @@ def test_nav_omits_a_page_this_build_did_not_write(tmp_path):
     )
     index = (out / "index.html").read_text(encoding="utf-8")
 
-    assert "Request a record" in index  # built, so linked
+    assert "Request or correct a record" in index  # built, so linked
     assert "glossary" not in index.lower()  # not built, so not linked
     assert "boards/" not in index
 
@@ -208,7 +233,7 @@ def test_request_page_carries_the_consent_rule_and_the_issue_link(tmp_path):
     assert "issues/new?template=record-request.yml" in page
     # The moderation policy's outreach rule, restated where a requester will
     # actually meet it rather than only in a docs file they will not read.
-    assert "contacted" in page
+    assert "author request or opt-in" in page
     assert "no decline list" in page
 
 
@@ -227,7 +252,9 @@ def test_an_unconfigured_contact_address_produces_no_mailto(tmp_path):
 
     page = (out / "request" / "index.html").read_text(encoding="utf-8")
     assert "mailto:" not in page
-    assert "No contact address is configured" in page
+    assert "No contact address is configured" not in page
+    assert "Reply directly to that message" in page
+    assert "Silence is never represented as" in page
 
 
 def test_a_configured_contact_address_produces_a_templated_mailto(tmp_path):
@@ -245,7 +272,7 @@ def test_a_configured_contact_address_produces_a_templated_mailto(tmp_path):
     # The same three fields as the issue form, in the same order.
     assert "Link%20to%20the%20claim" in page
     assert "Your%20role" in page
-    assert "What%20you%20want%20tracked" in page
+    assert "Optional%20%E2%80%94%20what%20should%20change%20or%20receive%20attention" in page
 
 
 def test_safe_email_refuses_anything_that_could_break_out_of_a_mailto():
@@ -271,7 +298,7 @@ def test_take_this_task_appears_only_where_instructions_exist(tmp_path):
     record = load_record(RECORDS_DIR / f"{PUBLIC_RECORD_ID}.yaml")
     with_how = [i for i in record["open_invitations"] if i.get("how")]
     assert len(with_how) == 3
-    assert page.count("Take this task") == len(with_how)
+    assert page.count("Take this task") == sum(1 for i in with_how if i.get("status", "open") == "open")
     assert "Report what you found" in page
 
 
@@ -287,8 +314,8 @@ def test_invitation_instructions_name_the_revision_the_record_pins(tmp_path):
     record = load_record(RECORDS_DIR / f"{PUBLIC_RECORD_ID}.yaml")
     formal = next(e for e in record["evidence"] if e["kind"] == "formal_artifact")
     assert formal["commit"] in page
-    assert formal["toolchain"]["pin"] in page
-    assert record["manuscript"]["sha256"] in page
+    assert formal["toolchain"]["pin"][7:19] in page
+    assert record["manuscript"]["sha256"][:12] in page
 
 
 # --- status boards (Feature 5) ----------------------------------------------
@@ -305,6 +332,10 @@ def test_board_renders_with_its_rows_and_is_linked_from_the_index(tmp_path):
     assert board["title"] in page
     for row in board["rows"]:
         assert row["result"] in page
+
+    recorded = next(row for row in board["rows"] if row.get("record"))
+    assert f'href="../../{recorded["record"]}/index.html"' in page
+    assert "index.html2026-" not in page
 
     summaries = json.loads((out / "index.json").read_text(encoding="utf-8"))
     assert summaries["boards"] == [

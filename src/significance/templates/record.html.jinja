@@ -7,10 +7,51 @@
 {% set fr = record.get('freshness', {}) %}
 {% set evidence = record.get('evidence', []) %}
 
-{% block topline_meta %}RECORD {{ record.record_id }} / v{{ record.record_version }} / {{ record.record_state }} / freshness {{ fr.get('result', 'unknown') }}{% endblock %}
+{% block topline_meta %}Checked {{ fr.get('checked_at', '?')[:10] }} · source {% if fr.get('result') == 'current' %}current{% elif fr.get('result') == 'stale' %}changed{% else %}not rechecked{% endif %} · v{{ record.record_version }}{% endblock %}
 
 {% block content %}
 <article class="record">
+
+  {% set ar = record.get('author_relationship') %}
+  {% set formal_runs = evidence|selectattr('kind', 'equalto', 'formal_artifact')|list %}
+  {% set computational_runs = evidence|selectattr('kind', 'equalto', 'computational_reproduction')|list %}
+  {% set assessments = evidence|selectattr('kind', 'equalto', 'mathematical_assessment')|list %}
+  {% set informal_reviews = evidence|selectattr('kind', 'equalto', 'informal_review')|list %}
+
+  <header class="band record-hero">
+    {% if record.get('draft') %}
+    <div class="banner banner-unknown">
+      <strong>Non-public editorial draft.</strong>
+      The author has not approved publication of this record.
+    </div>
+    {% endif %}
+    {% if fr.get('result') in ('stale', 'unknown') %}
+    <div class="banner banner-{{ fr.result }}">
+      <strong>{% if fr.result == 'stale' %}The source has changed since this page was checked.{% else %}This page has not yet been rechecked against the current source.{% endif %}</strong>
+      Last checked {{ fr.get('checked_at', '?')[:10] }}.
+    </div>
+    {% endif %}
+    {% set claimant_id = record.claim.text.get('asserted_by', '?') %}
+    {% set claimant = record.get('parties', {}).get(claimant_id, {}) %}
+    <p class="eyebrow">Claim from {{ claimant.get('name', claimant.get('pseudonym', m.party_label(claimant_id))) }}</p>
+    {% if record.claim.get('display_math') %}
+    <h1 class="claim-text claim-math" aria-label="{{ record.claim.text.value }}">{{ record.claim.display_math|mathml }}</h1>
+    {% else %}
+    <h1 class="claim-text">{{ record.claim.text.value }}</h1>
+    {% endif %}
+    <p class="claim-source">{{ m.attribution(record.claim.text) }}</p>
+  </header>
+
+  <section class="band record-relationship" aria-labelledby="relationship-heading">
+    <p class="lbl" id="relationship-heading">Author involvement</p>
+    {% if ar %}
+    <p class="relationship-value">{{ ar.note }}</p>
+    <p class="meta">{{ m.credit(ar, 'Record note') }}</p>
+    {% else %}
+    <p class="relationship-value">Compiled from public sources. No author participation in this Significance record is recorded.</p>
+    <p class="meta">This describes the record-making relationship, not the mathematics.</p>
+    {% endif %}
+  </section>
 
   {% set ps = record.get('plain_summary') %}
   {% if ps %}
@@ -21,30 +62,30 @@
      summary would read as the site speaking. #}
   <section class="band plain-summary" aria-labelledby="plain-summary-heading">
     <p class="lbl" id="plain-summary-heading">
-      Plain-language summary — written by {{ ps.asserted_by }}, not a verdict
+      Summary
     </p>
     <dl class="plain-summary-list">
       <div>
-        <dt>What is claimed</dt>
+        <dt>Claim</dt>
         <dd>{{ ps.claimed }}</dd>
       </div>
       <div>
-        <dt>What has been checked</dt>
+        <dt>Checked</dt>
         <dd>{{ ps.checked }}</dd>
       </div>
       <div>
-        <dt>What has not been checked</dt>
+        <dt>Not checked</dt>
         <dd>{{ ps.not_checked }}</dd>
       </div>
       <div>
         <dt>As of</dt>
         <dd>
-          {{ fr.get('checked_at', '?') }}
-          {%- if fr.get('result') %} · freshness {{ fr.result }}{% endif %}
+          {{ fr.get('checked_at', '?')[:10] }}
+          {%- if fr.get('result') == 'current' %} · source current{% elif fr.get('result') == 'stale' %} · source changed{% else %} · not rechecked{% endif %}
         </dd>
       </div>
     </dl>
-    <p class="meta">{{ m.attribution(ps) }} This block restates the record below in plainer words. It adds nothing to it.</p>
+    <p class="meta">{{ m.credit(ps, 'Summary') }}</p>
 
     {% for tr in ps.get('translations', []) %}
     {# A translation is a second summary with its own asserter, so it renders
@@ -63,11 +104,22 @@
         <div><dt>Checked</dt><dd>{{ tr.checked }}</dd></div>
         <div><dt>Not checked</dt><dd>{{ tr.not_checked }}</dd></div>
       </dl>
-      <p class="meta" lang="en" dir="ltr">{{ m.attribution(tr) }} Translation into {{ tr.lang }}, asserted by whoever wrote it.</p>
+      <p class="meta" lang="en" dir="ltr">{{ m.attribution(tr) }} Translation into {{ tr.lang }}, attributed to its translator.</p>
     </div>
     {% endfor %}
   </section>
   {% endif %}
+
+  <section class="band review-coverage" aria-labelledby="coverage-heading">
+    <p class="lbl" id="coverage-heading">Review activity</p>
+    <dl class="coverage-list">
+      <div><dt>Independent reruns</dt><dd>{{ formal_runs|length + computational_runs|length }}</dd></div>
+      <div><dt>Math assessments</dt><dd>{{ assessments|length }}</dd></div>
+      <div><dt>Written reviews</dt><dd>{{ informal_reviews|length }}</dd></div>
+      <div><dt>Open checks</dt><dd>{{ record.get('open_invitations', [])|selectattr('status', 'undefined')|list|length + record.get('open_invitations', [])|selectattr('status', 'equalto', 'open')|list|length }}</dd></div>
+    </dl>
+    {% if ps %}<p class="coverage-boundary"><strong>Unexamined boundary:</strong> {{ ps.not_checked }}</p>{% endif %}
+  </section>
 
   {% set aw = record.get('accurate_wording') %}
   {% if aw %}
@@ -75,9 +127,9 @@
      the strip because it answers the same reader's question, and it is marked
      a suggestion because this project does not tell anyone what to write. #}
   <section class="band accurate-wording">
-    <p class="lbl">How to describe this accurately — a suggestion, not a requirement</p>
+    <p class="lbl">Careful wording</p>
     <p class="accurate-wording-value">{{ aw.value }}</p>
-    <p class="meta">{{ m.attribution(aw) }}</p>
+    <p class="meta">{{ m.credit(aw, 'Wording') }}</p>
   </section>
   {% endif %}
 
@@ -86,19 +138,6 @@
     {{ m.copy_status(status_text) }}
   </section>
   {% endif %}
-
-  <div class="band claim-band">
-    {% if fr.get('result') in ('stale', 'unknown') %}
-    <div class="banner banner-{{ fr.result }}">
-      <strong>Freshness: {{ fr.result|upper }}.</strong>
-      {% if fr.get('observed_source_version') %}Observed source version {{ fr.observed_source_version }}, last confirmed {{ fr.confirmed_source_version }}.{% endif %}
-      Checked at {{ fr.get('checked_at', '?') }}.
-    </div>
-    {% endif %}
-    <p class="lbl">{{ m.term('claim', 'Claim', glossary, links) }} / {{ m.term('basis', record.claim.text.get('basis', '?'), glossary, links) }} / {{ m.term('asserted-by', record.claim.text.get('asserted_by', '?'), glossary, links) }}</p>
-    <h1 class="claim-text">{{ record.claim.text.value }}</h1>
-    <p>{{ m.attribution(record.claim.text) }}</p>
-  </div>
 
   <div class="band">
     <dl class="facts">
@@ -119,54 +158,66 @@
         {{ m.external_link(record.manuscript.url, record.manuscript.label) }}
         <span class="meta">
         {%- if record.manuscript.get('immutable_version_id') %} · {{ record.manuscript.immutable_version_id }}{% endif %} · retrieved {{ record.manuscript.retrieved_at }}</span>
-        <div class="meta">{{ m.term('manuscript-hash', 'sha256', glossary, links) }} <code>{{ record.manuscript.sha256 }}</code></div>
+        <div class="meta">{{ m.term('manuscript-hash', 'sha256', glossary, links) }} <code>{{ record.manuscript.sha256|short_hash }}</code></div>
+        {% for artifact in record.manuscript.get('supplemental_artifacts', []) %}
+        <div class="supplemental-artifact">
+          Companion: {{ m.external_link(artifact.url, artifact.label) }}
+          <span class="meta">· retrieved {{ artifact.retrieved_at }}</span>
+          <div class="meta">{{ m.term('manuscript-hash', 'sha256', glossary, links) }} <code>{{ artifact.sha256|short_hash }}</code></div>
+        </div>
+        {% endfor %}
       </dd>
     </dl>
   </div>
 
   <section class="band">
-    <p class="lbl">{{ m.term('evidence-entry', 'Evidence', glossary, links) }} — {{ evidence|length }} {{ 'entry' if evidence|length == 1 else 'entries' }}</p>
+    <p class="lbl">Evidence — {{ evidence|length }} {{ 'entry' if evidence|length == 1 else 'entries' }}</p>
     {% if evidence %}
     <ol class="ledger">
       {% for ev in evidence %}
-      <li class="evidence-card evidence-{{ ev.kind }}">
+      <li id="evidence-{{ ev.id }}" class="evidence-card evidence-{{ ev.kind }}">
         <div>
           <div class="evidence-head">
-            <h3>{{ ev.id }}</h3>
-            <span class="kind">{{ ev.kind }}{% if ev.kind == 'formal_artifact' %} · receipts attached{% elif ev.kind == 'external_formal_artifact' %} · no qualifying receipt{% elif ev.kind == 'mathematical_assessment' %} · target {{ ev.target }}{% endif %}</span>
+            <h3>{{ m.evidence_label(ev.kind) }}</h3>
+            <span class="kind">{{ ev.id|short_hash }}{% if ev.kind == 'formal_artifact' %} · execution record attached{% elif ev.kind == 'mathematical_assessment' %} · focused on {{ ev.target }}{% endif %}</span>
           </div>
 
           {% if ev.kind == 'formal_artifact' %}
           <div class="side-by-side">
             <div class="informal">
-              <h4>Informal — manuscript</h4>
+              <h4>Statement in the paper</h4>
               <p>{{ record.claim.text.value }}</p>
             </div>
             <div class="formal">
-              <h4>Formal — {{ ev.toolchain.get('name', '?') }}</h4>
-              <p>{{ m.external_link(ev.repo) }} @ <code>{{ ev.commit }}</code></p>
+              <h4>Statement represented in {{ ev.toolchain.get('name', '?') }}</h4>
+              <p>{{ m.external_link(ev.repo) }} @ <code>{{ ev.commit|short_hash }}</code></p>
               <p>{{ ev.correspondence.value }}</p>
-              <p>{{ m.attribution(ev.correspondence) }} Attested, not machine-checked.</p>
+              <p class="meta">{{ m.attribution(ev.correspondence) }} · The match between statements is a human judgement, not an automated check.</p>
             </div>
           </div>
           <div class="rows">
-            <div class="row"><span class="k">axiom policy</span><span class="v">{{ ev.axiom_policy.trust_profile }} (allowlist v{{ ev.axiom_policy.allowlist_version }}){% if ev.axiom_policy.get('allowlist') %} — {% for a in ev.axiom_policy.allowlist %}<code>{{ a }}</code>{{ ', ' if not loop.last }}{% endfor %}{% endif %}</span></div>
-            {{ m.receipt_row('build', ev.artifact_build) }}
-            {{ m.receipt_row('axiom closure', ev.axiom_policy.execution) }}
-            {{ m.runner_row(ev.artifact_build) }}
+            <div class="row"><span class="k">Allowed assumptions</span><span class="v">Standard classical Lean profile{% if ev.axiom_policy.get('allowlist') %} — {% for a in ev.axiom_policy.allowlist %}<code>{{ a }}</code>{{ ', ' if not loop.last }}{% endfor %}{% endif %}</span></div>
+            {{ m.receipt_row('Code build', ev.artifact_build) }}
+            {{ m.receipt_row('Assumption check', ev.axiom_policy.execution) }}
+            <details class="technical-details"><summary>Technical execution details</summary>{{ m.runner_row(ev.artifact_build) }}</details>
           </div>
 
           {% elif ev.kind == 'external_formal_artifact' %}
-          <p class="reported-note">Reported, not reproduced.</p>
-          <p class="prose">{{ ev.description }}</p>
-          <p class="meta">{{ m.external_link(ev.repo) }}{% if ev.get('commit') %} @ <code>{{ ev.commit }}</code>{% endif %} · {{ m.attribution(ev) }}</p>
+          <p class="reported-note">Published by the source. Any independent rerun appears as a separate entry.</p>
+          <p class="prose">{{ ev.description|readable_text }}</p>
+          <p class="meta">{{ m.external_link(ev.repo) }}{% if ev.get('commit') %} @ <code>{{ ev.commit|short_hash }}</code>{% endif %} · {{ m.attribution(ev) }}</p>
 
           {% elif ev.kind == 'computational_reproduction' %}
-          <p class="prose">{{ ev.description }}</p>
+          <p class="prose">{{ ev.description|readable_text }}</p>
           <div class="rows">
             {{ m.receipt_row('execution', ev.execution) }}
             {{ m.runner_row(ev.execution) }}
           </div>
+
+          {% elif ev.kind == 'source_inspection' %}
+          <p class="reported-note">Public-source and version check only. This is not a mathematical review.</p>
+          <p class="prose">{{ ev.description|readable_text }}</p>
+          <p class="meta">{{ m.attribution(ev) }}</p>
 
           {% elif ev.kind == 'informal_review' %}
           <p class="prose">{{ ev.text }}</p>
@@ -206,12 +257,12 @@
        editor's explanation of it are different objects even when they agree,
        and merging them would produce an unsigned consensus nobody wrote. #}
     {% for d in plain_language %}
-    <p class="lbl">What this result says — {{ m.term('stratum', d.stratum, glossary, links) }} — {{ d.get('basis', '?') }} / {{ d.get('asserted_by', '?') }}</p>
+    <p class="lbl">Plain-language explanation</p>
     <p class="digestion-text plain-language">{{ d.text }}</p>
-    <p class="meta">{{ m.attribution(d) }}</p>
+    <p class="meta">{{ m.credit(d, 'Explanation') }}</p>
     {% endfor %}
     {% for d in specialist %}
-    <p class="lbl">{{ m.term('digestion', 'Digestion', glossary, links) }} — {{ d.audience }} — {{ d.get('basis', '?') }} / {{ d.get('asserted_by', '?') }}</p>
+    <p class="lbl">Mathematical context</p>
     <p class="digestion-text">{{ d.text }}</p>
     {% endfor %}
     {% if record.get('importance_claims') %}
@@ -224,11 +275,17 @@
   {% endif %}
 
   <section class="band what-this-does-not-establish">
-    <p class="lbl">What this does not establish</p>
+    <p class="lbl">Limits</p>
     <ul>
-      <li>Correspondence between formal and informal statements is attested, not machine-checked.</li>
-      <li>A formalization may omit hypotheses present in the informal statement.</li>
-      <li>The adapter is not a general mathematical verifier — it performs narrow evidence checks.</li>
+      <li>This record does not issue a whole-paper correctness judgement.</li>
+      {% if formal_runs %}
+      <li>Correspondence between formal and informal statements is attested, not machine-checked; a formalization may omit informal hypotheses.</li>
+      <li>The formal adapter performs narrow artifact checks. It is not a general mathematical verifier.</li>
+      {% endif %}
+      {% if computational_runs %}<li>A reproduced computation establishes only the recorded execution result under the pinned inputs and environment.</li>{% endif %}
+      {% if assessments or informal_reviews %}<li>Reviews and assessments are attributed conclusions by their writers, not conclusions issued by Significance.</li>{% endif %}
+      {% if record.get('open_invitations') %}<li>Open invitations identify work not yet represented by a completed evidence entry.</li>{% endif %}
+      {% if not formal_runs and not computational_runs and not assessments and not informal_reviews %}<li>No independent reproduction or mathematical assessment is represented unless an evidence entry above says otherwise.</li>{% endif %}
     </ul>
   </section>
 
@@ -239,39 +296,38 @@
 <aside class="rail">
 
   <div class="band">
-    <p class="lbl">State</p>
+    <p class="lbl">Record details</p>
     <dl class="state-list">
-      <div><dt>{{ m.term('lifecycle', 'record_state', glossary, links) }}</dt><dd>{{ record.record_state }}</dd></div>
-      <div><dt>version</dt><dd>v{{ record.record_version }}</dd></div>
-      <div><dt>{{ m.term('freshness', 'freshness.result', glossary, links) }}</dt><dd>{{ fr.get('result', 'unknown') }}</dd></div>
+      <div><dt>Publication state</dt><dd>{% if record.get('draft') %}Editorial draft{% elif record.record_state == 'active' %}Active record{% else %}{{ record.record_state|replace('_', ' ') }}{% endif %}</dd></div>
+      <div><dt>Record version</dt><dd>{{ record.record_version }}</dd></div>
+      <div><dt>Source check</dt><dd>{% if fr.get('result') == 'current' %}Current{% elif fr.get('result') == 'stale' %}Source changed{% else %}Not rechecked{% endif %}</dd></div>
       {% if fr.get('observed_source_version') %}
-      <div><dt>observed_version</dt><dd>{{ fr.observed_source_version }}</dd></div>
+      <div><dt>Source version</dt><dd>{{ fr.observed_source_version }}</dd></div>
       {% endif %}
-      {% if fr.get('confirmed_source_version') %}
-      <div><dt>confirmed_version</dt><dd>{{ fr.confirmed_source_version }}</dd></div>
-      {% endif %}
-      <div><dt>checked_at</dt><dd>{{ fr.get('checked_at', '?') }}</dd></div>
+      <div><dt>Last checked</dt><dd>{{ fr.get('checked_at', '?')[:10] }}</dd></div>
     </dl>
   </div>
 
   {% if record.get('open_invitations') %}
   <div class="band">
-    <p class="lbl">{{ m.term('open-invitation', 'Open work', glossary, links) }} — {{ record.open_invitations|length }}</p>
-    <p class="lbl-sub">Bounded tasks another person can take.</p>
+    <p class="lbl">Open checks — {{ record.open_invitations|selectattr('status', 'undefined')|list|length + record.open_invitations|selectattr('status', 'equalto', 'open')|list|length }}</p>
+    <p class="lbl-sub">Each is a focused task.</p>
     <ul class="invitations">
       {% for oi in record.open_invitations %}
       <li>
-        <p class="invitation-kind">{{ oi.kind|replace('_', ' ') }}</p>
-        <p class="invitation-target">{{ oi.target }}</p>
+        {% set oi_status = oi.get('status', 'open') %}
+        <p class="meta">Status: {{ oi_status }}{% if oi_status == 'taken' %} · {{ oi.taken_by }} · {{ oi.taken_at[:10] }}{% if oi.taken_note %} · {{ oi.taken_note }}{% endif %}{% endif %}{% if oi_status == 'done' and oi.done_ref %} · <a href="#evidence-{{ oi.done_ref }}">Recorded result</a>{% endif %}</p>
+        <p class="invitation-kind">{% if oi.kind == 'mathematical_review' %}Mathematical reading{% elif oi.kind == 'correspondence' %}Compare the statements{% elif oi.kind == 'reproduction' %}Rerun the artifact{% else %}{{ oi.kind|replace('_', ' ') }}{% endif %}</p>
+        <p class="invitation-target">{{ oi.target|short_hash }}</p>
         {# The affordance appears only where instructions exist. An invitation
            without `how` renders exactly as it did before this feature: a
            "take this task" control on a task with no instructions promises
            help that is not there, which is worse than the plain line it
            replaced. #}
-        {% if oi.get('how') %}
+        {% if oi.get('how') and oi_status == 'open' %}
         <div class="invitation-task">
           <p class="invitation-how-label">Take this task</p>
-          <p class="invitation-how">{{ oi.how }}</p>
+          <p class="invitation-how">{{ oi.how|readable_text }}</p>
           {% set respond = oi.get('respond') or {} %}
           {% set respond_url = respond.get('url')|safe_href %}
           {% set respond_mail = respond.get('mailto')|safe_email %}
@@ -284,23 +340,36 @@
           {% endif %}
         </div>
         {% endif %}
-        <p class="invitation-origin">{{ oi.created_by }} · {{ oi.created_at }}</p>
+        <p class="invitation-origin">Prepared by {{ m.party_label(oi.created_by) }} · {{ oi.created_at[:10] }}</p>
+        {% if oi.get('_stale') %}<p class="meta">No update since {{ oi.taken_at[:10] }}.</p>{% endif %}
       </li>
       {% endfor %}
     </ul>
   </div>
   {% endif %}
 
+  <section class="band" aria-labelledby="looked-heading">
+    <p class="lbl" id="looked-heading">Who has looked at this</p>
+    {% set named = [] %}
+    {% for a in record.get('attestations', []) %}{% set _ = named.append(a) %}{% endfor %}
+    {% for ev in evidence if ev.kind in ['informal_review', 'mathematical_assessment'] %}{% set _ = named.append(ev) %}{% endfor %}
+    {% for oi in record.get('open_invitations', []) if oi.get('taken_by') %}{% set _ = named.append({'reviewer': oi.taken_by, 'scope': oi.target, 'stratum': ('machine' if record.get('parties', {}).get(oi.taken_by, {}).get('verification_method', {}).get('kind') == 'automation' else 'community'), 'asserted_at': oi.taken_at}) %}{% endfor %}
+    {% if named %}<ul>{% for a in named %}<li><a href="{{ links.reviewers.rstrip('/')|replace('/index.html', '') }}/{{ (a.get('reviewer') or a.get('asserted_by')) }}/index.html">{{ m.party_label(a.get('reviewer') or a.get('asserted_by')) }}</a> · {{ a.get('scope', a.get('target', 'recorded work'))|short_hash }}{% if a.get('stratum') %} · {{ a.stratum }}{% endif %}{% if a.get('review_note') %}<p class="prose">{{ a.review_note }}</p>{% endif %}</li>{% endfor %}</ul>{% else %}<p class="prose">No named reviewer has recorded work on this claim yet.</p>{% endif %}
+  </section>
+
+  {% if record.get('depends_on') %}<section class="band"><p class="lbl">Builds on</p><ul>{% for d in record.depends_on %}<li>{% if d.record %}<a href="{{ links.records_index|replace('index.html', d.record ~ '/index.html') }}">{{ d.record }}</a>{% set upstream = record_lookup.get(d.record) %}{% if upstream and (upstream.record_state != 'active' or upstream.freshness.result in ['stale', 'unknown']) %} · depends on {{ d.record }}, currently {{ upstream.record_state }} / {{ upstream.freshness.result }}{% endif %}{% else %}<a href="{{ d.external.url|safe_href }}">{{ d.external.label }}</a>{% endif %} · {{ d.relation|replace('_', ' ') }}{% if d.note %} · {{ d.note }}{% endif %}</li>{% endfor %}</ul></section>{% endif %}
+  {% if cited_by %}<section class="band"><p class="lbl">Cited by</p><ul>{% for r in cited_by %}<li><a href="{{ links.records_index|replace('index.html', r.record_id ~ '/index.html') }}">{{ r.claim.text.value }}</a></li>{% endfor %}</ul></section>{% endif %}
+
   {% set ai = record.get('ai_provenance') %}
   {% if ai %}
   <div class="band">
-    <p class="lbl">AI provenance</p>
+    <p class="lbl">Reported AI use</p>
     <p class="prose">{{ ai.disclosure.value }}</p>
     <p class="meta">{{ m.attribution(ai.disclosure) }}</p>
     {% if ai.get('roles') %}
     <ul class="roles">
       {% for r in ai.roles %}
-      <li><span class="role">{{ r.role|replace('_', ' ') }}</span><span class="role-meta"> — {{ r.model }} · {{ r.basis }} · {{ r.asserted_by }}</span></li>
+      <li><span class="role">{{ m.role_label(r.role) }}</span><span class="role-meta"> — {{ r.model }} · {{ m.basis_label(r.basis) }} · {{ m.party_label(r.asserted_by) }}</span></li>
       {% endfor %}
     </ul>
     {% endif %}
@@ -308,12 +377,12 @@
   {% endif %}
 
   <div class="band">
-    <p class="lbl">History — append-only</p>
+    <p class="lbl">History</p>
     <ul class="history">
       {% for h in record.get('history', [])|reverse %}
       <li>
-        <span class="event-id">{{ h.id }}</span>
-        <span class="event-meta">{{ h.type }} · {{ h.at }} · {{ h.by }}{% if h.get('note') %}<br>{{ h.note }}{% endif %}</span>
+        {% if h.get('note') %}<span class="history-note">{{ h.note }}</span>{% endif %}
+        <span class="event-meta">{{ h.type|replace('_', ' ') }} · {{ h.at[:10] }} · {{ m.party_label(h.by) }}</span>
       </li>
       {% endfor %}
     </ul>

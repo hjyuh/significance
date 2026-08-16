@@ -1,0 +1,306 @@
+schema_version: 1
+record_id: 2026-anthropic-zeta-two-thirds
+record_version: 2
+record_state: active
+
+freshness:
+  result: current
+  observed_source_version: "official-release-2026-08-10"
+  confirmed_source_version: "official-release-2026-08-10"
+  checked_at: "2026-08-11T00:48:19Z"
+
+parties:
+  anthropic:
+    name: "Anthropic"
+    # This identifies the organization publishing the announcement, paper,
+    # note, and repository. It does not imply participation in this record.
+    verification_method:
+      kind: github_identity
+      identifier: "anthropics"
+      verified_at: "2026-08-11T00:48:19Z"
+  claude-paper:
+    name: "Claude (paper author)"
+    verification_method:
+      kind: pseudonymous
+      identifier: "author line in Anthropic's 2026-08-10 paper"
+  significance-editor:
+    pseudonym: "Significance editor"
+    verification_method:
+      kind: pseudonymous
+      identifier: "significance-project"
+
+author_relationship:
+  status: public_sources_only
+  note: "Compiled from Anthropic's public announcement, paper, technical note, and repository. Anthropic and the paper's author did not participate in or confirm this Significance record."
+  basis: editorial_inference
+  asserted_by: significance-editor
+  asserted_at: "2026-08-11T12:00:00Z"
+
+claim:
+  id: claim-main
+  display_math: >-
+    \liminf_{T \to \infty}
+    \frac{N_0^*(T, 2T)}{N(T, 2T)}
+    \ge \frac{3}{2} - \frac{1}{\sqrt{2}}
+    \cot\!\left(\frac{1}{\sqrt{2}}\right)
+    = 0.67250\ldots
+  text:
+    value: >-
+      lim inf as T → ∞ of N₀*(T, 2T) / N(T, 2T) ≥
+      3/2 − (1/√2) cot(1/√2) = 0.67250… .
+    basis: source_quote
+    asserted_by: claude-paper
+    asserted_at: "2026-08-10T17:03:29Z"
+    locator:
+      page: 21
+      quote: >-
+        Theorem D. lim inf N₀*(T, 2T)/N(T, 2T) ≥
+        3/2 − 1/√2 cot(1/√2) = 0.67250…
+  scope:
+    value: >-
+      N(T, 2T) counts nontrivial zeros of the Riemann zeta function in the
+      height window with multiplicity; N₀*(T, 2T) counts distinct such zeros
+      on the critical line. The displayed result is an asymptotic lower bound,
+      not a statement about every finite height window.
+    basis: editorial_inference
+    asserted_by: significance-editor
+    asserted_at: "2026-08-10T17:03:29Z"
+    locator:
+      page: 1
+      quote: >-
+        Let N(T, 2T) denote the number of zeros … counted with multiplicity,
+        and N₀*(T, 2T) the number of distinct such zeros with β = 1/2.
+  exclusions:
+    - value: >-
+        They have no bearing on the Riemann hypothesis in either direction.
+        The argument produces lower bounds only: it certifies that at least
+        two thirds of the zeros are on the line, and says nothing about the
+        remaining third.
+      basis: source_quote
+      asserted_by: claude-paper
+      asserted_at: "2026-08-10T17:03:29Z"
+      locator:
+        page: 5
+        quote: >-
+          They have no bearing on the Riemann hypothesis in either direction.
+          The argument produces lower bounds only.
+
+plain_summary:
+  claimed: >-
+    Claude's paper says at least about 67.25% of the nontrivial zeros of the
+    Riemann zeta function are on the critical line, in a precise asymptotic
+    sense. It does not claim to settle the Riemann hypothesis.
+  checked: >-
+    Significance pinned and inspected Anthropic's paper, concise note, and
+    Lean repository. The paper and note were downloaded and hashed; the
+    repository was pinned to its public v1.0 commit.
+  not_checked: >-
+    Significance has not independently rebuilt the Lean project, run
+    comparator, matched every formal definition to the paper, or assessed the
+    analytic argument. Anthropic reports human examination and successful
+    formal checks; those reports are not independent Significance receipts.
+  basis: digest
+  asserted_by: significance-editor
+  asserted_at: "2026-08-11T00:48:19Z"
+
+accurate_wording:
+  value: >-
+    Anthropic published Claude's claimed unconditional 67.25% lower bound with
+    a Lean artifact; Significance has pinned the sources but has not yet
+    independently rebuilt or assessed them.
+  basis: digest
+  asserted_by: significance-editor
+  asserted_at: "2026-08-11T00:48:19Z"
+
+manuscript:
+  url: "https://www-cdn.anthropic.com/564f962e60643842f5fcb4a17c9dbc8f608f1c37.pdf"
+  label: "Claude, More Than Two Thirds of the Zeros of the Riemann Zeta Function Lie on the Critical Line"
+  immutable_version_id: "official-release-2026-08-10"
+  sha256: "6792988e6cd0e17690621ce898abd5d534f98407741bc7cb14bbe7d07c77d72f"
+  retrieved_at: "2026-08-11T00:30:00Z"
+  supplemental_artifacts:
+    - label: "Anthropic's concise informal note for experts"
+      url: "https://www-cdn.anthropic.com/23455459f8832d06bb175cc0f88d019aed962ef8.pdf"
+      sha256: "45e0330ad37965e5531fa1f4f11e5bebcae147a5237a3e5b3d029efa7ddf759d"
+      retrieved_at: "2026-08-11T00:30:00Z"
+
+evidence:
+  - id: ev-anthropic-lean-artifact
+    kind: external_formal_artifact
+    repo: "https://github.com/anthropics/zeta-23-lean"
+    commit: "3635e74826a4c1fcece7d1cd2b6fa75e43a00510"
+    description: >-
+      Anthropic published a Lean 4 companion repository at tag v1.0. Its README
+      maps paper Theorem D to comparator declarations including
+      montgomery_taylor_on_critical_line and reports Lean v4.33.0-rc2, Mathlib
+      commit 51e6992efd06126df61a496bebf8f49482a4e129, no hypotheses on the
+      headline theorem, the three standard Lean axioms, and successful
+      comparator runs. Significance inspected those files at the pinned commit
+      but has not attached its own execution receipt.
+    basis: editorial_inference
+    asserted_by: significance-editor
+    asserted_at: "2026-08-11T00:48:19Z"
+    locator:
+      url: "https://github.com/anthropics/zeta-23-lean/tree/3635e74826a4c1fcece7d1cd2b6fa75e43a00510"
+      quote: >-
+        A Lean 4 formalization released as a static companion artifact to the
+        paper.
+
+ai_provenance:
+  disclosure:
+    value: >-
+      An unreleased research version of Claude found the new lower bound over
+      two sessions in Claude Code, using a total of 31 million output tokens.
+    basis: source_quote
+    asserted_by: anthropic
+    asserted_at: "2026-08-11T00:48:19Z"
+    locator:
+      url: "https://www.anthropic.com/research/riemann-zeta"
+      quote: >-
+        An unreleased research version of Claude found the new lower bound over
+        two sessions in Claude Code, using a total of 31 million output tokens.
+  roles:
+    - role: proof_generation
+      model: "unreleased research version of Claude"
+      basis: source_quote
+      asserted_by: anthropic
+      locator:
+        url: "https://www.anthropic.com/research/riemann-zeta"
+    - role: criticism
+      model: "further independent instances of Claude"
+      basis: source_quote
+      asserted_by: claude-paper
+      locator:
+        page: 5
+        quote: "subjected throughout to repeated adversarial review by independent instances"
+    - role: formalization
+      model: "Claude, working with Eric Easley"
+      basis: source_quote
+      asserted_by: anthropic
+      locator:
+        url: "https://www.anthropic.com/research/riemann-zeta"
+    - role: prose_editing
+      model: "Claude"
+      basis: source_quote
+      asserted_by: claude-paper
+      locator:
+        page: 1
+        quote: "The argument and its verification are the author's."
+
+digestions:
+  - audience: non_specialist
+    kind: plain_language
+    stratum: editor
+    text: >-
+      The Riemann hypothesis predicts that every nontrivial zero of the zeta
+      function lies on one vertical line. This paper does not establish that.
+      It gives a lower-bound certificate: as higher and higher windows are
+      examined, the claimed share of distinct zeros on that line is at least
+      about 67.25%, after zeros are counted with multiplicity in the
+      denominator. The other roughly one third are not claimed to lie off the
+      line; this method simply does not account for them.
+    basis: digest
+    asserted_by: significance-editor
+    source_claims: [claim-main]
+  - audience: general_mathematician
+    text: >-
+      The paper replaces the positivity normally supplied by RH in
+      Montgomery's pair-correlation argument with finite-dimensional linear
+      algebra on a compression of Weil's Hermitian form. Theorem D optimizes
+      the test window to obtain the Montgomery–Taylor constant 0.67250… . This
+      is the paper's stated mechanism, not an assessment of its steps.
+    basis: editorial_inference
+    asserted_by: significance-editor
+    locator:
+      page: 1
+      quote: >-
+        The Riemann hypothesis … is replaced by linear algebra applied to a
+        finite compression of Weil's Hermitian form.
+    source_claims: [claim-main]
+
+importance_claims:
+  - text: >-
+      Drawing on extensive prior research by mathematicians over the past
+      decades, it has increased this bound from 41.6% to 67.2%.
+    basis: source_quote
+    asserted_by: anthropic
+    source:
+      url: "https://www.anthropic.com/research/riemann-zeta"
+      quote: >-
+        it has increased this bound from 41.6% to 67.2%
+  - text: >-
+      Ralph Furman and Levent Alpöge studied the result in detail after the
+      session, placed it in the context of the existing literature, checked
+      the argument independently, and have taken responsibility for its
+      communication.
+    basis: source_quote
+    asserted_by: claude-paper
+    source:
+      page: 33
+      quote: >-
+        Ralph Furman and Levent Alpöge studied the result in detail after the
+        session, placed it in the context of the existing literature, checked
+        the argument independently, and have taken responsibility for its
+        communication.
+
+open_invitations:
+  - kind: reproduction
+    target: >-
+      Independently build the Theorem D Lean targets and run their axiom audit
+      at commit 3635e74826a4c1fcece7d1cd2b6fa75e43a00510.
+    how: >-
+      Clone https://github.com/anthropics/zeta-23-lean, check out
+      3635e74826a4c1fcece7d1cd2b6fa75e43a00510, and retain the pinned
+      lean-toolchain and lake-manifest.json. Run lake exe cache get, lake build
+      Solution Solution.Multiplicity, then lake env lean
+      comparator/PrintAxioms.lean and lake env lean
+      comparator/PrintAxioms/Multiplicity.lean. Report commands, platform,
+      exit codes, and the SHA-256 of the complete log.
+    respond:
+      url: "https://github.com/hjyuh/significance/issues/new?template=invitation-response.yml"
+    created_by: significance-editor
+    created_at: "2026-08-11T00:48:19Z"
+  - kind: correspondence
+    target: >-
+      Compare paper Theorem D with the trusted comparator statement
+      montgomery_taylor_on_critical_line and its counting definitions.
+    how: >-
+      Use page 21 of the paper with SHA-256
+      6792988e6cd0e17690621ce898abd5d534f98407741bc7cb14bbe7d07c77d72f.
+      At the pinned repository commit, inspect comparator/ChallengeDeps.lean,
+      comparator/Challenge.lean, comparator/Solution.lean, and config.json.
+      State whether the interval conventions, multiplicity, critical-line
+      count, limit formulation, and constant match; identify every mismatch
+      or unresolved definition explicitly.
+    respond:
+      url: "https://github.com/hjyuh/significance/issues/new?template=invitation-response.yml"
+    created_by: significance-editor
+    created_at: "2026-08-11T00:48:19Z"
+  - kind: mathematical_review
+    target: >-
+      Assess the passage from Weil-form signature data to the lower bound in
+      Proposition 4.4 and Theorem D, against the pinned paper.
+    how: >-
+      Work from the paper hash recorded here and name that hash in the report.
+      Focus on the off-critical-line block decomposition, tail control, and
+      use of the unconditional prime-side second moment. Name the first step
+      you cannot justify, or state the bounded portion you checked; do not give
+      a paper-wide score.
+    respond:
+      url: "https://github.com/hjyuh/significance/issues/new?template=invitation-response.yml"
+    created_by: significance-editor
+    created_at: "2026-08-11T00:48:19Z"
+
+history:
+  - id: evt-created
+    type: created
+    at: "2026-08-11T00:48:19Z"
+    by: significance-editor
+    note: >-
+      Created from Anthropic's 2026-08-10 announcement, the official paper and
+      concise note, and the v1.0 Lean repository at its pinned commit.
+  - id: evt-author-relationship
+    type: metadata_added
+    at: "2026-08-11T12:00:00Z"
+    by: significance-editor
+    note: "Made the absence of author participation explicit and added derived review-coverage presentation; no claim or evidence entry changed."

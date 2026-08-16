@@ -66,12 +66,19 @@ a score, or a colour-coded truth state; all of them are attributed.
 
 Pages:
 
-- `/request/` — how to ask for a record, with a prefilled GitHub issue and an
-  email fallback asking the same three questions. States the consent rule: a
-  record about a living person's claim is filed only after they are contacted,
-  and a decline is recorded nowhere.
+- `/request/` — how to ask for or correct a record. One link is required; the
+  role and requested attention are short context, and the latter is optional.
+  It states the two publication routes: editorial public-interest records for
+  widely circulating claims, and author request or opt-in for ordinary claims
+  by living individuals. A decline is recorded nowhere.
+- `/submit/` — the advanced schema builder for maintainers and technical
+  contributors. Authors and readers are directed to `/request/`; they are not
+  expected to author provenance fields, party ids, or YAML.
 - `/glossary/` — the vocabulary, one sentence per term. Terms are also links
   from the pages where they appear.
+- `/reviewers/` — an alphabetical census of named identities with recorded work; reviewer pages contain entries and links, never scores or ranks.
+- `/backlog/` — an activity-sorted map of active records, hidden until the configured minimum corpus size is reached.
+- `/how-to-file-a-claim/` — a one-page intake standard and copyable template.
 - `/boards/ten-results/` — one row per result in the August 2026 release,
   stating what has been checked and what has not. Nine of its ten rows are
   deliberately empty: nothing here evidences those results yet, and an empty
@@ -79,6 +86,9 @@ Pages:
 
 Two optional blocks in a record's YAML:
 
+- `manuscript.supplemental_artifacts` — hashed companion sources published
+  with the main manuscript, such as a concise technical note. They remain
+  source artifacts and do not become evidence merely by being listed.
 - `plain_summary` — four plain sentences above the dossier: what is claimed,
   what has been checked, what has not, as of when. `basis: digest`, capped at
   60 words a field, and refused if it states a verdict or leaves `not_checked`
@@ -88,8 +98,11 @@ Two optional blocks in a record's YAML:
   Strata are rendered separately and never merged.
 
 Open invitations may also carry `how` (what somebody would actually do, pinned
-to an exact revision) and `respond` (where the answer goes). Both are optional;
-an invitation without them renders exactly as it did before.
+to an exact revision) and `respond` (where the answer goes). Status is
+`open`, `taken`, `done`, or `withdrawn`; taking is attributed and a completed
+task points to its evidence. `depends_on` records attributed links to earlier
+records or external work. Reviewer attestations carry scope and manuscript
+hash, with an optional short review note; strata are displayed separately.
 
 `significance validate` checks boards as well as records, choosing by the
 `kind: board` discriminator. `significance build` gains `--pages-out` for the

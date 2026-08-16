@@ -105,6 +105,11 @@ file hashes because regenerated PDFs can differ without a substantive revision.
 If freshness cannot be checked, the result is `unknown`, never silently
 `current`.
 
+When a release includes companion files, `manuscript.supplemental_artifacts`
+binds each one to its URL, label, SHA-256 hash, and retrieval time. A companion
+note is a source artifact, not an independent evidence entry; hashing it keeps
+the note and manuscript from drifting under a single mutable release label.
+
 History is append-only in the normal contribution path: existing event IDs and
 payloads cannot disappear or change, corrections add new events, and record
 versions increase monotonically. CI enforces this against a base record. A
@@ -215,10 +220,14 @@ real GitHub-hosted end-to-end run exercises the boundary.
 
 ## 8. Distribution and adoption
 
-Default discovery for specialist tooling is effectively zero. The initial
-mechanic is correction: draft a record for an author and ask whether it is
-accurate. Authors who explicitly disclose AI use are the appropriate first
-population; undisclosed use is never investigated or alleged.
+Default discovery for specialist tooling is effectively zero. Distribution has
+two routes. Widely circulating organisational claims and major public
+announcements may receive editorial records compiled from public evidence; the
+record explicitly says whether its authors participated. Ordinary claims by
+living individual authors enter through an author request or opt-in. In that
+route, the initial mechanic is correction: prepare the record and ask whether
+it is accurate rather than asking the author to fill the schema. Undisclosed AI
+use is never investigated or alleged.
 
 Records travel through author pages, repositories, forum discussions,
 benchmark exports, and existing trackers. A tracker consuming the schema is a

@@ -23,9 +23,9 @@
   --mono: ui-monospace, "SFMono-Regular", "SF Mono", Menlo, Consolas, monospace;
   --sans: system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
 
-  --frame: 1080px;
-  --rail-w: 320px;
-  --pad: 32px;
+  --frame: 1180px;
+  --rail-w: 340px;
+  --pad: 42px;
 }
 
 @media (prefers-color-scheme: light) {
@@ -50,8 +50,8 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--fg);
-  font-family: var(--mono);
-  font-size: 13px;
+  font-family: var(--sans);
+  font-size: 15px;
   line-height: 1.65;
 }
 
@@ -84,12 +84,11 @@ dl.facts dd,
 }
 
 .topline {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
   align-items: baseline;
-  justify-content: space-between;
-  gap: 8px 24px;
-  padding: 14px 28px;
+  gap: 10px 28px;
+  padding: 20px 32px 18px;
   border-bottom: 1px solid var(--rule);
   font-size: 11.5px;
 }
@@ -98,9 +97,12 @@ dl.facts dd,
   color: var(--fg-strong);
   letter-spacing: 0.14em;
   text-decoration: none;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 650;
 }
 
-.topline-meta { margin: 0; color: var(--muted); }
+.topline-meta { margin: 0; color: var(--muted); text-align: right; font-family: var(--mono); }
 
 .shell { display: grid; grid-template-columns: minmax(0, 1fr); }
 
@@ -121,16 +123,17 @@ dl.facts dd,
 /* ---------- bands and labels ---------- */
 
 .band {
-  padding: 26px var(--pad) 30px;
+  padding: 38px var(--pad) 42px;
   border-bottom: 1px solid var(--rule);
 }
 
 .band:last-child { border-bottom: 0; }
 
 .lbl {
-  margin: 0 0 14px;
-  font-size: 11px;
-  letter-spacing: 0.16em;
+  margin: 0 0 18px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.13em;
   text-transform: uppercase;
   color: var(--muted);
 }
@@ -143,32 +146,59 @@ dl.facts dd,
 }
 
 .prose {
-  font-family: var(--sans);
-  font-size: 13.5px;
-  line-height: 1.6;
+  font-size: 15px;
+  line-height: 1.7;
   color: var(--dim);
   text-wrap: pretty;
 }
 
 /* ---------- claim ---------- */
 
-.claim-band { padding: 34px var(--pad) 30px; }
+.record-hero {
+  padding-top: 54px;
+  padding-bottom: 50px;
+  background: linear-gradient(180deg, var(--bg-rail), var(--bg));
+}
+
+.eyebrow {
+  margin: 0 0 18px;
+  color: var(--note);
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.claim-source { margin: 22px 0 0; }
 
 h1.claim-text {
   margin: 0;
   font-family: var(--sans);
-  font-size: clamp(22px, 3.4vw, 30px);
-  font-weight: 500;
-  line-height: 1.22;
-  letter-spacing: -0.02em;
+  max-width: 24ch;
+  font-size: clamp(30px, 4.3vw, 48px);
+  font-weight: 560;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
   color: var(--fg-strong);
   text-wrap: pretty;
 }
 
-.claim-band .attribution,
-.claim-band .locator { display: inline; }
+h1.claim-math {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 6px;
+}
 
-.claim-band > p:last-child { margin: 18px 0 0; }
+.claim-math math {
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  color: var(--fg-strong);
+  font-size: clamp(13px, 2vw, 26px);
+}
+
+.credit { color: var(--dim); }
 
 .banner {
   margin: 0 0 20px;
@@ -197,7 +227,12 @@ dl.facts dt {
 
 dl.facts dd { margin: 0; }
 
-.attribution, .locator, .meta { color: var(--muted); }
+.attribution, .locator, .meta {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.55;
+}
 
 /* ---------- evidence ---------- */
 
@@ -212,7 +247,7 @@ ol.ledger > li {
   display: grid;
   grid-template-columns: 1.9rem minmax(0, 1fr);
   gap: 0 14px;
-  padding: 12px 0;
+  padding: 22px 0;
   border-top: 1px solid var(--rule);
 }
 
@@ -235,12 +270,13 @@ ol.ledger > li::before {
 
 .evidence-head h3 {
   margin: 0;
-  font-size: 13px;
-  font-weight: 400;
+  font-family: var(--sans);
+  font-size: 18px;
+  font-weight: 600;
   color: var(--fg-strong);
 }
 
-.evidence-head .kind { color: var(--muted); }
+.evidence-head .kind { color: var(--muted); font-family: var(--mono); font-size: 11.5px; }
 
 .side-by-side {
   display: grid;
@@ -267,14 +303,14 @@ ol.ledger > li::before {
 .side-by-side p {
   margin: 0 0 8px;
   font-family: var(--sans);
-  font-size: 13.5px;
+  font-size: 15px;
   color: var(--dim);
 }
 
 .side-by-side p:last-child { margin-bottom: 0; }
 .side-by-side code { font-size: 12px; color: var(--fg); }
 
-.rows { display: flex; flex-direction: column; color: var(--dim); }
+.rows { display: flex; flex-direction: column; color: var(--dim); font-size: 13.5px; }
 
 .row {
   display: flex;
@@ -290,6 +326,8 @@ ol.ledger > li::before {
   flex: none;
   width: 9rem;
   color: var(--muted);
+  font-family: var(--mono);
+  font-size: 12px;
 }
 
 .row .v { flex: 1 1 16rem; min-width: 0; }
@@ -297,7 +335,7 @@ ol.ledger > li::before {
 .reported-note {
   margin: 0 0 8px;
   font-family: var(--sans);
-  font-size: 13.5px;
+  font-size: 14px;
   color: var(--muted);
 }
 
@@ -331,8 +369,8 @@ ol.ledger > li::before {
 .digestion-text {
   margin: 0 0 18px;
   font-family: var(--sans);
-  font-size: 14.5px;
-  line-height: 1.6;
+  font-size: 16px;
+  line-height: 1.7;
   color: var(--fg-body);
   text-wrap: pretty;
 }
@@ -354,7 +392,7 @@ ol.ledger > li::before {
 
 /* ---------- rail ---------- */
 
-.rail .band { padding: 24px 26px 26px; }
+.rail .band { padding: 30px 28px 32px; }
 
 .state-list { display: flex; flex-direction: column; margin: 0; }
 
@@ -365,7 +403,8 @@ ol.ledger > li::before {
   gap: 4px 10px;
   padding: 7px 0;
   border-top: 1px solid var(--hair);
-  font-size: 12.5px;
+  font-family: var(--mono);
+  font-size: 12px;
 }
 
 .state-list > div:last-child { border-bottom: 1px solid var(--hair); }
@@ -381,7 +420,7 @@ ul.invitations {
   gap: 12px;
 }
 
-ul.invitations li { border: 1px solid var(--edge); padding: 16px 16px 14px; }
+ul.invitations li { border: 1px solid var(--edge); padding: 18px 18px 16px; }
 
 .invitation-kind {
   margin: 0 0 8px;
@@ -394,7 +433,7 @@ ul.invitations li { border: 1px solid var(--edge); padding: 16px 16px 14px; }
 .invitation-target {
   margin: 0 0 10px;
   font-family: var(--sans);
-  font-size: 14px;
+  font-size: 15px;
   color: var(--fg-body);
   text-wrap: pretty;
 }
@@ -425,6 +464,7 @@ ul.history {
 
 ul.history .event-id { color: var(--fg-body); }
 ul.history .event-meta { display: block; color: var(--muted); }
+.history-note { display: block; margin-bottom: 5px; color: var(--fg-body); font-family: var(--sans); font-size: 13px; line-height: 1.5; }
 
 /* ---------- index ---------- */
 
@@ -464,7 +504,11 @@ ul.history .event-meta { display: block; color: var(--muted); }
 /* ---------- narrow ---------- */
 
 @media (max-width: 900px) {
-  :root { --pad: 20px; }
+  :root { --pad: 24px; }
+  .topline { grid-template-columns: minmax(0, 1fr); padding: 18px 24px; }
+  .topline-meta { text-align: left; }
+  .topline-nav { grid-column: 1; }
+  .record-hero { padding-top: 42px; padding-bottom: 40px; }
   .shell.with-rail { grid-template-columns: minmax(0, 1fr); }
   .shell.with-rail > main { border-right: 0; }
   .rail { border-top: 1px solid var(--rule); }
@@ -482,9 +526,9 @@ ul.history .event-meta { display: block; color: var(--muted); }
    a finding. The only visual weight it carries is being first. */
 .plain-summary dl.plain-summary-list {
   display: grid;
-  grid-template-columns: minmax(0, 200px) minmax(0, 1fr);
-  gap: 10px 24px;
-  margin: 0 0 14px;
+  grid-template-columns: minmax(0, 180px) minmax(0, 1fr);
+  gap: 18px 30px;
+  margin: 0 0 22px;
 }
 
 .plain-summary dl.plain-summary-list > div {
@@ -493,7 +537,8 @@ ul.history .event-meta { display: block; color: var(--muted); }
 
 .plain-summary dt {
   margin: 0;
-  font-size: 13px;
+  font-family: var(--mono);
+  font-size: 12px;
   color: var(--dim);
 }
 
@@ -501,8 +546,55 @@ ul.history .event-meta { display: block; color: var(--muted); }
   margin: 0;
   max-width: 62ch;
   color: var(--fg-body);
-  line-height: 1.6;
+  font-size: 16px;
+  line-height: 1.7;
 }
+
+/* --- author relationship and review coverage -----------------------------
+   These answer two questions that must survive screenshots: did the author
+   participate, and how much work was actually done? Neither uses a badge,
+   colour, percentage, or whole-paper score. */
+.relationship-value,
+.coverage-boundary {
+  margin: 0 0 8px;
+  max-width: 68ch;
+  font-family: var(--sans);
+  color: var(--fg-body);
+  font-size: 15.5px;
+  line-height: 1.7;
+}
+
+.record-relationship { background: var(--bg-rail); }
+
+.coverage-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0 0 16px;
+  background: var(--hair);
+  border: 1px solid var(--hair);
+}
+
+.coverage-list > div {
+  padding: 18px;
+  background: var(--bg);
+}
+
+.coverage-list dt {
+  color: var(--muted);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.coverage-list dd {
+  margin: 4px 0 0;
+  color: var(--fg-strong);
+  font-size: 24px;
+  font-weight: 560;
+}
+
+.coverage-boundary strong { font-weight: 500; }
 
 @media (max-width: 720px) {
   .plain-summary dl.plain-summary-list {
@@ -510,6 +602,7 @@ ul.history .event-meta { display: block; color: var(--muted); }
     gap: 2px 0;
   }
   .plain-summary dt { margin-top: 10px; }
+  .coverage-list { grid-template-columns: minmax(0, 1fr); }
 }
 
 /* --- site nav ---------------------------------------------------------------
@@ -520,8 +613,10 @@ ul.history .event-meta { display: block; color: var(--muted); }
   display: flex;
   flex-wrap: wrap;
   gap: 4px 18px;
-  margin-top: 8px;
-  font-size: 12px;
+  grid-column: 1 / -1;
+  margin-top: 4px;
+  font-family: var(--sans);
+  font-size: 13px;
 }
 
 .topline-nav a { color: var(--dim); }
@@ -565,11 +660,15 @@ pre.mail-template {
 
 .invitation-how {
   margin: 0;
-  font-size: 13px;
+  font-family: var(--sans);
+  font-size: 14px;
   line-height: 1.6;
   color: var(--fg-body);
   overflow-wrap: anywhere;
+  word-break: break-word;
 }
+
+.invitation-target { overflow-wrap: anywhere; word-break: break-word; }
 
 .invitation-respond {
   margin: 8px 0 0;
@@ -714,10 +813,21 @@ pre.copy-status-text {
   margin: 0 0 8px;
   padding-left: 14px;
   border-left: 2px solid var(--edge);
-  max-width: 66ch;
+  max-width: 62ch;
+  font-family: var(--sans);
+  font-size: 17px;
   color: var(--fg-body);
   line-height: 1.6;
 }
+
+details.technical-details {
+  margin-top: 12px;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 11.5px;
+}
+
+details.technical-details summary { cursor: pointer; }
 
 /* --- translated summaries ---------------------------------------------------
    Each is its own block with its own attribution. dir="rtl" is set from the

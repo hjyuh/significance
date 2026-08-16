@@ -58,6 +58,11 @@ export interface InformalReviewDraft extends EvidenceDraftBase {
   text: string;
 }
 
+export interface SourceInspectionDraft extends EvidenceDraftBase {
+  kind: "source_inspection";
+  description: string;
+}
+
 export interface MathematicalAssessmentDraft extends EvidenceDraftBase {
   kind: "mathematical_assessment";
   target: string;
@@ -65,7 +70,7 @@ export interface MathematicalAssessmentDraft extends EvidenceDraftBase {
   reportInline: string;
 }
 
-export type EvidenceDraft = ExternalFormalArtifactDraft | InformalReviewDraft | MathematicalAssessmentDraft;
+export type EvidenceDraft = ExternalFormalArtifactDraft | SourceInspectionDraft | InformalReviewDraft | MathematicalAssessmentDraft;
 
 export interface AiRoleDraft {
   role: string;

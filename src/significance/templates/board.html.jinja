@@ -29,7 +29,7 @@
 <section class="band">
   <p class="lbl">
     {{ board.rows|length }} rows ·
-    {{ board.rows|selectattr('state', 'equalto', 'recorded')|list|length }} researched
+    {{ board.rows|selectattr('state', 'equalto', 'recorded')|list|length }} recorded
   </p>
   <ol class="board-rows">
     {% for row in board.rows %}
@@ -38,7 +38,7 @@
         <h2>{{ row.result }}</h2>
         {% if row.get('record') %}
         <p class="board-row-record">
-          <a href="{{ links.records_index }}{{ row.record }}/index.html">Open the record → {{ row.record }}</a>
+          <a href="{{ record_links[row.id] }}">Open the record → {{ row.record }}</a>
         </p>
         {% endif %}
       </div>

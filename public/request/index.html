@@ -4,100 +4,85 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none';">
-<title>Request a record — Significance</title>
-<link rel="stylesheet" href="/records/static/style.css">
+<title>Request or correct a record — Significance</title>
+<link rel="stylesheet" href="/records/static/style.css?v=4d188f66fa12">
 </head>
 <body>
 <header class="topline">
-<a class="wordmark" href="/records/">SIGNIFICANCE</a>
-<p class="topline-meta">Ask for a claim-state record</p>
+<a class="wordmark" href="/records/index.html">SIGNIFICANCE</a>
+<p class="topline-meta">One link is enough to begin</p>
 <nav class="topline-nav" aria-label="Site">
-<a href="/orientation/">What is going on</a><a href="/request/">Request a record</a>
-<a href="/glossary/">Glossary</a><a href="/boards/ten-results/">ten results</a>
+<a href="/orientation/index.html">What is going on</a><a href="/request/index.html">Request or correct a record</a>
+<a href="/how-to-file-a-claim/index.html">How to file a claim</a><a href="/reviewers/index.html">Reviewers</a><a href="/glossary/index.html">Glossary</a><a href="/boards/ten-results/index.html">ten results</a>
 </nav>
 </header>
 <div class="shell">
 <main>
 
 <section class="band">
-  <p class="lbl">Request a record</p>
-  <h1 class="claim-text">Ask for a claim to be tracked.</h1>
+  <p class="lbl">Request or correct a record</p>
+  <h1 class="claim-text">Send one link. We do the record work.</h1>
   <p class="prose">
     A record says what was claimed, who asserted it, what evidence exists, and
     what nobody has checked yet. It does not say whether the mathematics is
     right, and nothing in it ever will. If that is the thing you need, this is
     how to ask for it — you do not need to know any of this project's
-    vocabulary to file the request. Putting it in plain words is our job.
+    vocabulary to file the request. You may leave the final question blank.
+    Extracting fields, provenance, hashes, and locators is our job.
   </p>
 </section>
 
 
 <section class="band">
-  <p class="lbl">Before you ask — records about other people</p>
+  <p class="lbl">Two routes — public-interest records and author requests</p>
   <p class="prose">
-    A record about a living person's claim is filed only after that person has
-    been contacted. If they decline, no record is filed, and nothing anywhere
-    in this project records that they were asked or that they said no: there is
-    no decline list, in public, in private, or in maintainer notes. Aggregate
-    counts of outreach may be published; individuals who said no never appear
-    in them. This mirrors the outreach rules in the project's moderation
-    policy, and it applies to requests as much as to anything the maintainers
-    initiate themselves.
+    Widely circulating public claims from organisations or major announcements
+    may receive editorial records compiled entirely from public sources. The
+    page says plainly that its authors did not participate unless they did.
   </p>
   <p class="prose">
-    Asking about your own claim skips all of that. You are the person who would
-    otherwise be contacted.
+    Ordinary claims by individual living authors are published through an
+    author request or opt-in. A reader may suggest one; maintainers contact the
+    author privately before publication. If the author declines, no record is
+    filed and no decline list is kept.
   </p>
 </section>
 
 <section class="band">
-  <p class="lbl">Three things we need</p>
+  <p class="lbl">One required field, two short context fields</p>
   <dl class="facts">
-    <dt>The claim</dt>
+    <dt>Required — link</dt>
     <dd>A link to where it actually lives — paper, preprint, repository, announcement, post. The most stable one, if it is in several places.</dd>
-    <dt>Your role</dt>
+    <dt>Short — your role</dt>
     <dd>Author, reader, or something else. This changes what happens next rather than how the request is ranked: an author can attest to their own work, and a reader asking about someone else's claim starts the contact step above.</dd>
-    <dt>What to track</dt>
-    <dd>In your own words. Which statement matters, what evidence you know of, what you think nobody has checked.</dd>
+    <dt>Optional — attention</dt>
+    <dd>A correction, a theorem that matters, or a step you want examined. “Not sure” and a blank answer are both valid.</dd>
   </dl>
 </section>
 
 <section class="band">
   <p class="lbl">Action — open an issue</p>
   <p class="prose">
-    <a href="https://github.com/hjyuh/significance/issues/new?template=record-request.yml">Open a prefilled record request on GitHub</a> —
-    the three fields above, already labelled. Needs a GitHub account.
+    <a href="https://github.com/hjyuh/significance/issues/new?template=record-request.yml">Open a prefilled request or correction on GitHub</a> —
+    the fields above are already labelled. Needs a GitHub account.
   </p>
 </section>
 
 <section class="band">
-  <p class="lbl">Action — send it by email</p>
+  <p class="lbl">Already received a draft from Significance?</p>
   <p class="prose">
-    No contact address is configured for this build, so there is no email link
-    to offer. Rather than link somewhere that goes nowhere, here is the message
-    to send once an address exists — the same three fields, in the same order:
-  </p>
-  <pre class="mail-template">Subject: Record request
-
-Link to the claim:
-
-Your role (author / reader / other):
-
-What you want tracked:
-
-</pre>
-  <p class="meta">
-    Setting <code>contact_email</code> in <code>data/site.yaml</code> turns this
-    into a mailto link. It is deliberately unset rather than guessed: a link to
-    an invented address would let somebody believe they had asked when nobody
-    received anything.
+    Reply directly to that message with “accurate,” ordinary prose corrections,
+    “keep this private,” or “do not mark this author-confirmed.” No account,
+    schema, or separate form is required. Silence is never represented as
+    approval.
   </p>
 </section>
+
 
 <section class="band what-this-does-not-establish">
   <p class="lbl">What filing a request does not do</p>
   <ul>
-    <li>It does not commit anyone to creating a record.</li>
+    <li>It does not commit anyone to creating a record or finding a reviewer.</li>
     <li>A request that goes nowhere is closed without a public judgement attached to it.</li>
     <li>A record, if one is created, still asserts nothing about whether the mathematics is right.</li>
   </ul>

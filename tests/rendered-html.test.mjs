@@ -4,25 +4,44 @@ import test from "node:test";
 
 const indexPath = "public/records/index.html";
 const recordPath = "public/records/2026-openai-nonsofic-groups/index.html";
+const zetaRecordPath = "public/records/2026-anthropic-zeta-two-thirds/index.html";
 const retiredSyntheticPath = "public/records/2026-sandoval-ramsey-k7/index.html";
 
-test("the public corpus contains only the source-inspected OpenAI record", () => {
+test("the public corpus contains only source-inspected records", () => {
   assert.equal(existsSync(indexPath), true);
   assert.equal(existsSync(recordPath), true);
+  assert.equal(existsSync(zetaRecordPath), true);
   assert.equal(existsSync(retiredSyntheticPath), false);
 
   const index = readFileSync(indexPath, "utf8");
   assert.match(index, /2026-openai-nonsofic-groups/);
+  assert.match(index, /2026-anthropic-zeta-two-thirds/);
   assert.doesNotMatch(index, /Sandoval|2606\.01234|synthetic-ramsey/i);
 });
 
 test("the rendered record preserves the project's epistemic boundary", () => {
   const record = readFileSync(recordPath, "utf8");
-  assert.match(record, /Reported, not reproduced\./);
-  assert.match(record, /build<\/span><span class="v">passed/);
+  assert.match(record, /Published by the source\. Any independent rerun appears as a separate entry\./);
+  assert.match(record, /the later formal-artifact entry records that reproduction/i);
+  assert.match(record, /Code build<\/span><span class="v">Completed/);
   assert.match(record, /does not independently establish correspondence/i);
   assert.match(record, /does not mechanically determine mathematical truth/i);
   assert.doesNotMatch(record, /mathematically verified|proof verified/i);
+});
+
+test("the zeta record separates pinned sources from independent execution", () => {
+  const record = readFileSync(zetaRecordPath, "utf8");
+  assert.match(record, /<math xmlns="http:\/\/www\.w3\.org\/1998\/Math\/MathML"/);
+  assert.match(record, /<mfrac>/);
+  assert.match(record, /Summary · Significance/);
+  assert.match(record, /Record note · Significance/);
+  assert.doesNotMatch(record, /Confirming a description would not confirm the mathematics/);
+  assert.match(record, /0\.67250/);
+  assert.match(record, /no bearing on the Riemann hypothesis in either direction/i);
+  assert.match(record, /Companion:/);
+  assert.match(record, /45e0330ad379…/);
+  assert.match(record, /has not attached its own execution receipt/i);
+  assert.doesNotMatch(record, /Code build<\/span><span class="v">Completed/);
 });
 
 test("the homepage derives its record facts from the generated index", () => {
@@ -37,11 +56,14 @@ test("the homepage derives its record facts from the generated index", () => {
   // needed somewhere to be linked from, and the rule that the shell may only
   // present generated data left exactly one place to put it.
   assert.deepEqual(Object.keys(summaries).sort(), ["boards", "records"]);
-  assert.equal(summaries.records.length, 1);
-  assert.equal(summaries.records[0].record_id, "2026-openai-nonsofic-groups");
-  assert.equal(summaries.records[0].freshness, "current");
-  assert.equal(summaries.records[0].evidence_count, 2);
-  assert.equal(summaries.records[0].open_invitation_count, 3);
+  assert.equal(summaries.records.length, 2);
+  const byId = Object.fromEntries(summaries.records.map((record) => [record.record_id, record]));
+  assert.equal(byId["2026-openai-nonsofic-groups"].freshness, "current");
+  assert.equal(byId["2026-openai-nonsofic-groups"].evidence_count, 2);
+  assert.equal(byId["2026-openai-nonsofic-groups"].open_invitation_count, 3);
+  assert.equal(byId["2026-anthropic-zeta-two-thirds"].freshness, "current");
+  assert.equal(byId["2026-anthropic-zeta-two-thirds"].evidence_count, 1);
+  assert.equal(byId["2026-anthropic-zeta-two-thirds"].open_invitation_count, 3);
 
   // Board counts are generated, not counted in JSX: the homepage must not be
   // able to disagree with the board about how much of it is filled in.
@@ -56,6 +78,6 @@ test("the homepage derives its record facts from the generated index", () => {
   // sole interface to React.
   assert.doesNotMatch(
     homepage,
-    /2026-openai-nonsofic-groups|2026-08-01|L_F2\(1,2\)|three scoped invitations/,
+    /2026-openai-nonsofic-groups|2026-anthropic-zeta-two-thirds|2026-08-01|2026-08-10|L_F2\(1,2\)|0\.67250|three scoped invitations/,
   );
 });

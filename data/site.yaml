@@ -28,9 +28,14 @@ contact_email: "[FILL: maintainer address, or leave as-is to omit the mailto lin
 # it blames themselves. It is never derived from a request -- see the header of
 # db/config.ts on the other half of this project for the same rule and the
 # attack behind it.
-site_url: "[FILL: public site URL, e.g. https://significance.example]"
+site_url: "https://hjyuh.github.io/significance"
 
 # Shown on /request/ when set. Deliberately unset by default: a turnaround
 # printed on a page and missed is worse than no turnaround at all, so this
 # says a number only when somebody is prepared to keep it.
 request_turnaround: ""
+
+# Backlog remains hidden until the corpus is large enough to make it useful.
+backlog_enabled: true
+backlog_min_records: 5
+stale_task_days: 45

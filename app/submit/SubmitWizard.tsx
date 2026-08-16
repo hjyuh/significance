@@ -17,6 +17,46 @@ type Step = (typeof STEPS)[number];
 const BASIS_OPTIONS: Basis[] = ["source_quote", "author_attestation", "editorial_inference"];
 const VERIFICATION_OPTIONS: VerificationKind[] = ["github_identity", "orcid", "email_confirmation", "pseudonymous"];
 
+const STEP_LABELS: Record<Step, string> = {
+  role: "Your role",
+  claim: "Claim",
+  manuscript: "Source",
+  parties: "People",
+  evidence: "Evidence",
+  provenance: "AI use",
+  review: "Review",
+};
+
+const BASIS_LABELS: Record<Basis, string> = {
+  source_quote: "Quoted from the source",
+  author_attestation: "Stated by the author",
+  editorial_inference: "Your interpretation",
+};
+
+const VERIFICATION_LABELS: Record<VerificationKind, string> = {
+  github_identity: "GitHub account",
+  orcid: "ORCID",
+  email_confirmation: "Confirmed email",
+  pseudonymous: "Pseudonymous identity",
+};
+
+const EVIDENCE_LABELS: Record<EvidenceDraft["kind"], string> = {
+  external_formal_artifact: "Published proof code",
+  source_inspection: "Source inspection",
+  informal_review: "Written review",
+  mathematical_assessment: "Mathematical assessment",
+};
+
+function roleLabel(value: string) {
+  return ({
+    proof_generation: "Developing the proof",
+    formalization: "Writing the formal proof",
+    prose_editing: "Editing the writing",
+    literature_search: "Searching prior work",
+    computation: "Running computations",
+  } as Record<string, string>)[value] ?? value.replaceAll("_", " ");
+}
+
 function slugify(input: string): string {
   return input.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 }
@@ -46,8 +86,8 @@ function LocatorFields({
     <div className="wizard-locator">
       <p className="wizard-hint">
         {basis === "source_quote"
-          ? "source_quote requires a locator — where in the source this comes from."
-          : "Recording someone else's author_attestation requires a locator pointing at how they told you — a correspondence link or public statement."}
+          ? "Add a precise location showing where this appears in the source."
+          : "Add a link to the public statement or correspondence where the author said this."}
       </p>
       <label>
         Section <input value={locator?.section ?? ""} onChange={(e) => onChange({ ...locator, section: e.target.value })} />
@@ -79,20 +119,20 @@ function AttributedFields({
         <textarea value={draft.value} onChange={(e) => onChange({ ...draft, value: e.target.value })} />
       </label>
       <label>
-        Basis
+        Where this information comes from
         <select
           value={draft.basis}
           onChange={(e) => onChange({ ...draft, basis: e.target.value as Basis })}
         >
           {BASIS_OPTIONS.map((b) => (
             <option key={b} value={b}>
-              {b}
+              {BASIS_LABELS[b]}
             </option>
           ))}
         </select>
       </label>
       <label>
-        Asserted by (party id)
+        Attributed to (person id)
         <input value={draft.assertedBy} onChange={(e) => onChange({ ...draft, assertedBy: e.target.value })} />
       </label>
       {needsLocator ? (
@@ -133,6 +173,7 @@ export default function SubmitWizard() {
     const base = { id: `ev-${state.evidence.length + 1}`, basis: "editorial_inference" as Basis, assertedBy: "" };
     let item: EvidenceDraft;
     if (kind === "external_formal_artifact") item = { ...base, kind, repo: "", commit: "", description: "" };
+    else if (kind === "source_inspection") item = { ...base, kind, description: "" };
     else if (kind === "informal_review") item = { ...base, kind, reviewer: "", text: "" };
     else item = { ...base, kind, target: "", reportUrl: "", reportInline: "" };
     setState((s) => ({ ...s, evidence: [...s.evidence, item] }));
@@ -186,12 +227,20 @@ export default function SubmitWizard() {
     <main className="wizard">
       <header className="masthead">
         <Link className="wordmark" href="/" aria-label="Significance home">SIGNIFICANCE</Link>
-        <p>Submit a record</p>
+        <p>Advanced record builder</p>
       </header>
+
+      <section className="wizard-section wizard-banner">
+        <h2>For maintainers and technical contributors</h2>
+        <p>
+          Authors and readers do not need to use this advanced builder. Start with the{" "}
+          <a href="/request/">short request or correction page</a>; maintainers can turn ordinary prose into a complete record.
+        </p>
+      </section>
 
       <nav className="wizard-steps" aria-label="Submission steps">
         {STEPS.map((s, i) => (
-          <span key={s} className={i === stepIndex ? "wizard-step-current" : "wizard-step"}>{i + 1}. {s}</span>
+          <span key={s} className={i === stepIndex ? "wizard-step-current" : "wizard-step"}>{i + 1}. {STEP_LABELS[s]}</span>
         ))}
       </nav>
 
@@ -199,10 +248,10 @@ export default function SubmitWizard() {
         <section className="wizard-section">
           <h2>Are you an author of this claim, or recording someone else&apos;s public work?</h2>
           <p className="wizard-hint">
-            This changes what you can assert without a locator. Recording someone
-            else&apos;s public work is this tool&apos;s core use case and needs no
-            permission — the one thing it restricts is claiming, unlocated,
-            that an author privately told you something.
+            This changes which statements need a public source link. Records about public work
+            can be drafted from public sources. Claims by living individual authors need an
+            author request or permission before the public page is published. Private
+            correspondence must always include a link or other precise reference.
           </p>
           <div className="wizard-choice-row">
             <button type="button" onClick={() => setState((s) => ({ ...s, submitterRole: "author" }))} aria-pressed={state.submitterRole === "author"}>
@@ -232,7 +281,7 @@ export default function SubmitWizard() {
 
       {step === "manuscript" ? (
         <section className="wizard-section">
-          <h2>Manuscript</h2>
+          <h2>Source document</h2>
           <label>URL <input value={state.manuscriptUrl} onChange={(e) => setState((s) => ({ ...s, manuscriptUrl: e.target.value }))} /></label>
           <label>Label <input value={state.manuscriptLabel} onChange={(e) => setState((s) => ({ ...s, manuscriptLabel: e.target.value }))} /></label>
           <label>Immutable version id (optional, e.g. an arXiv vN) <input value={state.manuscriptImmutableVersionId} onChange={(e) => setState((s) => ({ ...s, manuscriptImmutableVersionId: e.target.value }))} /></label>
@@ -243,7 +292,7 @@ export default function SubmitWizard() {
           {hashing ? <p className="wizard-hint">Hashing…</p> : null}
           {hashError ? <p className="wizard-hint wizard-warning">{hashError}</p> : null}
           <label>
-            sha256 {" "}
+            File fingerprint (SHA-256) {" "}
             <input value={state.manuscriptSha256} onChange={(e) => setState((s) => ({ ...s, manuscriptSha256: e.target.value }))} placeholder="Pick a file above, or paste a known hash" />
           </label>
         </section>
@@ -251,11 +300,11 @@ export default function SubmitWizard() {
 
       {step === "parties" ? (
         <section className="wizard-section">
-          <h2>Parties</h2>
+          <h2>People and organizations</h2>
           {state.parties.map((p, i) => (
             <fieldset className="wizard-fieldset" key={i}>
-              <legend>Party {i + 1}</legend>
-              <label>Id (lowercase-kebab) <input value={p.id} onChange={(e) => updateParty(i, { ...p, id: slugify(e.target.value) })} /></label>
+              <legend>Person or organization {i + 1}</legend>
+              <label>Internal id <input value={p.id} onChange={(e) => updateParty(i, { ...p, id: slugify(e.target.value) })} /></label>
               <label>
                 <input type="checkbox" checked={p.isPseudonym} onChange={(e) => updateParty(i, { ...p, isPseudonym: e.target.checked })} />
                 Pseudonymous
@@ -264,16 +313,16 @@ export default function SubmitWizard() {
               <label>
                 Verification method
                 <select value={p.verificationKind} onChange={(e) => updateParty(i, { ...p, verificationKind: e.target.value as VerificationKind })}>
-                  {VERIFICATION_OPTIONS.map((k) => <option key={k} value={k}>{k}</option>)}
+                  {VERIFICATION_OPTIONS.map((k) => <option key={k} value={k}>{VERIFICATION_LABELS[k]}</option>)}
                 </select>
               </label>
               <label>Identifier <input value={p.verificationIdentifier} onChange={(e) => updateParty(i, { ...p, verificationIdentifier: e.target.value })} /></label>
               <button type="button" onClick={() => removeParty(i)}>Remove</button>
             </fieldset>
           ))}
-          <button type="button" onClick={addParty}>Add party</button>
+          <button type="button" onClick={addParty}>Add a person or organization</button>
           <label>
-            Which party id is you, the submitter?
+            Which internal id represents you?
             <input value={state.submitterPartyId} onChange={(e) => setState((s) => ({ ...s, submitterPartyId: e.target.value }))} />
           </label>
         </section>
@@ -283,17 +332,17 @@ export default function SubmitWizard() {
         <section className="wizard-section">
           <h2>Evidence</h2>
           <div className="wizard-choice-row">
-            <button type="button" onClick={() => addEvidence("external_formal_artifact")}>+ external_formal_artifact</button>
-            <button type="button" onClick={() => addEvidence("informal_review")}>+ informal_review</button>
-            <button type="button" onClick={() => addEvidence("mathematical_assessment")}>+ mathematical_assessment</button>
+            <button type="button" onClick={() => addEvidence("external_formal_artifact")}>+ Published proof code</button>
+            <button type="button" onClick={() => addEvidence("source_inspection")}>+ Source inspection</button>
+            <button type="button" onClick={() => addEvidence("informal_review")}>+ Written review</button>
+            <button type="button" onClick={() => addEvidence("mathematical_assessment")}>+ Mathematical assessment</button>
           </div>
           <div className="wizard-choice-row">
-            <span className="wizard-gated" aria-disabled="true" role="button" tabIndex={0}>formal_artifact</span>
-            <span className="wizard-gated" aria-disabled="true" role="button" tabIndex={0}>computational_reproduction</span>
+            <span className="wizard-gated" aria-disabled="true" role="button" tabIndex={0}>Reproduced formal proof</span>
+            <span className="wizard-gated" aria-disabled="true" role="button" tabIndex={0}>Reproduced computation</span>
           </div>
           <p className="wizard-hint">
-            formal_artifact and computational_reproduction require a machine-generated
-            execution receipt — produced by CI or the {" "}
+            Reproduced results require an execution receipt produced by an automated check or the {" "}
             <a href="https://github.com/hjyuh/significance/blob/main/adapters/lean/README.md">Lean adapter</a>,
             not typed by hand.
           </p>
@@ -302,8 +351,8 @@ export default function SubmitWizard() {
             const needsLocator = needsLocatorFor(ev.basis, thirdParty);
             return (
               <fieldset className="wizard-fieldset" key={i}>
-                <legend>{ev.kind} — {ev.id}</legend>
-                <label>Id <input value={ev.id} onChange={(e) => updateEvidence(i, { ...ev, id: e.target.value })} /></label>
+                <legend>{EVIDENCE_LABELS[ev.kind]} — {ev.id}</legend>
+                <label>Internal id <input value={ev.id} onChange={(e) => updateEvidence(i, { ...ev, id: e.target.value })} /></label>
                 {ev.kind === "external_formal_artifact" ? (
                   <>
                     <label>Repo URL <input value={ev.repo} onChange={(e) => updateEvidence(i, { ...ev, repo: e.target.value })} /></label>
@@ -311,9 +360,12 @@ export default function SubmitWizard() {
                     <label>Description <textarea value={ev.description} onChange={(e) => updateEvidence(i, { ...ev, description: e.target.value })} /></label>
                   </>
                 ) : null}
+                {ev.kind === "source_inspection" ? (
+                  <label>What was inspected <textarea value={ev.description} onChange={(e) => updateEvidence(i, { ...ev, description: e.target.value })} /></label>
+                ) : null}
                 {ev.kind === "informal_review" ? (
                   <>
-                    <label>Reviewer (party id) <input value={ev.reviewer} onChange={(e) => updateEvidence(i, { ...ev, reviewer: e.target.value })} /></label>
+                    <label>Reviewer (person id) <input value={ev.reviewer} onChange={(e) => updateEvidence(i, { ...ev, reviewer: e.target.value })} /></label>
                     <label>Text <textarea value={ev.text} onChange={(e) => updateEvidence(i, { ...ev, text: e.target.value })} /></label>
                   </>
                 ) : null}
@@ -323,17 +375,17 @@ export default function SubmitWizard() {
                     <label>Report URL <input value={ev.reportUrl} onChange={(e) => updateEvidence(i, { ...ev, reportUrl: e.target.value })} /></label>
                     <label>Report inline text <textarea value={ev.reportInline} onChange={(e) => updateEvidence(i, { ...ev, reportInline: e.target.value })} /></label>
                     {!ev.reportUrl && !ev.reportInline ? (
-                      <p className="wizard-hint wizard-warning">A mathematical_assessment needs at least a report URL or inline text — the schema requires one.</p>
+                      <p className="wizard-hint wizard-warning">A mathematical assessment needs either a report link or written report.</p>
                     ) : null}
                   </>
                 ) : null}
                 <label>
-                  Basis
+                  Where this information comes from
                   <select value={ev.basis} onChange={(e) => updateEvidence(i, { ...ev, basis: e.target.value as Basis })}>
-                    {BASIS_OPTIONS.map((b) => <option key={b} value={b}>{b}</option>)}
+                    {BASIS_OPTIONS.map((b) => <option key={b} value={b}>{BASIS_LABELS[b]}</option>)}
                   </select>
                 </label>
-                <label>Asserted by (party id) <input value={ev.assertedBy} onChange={(e) => updateEvidence(i, { ...ev, assertedBy: e.target.value })} /></label>
+                <label>Attributed to (person id) <input value={ev.assertedBy} onChange={(e) => updateEvidence(i, { ...ev, assertedBy: e.target.value })} /></label>
                 {needsLocator ? (
                   <LocatorFields basis={ev.basis} locator={ev.locator} onChange={(next) => updateEvidence(i, { ...ev, locator: next })} />
                 ) : null}
@@ -346,8 +398,8 @@ export default function SubmitWizard() {
 
       {step === "provenance" ? (
         <section className="wizard-section">
-          <h2>AI provenance</h2>
-          <AttributedFields label="Disclosure" draft={state.aiDisclosure} onChange={(v) => setState((s) => ({ ...s, aiDisclosure: v }))} thirdPartyLocked={thirdParty} />
+          <h2>How AI was used</h2>
+          <AttributedFields label="What the source discloses" draft={state.aiDisclosure} onChange={(v) => setState((s) => ({ ...s, aiDisclosure: v }))} thirdPartyLocked={thirdParty} />
           {state.aiRoles.map((r, i) => {
             const needsLocator = needsLocatorFor(r.basis, thirdParty);
             return (
@@ -356,17 +408,17 @@ export default function SubmitWizard() {
                 <label>
                   Role
                   <select value={r.role} onChange={(e) => updateAiRole(i, { ...r, role: e.target.value })}>
-                    {AI_PROVENANCE_ROLES.map((role) => <option key={role} value={role}>{role}</option>)}
+                    {AI_PROVENANCE_ROLES.map((role) => <option key={role} value={role}>{roleLabel(role)}</option>)}
                   </select>
                 </label>
                 <label>Model <input value={r.model} onChange={(e) => updateAiRole(i, { ...r, model: e.target.value })} /></label>
                 <label>
-                  Basis
+                  Where this information comes from
                   <select value={r.basis} onChange={(e) => updateAiRole(i, { ...r, basis: e.target.value as Basis })}>
-                    {BASIS_OPTIONS.map((b) => <option key={b} value={b}>{b}</option>)}
+                    {BASIS_OPTIONS.map((b) => <option key={b} value={b}>{BASIS_LABELS[b]}</option>)}
                   </select>
                 </label>
-                <label>Asserted by <input value={r.assertedBy} onChange={(e) => updateAiRole(i, { ...r, assertedBy: e.target.value })} /></label>
+                <label>Attributed to (person id) <input value={r.assertedBy} onChange={(e) => updateAiRole(i, { ...r, assertedBy: e.target.value })} /></label>
                 {needsLocator ? (
                   <LocatorFields basis={r.basis} locator={r.locator} onChange={(next) => updateAiRole(i, { ...r, locator: next })} />
                 ) : null}
@@ -375,7 +427,7 @@ export default function SubmitWizard() {
             );
           })}
           <button type="button" onClick={() => setState((s) => ({ ...s, aiRoles: [...s.aiRoles, { role: AI_PROVENANCE_ROLES[0], model: "", basis: "author_attestation", assertedBy: "" }] }))}>
-            Add role
+            Add another use
           </button>
         </section>
       ) : null}

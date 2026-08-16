@@ -2,25 +2,29 @@
 stable URL per record (stable, not permanent — GitHub Pages is not
 archival).
 
-Security posture: autoescape is on and nothing in these templates ever
-uses `|safe` on record-derived data. Autoescaping alone does not stop a
+Security posture: autoescape is on and record-derived prose is never marked
+safe. The only generated markup is MathML created server-side from an optional
+LaTeX display field. Autoescaping alone does not stop a
 `javascript:` URL from being placed in an href, so every link built from
 record data goes through the `safe_href` filter, which allows only
 http(s) URLs and otherwise falls back to plain (still-escaped) text. There
-is no Markdown or math rendering in v0.1 — prose is shown as escaped plain
-text — and no `<script>` anywhere, so the CSP meta tag denies scripts
-entirely.
+is no Markdown and no `<script>` anywhere, so the CSP meta tag denies scripts
+entirely. Math conversion happens during the build and needs no browser code.
 """
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import shutil
+from datetime import date, datetime
 from dataclasses import dataclass, field
 from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader
+from latex2mathml.converter import convert as latex_to_mathml
+from markupsafe import Markup
 from ruamel.yaml import YAML
 
 from significance.boards import (
@@ -52,6 +56,8 @@ _SAFE_URL_RE = re.compile(r"^https?://", re.IGNORECASE)
 # arrives — it is the same narrow question safe_href asks: may this string
 # become a link?
 _SAFE_EMAIL_RE = re.compile(r"^[^\s@,;<>?&\"']+@[^\s@,;<>?&\"']+\.[^\s@,;<>?&\"']+$")
+_HASH_RE = re.compile(r"(?<![a-f0-9])([a-f0-9]{40}|[a-f0-9]{64})(?![a-f0-9])", re.IGNORECASE)
+_URL_RE = re.compile(r"https?://[^\s]+", re.IGNORECASE)
 
 
 def safe_href(url) -> str | None:
@@ -76,6 +82,35 @@ def safe_email(address) -> str | None:
     return None
 
 
+def short_hash(value: object) -> object:
+    """Shorten long Git hashes in reader-facing prose; source data stays full."""
+    if not isinstance(value, str):
+        return value
+    return _HASH_RE.sub(lambda match: match.group(1)[:12] + "…", value)
+
+
+def readable_text(value: object) -> object:
+    """Keep instructional prose readable without changing source data."""
+    if not isinstance(value, str):
+        return value
+    shortened = short_hash(value)
+    return _URL_RE.sub(lambda match: match.group(0).split('/')[2] + "/…", shortened)
+
+
+def mathml(latex: object) -> Markup:
+    """Convert schema-validated LaTeX to server-rendered MathML.
+
+    The converter creates the markup; record content is never treated as HTML.
+    If conversion fails, escaped plain text is safer than a broken build.
+    """
+    if not isinstance(latex, str):
+        return Markup("")
+    try:
+        return Markup(latex_to_mathml(latex, display="block"))
+    except Exception:
+        return Markup.escape(latex)
+
+
 def _environment() -> Environment:
     env = Environment(
         loader=FileSystemLoader(str(_TEMPLATES_DIR)),
@@ -85,6 +120,12 @@ def _environment() -> Environment:
     )
     env.filters["safe_href"] = safe_href
     env.filters["safe_email"] = safe_email
+    env.filters["short_hash"] = short_hash
+    env.filters["readable_text"] = readable_text
+    env.filters["mathml"] = mathml
+    env.globals["style_version"] = hashlib.sha256(
+        _STATIC_DIR.joinpath("style.css").read_bytes()
+    ).hexdigest()[:12]
     return env
 
 
@@ -168,6 +209,9 @@ def site_links(
     board_ids: list[str] | None = None,
     has_glossary: bool = False,
     has_orientation: bool = False,
+    has_reviewers: bool = False,
+    has_backlog: bool = False,
+    has_intake: bool = True,
 ) -> dict:
     """Where the auxiliary pages live, from the point of view of one page.
 
@@ -192,14 +236,20 @@ def site_links(
     # soon" — so the link and the page arrive together or not at all.
     if deployed:
         links = {
-            "records_index": "/records/",
-            "request": "/request/",
-            "boards": {b: f"/boards/{b}/" for b in boards},
+            "records_index": "/records/index.html",
+            "request": "/request/index.html",
+            "boards": {b: f"/boards/{b}/index.html" for b in boards},
         }
         if has_glossary:
-            links["glossary"] = "/glossary/"
+            links["glossary"] = "/glossary/index.html"
         if has_orientation:
-            links["orientation"] = "/orientation/"
+            links["orientation"] = "/orientation/index.html"
+        if has_reviewers:
+            links["reviewers"] = "/reviewers/index.html"
+        if has_backlog:
+            links["backlog"] = "/backlog/index.html"
+        if has_intake:
+            links["intake"] = "/how-to-file-a-claim/index.html"
         return links
 
     links = {
@@ -211,6 +261,12 @@ def site_links(
         links["glossary"] = f"{root_prefix}glossary/index.html"
     if has_orientation:
         links["orientation"] = f"{root_prefix}orientation/index.html"
+    if has_reviewers:
+        links["reviewers"] = f"{root_prefix}reviewers/index.html"
+    if has_backlog:
+        links["backlog"] = f"{root_prefix}backlog/index.html"
+    if has_intake:
+        links["intake"] = f"{root_prefix}how-to-file-a-claim/index.html"
     return links
 
 
@@ -252,6 +308,8 @@ def build_site(
     result_skipped_boards: dict[str, list[Violation]] = {}
 
     config = load_site_config(site_config)
+    all_record_files = collect_yaml_files([str(records_dir)])
+    backlog_enabled = config.get("backlog_enabled", False)
 
     # Only an http(s) URL may become the link in a pasted paragraph. The
     # shipped value carries a [FILL] marker and fails this, which is the
@@ -310,6 +368,9 @@ def build_site(
             board_ids=board_ids,
             has_glossary=bool(glossary),
             has_orientation=bool(orientation),
+            has_reviewers=True,
+            has_backlog=bool(backlog_enabled and len(all_record_files) >= int(config.get('backlog_min_records', 5))),
+            has_intake=True,
         )
 
     env = _environment()
@@ -325,6 +386,13 @@ def build_site(
     for v in validate_paths([str(records_dir)]):
         violations_by_file.setdefault(v.file, []).append(v)
 
+    valid_records = [load_record(f) for f in collect_yaml_files([str(records_dir)]) if not violations_by_file.get(str(f))]
+    cited_by: dict[str, list[dict]] = {}
+    for source in valid_records:
+        for dep in source.get("depends_on", []):
+            if dep.get("record"):
+                cited_by.setdefault(dep["record"], []).append(source)
+
     for f in collect_yaml_files([str(records_dir)]):
         violations = violations_by_file.get(str(f), [])
         if violations:
@@ -332,10 +400,20 @@ def build_site(
             continue
 
         record = load_record(f)
+        stale_days = int(config.get("stale_task_days", 45))
+        for invitation in record.get("open_invitations", []):
+            if invitation.get("status", "open") == "taken" and invitation.get("taken_at"):
+                try:
+                    taken = datetime.fromisoformat(invitation["taken_at"].replace("Z", "+00:00")).date()
+                    invitation["_stale"] = (date.today() - taken).days > stale_days
+                except ValueError:
+                    invitation["_stale"] = False
         record_id = record["record_id"]
         record_url = f"{public_url}/records/{record_id}/" if public_url else None
         html = record_template.render(
             record=record,
+            record_lookup={r["record_id"]: r for r in valid_records},
+            cited_by=cited_by.get(record_id, []),
             glossary=glossary,
             status_text=record_status_text(record, record_url),
             root_prefix="../",
@@ -371,6 +449,11 @@ def build_site(
     )
     result.pages.append("request")
 
+    # Intake standard: deliberately plain and copyable, generated with the same
+    # static toolchain as records.
+    _write_page(pages_dir / "how-to-file-a-claim", env.get_template("intake.html.jinja").render(root_prefix=pages_prefix, links=pages_links))
+    result.pages.append("how-to-file-a-claim")
+
     if orientation:
         _write_page(
             pages_dir / "orientation",
@@ -394,15 +477,81 @@ def build_site(
         )
         result.pages.append("glossary")
 
+    # Build reviewer census from attributed record material. Strata stay labels,
+    # never a blended score or ranking.
+    reviewer_map: dict[str, dict] = {}
+    # The editor identity is a named participant even before they have a
+    # review entry; showing the empty census line is more honest than implying
+    # the page only exists for people with volume.
+    reviewer_map["significance-editor"] = {"id": "significance-editor", "records": []}
+    for record in built_records:
+        rid = record["record_id"]
+        for a in record.get("attestations", []):
+            who = a.get("reviewer") or a.get("asserted_by")
+            if who: reviewer_map.setdefault(who, {"id": who, "records": []})["records"].append({"record": record, "entry": a, "kind": "attestation"})
+        for ev in record.get("evidence", []):
+            who = ev.get("reviewer") or ev.get("asserted_by")
+            if who and ev.get("kind") in {"informal_review", "mathematical_assessment"}:
+                entry = dict(ev)
+                if not entry.get("stratum") and (record.get("parties", {}).get(who, {}).get("verification_method", {}).get("kind") == "automation"):
+                    entry["stratum"] = "machine"
+                reviewer_map.setdefault(who, {"id": who, "records": []})["records"].append({"record": record, "entry": entry, "kind": "evidence"})
+        for oi in record.get("open_invitations", []):
+            who = oi.get("taken_by")
+            if who:
+                entry = dict(oi)
+                entry.setdefault("stratum", "machine" if record.get("parties", {}).get(who, {}).get("verification_method", {}).get("kind") == "automation" else "community")
+                reviewer_map.setdefault(who, {"id": who, "records": []})["records"].append({"record": record, "entry": entry, "kind": "task"})
+    for row in reviewer_map.values():
+        party = next((r.get("parties", {}).get(row["id"]) for r in built_records if row["id"] in r.get("parties", {})), None)
+        if party and party.get("affiliation"):
+            row["affiliation"] = party["affiliation"]
+    reviewer_rows = sorted(reviewer_map.values(), key=lambda x: x["id"].lower())
+    _write_page(pages_dir / "reviewers", env.get_template("reviewers.html.jinja").render(reviewers=reviewer_rows, root_prefix=pages_prefix, links=pages_links))
+    result.pages.append("reviewers")
+    for reviewer in reviewer_rows:
+        _write_page(pages_dir / "reviewers" / reviewer["id"], env.get_template("reviewer.html.jinja").render(reviewer=reviewer, root_prefix=("/records/" if deployed else "../../"), links=pages_links))
+        result.pages.append(f"reviewer:{reviewer['id']}")
+
+    if backlog_enabled and len(built_records) >= int(config.get("backlog_min_records", 5)):
+        today = date.today()
+        rows = []
+        for record in built_records:
+            if record.get("record_state") != "active": continue
+            dates = [record.get("manuscript", {}).get("retrieved_at", "")[:10]]
+            for a in record.get("attestations", []): dates.append(a.get("asserted_at", "")[:10])
+            for e in record.get("evidence", []): dates.append(e.get("asserted_at", "")[:10])
+            for i in record.get("open_invitations", []): dates.append(i.get("taken_at", "")[:10] or i.get("created_at", "")[:10])
+            dates = [d for d in dates if d]
+            last = max(dates) if dates else today.isoformat()
+            rows.append({"record": record, "last": last, "days": (today - date.fromisoformat(last)).days, "open": sum(1 for i in record.get("open_invitations", []) if i.get("status", "open") == "open"), "taken": sum(1 for i in record.get("open_invitations", []) if i.get("status") == "taken"), "reviewers": len({a.get("reviewer") or a.get("asserted_by") for a in record.get("attestations", []) if a.get("reviewer") or a.get("asserted_by")})})
+        rows.sort(key=lambda x: x["days"], reverse=True)
+        _write_page(pages_dir / "backlog", env.get_template("backlog.html.jinja").render(rows=rows, root_prefix=pages_prefix, links=pages_links))
+        result.pages.append("backlog")
+
     # A board page sits two directories below its root (boards/<id>/), so its
     # relative prefix is one level deeper than the other auxiliary pages.
     board_prefix = "/records/" if deployed else "../../"
     board_template = env.get_template("board.html.jinja")
     for board in boards:
+        # A records-index URL is a page (and therefore ends in index.html in
+        # the self-contained layout), not a directory that record ids may be
+        # appended to. Build each destination explicitly so both layouts
+        # produce a valid link.
+        record_links = {
+            row["id"]: (
+                f"/records/{row['record']}/"
+                if deployed
+                else f"../../{row['record']}/index.html"
+            )
+            for row in board["rows"]
+            if row.get("record")
+        }
         _write_page(
             pages_dir / "boards" / board["board_id"],
             board_template.render(
                 board=board,
+                record_links=record_links,
                 # No paste for a row that has no name yet. "Nobody has
                 # looked at this" is a real answer to "is this real?" — but
                 # only when the paragraph can say which result it is about,
@@ -433,6 +582,7 @@ def build_site(
             "record_version": record["record_version"],
             "record_state": record["record_state"],
             "claim": record["claim"]["text"]["value"],
+            "claim_mathml": str(mathml(record["claim"].get("display_math", ""))) if record["claim"].get("display_math") else None,
             "claim_basis": record["claim"]["text"]["basis"],
             "claim_asserted_by": record["claim"]["text"]["asserted_by"],
             "freshness": record.get("freshness", {}).get("result", "unknown"),

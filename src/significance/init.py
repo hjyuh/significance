@@ -24,6 +24,7 @@ EVIDENCE_KINDS = [
     "formal_artifact",
     "external_formal_artifact",
     "computational_reproduction",
+    "source_inspection",
     "informal_review",
     "mathematical_assessment",
 ]
@@ -198,6 +199,9 @@ def _scaffold_evidence_item(prompt_fn, party_ids, index) -> dict:
         item["description"] = _ask(prompt_fn, "  description")
         item["execution"] = _scaffold_receipt(prompt_fn)
 
+    elif kind == "source_inspection":
+        item["description"] = _ask("What public sources or version facts were inspected?")
+        item.update(_attribution())
     elif kind == "informal_review":
         item["reviewer"] = _ask_choice(prompt_fn, "  reviewer (party id)", party_ids)
         item["text"] = _ask(prompt_fn, "  review text")

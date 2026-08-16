@@ -1,0 +1,145 @@
+schema_version: 1
+record_id: 2026-rafikzeraoulia-erdos-653
+record_version: 1
+record_state: active
+draft: true
+
+freshness:
+  result: current
+  observed_source_version: "zenodo-21858673-v1"
+  confirmed_source_version: "zenodo-21858673-v1"
+  checked_at: "2026-08-16T15:19:21Z"
+
+parties:
+  rafikzeraoulia2025:
+    pseudonym: "Rafikzeraoulia2025"
+    verification_method:
+      kind: pseudonymous
+      identifier: "https://www.erdosproblems.com/forum/user/Rafikzeraoulia2025"
+  significance-editor:
+    pseudonym: "Significance editor"
+    verification_method:
+      kind: pseudonymous
+      identifier: "significance-project"
+
+author_relationship:
+  status: public_sources_only
+  note: >-
+    Private editorial draft compiled from the public Erdős Problems proof-claim
+    page and its linked Zenodo record. The claimant has not participated in,
+    confirmed, or approved this Significance record.
+  basis: editorial_inference
+  asserted_by: significance-editor
+  asserted_at: "2026-08-16T15:19:21Z"
+
+claim:
+  id: claim-main
+  text:
+    value: "The paper gives a new partial result toward Erdős Problem #653 on planar distance-count spectra."
+    basis: source_quote
+    asserted_by: rafikzeraoulia2025
+    asserted_at: "2026-08-09T07:42:33Z"
+    locator:
+      url: "https://www.erdosproblems.com/forum/thread/653/proof-claims"
+      quote: "The paper gives a new partial result toward Erdős Problem #653 on planar distance-count spectra."
+  scope:
+    value: "The proof-claim page labels this submission as a partial proof claim."
+    basis: source_quote
+    asserted_by: rafikzeraoulia2025
+    asserted_at: "2026-08-09T07:42:33Z"
+    locator:
+      url: "https://www.erdosproblems.com/forum/thread/653/proof-claims"
+      quote: "A partial proof claimed by Rafik Zeraoulia."
+
+plain_summary:
+  claimed: >-
+    The public proof-claim page describes a partial result toward Erdős Problem
+    #653 and links to a Zenodo manuscript.
+  checked: >-
+    Significance fetched the proof-claim page and its linked Zenodo PDF, checked
+    the Zenodo version metadata, and computed the PDF SHA-256 hash recorded here.
+  not_checked: >-
+    Nothing beyond the claimant's public statements and the linked source
+    metadata was independently checked. No formal artifact or substantive
+    public review comment was found on the fetched proof-claim page.
+  basis: digest
+  asserted_by: significance-editor
+  asserted_at: "2026-08-16T15:19:21Z"
+
+manuscript:
+  url: "https://zenodo.org/records/21858673/files/Centered_Circle_Incidence_Bounds_Planar_Distance_Count_Spectra.pdf?download=1"
+  label: "Centered-circle incidence bounds for planar distance-count spectra"
+  immutable_version_id: "zenodo-21858673-v1"
+  sha256: "a87ca77b143fd6382ce3882fbef2320c3d037ed92d4128fe078689784bfc4147"
+  retrieved_at: "2026-08-16T15:19:21Z"
+
+evidence:
+  - id: ev-source-inspection
+    kind: source_inspection
+    description: >-
+      Significance fetched the queued proof-claim page, followed its direct
+      Zenodo manuscript link, confirmed the public v1 metadata, and computed
+      the PDF hash above. The page exposed no formal artifact and no substantive
+      review comment about this claim.
+    basis: machine_result
+    asserted_by: significance-editor
+    asserted_at: "2026-08-16T15:19:21Z"
+    locator:
+      url: "https://www.erdosproblems.com/forum/thread/653/proof-claims"
+
+ai_provenance:
+  disclosure:
+    value: "The proof claim is submitted as using OpenAI GPT-5.6 Thinking."
+    basis: source_quote
+    asserted_by: rafikzeraoulia2025
+    asserted_at: "2026-08-09T07:42:33Z"
+    locator:
+      url: "https://www.erdosproblems.com/forum/thread/653/proof-claims"
+      quote: "A partial proof claimed by Rafik Zeraoulia (using OpenAI GPT-5.6 Thinking)."
+  roles:
+    - role: proof_generation
+      model: "OpenAI GPT-5.6 Thinking"
+      basis: source_quote
+      asserted_by: rafikzeraoulia2025
+      locator:
+        url: "https://www.erdosproblems.com/forum/thread/653/proof-claims"
+
+open_invitations:
+  - kind: independent_read
+    target: "Read the main claimed deduction in the manuscript bound by the SHA-256 hash in this record."
+    how: >-
+      Work from the exact PDF linked in manuscript.url. Name the hash and the
+      numbered statement or bounded passage read. Record only the passage you
+      examined and what remains unread; do not issue a whole-document rating.
+    respond:
+      url: "https://github.com/hjyuh/significance/issues/new?template=invitation-response.yml"
+    created_by: significance-editor
+    created_at: "2026-08-16T15:19:21Z"
+  - kind: formal_artifact_check
+    target: "Determine whether the claimant has a public formal artifact for this submission."
+    how: >-
+      The queued proof-claim page exposes no formal artifact link. If the
+      claimant later provides one, record its immutable repository commit,
+      pinned toolchain, and build result here: [FILL: formal artifact URL,
+      commit, and toolchain]. Do not infer these values from the PDF.
+    respond:
+      url: "https://github.com/hjyuh/significance/issues/new?template=invitation-response.yml"
+    created_by: significance-editor
+    created_at: "2026-08-16T15:19:21Z"
+  - kind: public_review
+    target: "Add an attributed public review only if a commenter examines a specific statement in this version."
+    how: >-
+      Attach a stable comment or report URL and quote the comment verbatim. A
+      comment records what its author said; it does not become an attestation
+      by Significance.
+    respond:
+      url: "https://github.com/hjyuh/significance/issues/new?template=invitation-response.yml"
+    created_by: significance-editor
+    created_at: "2026-08-16T15:19:21Z"
+
+history:
+  - id: evt-created
+    type: created
+    at: "2026-08-16T15:19:21Z"
+    by: significance-editor
+    note: "Drafted from queued proof-claim URL and its directly linked Zenodo PDF; not published and not author-confirmed."

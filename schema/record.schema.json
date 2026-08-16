@@ -39,6 +39,10 @@
       "enum": ["active", "superseded", "withdrawn"],
       "description": "Authored lifecycle state. Distinct from freshness, which is computed."
     },
+    "draft": {
+      "type": "boolean",
+      "description": "True only for a non-public editorial working draft. Drafts are not canonical records and must render an explicit warning."
+    },
     "freshness": { "$ref": "#/$defs/freshness" },
     "parties": {
       "type": "object",
@@ -48,6 +52,7 @@
       "description": "Map of party id to identity. Every asserted_by elsewhere in the record must reference a key declared here (enforced by the validator, not this schema)."
     },
     "claim": { "$ref": "#/$defs/claim" },
+    "author_relationship": { "$ref": "#/$defs/author_relationship" },
     "plain_summary": { "$ref": "#/$defs/plain_summary" },
     "accurate_wording": { "$ref": "#/$defs/accurate_wording" },
     "manuscript": { "$ref": "#/$defs/manuscript" },
@@ -68,6 +73,14 @@
     "open_invitations": {
       "type": "array",
       "items": { "$ref": "#/$defs/open_invitation" }
+    },
+    "attestations": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/attestation" }
+    },
+    "depends_on": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/dependency" }
     },
     "history": {
       "type": "array",
@@ -111,6 +124,8 @@
       "properties": {
         "name": { "type": "string", "minLength": 1 },
         "pseudonym": { "type": "string", "minLength": 1 },
+        "affiliation": { "type": "string", "maxLength": 200 },
+        "affiliation_basis": { "type": "string", "const": "self_declared" },
         "verification_method": {
           "type": "object",
           "additionalProperties": false,
@@ -195,12 +210,60 @@
       "properties": {
         "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
         "text": { "$ref": "#/$defs/attributed_value" },
+        "display_math": {
+          "description": "Optional LaTeX presentation of the claim text. Converted to MathML by the renderer; it does not replace the attributed plain-text claim.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
         "scope": { "$ref": "#/$defs/attributed_value" },
         "exclusions": {
           "type": "array",
           "items": { "$ref": "#/$defs/attributed_value" }
         }
       }
+    },
+
+    "author_relationship": {
+      "description": "How, if at all, the manuscript author participated in this Significance record. This describes the record-making relationship only; it is never evidence for the mathematics.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "note", "basis", "asserted_by", "asserted_at"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["public_sources_only", "author_confirmed_description", "author_contributed", "author_requested"]
+        },
+        "note": { "type": "string", "minLength": 1 },
+        "basis": {
+          "type": "string",
+          "enum": ["author_attestation", "editorial_inference"]
+        },
+        "asserted_by": { "$ref": "#/$defs/party_id" },
+        "asserted_at": { "$ref": "#/$defs/iso_datetime" },
+        "locator": { "$ref": "#/$defs/locator" }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "status": { "const": "public_sources_only" } },
+            "required": ["status"]
+          },
+          "then": { "properties": { "basis": { "const": "editorial_inference" } } },
+          "else": {
+            "required": ["locator"],
+            "properties": { "basis": { "const": "author_attestation" } }
+          }
+        }
+      ]
+    },
+    "attestations": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/attestation" }
+    },
+    "depends_on": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/dependency" }
     },
 
     "accurate_wording": {
@@ -272,14 +335,31 @@
       "properties": {
         "url": { "type": "string", "format": "uri" },
         "label": { "type": "string", "minLength": 1 },
-        "immutable_version_id": {
-          "type": "string",
-          "description": "Host-provided immutable version identifier where one exists, e.g. an arXiv vN. Compared before hashes, since a regenerated PDF can differ byte-for-byte without a meaningful revision."
-        },
-        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
-        "retrieved_at": { "$ref": "#/$defs/iso_datetime" }
-      }
-    },
+          "immutable_version_id": {
+            "type": "string",
+            "description": "Host-provided immutable version identifier where one exists, e.g. an arXiv vN. Compared before hashes, since a regenerated PDF can differ byte-for-byte without a meaningful revision."
+          },
+          "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+          "retrieved_at": { "$ref": "#/$defs/iso_datetime" },
+          "supplemental_artifacts": {
+            "type": "array",
+            "description": "Version-bound companion files published with the manuscript, such as an informal note or technical appendix. These are sources, not independent evidence entries.",
+            "items": { "$ref": "#/$defs/source_artifact" }
+          }
+        }
+      },
+
+      "source_artifact": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["url", "label", "sha256", "retrieved_at"],
+        "properties": {
+          "url": { "type": "string", "format": "uri" },
+          "label": { "type": "string", "minLength": 1 },
+          "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+          "retrieved_at": { "$ref": "#/$defs/iso_datetime" }
+        }
+      },
 
     "axiom_trust_profile": {
       "type": "string",
@@ -325,7 +405,7 @@
         "kind": {
           "enum": [
             "formal_artifact", "external_formal_artifact",
-            "computational_reproduction", "informal_review", "mathematical_assessment"
+            "computational_reproduction", "source_inspection", "informal_review", "mathematical_assessment"
           ]
         }
       },
@@ -341,6 +421,10 @@
         {
           "if": { "properties": { "kind": { "const": "computational_reproduction" } } },
           "then": { "$ref": "#/$defs/evidence_computational_reproduction" }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "source_inspection" } } },
+          "then": { "$ref": "#/$defs/evidence_source_inspection" }
         },
         {
           "if": { "properties": { "kind": { "const": "informal_review" } } },
@@ -412,6 +496,22 @@
         "inputs": { "type": "string" },
         "outputs_summary": { "type": "string" },
         "execution": { "$ref": "#/$defs/execution_receipt" }
+      }
+    },
+
+    "evidence_source_inspection": {
+      "description": "A bounded check that public sources, versions, hashes, and stated scope were located and transcribed. It is not a mathematical review.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "description", "basis", "asserted_by", "asserted_at"],
+      "properties": {
+        "id": { "type": "string" },
+        "kind": { "const": "source_inspection" },
+        "description": { "type": "string", "minLength": 1 },
+        "basis": { "$ref": "#/$defs/basis" },
+        "asserted_by": { "$ref": "#/$defs/party_id" },
+        "asserted_at": { "$ref": "#/$defs/iso_datetime" },
+        "locator": { "$ref": "#/$defs/locator" }
       }
     },
 
@@ -579,6 +679,11 @@
           "description": "Any named party, not restricted to authors."
         },
         "created_at": { "$ref": "#/$defs/iso_datetime" },
+        "status": { "type": "string", "enum": ["open", "taken", "done", "withdrawn"], "default": "open" },
+        "taken_by": { "type": "string", "minLength": 1 },
+        "taken_at": { "$ref": "#/$defs/iso_datetime" },
+        "taken_note": { "type": "string", "maxLength": 200 },
+        "done_ref": { "type": "string", "minLength": 1 },
         "how": {
           "type": "string",
           "description": "What somebody would actually do: the exact commit, the toolchain, the command, the file to read. Optional, because an invitation whose instructions nobody has written down is still a real invitation — and rendering it with a 'take this task' button anyway would promise help that is not there. Non-emptiness is enforced by `significance validate`, which owns the rule so the failure has one name."
@@ -595,6 +700,44 @@
         }
       }
     },
+
+    "attestation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "reviewer", "scope", "manuscript_sha256", "asserted_by", "asserted_at"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "reviewer": { "$ref": "#/$defs/party_id" },
+        "scope": { "type": "string", "minLength": 1 },
+        "depth": { "type": "string", "minLength": 1 },
+        "manuscript_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "review_note": { "type": "string", "maxLength": 1200 },
+        "link": { "type": "string", "format": "uri" },
+        "stratum": { "type": "string", "enum": ["author", "editor", "community", "domain_expert", "machine"] },
+        "asserted_by": { "$ref": "#/$defs/party_id" },
+        "asserted_at": { "$ref": "#/$defs/iso_datetime" }
+      }
+    },
+
+    "dependency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["relation", "asserted_by", "basis"],
+      "properties": {
+        "record": { "$ref": "#/$defs/record_id_ref" },
+        "external": {
+          "type": "object", "additionalProperties": false, "required": ["label", "url"],
+          "properties": { "label": { "type": "string", "minLength": 1 }, "url": { "type": "string", "format": "uri" }, "version_hint": { "type": "string" } }
+        },
+        "relation": { "type": "string", "enum": ["cites", "builds_on", "uses_result"] },
+        "asserted_by": { "$ref": "#/$defs/party_id" },
+        "basis": { "type": "string", "enum": ["source_quote", "editor_note"] },
+        "note": { "type": "string", "maxLength": 240 }
+      },
+      "oneOf": [{ "required": ["record"] }, { "required": ["external"] }]
+    },
+
+    "record_id_ref": { "type": "string", "pattern": "^[0-9]{4}(-[a-z0-9]+){2,}$" },
 
     "history_event": {
       "type": "object",

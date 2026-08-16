@@ -6,6 +6,7 @@ type RecordSummary = {
   record_version: number;
   record_state: string;
   claim: string;
+  claim_mathml: string | null;
   claim_basis: string;
   claim_asserted_by: string;
   freshness: string;
@@ -24,7 +25,7 @@ type BoardSummary = {
 
 // The Python builder is the only source of record and board facts. This shell
 // presents what it generated and computes nothing of its own -- including the
-// "researched" counts below, which come from the file rather than from
+// "recorded" counts below, which come from the file rather than from
 // counting anything here, so the page cannot arrive at a different number from
 // the board it links to.
 const generated = generatedIndex as { records: RecordSummary[]; boards: BoardSummary[] };
@@ -35,6 +36,34 @@ function countLabel(count: number, singular: string, plural = `${singular}s`) {
   return `${count} ${count === 1 ? singular : plural}`;
 }
 
+function formatBasis(value: string) {
+  return ({
+    source_quote: "Quoted from the source",
+    author_attestation: "Stated by the author",
+    editorial_inference: "Significance's interpretation",
+    machine_result: "Automated result",
+  } as Record<string, string>)[value] ?? value.replaceAll("_", " ");
+}
+
+function formatParty(value: string) {
+  if (value === "significance-editor") return "Significance editor";
+  if (value === "significance-ci") return "Significance automated check";
+  if (value === "claude-paper") return "Claude (paper author)";
+  if (value === "openai") return "OpenAI";
+  if (value === "anthropic") return "Anthropic";
+  return value.replaceAll("-", " ");
+}
+
+function formatRecordState(value: string) {
+  return ({ active: "Active", current: "Active", stale: "Source changed", superseded: "Superseded", withdrawn: "Withdrawn", draft: "Draft" } as Record<string, string>)[value]
+    ?? value.replaceAll("_", " ");
+}
+
+function formatFreshness(value: string) {
+  return ({ current: "Source current", stale: "Source changed", unknown: "Source not rechecked" } as Record<string, string>)[value]
+    ?? value.replaceAll("_", " ");
+}
+
 export default function Home() {
   return (
     <main>
@@ -42,24 +71,23 @@ export default function Home() {
         <Link className="wordmark" href="/" aria-label="Significance home">
           SIGNIFICANCE
         </Link>
-        <p>Claim-state records for AI-assisted mathematics</p>
+        <p>Clear records for AI-assisted mathematics</p>
         <nav className="masthead-nav" aria-label="Site">
-          <Link href="/submit">Submit a record →</Link>
+          <a href="/request/index.html">Request or correct a record →</a>
           {/* Rendered by the Python renderer, not by this shell. The shell
               links to it; it never restates what the page says. */}
-          <a href="/orientation/">What is going on →</a>
-          <a href="/request/">Request a record →</a>
-          <a href="/glossary/">Glossary →</a>
+          <a href="/orientation/index.html">What is going on →</a>
+          <a href="/glossary/index.html">Glossary →</a>
         </nav>
       </header>
 
       <section className="hero">
-        <p className="lbl">A public evidence ledger</p>
-        <h1>Know exactly what was claimed—and what remains open.</h1>
+        <p className="lbl">Public record</p>
+        <h1>See what was claimed, what was checked, and what remains open.</h1>
         <p className="lede">
-          Significance makes mathematical claims, artifacts, interpretations,
-          and requests for review attributable, version-bound, and portable.
-          It records evidence without pretending to settle the mathematics.
+          Significance shows the exact mathematical claim, the source version,
+          what has been checked, who said what, and what still needs review. It
+          records evidence without pretending to settle the mathematics.
         </p>
       </section>
 
@@ -70,17 +98,17 @@ export default function Home() {
         {records.length ? (
           <div className="records-list">
             {records.map((record) => {
-              const recordPath = `/records/${record.record_id}/`;
+              const recordPath = `/records/${record.record_id}/index.html`;
               const checkedDate = record.freshness_checked_at?.slice(0, 10);
 
               return (
                 <a className="record-card" href={recordPath} key={record.record_id}>
                   <div className="record-topline">
                     <span>
-                      {record.record_id} / v{record.record_version} / {record.record_state}
+                      Record version {record.record_version} · {formatRecordState(record.record_state)}
                     </span>
                     <span>
-                      freshness {record.freshness}
+                      {formatFreshness(record.freshness)}
                       {checkedDate ? (
                         <>
                           {" · checked "}
@@ -91,15 +119,17 @@ export default function Home() {
                       ) : null}
                     </span>
                   </div>
-                  <h3>{record.claim}</h3>
+                  {record.claim_mathml ? (
+                    <div className="record-card-math" aria-label={record.claim} dangerouslySetInnerHTML={{ __html: record.claim_mathml }} />
+                  ) : <h3>{record.claim}</h3>}
                   <p>
-                    {record.claim_basis}, asserted by {record.claim_asserted_by}
+                    {formatBasis(record.claim_basis)} · {formatParty(record.claim_asserted_by)}
                     {" · "}
                     {countLabel(record.evidence_count, "evidence entry", "evidence entries")}
                     {" · "}
                     {countLabel(record.open_invitation_count, "open invitation")}
                   </p>
-                  <span className="open-record">Open the claim-state record →</span>
+                  <span className="open-record">Open the record →</span>
                 </a>
               );
             })}
@@ -115,10 +145,10 @@ export default function Home() {
             Status boards
           </p>
           {boards.map((board) => (
-            <a className="board-card" href={`/boards/${board.board_id}/`} key={board.board_id}>
+                  <a className="board-card" href={`/boards/${board.board_id}/index.html`} key={board.board_id}>
               <h3>{board.title}</h3>
               <p>
-                {board.recorded_row_count} of {board.row_count} rows researched
+                {board.recorded_row_count} of {board.row_count} rows recorded
                 {" · as of "}
                 <time dateTime={board.as_of}>{board.as_of.slice(0, 10)}</time>
               </p>
@@ -131,13 +161,13 @@ export default function Home() {
       <section className="principles" aria-label="What a record provides">
         <article>
           <span>01</span>
-          <h2>Attributable</h2>
-          <p>Every non-trivial statement says who asserted it and on what basis.</p>
+          <h2>Traceable</h2>
+          <p>Every important statement names who said it and where it came from.</p>
         </article>
         <article>
           <span>02</span>
-          <h2>Version-bound</h2>
-          <p>Hashes and commits prevent reviews from silently drifting across revisions.</p>
+          <h2>Tied to a version</h2>
+          <p>Every review stays attached to the exact paper or code version it covered.</p>
         </article>
         <article>
           <span>03</span>
@@ -147,8 +177,9 @@ export default function Home() {
       </section>
 
       <footer>
-        <p>Significance is a ledger and digestion layer—not a mathematical verdict.</p>
-        <a href="/records/">Browse the record index →</a>
+        <p>Significance organizes evidence and explanation. It does not issue mathematical verdicts.</p>
+        <a href="/records/index.html">Browse the record index →</a>
+        <Link href="/submit">Advanced contributor builder →</Link>
       </footer>
     </main>
   );

@@ -1,0 +1,243 @@
+schema_version: 1
+record_id: 2026-zeraoulia-erdos-653
+record_version: 1
+record_state: active
+draft: true
+
+freshness:
+  result: current
+  observed_source_version: "zenodo-21858673-v1"
+  confirmed_source_version: "zenodo-21858673-v1"
+  checked_at: "2026-08-12T22:27:07Z"
+
+parties:
+  rafik-zeraoulia:
+    name: "Rafik Zeraoulia"
+    verification_method:
+      kind: pseudonymous
+      identifier: "ErdosProblems user Rafikzeraoulia2025 and Zenodo creator metadata"
+  significance-editor:
+    pseudonym: "Significance editor"
+    verification_method:
+      kind: pseudonymous
+      identifier: "significance-project"
+
+author_relationship:
+  status: public_sources_only
+  note: >-
+    Editorial draft compiled from the public Erdős Problems proof-claim entry
+    and Zenodo manuscript. Rafik Zeraoulia has not participated in, confirmed,
+    or approved publication of this Significance record.
+  basis: editorial_inference
+  asserted_by: significance-editor
+  asserted_at: "2026-08-12T22:27:07Z"
+
+claim:
+  id: claim-main
+  display_math: >-
+    g(n)\le n-1-c_\alpha n^{(6-\alpha)/(8-3\alpha)}.
+  text:
+    value: >-
+      For every fixed α with 0 < α < 1/e, there are constants cα > 0 and
+      n₀(α) such that, for n ≥ n₀(α), g(n) ≤ n − 1 − cα n^β(α), where
+      β(α) = (6 − α)/(8 − 3α).
+    basis: source_quote
+    asserted_by: rafik-zeraoulia
+    asserted_at: "2026-08-09T07:39:13Z"
+    locator:
+      page: 2
+      url: "https://zenodo.org/records/21858673"
+      quote: >-
+        For every fixed α with 0 < α < 1/e, there are constants cα > 0 and
+        n₀(α) such that, for n ≥ n₀(α), g(n) ≤ n − 1 − cα n^β(α),
+        β(α) = (6 − α)/(8 − 3α).
+  scope:
+    value: >-
+      This is a quantitative partial result for Erdős Problem 653. Its endpoint
+      consequence gives a defect exponent arbitrarily close to
+      (6e - 1)/(8e - 3) = 0.8166799862..., compared with the previously quoted
+      exponent 2/3. It does not establish g(n) >= (1 - o(1))n.
+    basis: editorial_inference
+    asserted_by: significance-editor
+    asserted_at: "2026-08-12T22:27:07Z"
+    locator:
+      page: 2
+      url: "https://zenodo.org/records/21858673"
+      quote: >-
+        This does not decide (1.1), because n^theta = o(n). It does, however,
+        strengthen the exponent 2/3 in the classical upper defect.
+  exclusions:
+    - value: "The original asymptotic problem remains open."
+      basis: source_quote
+      asserted_by: rafik-zeraoulia
+      asserted_at: "2026-08-09T07:39:13Z"
+      locator:
+        page: 1
+        url: "https://zenodo.org/records/21858673"
+        quote: "The original asymptotic problem remains open."
+
+plain_summary:
+  claimed: >-
+    The manuscript claims a stronger upper bound on how small the missing part
+    of the pinned-distance spectrum can be. It is presented as progress on
+    Problem 653, not a complete solution.
+  checked: >-
+    Significance matched the forum entry to Zenodo record 21858673, downloaded
+    and hashed the v1 PDF, and located the headline bound in Theorem 1.1.
+  not_checked: >-
+    Significance has not checked the incidence argument, the optimization of
+    its exponents, the supporting structural lemmas, or the novelty claim.
+  basis: digest
+  asserted_by: significance-editor
+  asserted_at: "2026-08-12T22:27:07Z"
+
+accurate_wording:
+  value: >-
+    Rafik Zeraoulia has posted an AI-assisted preprint claiming a quantitative
+    partial improvement for Erdős Problem 653; the argument has not been
+    independently assessed in this record.
+  basis: digest
+  asserted_by: significance-editor
+  asserted_at: "2026-08-12T22:27:07Z"
+
+manuscript:
+  url: "https://zenodo.org/records/21858673/files/Centered_Circle_Incidence_Bounds_Planar_Distance_Count_Spectra.pdf?download=1"
+  label: "Centered-circle incidence bounds for planar distance-count spectra"
+  immutable_version_id: "zenodo-21858673-v1"
+  sha256: "a87ca77b143fd6382ce3882fbef2320c3d037ed92d4128fe078689784bfc4147"
+  retrieved_at: "2026-08-12T22:27:07Z"
+
+evidence:
+  - id: ev-source-alignment
+    kind: source_inspection
+    description: >-
+      Bounded source check only: the Erdős Problems entry labels this a partial
+      proof, and the linked v1 manuscript states the same scope in its abstract
+      and after Theorem 1.1. The forum entry names GPT-5.6 Thinking, while the
+      manuscript disclosure names GPT-5.6 Sol; this record does not infer that
+      those labels identify the same model or workflow.
+    basis: editorial_inference
+    asserted_by: significance-editor
+    asserted_at: "2026-08-12T22:27:07Z"
+    locator:
+      url: "https://www.erdosproblems.com/forum/thread/653/proof-claims"
+      quote: "A partial proof claimed by Rafik Zeraoulia."
+
+ai_provenance:
+  disclosure:
+    value: >-
+      OpenAI ChatGPT (GPT-5.6 Sol) was used as an AI-assisted research and
+      writing tool during the development of this manuscript, including
+      exploratory proof discussion, algebraic consistency checks,
+      literature-search assistance, language editing, and LaTeX preparation.
+    basis: source_quote
+    asserted_by: rafik-zeraoulia
+    asserted_at: "2026-08-09T07:39:13Z"
+    locator:
+      page: 14
+      url: "https://zenodo.org/records/21858673"
+      quote: "Generative AI disclosure. OpenAI ChatGPT (GPT-5.6 Sol) was used"
+  roles:
+    - role: proof_generation
+      model: "OpenAI ChatGPT (GPT-5.6 Sol)"
+      basis: source_quote
+      asserted_by: rafik-zeraoulia
+      locator:
+        page: 14
+        url: "https://zenodo.org/records/21858673"
+    - role: criticism
+      model: "OpenAI ChatGPT (GPT-5.6 Sol)"
+      basis: source_quote
+      asserted_by: rafik-zeraoulia
+      locator:
+        page: 14
+        url: "https://zenodo.org/records/21858673"
+    - role: literature_search
+      model: "OpenAI ChatGPT (GPT-5.6 Sol)"
+      basis: source_quote
+      asserted_by: rafik-zeraoulia
+      locator:
+        page: 14
+        url: "https://zenodo.org/records/21858673"
+    - role: prose_editing
+      model: "OpenAI ChatGPT (GPT-5.6 Sol)"
+      basis: source_quote
+      asserted_by: rafik-zeraoulia
+      locator:
+        page: 14
+        url: "https://zenodo.org/records/21858673"
+
+digestions:
+  - audience: general_mathematician
+    kind: plain_language
+    stratum: editor
+    text: >-
+      Problem 653 asks whether almost every possible pinned-distance count can
+      occur in one planar point set. The manuscript does not answer that. It
+      claims a stronger obstruction: every extremal configuration must still
+      miss at least a power-sized set of counts, with exponent about 0.8167
+      rather than the previously quoted 2/3. The proposed improvement comes
+      from applying a restricted-center point-circle incidence bound to circles
+      centered at selected low-distance-count points.
+    basis: digest
+    asserted_by: significance-editor
+    source_claims: [claim-main]
+
+importance_claims:
+  - text: >-
+      The manuscript describes its main contribution as improving the quoted
+      classical defect exponent 2/3 to every exponent below 0.8166799862... .
+    basis: editorial_inference
+    asserted_by: significance-editor
+    source:
+      page: 2
+      url: "https://zenodo.org/records/21858673"
+      quote: "It does, however, strengthen the exponent 2/3 in the classical upper defect."
+
+open_invitations:
+  - kind: focused_check
+    target: >-
+      Check the setup of Theorem 1.1: the selection of low-R centers, the
+      counts M <= T and L <= T^2, and the lower bound on incidences.
+    how: >-
+      Read Sections 2-3 of the PDF with the hash recorded here. Compare the
+      constructed circle family with the hypotheses of Pach-Tardos Theorem 2.2
+      and report the first unsupported distinctness, multiplicity, or incidence
+      step, or the bounded range checked.
+    respond:
+      url: "https://github.com/hjyuh/significance/issues/new?template=invitation-response.yml"
+    created_by: significance-editor
+    created_at: "2026-08-12T22:27:07Z"
+  - kind: calculation_check
+    target: >-
+      Verify the exponent bookkeeping in equations (3.10)-(3.14) and the limit
+      beta(alpha) -> (6e - 1)/(8e - 3).
+    how: >-
+      Recompute each normalized exponent from the six terms of Theorem 2.2.
+      State which equations were checked and include the algebra or a short
+      reproducible symbolic calculation.
+    respond:
+      url: "https://github.com/hjyuh/significance/issues/new?template=invitation-response.yml"
+    created_by: significance-editor
+    created_at: "2026-08-12T22:27:07Z"
+  - kind: literature_check
+    target: >-
+      Check whether the claimed 0.8166799862... consequence or an equivalent
+      bound already appears in the literature.
+    how: >-
+      Search forward citations of Pach-Tardos and the distance-count papers
+      cited in the manuscript. Report exact bibliographic matches; absence of
+      a match should be described only as the search performed.
+    respond:
+      url: "https://github.com/hjyuh/significance/issues/new?template=invitation-response.yml"
+    created_by: significance-editor
+    created_at: "2026-08-12T22:27:07Z"
+
+history:
+  - id: evt-created
+    type: created
+    at: "2026-08-12T22:27:07Z"
+    by: significance-editor
+    note: >-
+      Non-public editorial draft created from ErdosProblems proof claim 198
+      and Zenodo record 21858673. Author opt-in is required before publication.

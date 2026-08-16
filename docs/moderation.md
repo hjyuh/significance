@@ -49,6 +49,14 @@ moderation of proposals about them.
 
 ## Outreach ethics
 
+Significance uses two publication routes. Widely circulating claims from
+organisations or major public announcements may receive editorial records made
+entirely from public sources; those records must say that the authors did not
+participate unless they did. Ordinary claims by individual living authors are
+published only after an author request or explicit opt-in. A reader may suggest
+one, but the suggestion is not itself permission to publish an author-associated
+record.
+
 If Significance or its maintainers contact authors about their claims
 (to ask about AI-provenance disclosure, invite a correspondence
 attestation, or anything else), the following holds without exception:

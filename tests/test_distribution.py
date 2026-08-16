@@ -199,7 +199,7 @@ def test_orientation_page_explains_the_situation_and_is_attributed(tmp_path):
         assert f'id="{section["id"]}"' in page
     # Every section says whose reading it is: the page makes claims about the
     # world, not findings the site discovered.
-    assert page.count("asserted by significance-editor") >= len(orientation["sections"])
+    assert page.count("Significance editor") >= len(orientation["sections"])
 
 
 def test_orientation_separates_what_a_checker_does_from_what_it_does_not():

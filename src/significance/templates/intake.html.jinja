@@ -1,0 +1,12 @@
+{% extends "base.html.jinja" %}
+{% block title %}How to file a claim — Significance{% endblock %}
+{% block content %}<section class="band prose-page"><p class="lbl">How to file a claim</p>
+<p>These details make a proof claim easier for other people to pick up, whether it appears on a forum, in an arXiv comment, or here.</p>
+<ol><li>State the theorem exactly, with its definitions named.</li><li>Give the document a fixed identity: link and SHA-256 of the PDF.</li><li>List the papers, results, and prior claims you build on, with versions.</li><li>Say what you did not check, and which tools you used and for what.</li><li>Name the parts you consider risky.</li></ol>
+<p class="lbl">Copyable template</p><pre class="copy-status-text">Claim:
+Document URL:
+Document SHA-256:
+Builds on (with versions):
+I did not check:
+Tools used and purpose:
+Parts I consider risky:</pre></section>{% endblock %}

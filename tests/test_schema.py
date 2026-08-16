@@ -19,6 +19,7 @@ from significance.records import load_record, load_schema, validator
 REPO_ROOT = Path(__file__).resolve().parents[1]
 RECORDS_DIR = REPO_ROOT / "records"
 EXAMPLES_DIR = REPO_ROOT / "examples"
+DRAFTS_DIR = REPO_ROOT / "drafts" / "records"
 EXAMPLE_RECORD = EXAMPLES_DIR / "synthetic-ramsey-k7.yaml"
 BROKEN_DIR = REPO_ROOT / "tests" / "fixtures" / "broken"
 
@@ -34,7 +35,9 @@ def test_schema_forbids_additional_top_level_properties():
 
 @pytest.mark.parametrize(
     "record_path",
-    sorted(RECORDS_DIR.glob("*.yaml")) + sorted(EXAMPLES_DIR.glob("*.yaml")),
+    sorted(RECORDS_DIR.glob("*.yaml"))
+    + sorted(EXAMPLES_DIR.glob("*.yaml"))
+    + sorted(DRAFTS_DIR.glob("*.yaml")),
     ids=lambda p: p.name,
 )
 def test_example_records_are_valid(record_path):

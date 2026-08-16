@@ -1,6 +1,6 @@
 schema_version: 1
 record_id: 2026-openai-nonsofic-groups
-record_version: 6
+record_version: 8
 record_state: active
 
 freshness:
@@ -29,6 +29,13 @@ parties:
     verification_method:
       kind: automation
       identifier: "github-actions:hjyuh/significance"
+
+author_relationship:
+  status: public_sources_only
+  note: "Compiled from OpenAI's public release, manuscript, and repository. OpenAI did not participate in or confirm this Significance record."
+  basis: editorial_inference
+  asserted_by: significance-editor
+  asserted_at: "2026-08-11T12:00:00Z"
 
 claim:
   id: claim-main
@@ -145,7 +152,7 @@ evidence:
     kind: external_formal_artifact
     repo: "https://github.com/openai/ten-proofs"
     commit: "c510a55434c0935cde446e5a372699a4671438f6"
-    description: "OpenAI publishes NonSoficGroup.lean and a Comparator challenge targeting existence of a finitely presented non-sofic group. Significance has not yet attached an independent execution receipt."
+    description: "OpenAI published NonSoficGroup.lean and a Comparator challenge targeting existence of a finitely presented non-sofic group. At the time of this source-publication entry, Significance had not yet attached an independent execution receipt; the later formal-artifact entry records that reproduction."
     basis: source_quote
     asserted_by: openai
     asserted_at: "2026-08-01T13:57:00Z"
@@ -226,10 +233,8 @@ digestions:
       A group here is a set of reversible operations you can undo and combine.
       Soficity asks whether an infinite group can be imitated, to any accuracy
       you like, by shuffling a finite deck of cards: every product you can form
-      in the group is matched by a shuffle that agrees almost everywhere. Most
-      groups anyone writes down can be imitated this way, and for decades
-      nobody produced one that provably cannot. The manuscript names a
-      candidate: the reversible elements of a small algebra built from two
+      in the group is matched by a shuffle that agrees almost everywhere. The
+      manuscript names the reversible elements of a small algebra built from two
       symbols. Its claim is that no finite shuffle imitates this group well
       enough. What Significance holds is the artifacts around that claim -- the
       manuscript file, the formal code, the logs of rebuilding it -- not a
@@ -268,6 +273,10 @@ open_invitations:
       url: "https://github.com/hjyuh/significance/issues/new?template=invitation-response.yml"
     created_by: significance-editor
     created_at: "2026-08-01T13:57:00Z"
+    status: done
+    taken_by: significance-ci
+    taken_at: "2026-08-02T02:46:07Z"
+    done_ref: ev-lean-c510a55434c0935cde446e5a372699a4671438f6
   - kind: correspondence
     target: "Trace the declaration chain between manuscript Theorem 1.1 and the Comparator target exists_finitelyPresented_nonsofic_group."
     how: >-
@@ -331,3 +340,13 @@ history:
     at: "2026-08-07T00:00:00Z"
     by: significance-editor
     note: "Added a suggested accurate-wording sentence and French and Arabic translations of the plain-language summary. All restate material already in this record; the translations are drafted by the editor and carry the editor's name pending review by a fluent reader."
+  - id: evt-review-tightening
+    type: corrected
+    at: "2026-08-07T00:00:00Z"
+    by: significance-editor
+    note: "Clarified that the original external-artifact entry predates the independent receipt and removed unsupported historical context from the plain-language digestion. No claim or execution result changed."
+  - id: evt-author-relationship
+    type: metadata_added
+    at: "2026-08-11T12:00:00Z"
+    by: significance-editor
+    note: "Made the absence of author participation explicit and added derived review-coverage presentation; no claim or evidence entry changed."
