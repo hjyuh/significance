@@ -29,9 +29,15 @@ EVIDENCE_KINDS = [
     "mathematical_assessment",
 ]
 AI_ROLES = [
-    "problem_selection", "literature_search", "conjecture_generation",
-    "proof_generation", "criticism", "computation", "formalization",
-    "prose_editing", "candidate_generation",
+    "problem_selection",
+    "literature_search",
+    "conjecture_generation",
+    "proof_generation",
+    "criticism",
+    "computation",
+    "formalization",
+    "prose_editing",
+    "candidate_generation",
 ]
 
 
@@ -105,7 +111,8 @@ def _scaffold_parties(prompt_fn) -> dict:
         name_key = "pseudonym" if is_pseudonym else "name"
         name = _ask(prompt_fn, f"  {name_key}")
         vm_kind = _ask_choice(
-            prompt_fn, "  verification method",
+            prompt_fn,
+            "  verification method",
             ["github_identity", "orcid", "email_confirmation", "pseudonymous", "automation"],
         )
         identifier = _ask(prompt_fn, "  verification identifier", default="", required=False)
@@ -167,7 +174,8 @@ def _scaffold_evidence_item(prompt_fn, party_ids, index) -> dict:
         item["artifact_build"] = _scaffold_receipt(prompt_fn)
         item["axiom_policy"] = {
             "trust_profile": _ask_choice(
-                prompt_fn, "  axiom trust_profile",
+                prompt_fn,
+                "  axiom trust_profile",
                 ["lean_standard_classical", "lean_standard_classical_plus_native", "custom"],
             ),
             "allowlist": [
@@ -200,8 +208,10 @@ def _scaffold_evidence_item(prompt_fn, party_ids, index) -> dict:
         item["execution"] = _scaffold_receipt(prompt_fn)
 
     elif kind == "source_inspection":
-        item["description"] = _ask("What public sources or version facts were inspected?")
-        item.update(_attribution())
+        item["description"] = _ask(
+            prompt_fn, "What public sources or version facts were inspected?"
+        )
+        item.update(_ask_attribution(prompt_fn, party_ids, label="source inspection"))
     elif kind == "informal_review":
         item["reviewer"] = _ask_choice(prompt_fn, "  reviewer (party id)", party_ids)
         item["text"] = _ask(prompt_fn, "  review text")
@@ -225,7 +235,8 @@ def _scaffold_receipt(prompt_fn) -> dict:
         "tool": _ask(prompt_fn, "  execution tool"),
         "tool_version": _ask(prompt_fn, "  tool_version"),
         "runner_image_digest": _ask(
-            prompt_fn, "  runner_image_digest",
+            prompt_fn,
+            "  runner_image_digest",
             pattern=re.compile(r"^sha256:[a-f0-9]{64}$"),
         ),
         "executed_at": _ask(prompt_fn, "  executed_at", default=_now()),

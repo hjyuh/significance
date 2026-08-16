@@ -60,9 +60,11 @@ def test_build_produces_index_and_record_page(tmp_path):
         {
             "record_id": source["record_id"],
             "record_version": source["record_version"],
-                "record_state": source["record_state"],
-                "claim": source["claim"]["text"]["value"],
-                "claim_mathml": str(mathml(source["claim"].get("display_math", ""))) if source["claim"].get("display_math") else None,
+            "record_state": source["record_state"],
+            "claim": source["claim"]["text"]["value"],
+            "claim_mathml": str(mathml(source["claim"].get("display_math", "")))
+            if source["claim"].get("display_math")
+            else None,
             "claim_basis": source["claim"]["text"]["basis"],
             "claim_asserted_by": source["claim"]["text"]["asserted_by"],
             "freshness": source["freshness"]["result"],
@@ -154,7 +156,7 @@ def test_hostile_content_is_fully_escaped(tmp_path):
     assert "<img src=x onerror=" not in lower
 
     # The record contains several javascript: URLs; none may become a live link.
-    assert "href=\"javascript:" not in lower
+    assert 'href="javascript:' not in lower
     assert "javascript:alert" in html  # present, but only as escaped plain text
 
     # Math notation is shown as inert plain text, not interpreted.
@@ -244,8 +246,7 @@ def test_an_unconfigured_contact_address_produces_no_mailto(tmp_path):
     out = tmp_path / "site"
     config = tmp_path / "site.yaml"
     config.write_text(
-        'repository_url: "https://example.org/repo"\n'
-        'contact_email: "[FILL: maintainer address]"\n',
+        'repository_url: "https://example.org/repo"\ncontact_email: "[FILL: maintainer address]"\n',
         encoding="utf-8",
     )
     build_site(RECORDS_DIR, out, site_config=config)
@@ -261,8 +262,7 @@ def test_a_configured_contact_address_produces_a_templated_mailto(tmp_path):
     out = tmp_path / "site"
     config = tmp_path / "site.yaml"
     config.write_text(
-        'repository_url: "https://example.org/repo"\n'
-        'contact_email: "records@example.org"\n',
+        'repository_url: "https://example.org/repo"\ncontact_email: "records@example.org"\n',
         encoding="utf-8",
     )
     build_site(RECORDS_DIR, out, site_config=config)
@@ -298,7 +298,9 @@ def test_take_this_task_appears_only_where_instructions_exist(tmp_path):
     record = load_record(RECORDS_DIR / f"{PUBLIC_RECORD_ID}.yaml")
     with_how = [i for i in record["open_invitations"] if i.get("how")]
     assert len(with_how) == 3
-    assert page.count("Take this task") == sum(1 for i in with_how if i.get("status", "open") == "open")
+    assert page.count("Take this task") == sum(
+        1 for i in with_how if i.get("status", "open") == "open"
+    )
     assert "Report what you found" in page
 
 

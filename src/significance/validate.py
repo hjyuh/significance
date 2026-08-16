@@ -14,7 +14,12 @@ from ruamel.yaml import YAML
 from significance.boards import board_validator, board_violations, is_board
 from significance.records import load_record, validator
 from significance.schema_checks import schema_violations
-from significance.semantics import check_append_only, check_dependencies, check_uniqueness, semantic_violations
+from significance.semantics import (
+    check_append_only,
+    check_dependencies,
+    check_uniqueness,
+    semantic_violations,
+)
 from significance.violations import Violation
 
 _yaml = YAML(typ="safe")
@@ -110,7 +115,7 @@ def validate_paths(paths: list[str], base: str | None = None) -> list[Violation]
             v.file = file_str
         violations.extend(file_violations)
 
-    known_ids = {r.get('record_id') for _, r in loaded}
+    known_ids = {r.get("record_id") for _, r in loaded}
     for file_str, record in loaded:
         extra = check_dependencies(record, known_ids)
         # dependencies may refer forward to a sibling, so run after loading all files

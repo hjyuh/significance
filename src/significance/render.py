@@ -18,8 +18,8 @@ import hashlib
 import json
 import re
 import shutil
-from datetime import date, datetime
 from dataclasses import dataclass, field
+from datetime import date, datetime
 from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader
@@ -94,7 +94,7 @@ def readable_text(value: object) -> object:
     if not isinstance(value, str):
         return value
     shortened = short_hash(value)
-    return _URL_RE.sub(lambda match: match.group(0).split('/')[2] + "/…", shortened)
+    return _URL_RE.sub(lambda match: match.group(0).split("/")[2] + "/…", shortened)
 
 
 def mathml(latex: object) -> Markup:
@@ -352,7 +352,7 @@ def build_site(
         # rendered. A definition carrying a verdict would put it on every
         # page its term appears on, which is the widest blast radius of
         # anything in this build.
-        result_skipped_boards[str(glossary_path or _DATA_DIR / 'glossary.yaml')] = glossary_problems
+        result_skipped_boards[str(glossary_path or _DATA_DIR / "glossary.yaml")] = glossary_problems
         glossary = {}
 
     static_out = out_dir / "static"
@@ -369,7 +369,10 @@ def build_site(
             has_glossary=bool(glossary),
             has_orientation=bool(orientation),
             has_reviewers=True,
-            has_backlog=bool(backlog_enabled and len(all_record_files) >= int(config.get('backlog_min_records', 5))),
+            has_backlog=bool(
+                backlog_enabled
+                and len(all_record_files) >= int(config.get("backlog_min_records", 5))
+            ),
             has_intake=True,
         )
 
@@ -386,7 +389,11 @@ def build_site(
     for v in validate_paths([str(records_dir)]):
         violations_by_file.setdefault(v.file, []).append(v)
 
-    valid_records = [load_record(f) for f in collect_yaml_files([str(records_dir)]) if not violations_by_file.get(str(f))]
+    valid_records = [
+        load_record(f)
+        for f in collect_yaml_files([str(records_dir)])
+        if not violations_by_file.get(str(f))
+    ]
     cited_by: dict[str, list[dict]] = {}
     for source in valid_records:
         for dep in source.get("depends_on", []):
@@ -404,7 +411,9 @@ def build_site(
         for invitation in record.get("open_invitations", []):
             if invitation.get("status", "open") == "taken" and invitation.get("taken_at"):
                 try:
-                    taken = datetime.fromisoformat(invitation["taken_at"].replace("Z", "+00:00")).date()
+                    taken = datetime.fromisoformat(
+                        invitation["taken_at"].replace("Z", "+00:00")
+                    ).date()
                     invitation["_stale"] = (date.today() - taken).days > stale_days
                 except ValueError:
                     invitation["_stale"] = False
@@ -451,7 +460,10 @@ def build_site(
 
     # Intake standard: deliberately plain and copyable, generated with the same
     # static toolchain as records.
-    _write_page(pages_dir / "how-to-file-a-claim", env.get_template("intake.html.jinja").render(root_prefix=pages_prefix, links=pages_links))
+    _write_page(
+        pages_dir / "how-to-file-a-claim",
+        env.get_template("intake.html.jinja").render(root_prefix=pages_prefix, links=pages_links),
+    )
     result.pages.append("how-to-file-a-claim")
 
     if orientation:
@@ -485,48 +497,118 @@ def build_site(
     # the page only exists for people with volume.
     reviewer_map["significance-editor"] = {"id": "significance-editor", "records": []}
     for record in built_records:
-        rid = record["record_id"]
         for a in record.get("attestations", []):
             who = a.get("reviewer") or a.get("asserted_by")
-            if who: reviewer_map.setdefault(who, {"id": who, "records": []})["records"].append({"record": record, "entry": a, "kind": "attestation"})
+            if who:
+                reviewer_map.setdefault(who, {"id": who, "records": []})["records"].append(
+                    {"record": record, "entry": a, "kind": "attestation"}
+                )
         for ev in record.get("evidence", []):
             who = ev.get("reviewer") or ev.get("asserted_by")
             if who and ev.get("kind") in {"informal_review", "mathematical_assessment"}:
                 entry = dict(ev)
-                if not entry.get("stratum") and (record.get("parties", {}).get(who, {}).get("verification_method", {}).get("kind") == "automation"):
+                if not entry.get("stratum") and (
+                    record.get("parties", {})
+                    .get(who, {})
+                    .get("verification_method", {})
+                    .get("kind")
+                    == "automation"
+                ):
                     entry["stratum"] = "machine"
-                reviewer_map.setdefault(who, {"id": who, "records": []})["records"].append({"record": record, "entry": entry, "kind": "evidence"})
+                reviewer_map.setdefault(who, {"id": who, "records": []})["records"].append(
+                    {"record": record, "entry": entry, "kind": "evidence"}
+                )
         for oi in record.get("open_invitations", []):
             who = oi.get("taken_by")
             if who:
                 entry = dict(oi)
-                entry.setdefault("stratum", "machine" if record.get("parties", {}).get(who, {}).get("verification_method", {}).get("kind") == "automation" else "community")
-                reviewer_map.setdefault(who, {"id": who, "records": []})["records"].append({"record": record, "entry": entry, "kind": "task"})
+                entry.setdefault(
+                    "stratum",
+                    "machine"
+                    if record.get("parties", {})
+                    .get(who, {})
+                    .get("verification_method", {})
+                    .get("kind")
+                    == "automation"
+                    else "community",
+                )
+                reviewer_map.setdefault(who, {"id": who, "records": []})["records"].append(
+                    {"record": record, "entry": entry, "kind": "task"}
+                )
     for row in reviewer_map.values():
-        party = next((r.get("parties", {}).get(row["id"]) for r in built_records if row["id"] in r.get("parties", {})), None)
+        party = next(
+            (
+                r.get("parties", {}).get(row["id"])
+                for r in built_records
+                if row["id"] in r.get("parties", {})
+            ),
+            None,
+        )
         if party and party.get("affiliation"):
             row["affiliation"] = party["affiliation"]
     reviewer_rows = sorted(reviewer_map.values(), key=lambda x: x["id"].lower())
-    _write_page(pages_dir / "reviewers", env.get_template("reviewers.html.jinja").render(reviewers=reviewer_rows, root_prefix=pages_prefix, links=pages_links))
+    _write_page(
+        pages_dir / "reviewers",
+        env.get_template("reviewers.html.jinja").render(
+            reviewers=reviewer_rows, root_prefix=pages_prefix, links=pages_links
+        ),
+    )
     result.pages.append("reviewers")
     for reviewer in reviewer_rows:
-        _write_page(pages_dir / "reviewers" / reviewer["id"], env.get_template("reviewer.html.jinja").render(reviewer=reviewer, root_prefix=("/records/" if deployed else "../../"), links=pages_links))
+        _write_page(
+            pages_dir / "reviewers" / reviewer["id"],
+            env.get_template("reviewer.html.jinja").render(
+                reviewer=reviewer,
+                root_prefix=("/records/" if deployed else "../../"),
+                links=pages_links,
+            ),
+        )
         result.pages.append(f"reviewer:{reviewer['id']}")
 
     if backlog_enabled and len(built_records) >= int(config.get("backlog_min_records", 5)):
         today = date.today()
         rows = []
         for record in built_records:
-            if record.get("record_state") != "active": continue
+            if record.get("record_state") != "active":
+                continue
             dates = [record.get("manuscript", {}).get("retrieved_at", "")[:10]]
-            for a in record.get("attestations", []): dates.append(a.get("asserted_at", "")[:10])
-            for e in record.get("evidence", []): dates.append(e.get("asserted_at", "")[:10])
-            for i in record.get("open_invitations", []): dates.append(i.get("taken_at", "")[:10] or i.get("created_at", "")[:10])
+            for a in record.get("attestations", []):
+                dates.append(a.get("asserted_at", "")[:10])
+            for e in record.get("evidence", []):
+                dates.append(e.get("asserted_at", "")[:10])
+            for i in record.get("open_invitations", []):
+                dates.append(i.get("taken_at", "")[:10] or i.get("created_at", "")[:10])
             dates = [d for d in dates if d]
             last = max(dates) if dates else today.isoformat()
-            rows.append({"record": record, "last": last, "days": (today - date.fromisoformat(last)).days, "open": sum(1 for i in record.get("open_invitations", []) if i.get("status", "open") == "open"), "taken": sum(1 for i in record.get("open_invitations", []) if i.get("status") == "taken"), "reviewers": len({a.get("reviewer") or a.get("asserted_by") for a in record.get("attestations", []) if a.get("reviewer") or a.get("asserted_by")})})
+            rows.append(
+                {
+                    "record": record,
+                    "last": last,
+                    "days": (today - date.fromisoformat(last)).days,
+                    "open": sum(
+                        1
+                        for i in record.get("open_invitations", [])
+                        if i.get("status", "open") == "open"
+                    ),
+                    "taken": sum(
+                        1 for i in record.get("open_invitations", []) if i.get("status") == "taken"
+                    ),
+                    "reviewers": len(
+                        {
+                            a.get("reviewer") or a.get("asserted_by")
+                            for a in record.get("attestations", [])
+                            if a.get("reviewer") or a.get("asserted_by")
+                        }
+                    ),
+                }
+            )
         rows.sort(key=lambda x: x["days"], reverse=True)
-        _write_page(pages_dir / "backlog", env.get_template("backlog.html.jinja").render(rows=rows, root_prefix=pages_prefix, links=pages_links))
+        _write_page(
+            pages_dir / "backlog",
+            env.get_template("backlog.html.jinja").render(
+                rows=rows, root_prefix=pages_prefix, links=pages_links
+            ),
+        )
         result.pages.append("backlog")
 
     # A board page sits two directories below its root (boards/<id>/), so its
@@ -540,9 +622,7 @@ def build_site(
         # produce a valid link.
         record_links = {
             row["id"]: (
-                f"/records/{row['record']}/"
-                if deployed
-                else f"../../{row['record']}/index.html"
+                f"/records/{row['record']}/" if deployed else f"../../{row['record']}/index.html"
             )
             for row in board["rows"]
             if row.get("record")
@@ -582,7 +662,9 @@ def build_site(
             "record_version": record["record_version"],
             "record_state": record["record_state"],
             "claim": record["claim"]["text"]["value"],
-            "claim_mathml": str(mathml(record["claim"].get("display_math", ""))) if record["claim"].get("display_math") else None,
+            "claim_mathml": str(mathml(record["claim"].get("display_math", "")))
+            if record["claim"].get("display_math")
+            else None,
             "claim_basis": record["claim"]["text"]["basis"],
             "claim_asserted_by": record["claim"]["text"]["asserted_by"],
             "freshness": record.get("freshness", {}).get("result", "unknown"),

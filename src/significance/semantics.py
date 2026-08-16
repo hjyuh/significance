@@ -51,23 +51,59 @@ _VERDICT_WORDS = ("correct", "incorrect", "true", "false", "proven", "verified",
 # fluently produces false refusals nobody present can adjudicate.
 _VERDICT_WORDS_BY_LANG = {
     "fr": (
-        "correct", "correcte", "corrects", "correctes",
-        "exact", "exacte", "exacts", "exactes",
-        "vrai", "vraie", "vrais", "vraies",
-        "faux", "fausse", "fausses",
-        "prouvé", "prouvée", "prouvés", "prouvées",
-        "démontré", "démontrée", "démontrés", "démontrées",
-        "vérifié", "vérifiée", "vérifiés", "vérifiées",
-        "réfuté", "réfutée", "réfutés", "réfutées",
-        "valide", "valides", "invalide", "invalides",
+        "correct",
+        "correcte",
+        "corrects",
+        "correctes",
+        "exact",
+        "exacte",
+        "exacts",
+        "exactes",
+        "vrai",
+        "vraie",
+        "vrais",
+        "vraies",
+        "faux",
+        "fausse",
+        "fausses",
+        "prouvé",
+        "prouvée",
+        "prouvés",
+        "prouvées",
+        "démontré",
+        "démontrée",
+        "démontrés",
+        "démontrées",
+        "vérifié",
+        "vérifiée",
+        "vérifiés",
+        "vérifiées",
+        "réfuté",
+        "réfutée",
+        "réfutés",
+        "réfutées",
+        "valide",
+        "valides",
+        "invalide",
+        "invalides",
     ),
     "ar": (
-        "صحيح", "صحيحة", "صحيحان",
-        "خطأ", "خاطئ", "خاطئة",
-        "مثبت", "مثبتة", "مبرهن", "مبرهنة",
-        "مؤكد", "مؤكدة",
-        "مفند", "مفندة",
-        "سليم", "سليمة",
+        "صحيح",
+        "صحيحة",
+        "صحيحان",
+        "خطأ",
+        "خاطئ",
+        "خاطئة",
+        "مثبت",
+        "مثبتة",
+        "مبرهن",
+        "مبرهنة",
+        "مؤكد",
+        "مؤكدة",
+        "مفند",
+        "مفندة",
+        "سليم",
+        "سليمة",
     ),
 }
 
@@ -379,6 +415,7 @@ def check_invitation_instructions(record: dict) -> list[Violation]:
             )
     return violations
 
+
 def check_invitation_state(record: dict) -> list[Violation]:
     violations = []
     evidence_ids = {e.get("id") for e in record.get("evidence") or [] if isinstance(e, dict)}
@@ -390,12 +427,31 @@ def check_invitation_state(record: dict) -> list[Violation]:
         path = f"open_invitations[{i}]"
         if status == "taken":
             if not invitation.get("taken_by"):
-                violations.append(Violation("taken-without-who", "taken invitation requires taken_by", path + ".taken_by"))
+                violations.append(
+                    Violation(
+                        "taken-without-who",
+                        "taken invitation requires taken_by",
+                        path + ".taken_by",
+                    )
+                )
             if not invitation.get("taken_at"):
-                violations.append(Violation("taken-without-date", "taken invitation requires taken_at", path + ".taken_at"))
+                violations.append(
+                    Violation(
+                        "taken-without-date",
+                        "taken invitation requires taken_at",
+                        path + ".taken_at",
+                    )
+                )
         if status == "done" and invitation.get("done_ref") not in evidence_ids | attestation_ids:
-            violations.append(Violation("done-without-ref", "done invitation requires done_ref resolving to evidence or attestation", path + ".done_ref"))
+            violations.append(
+                Violation(
+                    "done-without-ref",
+                    "done invitation requires done_ref resolving to evidence or attestation",
+                    path + ".done_ref",
+                )
+            )
     return violations
+
 
 def check_review_notes(record: dict) -> list[Violation]:
     violations = []
@@ -405,11 +461,18 @@ def check_review_notes(record: dict) -> list[Violation]:
             violations.extend(verdict_violations(note, f"attestations[{i}].review_note"))
     return violations
 
+
 def check_dependencies(record: dict, known_ids: set[str] | None = None) -> list[Violation]:
     known_ids = known_ids or set()
-    return [Violation("depends-on-unknown-record", f"dependency references unknown record '{d['record']}'", f"depends_on[{i}].record")
-            for i, d in enumerate(record.get("depends_on") or [])
-            if isinstance(d, dict) and d.get("record") and d["record"] not in known_ids]
+    return [
+        Violation(
+            "depends-on-unknown-record",
+            f"dependency references unknown record '{d['record']}'",
+            f"depends_on[{i}].record",
+        )
+        for i, d in enumerate(record.get("depends_on") or [])
+        if isinstance(d, dict) and d.get("record") and d["record"] not in known_ids
+    ]
 
 
 def check_freshness_recomputation(record: dict) -> list[Violation]:
@@ -445,8 +508,13 @@ def check_freshness_recomputation(record: dict) -> list[Violation]:
 
 
 _EXECUTION_RECEIPT_KEYS = {
-    "tool", "tool_version", "runner_image_digest", "executed_at",
-    "result", "log_sha256", "asserted_by",
+    "tool",
+    "tool_version",
+    "runner_image_digest",
+    "executed_at",
+    "result",
+    "log_sha256",
+    "asserted_by",
 }
 
 
@@ -542,9 +610,7 @@ def check_append_only(current: dict, base: dict) -> list[Violation]:
         cur_event = cur_events[event_id]
         if cur_event != base_event:
             changed = sorted(
-                k
-                for k in set(base_event) | set(cur_event)
-                if base_event.get(k) != cur_event.get(k)
+                k for k in set(base_event) | set(cur_event) if base_event.get(k) != cur_event.get(k)
             )
             violations.append(
                 Violation(
