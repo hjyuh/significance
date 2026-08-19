@@ -75,7 +75,7 @@ def main(argv: list[str] | None = None) -> int:
             "egress_attempts_after_denial": network_attempts,
         },
         "resource_limits": {
-            "cpu_enforced": True,   # structural: --cpus
+            "cpu_enforced": True,  # structural: --cpus
             "memory_enforced": True,  # structural: --memory
             "pids_enforced": True,  # structural: --pids-limit
             "disk_enforced": not disk_violation,

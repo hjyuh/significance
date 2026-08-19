@@ -101,6 +101,18 @@ terms:
       A bounded task nobody has done yet, named in the record so that somebody
       else can pick it up.
 
+  - slug: review-map
+    term: "review map"
+    definition: >-
+      The short, attributed guide at the top of a record that says where to
+      begin, what looks delicate, and what background a reader needs.
+
+  - slug: needs-checking
+    term: "needs checking"
+    definition: >-
+      A specific paper passage a reader has suggested examining, with a reason
+      and a version of the source attached.
+
   - slug: digestion
     term: "digestion"
     definition: >-

@@ -1,0 +1,52 @@
+name: Suggest a focused check
+description: Point a reader to one passage that needs independent attention.
+title: "Needs checking: "
+labels: ["needs-checking"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Keep this small and specific. Name one record, one paper location,
+        and why the step deserves attention. This is a reading request, not a
+        verdict or a score.
+
+  - type: input
+    id: record
+    attributes:
+      label: Record
+      placeholder: 2026-author-topic
+    validations:
+      required: true
+
+  - type: input
+    id: location
+    attributes:
+      label: Paper location
+      description: Theorem, lemma, equation, section, or page.
+      placeholder: Theorem 1.1, Section 3, pages 4–6
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-needs-checking
+    attributes:
+      label: What should be checked?
+      description: One concrete step or dependency.
+    validations:
+      required: true
+
+  - type: textarea
+    id: why
+    attributes:
+      label: Why does this matter?
+      description: Explain why this is a useful entry point for a reader.
+    validations:
+      required: true
+
+  - type: input
+    id: revision
+    attributes:
+      label: Source version or hash
+      description: Link the exact manuscript version if possible.
+    validations:
+      required: true

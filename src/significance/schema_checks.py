@@ -24,8 +24,13 @@ _ATTRIBUTION_FIELDS = {"basis", "asserted_by", "asserted_at"}
 _ATTRIBUTED_VALUE_REQUIRED = frozenset({"value", "basis", "asserted_by", "asserted_at"})
 _EXECUTION_RECEIPT_REQUIRED = frozenset(
     {
-        "tool", "tool_version", "runner_image_digest", "executed_at",
-        "result", "log_sha256", "asserted_by",
+        "tool",
+        "tool_version",
+        "runner_image_digest",
+        "executed_at",
+        "result",
+        "log_sha256",
+        "asserted_by",
     }
 )
 _MANUSCRIPT_REQUIRED = frozenset({"url", "label", "sha256", "retrieved_at"})
@@ -48,9 +53,7 @@ def classify(error) -> Violation:
                 location,
             )
         if path and path[-1] == "correspondence" and prop == "basis":
-            return Violation(
-                "correspondence-unattested", "correspondence has no basis", location
-            )
+            return Violation("correspondence-unattested", "correspondence has no basis", location)
         if required_set == _ATTRIBUTED_VALUE_REQUIRED or prop in _ATTRIBUTION_FIELDS:
             return Violation(
                 "unattributed-assertion",

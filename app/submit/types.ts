@@ -80,6 +80,16 @@ export interface AiRoleDraft {
   locator?: LocatorDraft;
 }
 
+export interface ReviewMapEntryDraft {
+  text: string;
+  location: string;
+  pointer: string;
+  reason: string;
+  basis: Basis;
+  assertedBy: string;
+  locator?: LocatorDraft;
+}
+
 export interface WizardState {
   submitterRole: SubmitterRole | null;
   submitterPartyId: string;
@@ -94,6 +104,13 @@ export interface WizardState {
   evidence: EvidenceDraft[];
   aiDisclosure: AttributedDraft;
   aiRoles: AiRoleDraft[];
+  readerSummary: AttributedDraft;
+  checkedSummary: AttributedDraft;
+  notCheckedSummary: AttributedDraft;
+  mainDeduction: ReviewMapEntryDraft;
+  riskPoints: ReviewMapEntryDraft[];
+  prerequisites: ReviewMapEntryDraft[];
+  needsChecking: ReviewMapEntryDraft[];
 }
 
 export const AI_PROVENANCE_ROLES = [
@@ -103,6 +120,10 @@ export const AI_PROVENANCE_ROLES = [
 ] as const;
 
 export const EMPTY_ATTRIBUTED: AttributedDraft = { value: "", basis: "editorial_inference", assertedBy: "" };
+
+export const EMPTY_REVIEW_ENTRY: ReviewMapEntryDraft = {
+  text: "", location: "", pointer: "", reason: "", basis: "editorial_inference", assertedBy: "",
+};
 
 export function emptyWizardState(): WizardState {
   return {
@@ -119,5 +140,12 @@ export function emptyWizardState(): WizardState {
     evidence: [],
     aiDisclosure: { ...EMPTY_ATTRIBUTED },
     aiRoles: [],
+    readerSummary: { ...EMPTY_ATTRIBUTED },
+    checkedSummary: { ...EMPTY_ATTRIBUTED },
+    notCheckedSummary: { ...EMPTY_ATTRIBUTED },
+    mainDeduction: { ...EMPTY_REVIEW_ENTRY },
+    riskPoints: [],
+    prerequisites: [],
+    needsChecking: [],
   };
 }

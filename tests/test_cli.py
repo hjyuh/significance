@@ -21,9 +21,7 @@ def test_validate_clean_record_exits_zero(capsys):
 
 
 def test_validate_broken_record_exits_one_with_json(capsys):
-    code = main(
-        ["validate", str(BROKEN_DIR / "missing-manuscript-hash.yaml"), "--json"]
-    )
+    code = main(["validate", str(BROKEN_DIR / "missing-manuscript-hash.yaml"), "--json"])
     out = capsys.readouterr().out
     assert code == 1
     report = json.loads(out)

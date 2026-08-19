@@ -12,6 +12,13 @@ You can also write the YAML by hand against `schema/record.schema.json`
 (see `significance init` for a guided CLI scaffold) and open the PR
 yourself. Whichever path you take, the same review checklist applies.
 
+For authors, the wizard's reviewer-map step is especially useful: name the main
+deduction, the steps you consider most delicate, the background a reader needs,
+and the passages you most want independently examined. Those answers become
+attributed `review_map` entries. Readers can propose an additional anchored
+need through the record page's "Suggest another focused check" link; it is
+merged only as an attributed pull request.
+
 ## Are you an author, or recording someone else's work?
 
 This distinction matters and the wizard asks it up front (see the

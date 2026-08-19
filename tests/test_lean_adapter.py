@@ -33,15 +33,19 @@ def _load(path: Path) -> dict:
 def _ingest_from_fixture(name: str, source_root: Path | None = None):
     d = FIXTURES / name
     isolation_evidence = _load(d / "isolation-evidence.json")
-    build_receipt = _load(d / "build-receipt.json") if (d / "build-receipt.json").exists() else {
-        "tool": "significance-lean",
-        "tool_version": "0.1.0",
-        "runner_image_digest": "sha256:" + "0" * 64,
-        "executed_at": "2026-07-31T00:00:00Z",
-        "result": "failed",
-        "log_sha256": "0" * 64,
-        "asserted_by": "significance-ci",
-    }
+    build_receipt = (
+        _load(d / "build-receipt.json")
+        if (d / "build-receipt.json").exists()
+        else {
+            "tool": "significance-lean",
+            "tool_version": "0.1.0",
+            "runner_image_digest": "sha256:" + "0" * 64,
+            "executed_at": "2026-07-31T00:00:00Z",
+            "result": "failed",
+            "log_sha256": "0" * 64,
+            "asserted_by": "significance-ci",
+        }
+    )
     axiom_execution_path = d / "axiom-execution.json"
     axiom_execution = (
         _load(axiom_execution_path) if axiom_execution_path.exists() else dict(build_receipt)

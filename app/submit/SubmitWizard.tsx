@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import type { AiRoleDraft, AttributedDraft, Basis, EvidenceDraft, LocatorDraft, PartyDraft, VerificationKind, WizardState } from "./types";
-import { AI_PROVENANCE_ROLES, emptyWizardState } from "./types";
+import type { AiRoleDraft, AttributedDraft, Basis, EvidenceDraft, LocatorDraft, PartyDraft, ReviewMapEntryDraft, VerificationKind, WizardState } from "./types";
+import { AI_PROVENANCE_ROLES, EMPTY_REVIEW_ENTRY, emptyWizardState } from "./types";
 import { buildRecord, recordToYaml } from "./build-yaml";
 import { validateAgainstSchema } from "./schema-validate";
 import { runIntraRecordChecks } from "./intra-record-checks";
@@ -11,7 +11,7 @@ import { buildMailtoUrl, buildPrComposeUrl, triggerYamlDownload } from "./github
 import { computeThirdPartyAttestationGaps } from "./attestation-gaps";
 import { isSubmissionReady } from "./submission-readiness";
 
-const STEPS = ["role", "claim", "manuscript", "parties", "evidence", "provenance", "review"] as const;
+const STEPS = ["role", "claim", "manuscript", "review_map", "parties", "evidence", "provenance", "review"] as const;
 type Step = (typeof STEPS)[number];
 
 const BASIS_OPTIONS: Basis[] = ["source_quote", "author_attestation", "editorial_inference"];
@@ -24,6 +24,7 @@ const STEP_LABELS: Record<Step, string> = {
   parties: "People",
   evidence: "Evidence",
   provenance: "AI use",
+  review_map: "Reviewer map",
   review: "Review",
 };
 
@@ -142,6 +143,30 @@ function AttributedFields({
   );
 }
 
+function ReviewEntryFields({
+  label, entry, onChange, thirdPartyLocked, allowReason,
+}: {
+  label: string;
+  entry: ReviewMapEntryDraft;
+  onChange: (next: ReviewMapEntryDraft) => void;
+  thirdPartyLocked: boolean;
+  allowReason?: boolean;
+}) {
+  const needsLocator = needsLocatorFor(entry.basis, thirdPartyLocked);
+  return (
+    <fieldset className="wizard-fieldset">
+      <legend>{label}</legend>
+      <label>What should a reader examine? <textarea value={entry.text} onChange={(e) => onChange({ ...entry, text: e.target.value })} /></label>
+      <label>Paper location <input value={entry.location} onChange={(e) => onChange({ ...entry, location: e.target.value })} placeholder="e.g. Theorem 1.1, Section 3" /></label>
+      <label>Pointer or prerequisite <input value={entry.pointer} onChange={(e) => onChange({ ...entry, pointer: e.target.value })} /></label>
+      {allowReason ? <label>Why does this matter? <input value={entry.reason} onChange={(e) => onChange({ ...entry, reason: e.target.value })} /></label> : null}
+      <label>Who is asserting this? <input value={entry.assertedBy} onChange={(e) => onChange({ ...entry, assertedBy: e.target.value })} /></label>
+      <label>Basis<select value={entry.basis} onChange={(e) => onChange({ ...entry, basis: e.target.value as Basis })}>{BASIS_OPTIONS.map((b) => <option key={b} value={b}>{BASIS_LABELS[b]}</option>)}</select></label>
+      {needsLocator ? <LocatorFields basis={entry.basis} locator={entry.locator} onChange={(next) => onChange({ ...entry, locator: next })} /> : null}
+    </fieldset>
+  );
+}
+
 export default function SubmitWizard() {
   const [step, setStep] = useState<Step>("role");
   const [state, setState] = useState<WizardState>(emptyWizardState());
@@ -153,6 +178,24 @@ export default function SubmitWizard() {
   const goBack = () => setStep(STEPS[Math.max(stepIndex - 1, 0)]);
 
   const thirdParty = state.submitterRole === "third_party";
+
+  function chooseSubmitterRole(role: "author" | "third_party") {
+    setState((s) => {
+      if (role !== "author") return { ...s, submitterRole: role };
+      const authorBasis = <T extends { basis: Basis }>(entry: T): T => ({ ...entry, basis: "author_attestation" });
+      return {
+        ...s,
+        submitterRole: role,
+        readerSummary: authorBasis(s.readerSummary),
+        checkedSummary: authorBasis(s.checkedSummary),
+        notCheckedSummary: authorBasis(s.notCheckedSummary),
+        mainDeduction: authorBasis(s.mainDeduction),
+        riskPoints: s.riskPoints.map(authorBasis),
+        prerequisites: s.prerequisites.map(authorBasis),
+        needsChecking: s.needsChecking.map(authorBasis),
+      };
+    });
+  }
 
   function addParty() {
     const id: PartyDraft = {
@@ -254,10 +297,10 @@ export default function SubmitWizard() {
             correspondence must always include a link or other precise reference.
           </p>
           <div className="wizard-choice-row">
-            <button type="button" onClick={() => setState((s) => ({ ...s, submitterRole: "author" }))} aria-pressed={state.submitterRole === "author"}>
+            <button type="button" onClick={() => chooseSubmitterRole("author")} aria-pressed={state.submitterRole === "author"}>
               I am an author
             </button>
-            <button type="button" onClick={() => setState((s) => ({ ...s, submitterRole: "third_party" }))} aria-pressed={state.submitterRole === "third_party"}>
+            <button type="button" onClick={() => chooseSubmitterRole("third_party")} aria-pressed={state.submitterRole === "third_party"}>
               I&apos;m recording someone else&apos;s work
             </button>
           </div>
@@ -295,6 +338,20 @@ export default function SubmitWizard() {
             File fingerprint (SHA-256) {" "}
             <input value={state.manuscriptSha256} onChange={(e) => setState((s) => ({ ...s, manuscriptSha256: e.target.value }))} placeholder="Pick a file above, or paste a known hash" />
           </label>
+        </section>
+      ) : null}
+
+      {step === "review_map" ? (
+        <section className="wizard-section">
+          <h2>What should a reviewer do with this paper?</h2>
+          <p className="wizard-hint">These answers become the record&apos;s “Start here” section. Authors are the best source for delicate steps; readers can add further needs later.</p>
+          <AttributedFields label="One sentence for a general reader" draft={state.readerSummary} onChange={(v) => setState((s) => ({ ...s, readerSummary: v }))} thirdPartyLocked={thirdParty} />
+          <AttributedFields label="What has been checked so far" draft={state.checkedSummary} onChange={(v) => setState((s) => ({ ...s, checkedSummary: v }))} thirdPartyLocked={thirdParty} />
+          <AttributedFields label="What remains open" draft={state.notCheckedSummary} onChange={(v) => setState((s) => ({ ...s, notCheckedSummary: v }))} thirdPartyLocked={thirdParty} />
+          <ReviewEntryFields label="Main deduction" entry={state.mainDeduction} onChange={(v) => setState((s) => ({ ...s, mainDeduction: v }))} thirdPartyLocked={thirdParty} />
+          <ReviewEntryFields label="Most delicate step or risk" entry={state.riskPoints[0] ?? EMPTY_REVIEW_ENTRY} onChange={(v) => setState((s) => ({ ...s, riskPoints: [v] }))} thirdPartyLocked={thirdParty} allowReason />
+          <ReviewEntryFields label="Background a reviewer needs" entry={state.prerequisites[0] ?? EMPTY_REVIEW_ENTRY} onChange={(v) => setState((s) => ({ ...s, prerequisites: [v] }))} thirdPartyLocked={thirdParty} />
+          <ReviewEntryFields label="Optional: a specific thing that needs checking" entry={state.needsChecking[0] ?? EMPTY_REVIEW_ENTRY} onChange={(v) => setState((s) => ({ ...s, needsChecking: [v] }))} thirdPartyLocked={thirdParty} allowReason />
         </section>
       ) : null}
 

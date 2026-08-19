@@ -1,0 +1,215 @@
+schema_version: 1
+record_id: 2026-rafikzeraoulia-erdos-653
+record_version: 2
+record_state: active
+draft: false
+
+freshness:
+  result: current
+  observed_source_version: "zenodo-21858673-v1"
+  confirmed_source_version: "zenodo-21858673-v1"
+  checked_at: "2026-08-16T15:19:21Z"
+
+parties:
+  rafikzeraoulia2025:
+    pseudonym: "Rafikzeraoulia2025"
+    verification_method:
+      kind: pseudonymous
+      identifier: "https://www.erdosproblems.com/forum/user/Rafikzeraoulia2025"
+  significance-editor:
+    pseudonym: "Significance editor"
+    verification_method:
+      kind: pseudonymous
+      identifier: "significance-project"
+
+author_relationship:
+  status: author_confirmed_description
+  note: >-
+    Rafik Zeraoulia reviewed and approved the claim description, source
+    version, hash, and reviewer map by correspondence on 2026-08-18.
+  basis: author_attestation
+  asserted_by: rafikzeraoulia2025
+  asserted_at: "2026-08-18T05:08:00Z"
+  locator:
+    url: "https://www.erdosproblems.com/forum/thread/653/proof-claims"
+
+claim:
+  id: claim-main
+  display_math: >-
+    g(n) \le n-1-c_\varepsilon n^{0.81668-\varepsilon}.
+  text:
+    value: >-
+      The manuscript gives a partial result toward Erdős Problem #653,
+      proving an improved upper bound
+      g(n) ≤ n − 1 − cε n^(0.81668−ε).
+    basis: author_attestation
+    asserted_by: rafikzeraoulia2025
+    asserted_at: "2026-08-18T05:08:00Z"
+  scope:
+    value: "This is a partial result, not a resolution of Erdős Problem #653."
+    basis: author_attestation
+    asserted_by: rafikzeraoulia2025
+    asserted_at: "2026-08-18T05:08:00Z"
+
+plain_summary:
+  claimed: >-
+    The manuscript gives a partial result, not a resolution: it reports an
+    improved upper bound for the distance-count function in Erdős Problem #653.
+  checked: >-
+    Significance fetched the proof-claim page and its linked Zenodo PDF, checked
+    the Zenodo version metadata, and computed the PDF SHA-256 hash recorded here.
+  not_checked: >-
+    Significance has not independently checked the restricted-center incidence
+    argument, the conversion to missing distance-count values, or the exponent
+    calculation. Independent verification remains open.
+  basis: digest
+  asserted_by: significance-editor
+  asserted_at: "2026-08-16T15:19:21Z"
+
+manuscript:
+  url: "https://zenodo.org/records/21858673/files/Centered_Circle_Incidence_Bounds_Planar_Distance_Count_Spectra.pdf?download=1"
+  label: "Centered-circle incidence bounds for planar distance-count spectra"
+  immutable_version_id: "zenodo-21858673-v1"
+  sha256: "a87ca77b143fd6382ce3882fbef2320c3d037ed92d4128fe078689784bfc4147"
+  retrieved_at: "2026-08-16T15:19:21Z"
+
+evidence:
+  - id: ev-source-inspection
+    kind: source_inspection
+    description: >-
+      Significance fetched the queued proof-claim page, followed its direct
+      Zenodo manuscript link, confirmed the public v1 metadata, and computed
+      the PDF hash above. The page exposed no formal artifact and no substantive
+      review comment about this claim.
+    basis: machine_result
+    asserted_by: significance-editor
+    asserted_at: "2026-08-16T15:19:21Z"
+    locator:
+      url: "https://www.erdosproblems.com/forum/thread/653/proof-claims"
+
+ai_provenance:
+  disclosure:
+    value: "The proof claim is submitted as using OpenAI GPT-5.6 Thinking."
+    basis: source_quote
+    asserted_by: rafikzeraoulia2025
+    asserted_at: "2026-08-09T07:42:33Z"
+    locator:
+      url: "https://www.erdosproblems.com/forum/thread/653/proof-claims"
+      quote: "A partial proof claimed by Rafik Zeraoulia (using OpenAI GPT-5.6 Thinking)."
+  roles:
+    - role: proof_generation
+      model: "OpenAI GPT-5.6 Thinking"
+      basis: source_quote
+      asserted_by: rafikzeraoulia2025
+      locator:
+        url: "https://www.erdosproblems.com/forum/thread/653/proof-claims"
+
+review_map:
+  main_deduction:
+    text: >-
+      Follow the improved upper bound from the restricted-center point-circle
+      incidence argument to the missing distance-count values and exponent.
+    location: "Theorem 1.1, Proposition 2.1, and Section 3"
+    pointer: "The restricted-center incidence argument is the most delicate starting point."
+    basis: author_attestation
+    asserted_by: rafikzeraoulia2025
+    asserted_at: "2026-08-18T05:08:00Z"
+  risks:
+    - text: >-
+        The delicate step is whether the selected low-R centers and their
+        circle family satisfy every hypothesis of the restricted-center
+        incidence theorem.
+      location: "Theorem 2.2 and its use in Section 3"
+      basis: author_attestation
+      asserted_by: rafikzeraoulia2025
+      asserted_at: "2026-08-18T05:08:00Z"
+    - text: >-
+        The exponent improvement depends on the parameter bookkeeping surviving
+        the passage from the incidence terms to beta(alpha) and theta.
+      location: "Section 3, final optimization"
+      basis: author_attestation
+      asserted_by: rafikzeraoulia2025
+      asserted_at: "2026-08-18T05:08:00Z"
+  prerequisites:
+    - text: "Basic point-circle incidence bounds and the pinned-distance definitions used in the problem statement."
+      pointer: "Theorem 2.2 and the definitions preceding Proposition 2.1"
+      basis: author_attestation
+      asserted_by: rafikzeraoulia2025
+      asserted_at: "2026-08-18T05:08:00Z"
+  needs_checking:
+    - text: "Verify the stated incidence hypotheses before spending time on the exponent algebra."
+      location: "Theorem 2.2 application"
+      reason: "A failure here would affect the main deduction."
+      basis: author_attestation
+      asserted_by: rafikzeraoulia2025
+      asserted_at: "2026-08-18T05:08:00Z"
+
+digestions:
+  - audience: general_mathematician
+    kind: plain_language
+    stratum: editor
+    text: >-
+      This record is a review map, not a substitute for the manuscript: it
+      identifies the exact claim, source version, and bounded open tasks so a
+      reader can decide whether to inspect a particular passage. The paper's
+      stated theorem is on the upper-bound side, while Problem #653 asks for a
+      near-linear lower bound; those directions must not be blended.
+    basis: editorial_inference
+    asserted_by: significance-editor
+    source_claims: [claim-main]
+  - audience: non_specialist
+    kind: plain_language
+    stratum: editor
+    text: >-
+      This page records what the author claims and what Significance checked
+      about the source file. It does not explain or judge the proof.
+    basis: editorial_inference
+    asserted_by: significance-editor
+    source_claims: [claim-main]
+
+open_invitations:
+  - kind: proof_bookkeeping
+    target: "Check Theorem 1.1 and the Section 3 deduction from the incidence bound to the exponent."
+    how: >-
+      Use the exact PDF in manuscript.url. Check the low-R center selection,
+      the bounds M <= T and L <= T^2, the terms used from Theorem 2.2, and the
+      optimization that gives beta(alpha) and theta. Report the first step you
+      cannot justify, or say which bounded steps you followed; this is not a
+      review of the whole paper.
+    respond:
+      url: "https://github.com/hjyuh/significance/issues/new?template=invitation-response.yml"
+    created_by: significance-editor
+    created_at: "2026-08-16T15:19:21Z"
+  - kind: incidence_hypotheses
+    target: "Check the hypotheses of Theorem 2.2 where it is applied to the constructed circles."
+    how: >-
+      Check that the circle family and selected centers satisfy the exact
+      distinctness, multiplicity, and range assumptions of the cited
+      Pach--Tardos incidence theorem. Record the numbered passage examined;
+      do not infer that the main theorem follows from this check alone.
+    respond:
+      url: "https://github.com/hjyuh/significance/issues/new?template=invitation-response.yml"
+    created_by: significance-editor
+    created_at: "2026-08-16T15:19:21Z"
+  - kind: bounded_structural_check
+    target: "Check one short structural result: Proposition 2.1 or Theorem 6.2."
+    how: >-
+      Choose one result, state the exact statement and pages read, and record
+      the definitions and inequalities you checked. A bounded report records
+      only that passage; it is not a verdict on the paper.
+    respond:
+      url: "https://github.com/hjyuh/significance/issues/new?template=invitation-response.yml"
+    created_by: significance-editor
+    created_at: "2026-08-16T15:19:21Z"
+
+history:
+  - id: evt-created
+    type: created
+    at: "2026-08-16T15:19:21Z"
+    by: significance-editor
+    note: "Drafted from queued proof-claim URL and its directly linked Zenodo PDF; not published and not author-confirmed."
+  - id: evt-author-confirmed
+    type: author-confirmed
+    at: "2026-08-18T05:08:00Z"
+    by: rafikzeraoulia2025
+    note: "Author reviewed and approved the claim scope, source version, hash, and reviewer map for publication; independent verification remains open."

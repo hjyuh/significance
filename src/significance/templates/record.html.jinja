@@ -61,31 +61,14 @@
      as a status light. The label names the writer, because an unsigned plain
      summary would read as the site speaking. #}
   <section class="band plain-summary" aria-labelledby="plain-summary-heading">
-    <p class="lbl" id="plain-summary-heading">
-      Summary
-    </p>
+    <p class="lbl" id="plain-summary-heading">Summary · for readers</p>
     <dl class="plain-summary-list">
       <div>
-        <dt>Claim</dt>
+        <dt>In one sentence</dt>
         <dd>{{ ps.claimed }}</dd>
       </div>
-      <div>
-        <dt>Checked</dt>
-        <dd>{{ ps.checked }}</dd>
-      </div>
-      <div>
-        <dt>Not checked</dt>
-        <dd>{{ ps.not_checked }}</dd>
-      </div>
-      <div>
-        <dt>As of</dt>
-        <dd>
-          {{ fr.get('checked_at', '?')[:10] }}
-          {%- if fr.get('result') == 'current' %} · source current{% elif fr.get('result') == 'stale' %} · source changed{% else %} · not rechecked{% endif %}
-        </dd>
-      </div>
     </dl>
-    <p class="meta">{{ m.credit(ps, 'Summary') }}</p>
+    <p class="meta">{{ m.credit(ps, 'Reader summary') }}</p>
 
     {% for tr in ps.get('translations', []) %}
     {# A translation is a second summary with its own asserter, so it renders
@@ -110,6 +93,25 @@
   </section>
   {% endif %}
 
+  {% set review_map = record.get('review_map') %}
+  {% if review_map %}
+  <section class="band start-here" aria-labelledby="start-here-heading">
+    <p class="lbl" id="start-here-heading">Start here · for reviewers</p>
+    <div class="review-map-main">
+      <p class="map-label">Main deduction</p>
+      <p class="prose">{{ review_map.main_deduction.text }}</p>
+      {% if review_map.main_deduction.location %}<p class="meta">{{ review_map.main_deduction.location }}{% if review_map.main_deduction.pointer %} · {{ review_map.main_deduction.pointer }}{% endif %} · {{ m.attribution(review_map.main_deduction) }}</p>{% endif %}
+    </div>
+    {% if review_map.risks %}
+    <div class="review-map-group"><p class="map-label">Risk points</p><ul class="review-map-list">{% for item in review_map.risks %}<li><p class="prose">{{ item.text }}</p><p class="meta">{% if item.location %}{{ item.location }} · {% endif %}{{ m.attribution(item) }}</p></li>{% endfor %}</ul></div>
+    {% endif %}
+    {% if review_map.prerequisites %}
+    <div class="review-map-group"><p class="map-label">Useful background</p><ul class="review-map-list">{% for item in review_map.prerequisites %}<li><p class="prose">{{ item.text }}</p><p class="meta">{% if item.pointer %}{{ item.pointer }} · {% endif %}{{ m.attribution(item) }}</p></li>{% endfor %}</ul></div>
+    {% endif %}
+    <div class="review-map-group"><p class="map-label">Needs checking</p><ul class="review-map-list">{% for item in review_map.needs_checking or [] %}<li><p class="prose">{{ item.text }}{% if item.reason %} <span class="meta">— {{ item.reason }}</span>{% endif %}</p><p class="meta">{% if item.location %}{{ item.location }} · {% endif %}{{ m.attribution(item) }}</p></li>{% endfor %}<li><a href="https://github.com/hjyuh/significance/issues/new?template=needs-checking.yml">Suggest another focused check</a></li></ul></div>
+  </section>
+  {% endif %}
+
   <section class="band review-coverage" aria-labelledby="coverage-heading">
     <p class="lbl" id="coverage-heading">Review activity</p>
     <dl class="coverage-list">
@@ -118,7 +120,12 @@
       <div><dt>Written reviews</dt><dd>{{ informal_reviews|length }}</dd></div>
       <div><dt>Open checks</dt><dd>{{ record.get('open_invitations', [])|selectattr('status', 'undefined')|list|length + record.get('open_invitations', [])|selectattr('status', 'equalto', 'open')|list|length }}</dd></div>
     </dl>
-    {% if ps %}<p class="coverage-boundary"><strong>Unexamined boundary:</strong> {{ ps.not_checked }}</p>{% endif %}
+    {% if ps %}
+    <div class="coverage-notes">
+      <p class="coverage-boundary"><strong>What Significance checked:</strong> {{ ps.checked }}</p>
+      <p class="coverage-boundary"><strong>Still open:</strong> {{ ps.not_checked }}</p>
+    </div>
+    {% endif %}
   </section>
 
   {% set aw = record.get('accurate_wording') %}

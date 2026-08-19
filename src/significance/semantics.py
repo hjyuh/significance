@@ -267,6 +267,37 @@ def check_plain_summary(record: dict) -> list[Violation]:
 # mathematician is reading.
 PLAIN_LANGUAGE_MAX_WORDS = 150
 
+REVIEW_MAP_ENTRY_MAX_WORDS = 120
+
+
+def check_review_map(record: dict) -> list[Violation]:
+    """Keep the reviewer map concrete enough to guide one evening of reading."""
+    review_map = record.get("review_map")
+    if not isinstance(review_map, dict):
+        return []
+    violations: list[Violation] = []
+    groups = ("main_deduction", "risks", "prerequisites", "needs_checking")
+    for group in groups:
+        raw = review_map.get(group)
+        entries = [raw] if group == "main_deduction" and isinstance(raw, dict) else (raw or [])
+        if not isinstance(entries, list):
+            continue
+        for index, entry in enumerate(entries):
+            if not isinstance(entry, dict) or not isinstance(entry.get("text"), str):
+                continue
+            location = f"review_map.{group}" if group == "main_deduction" else f"review_map.{group}[{index}]"
+            count = word_count(entry["text"])
+            if count > REVIEW_MAP_ENTRY_MAX_WORDS:
+                violations.append(
+                    Violation(
+                        "review-map-entry-too-long",
+                        f"{count} words, over the {REVIEW_MAP_ENTRY_MAX_WORDS}-word cap for a focused reviewer-map entry",
+                        f"{location}.text",
+                    )
+                )
+            violations.extend(verdict_violations(entry["text"], f"{location}.text"))
+    return violations
+
 
 # The line is written to be pasted into a headline or a forum post, so it has
 # to fit in one. Shorter than a plain_summary field on purpose.
@@ -633,6 +664,7 @@ def semantic_violations(record: dict, known_ids: set[str] | None = None) -> list
         *check_plain_summary_translations(record),
         *check_accurate_wording(record),
         *check_plain_language_digestions(record),
+        *check_review_map(record),
         *check_invitation_instructions(record),
         *check_invitation_state(record),
         *check_review_notes(record),

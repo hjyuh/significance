@@ -128,6 +128,45 @@ plain_summary:
       asserted_by: significance-editor
       asserted_at: "2026-08-07T00:00:00Z"
 
+review_map:
+  main_deduction:
+    text: >-
+      Start with the manuscript's Theorem 1.1 and the companion Comparator
+      target, then trace whether they state the same mathematical result.
+    location: "Manuscript Theorem 1.1, pp. 78–80; Comparator challenge"
+    pointer: "Read the statement correspondence before attempting the longer proof."
+    basis: editorial_inference
+    asserted_by: significance-editor
+    asserted_at: "2026-08-17T00:00:00Z"
+  risks:
+    - text: >-
+        The central risk is the gap between the manuscript's concrete unit-group
+        theorem and the formal target's broader finitely-presented existence statement.
+      location: "Theorem 1.1 and Comparator/Challenge.lean"
+      basis: editorial_inference
+      asserted_by: significance-editor
+      asserted_at: "2026-08-17T00:00:00Z"
+    - text: >-
+        The proof's use of property (T), Kun's theorem, and the expander
+        decomposition is the main mathematical reading target after correspondence.
+      location: "Sections 5–8"
+      basis: editorial_inference
+      asserted_by: significance-editor
+      asserted_at: "2026-08-17T00:00:00Z"
+  prerequisites:
+    - text: "Basic soficity, property (T), expander graphs, and the role of a finitely presented group presentation."
+      pointer: "Manuscript Sections 2–4 and the cited Kun theorem"
+      basis: editorial_inference
+      asserted_by: significance-editor
+      asserted_at: "2026-08-17T00:00:00Z"
+  needs_checking:
+    - text: "Compare the theorem represented by the Lean/Comparator target with the concrete group named in the manuscript."
+      location: "Challenge.lean, Solution.lean, and manuscript Theorem 1.1"
+      reason: "The existing receipt establishes execution and axioms, not informal/formal correspondence."
+      basis: editorial_inference
+      asserted_by: significance-editor
+      asserted_at: "2026-08-17T00:00:00Z"
+
 # One sentence for somebody writing about this claim who does not want to
 # overstate it. A suggestion, never a requirement.
 accurate_wording:

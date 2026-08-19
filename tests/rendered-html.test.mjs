@@ -5,12 +5,16 @@ import test from "node:test";
 const indexPath = "public/records/index.html";
 const recordPath = "public/records/2026-openai-nonsofic-groups/index.html";
 const zetaRecordPath = "public/records/2026-anthropic-zeta-two-thirds/index.html";
+const rafik653RecordPath = "public/records/2026-rafikzeraoulia-erdos-653/index.html";
+const rafik726RecordPath = "public/records/2026-rafikzeraoulia-erdos-726/index.html";
 const retiredSyntheticPath = "public/records/2026-sandoval-ramsey-k7/index.html";
 
 test("the public corpus contains only source-inspected records", () => {
   assert.equal(existsSync(indexPath), true);
   assert.equal(existsSync(recordPath), true);
   assert.equal(existsSync(zetaRecordPath), true);
+  assert.equal(existsSync(rafik653RecordPath), true);
+  assert.equal(existsSync(rafik726RecordPath), true);
   assert.equal(existsSync(retiredSyntheticPath), false);
 
   const index = readFileSync(indexPath, "utf8");
@@ -33,7 +37,8 @@ test("the zeta record separates pinned sources from independent execution", () =
   const record = readFileSync(zetaRecordPath, "utf8");
   assert.match(record, /<math xmlns="http:\/\/www\.w3\.org\/1998\/Math\/MathML"/);
   assert.match(record, /<mfrac>/);
-  assert.match(record, /Summary · Significance/);
+  assert.match(record, /Summary · for readers/);
+  assert.match(record, /Reader summary · Significance/);
   assert.match(record, /Record note · Significance/);
   assert.doesNotMatch(record, /Confirming a description would not confirm the mathematics/);
   assert.match(record, /0\.67250/);
@@ -56,7 +61,7 @@ test("the homepage derives its record facts from the generated index", () => {
   // needed somewhere to be linked from, and the rule that the shell may only
   // present generated data left exactly one place to put it.
   assert.deepEqual(Object.keys(summaries).sort(), ["boards", "records"]);
-  assert.equal(summaries.records.length, 2);
+  assert.equal(summaries.records.length, 4);
   const byId = Object.fromEntries(summaries.records.map((record) => [record.record_id, record]));
   assert.equal(byId["2026-openai-nonsofic-groups"].freshness, "current");
   assert.equal(byId["2026-openai-nonsofic-groups"].evidence_count, 2);
@@ -64,6 +69,8 @@ test("the homepage derives its record facts from the generated index", () => {
   assert.equal(byId["2026-anthropic-zeta-two-thirds"].freshness, "current");
   assert.equal(byId["2026-anthropic-zeta-two-thirds"].evidence_count, 1);
   assert.equal(byId["2026-anthropic-zeta-two-thirds"].open_invitation_count, 3);
+  assert.equal(byId["2026-rafikzeraoulia-erdos-653"].freshness, "current");
+  assert.equal(byId["2026-rafikzeraoulia-erdos-726"].freshness, "current");
 
   // Board counts are generated, not counted in JSX: the homepage must not be
   // able to disagree with the board about how much of it is filled in.

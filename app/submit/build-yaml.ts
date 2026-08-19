@@ -1,5 +1,5 @@
 import { dump } from "js-yaml";
-import type { AttributedDraft, EvidenceDraft, WizardState } from "./types";
+import type { AttributedDraft, EvidenceDraft, ReviewMapEntryDraft, WizardState } from "./types";
 import { hasLocatorValue } from "./types";
 
 function nowIso(): string {
@@ -38,6 +38,19 @@ function evidenceItem(draft: EvidenceDraft, nowText: string): Record<string, unk
   }
 }
 
+function reviewMapEntry(draft: ReviewMapEntryDraft, nowText: string): Record<string, unknown> {
+  return {
+    text: draft.text,
+    ...(draft.location ? { location: draft.location } : {}),
+    ...(draft.pointer ? { pointer: draft.pointer } : {}),
+    ...(draft.reason ? { reason: draft.reason } : {}),
+    basis: draft.basis,
+    asserted_by: draft.assertedBy,
+    asserted_at: nowText,
+    ...(hasLocatorValue(draft.locator) ? { locator: { ...draft.locator } } : {}),
+  };
+}
+
 export function buildRecord(state: WizardState): Record<string, unknown> {
   const nowText = nowIso();
   const parties: Record<string, unknown> = {};
@@ -59,6 +72,24 @@ export function buildRecord(state: WizardState): Record<string, unknown> {
       text: attributedValue(state.claimText, nowText),
       scope: attributedValue(state.claimScope, nowText),
     },
+    ...(state.readerSummary.value ? {
+      plain_summary: {
+        claimed: state.readerSummary.value,
+        checked: state.checkedSummary.value,
+        not_checked: state.notCheckedSummary.value,
+        basis: "digest",
+        asserted_by: state.readerSummary.assertedBy,
+        asserted_at: nowText,
+      },
+    } : {}),
+    ...(state.mainDeduction.text ? {
+      review_map: {
+        main_deduction: reviewMapEntry(state.mainDeduction, nowText),
+        risks: state.riskPoints.map((entry) => reviewMapEntry(entry, nowText)),
+        prerequisites: state.prerequisites.map((entry) => reviewMapEntry(entry, nowText)),
+        ...(state.needsChecking.length ? { needs_checking: state.needsChecking.map((entry) => reviewMapEntry(entry, nowText)) } : {}),
+      },
+    } : {}),
     manuscript: {
       url: state.manuscriptUrl,
       label: state.manuscriptLabel,

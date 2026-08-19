@@ -79,6 +79,8 @@ Pages:
 - `/reviewers/` — an alphabetical census of named identities with recorded work; reviewer pages contain entries and links, never scores or ranks.
 - `/backlog/` — an activity-sorted map of active records, hidden until the configured minimum corpus size is reached.
 - `/how-to-file-a-claim/` — a one-page intake standard and copyable template.
+- Record pages begin with a reader summary and `review_map`: the main
+  deduction, delicate steps, prerequisites, and needs-checking items.
 - `/boards/ten-results/` — one row per result in the August 2026 release,
   stating what has been checked and what has not. Nine of its ten rows are
   deliberately empty: nothing here evidences those results yet, and an empty
@@ -96,6 +98,9 @@ Two optional blocks in a record's YAML:
 - `digestions[].kind: plain_language` — a signed paragraph explaining what the
   result says, labelled with the stratum speaking (author, editor, community).
   Strata are rendered separately and never merged.
+- `review_map` — an attributed guide to where a reviewer should begin, what
+  looks delicate, and what background is needed. It directs reading; it does
+  not issue a verdict.
 
 Open invitations may also carry `how` (what somebody would actually do, pinned
 to an exact revision) and `respond` (where the answer goes). Status is
@@ -103,6 +108,10 @@ to an exact revision) and `respond` (where the answer goes). Status is
 task points to its evidence. `depends_on` records attributed links to earlier
 records or external work. Reviewer attestations carry scope and manuscript
 hash, with an optional short review note; strata are displayed separately.
+
+Readers can suggest a single anchored `needs_checking` item through the GitHub
+issue template linked on record pages. It becomes part of a record only through
+the ordinary attributed pull-request review.
 
 `significance validate` checks boards as well as records, choosing by the
 `kind: board` discriminator. `significance build` gains `--pages-out` for the

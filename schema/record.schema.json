@@ -54,6 +54,7 @@
     "claim": { "$ref": "#/$defs/claim" },
     "author_relationship": { "$ref": "#/$defs/author_relationship" },
     "plain_summary": { "$ref": "#/$defs/plain_summary" },
+    "review_map": { "$ref": "#/$defs/review_map" },
     "accurate_wording": { "$ref": "#/$defs/accurate_wording" },
     "manuscript": { "$ref": "#/$defs/manuscript" },
     "evidence": {
@@ -325,6 +326,35 @@
         "basis": { "$ref": "#/$defs/digest_basis" },
         "asserted_by": { "$ref": "#/$defs/party_id" },
         "asserted_at": { "$ref": "#/$defs/iso_datetime" }
+      }
+    },
+
+    "review_map": {
+      "description": "A reviewer-first map of where to begin. Each entry is attributed; this map directs reading and never asserts mathematical truth.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["main_deduction", "risks", "prerequisites"],
+      "properties": {
+        "main_deduction": { "$ref": "#/$defs/review_map_entry" },
+        "risks": { "type": "array", "items": { "$ref": "#/$defs/review_map_entry" } },
+        "prerequisites": { "type": "array", "items": { "$ref": "#/$defs/review_map_entry" } },
+        "needs_checking": { "type": "array", "items": { "$ref": "#/$defs/review_map_entry" } }
+      }
+    },
+
+    "review_map_entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text", "basis", "asserted_by", "asserted_at"],
+      "properties": {
+        "text": { "type": "string", "minLength": 1, "maxLength": 1200 },
+        "location": { "type": "string", "minLength": 1, "maxLength": 240 },
+        "reason": { "type": "string", "minLength": 1, "maxLength": 600 },
+        "pointer": { "type": "string", "minLength": 1, "maxLength": 240 },
+        "basis": { "$ref": "#/$defs/basis" },
+        "asserted_by": { "$ref": "#/$defs/party_id" },
+        "asserted_at": { "$ref": "#/$defs/iso_datetime" },
+        "locator": { "$ref": "#/$defs/locator" }
       }
     },
 

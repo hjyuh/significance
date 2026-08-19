@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none';">
 <title>2026-openai-nonsofic-groups — Significance</title>
-<link rel="stylesheet" href="../static/style.css?v=4d188f66fa12">
+<link rel="stylesheet" href="../static/style.css?v=9f4d3b802fde">
 </head>
 <body>
 <header class="topline">
@@ -34,29 +34,14 @@
   </section>
 
   <section class="band plain-summary" aria-labelledby="plain-summary-heading">
-    <p class="lbl" id="plain-summary-heading">
-      Summary
-    </p>
+    <p class="lbl" id="plain-summary-heading">Summary · for readers</p>
     <dl class="plain-summary-list">
       <div>
-        <dt>Claim</dt>
+        <dt>In one sentence</dt>
         <dd>OpenAI says one specific infinite group — the unit group of a small algebra built from two symbols — cannot be approximated by finite shuffles. That property is called soficity, and the manuscript states this group does not have it.</dd>
       </div>
-      <div>
-        <dt>Checked</dt>
-        <dd>Significance rebuilt the published Lean code at a pinned commit and recorded that the build and the axiom check ran to completion, with both logs hashed. The manuscript file was downloaded and hashed. These are checks on artifacts, not on the mathematics.</dd>
-      </div>
-      <div>
-        <dt>Not checked</dt>
-        <dd>Nobody has traced the manuscript&#39;s Theorem 1.1 to the statement the Lean code actually contains; the repository&#39;s formal target is a broader existence statement. No mathematician&#39;s assessment of the argument is recorded here. The three open invitations name this work.</dd>
-      </div>
-      <div>
-        <dt>As of</dt>
-        <dd>
-          2026-08-01 · source current        </dd>
-      </div>
     </dl>
-    <p class="meta"><span class="credit">Summary · Significance · 2026-08-07</span></p>
+    <p class="meta"><span class="credit">Reader summary · Significance · 2026-08-07</span></p>
 
     <div class="plain-summary-translation" lang="fr">
       <dl class="plain-summary-list">
@@ -76,6 +61,17 @@
     </div>
   </section>
 
+  <section class="band start-here" aria-labelledby="start-here-heading">
+    <p class="lbl" id="start-here-heading">Start here · for reviewers</p>
+    <div class="review-map-main">
+      <p class="map-label">Main deduction</p>
+      <p class="prose">Start with the manuscript&#39;s Theorem 1.1 and the companion Comparator target, then trace whether they state the same mathematical result.</p>
+<p class="meta">Manuscript Theorem 1.1, pp. 78–80; Comparator challenge · Read the statement correspondence before attempting the longer proof. · <span class="attribution">Significance’s interpretation · Significance editor · 2026-08-17</span></p>    </div>
+    <div class="review-map-group"><p class="map-label">Risk points</p><ul class="review-map-list"><li><p class="prose">The central risk is the gap between the manuscript&#39;s concrete unit-group theorem and the formal target&#39;s broader finitely-presented existence statement.</p><p class="meta">Theorem 1.1 and Comparator/Challenge.lean · <span class="attribution">Significance’s interpretation · Significance editor · 2026-08-17</span></p></li><li><p class="prose">The proof&#39;s use of property (T), Kun&#39;s theorem, and the expander decomposition is the main mathematical reading target after correspondence.</p><p class="meta">Sections 5–8 · <span class="attribution">Significance’s interpretation · Significance editor · 2026-08-17</span></p></li></ul></div>
+    <div class="review-map-group"><p class="map-label">Useful background</p><ul class="review-map-list"><li><p class="prose">Basic soficity, property (T), expander graphs, and the role of a finitely presented group presentation.</p><p class="meta">Manuscript Sections 2–4 and the cited Kun theorem · <span class="attribution">Significance’s interpretation · Significance editor · 2026-08-17</span></p></li></ul></div>
+    <div class="review-map-group"><p class="map-label">Needs checking</p><ul class="review-map-list"><li><p class="prose">Compare the theorem represented by the Lean/Comparator target with the concrete group named in the manuscript. <span class="meta">— The existing receipt establishes execution and axioms, not informal/formal correspondence.</span></p><p class="meta">Challenge.lean, Solution.lean, and manuscript Theorem 1.1 · <span class="attribution">Significance’s interpretation · Significance editor · 2026-08-17</span></p></li><li><a href="https://github.com/hjyuh/significance/issues/new?template=needs-checking.yml">Suggest another focused check</a></li></ul></div>
+  </section>
+
   <section class="band review-coverage" aria-labelledby="coverage-heading">
     <p class="lbl" id="coverage-heading">Review activity</p>
     <dl class="coverage-list">
@@ -84,7 +80,11 @@
       <div><dt>Written reviews</dt><dd>0</dd></div>
       <div><dt>Open checks</dt><dd>2</dd></div>
     </dl>
-<p class="coverage-boundary"><strong>Unexamined boundary:</strong> Nobody has traced the manuscript&#39;s Theorem 1.1 to the statement the Lean code actually contains; the repository&#39;s formal target is a broader existence statement. No mathematician&#39;s assessment of the argument is recorded here. The three open invitations name this work.</p>  </section>
+    <div class="coverage-notes">
+      <p class="coverage-boundary"><strong>What Significance checked:</strong> Significance rebuilt the published Lean code at a pinned commit and recorded that the build and the axiom check ran to completion, with both logs hashed. The manuscript file was downloaded and hashed. These are checks on artifacts, not on the mathematics.</p>
+      <p class="coverage-boundary"><strong>Still open:</strong> Nobody has traced the manuscript&#39;s Theorem 1.1 to the statement the Lean code actually contains; the repository&#39;s formal target is a broader existence statement. No mathematician&#39;s assessment of the argument is recorded here. The three open invitations name this work.</p>
+    </div>
+  </section>
 
   <section class="band accurate-wording">
     <p class="lbl">Careful wording</p>

@@ -25,6 +25,32 @@
       "freshness_checked_at": "2026-08-01T14:09:51Z",
       "evidence_count": 2,
       "open_invitation_count": 3
+    },
+    {
+      "record_id": "2026-rafikzeraoulia-erdos-653",
+      "record_version": 2,
+      "record_state": "active",
+      "claim": "The manuscript gives a partial result toward Erdős Problem #653, proving an improved upper bound g(n) ≤ n − 1 − cε n^(0.81668−ε).",
+      "claim_mathml": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\"><mrow><mi>g</mi><mo stretchy=\"false\">&#x00028;</mo><mi>n</mi><mo stretchy=\"false\">&#x00029;</mo><mo>&#x02264;</mo><mi>n</mi><mo>&#x02212;</mo><mn>1</mn><mo>&#x02212;</mo><msub><mi>c</mi><mi>&#x003B5;</mi></msub><msup><mi>n</mi><mrow><mn>0.81668</mn><mo>&#x02212;</mo><mi>&#x003B5;</mi></mrow></msup><mo>&#x0002E;</mo></mrow></math>",
+      "claim_basis": "author_attestation",
+      "claim_asserted_by": "rafikzeraoulia2025",
+      "freshness": "current",
+      "freshness_checked_at": "2026-08-16T15:19:21Z",
+      "evidence_count": 1,
+      "open_invitation_count": 3
+    },
+    {
+      "record_id": "2026-rafikzeraoulia-erdos-726",
+      "record_version": 2,
+      "record_state": "active",
+      "claim": "The paper proves Problem #726 conditionally on an explicitly stated reciprocal-prime equidistribution hypothesis.",
+      "claim_mathml": null,
+      "claim_basis": "source_quote",
+      "claim_asserted_by": "rafikzeraoulia2025",
+      "freshness": "current",
+      "freshness_checked_at": "2026-08-16T15:19:21Z",
+      "evidence_count": 2,
+      "open_invitation_count": 4
     }
   ],
   "boards": [
