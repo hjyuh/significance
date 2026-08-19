@@ -21,6 +21,7 @@
 {% if links.get('intake') %}<a href="{{ links.intake }}">How to file a claim</a>{% endif %}
 {% if links.get('reviewers') %}<a href="{{ links.reviewers }}">Reviewers</a>{% endif %}
 {% if links.get('backlog') %}<a href="{{ links.backlog }}">Backlog</a>{% endif %}
+{% if links.get('problems') %}<a href="{{ links.problems }}">Problems</a>{% endif %}
 {% if links.get('glossary') %}<a href="{{ links.glossary }}">Glossary</a>{% endif %}
 {% for board_id, board_url in links.boards.items() %}
 <a href="{{ board_url }}">{{ board_id|replace('-', ' ') }}</a>

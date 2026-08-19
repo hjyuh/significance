@@ -1,0 +1,31 @@
+{% extends "base.html.jinja" %}
+{% import "macros.jinja" as m %}
+{% block title %}Problems — Significance{% endblock %}
+{% block topline_meta %}{{ problems|length }} linked problem record{{ '' if problems|length == 1 else 's' }}{% endblock %}
+{% block content %}
+<section class="band">
+  <p class="lbl">Linked problems</p>
+  <h1 class="claim-text">A portable layer for problem pages.</h1>
+  <p class="prose">This index is deliberately partial. Each row links a Significance record to the problem page it describes; the record keeps the evidence, reviewer map, and open work that a problem page may not hold.</p>
+</section>
+<section class="band">
+  <ul class="records-index">
+  {% for item in problems %}
+    <li>
+      <div>
+        <p class="record-claim"><a href="../records/{{ item.record_id }}/index.html">{{ item.claim }}</a></p>
+        <p class="record-id">{{ item.venue }} #{{ item.problem_id }} · record v{{ item.record_version }}</p>
+      </div>
+      <p class="record-state">
+        <span>{{ m.external_link(item.url, 'Open problem page') }}</span>
+        <span>{{ item.evidence_count }} evidence · {{ item.open_count }} open task{{ '' if item.open_count == 1 else 's' }}</span>
+      </p>
+    </li>
+  {% endfor %}
+  </ul>
+</section>
+<section class="band what-this-does-not-establish">
+  <p class="lbl">What this index does not establish</p>
+  <ul><li>Coverage of the full problem database.</li><li>A verdict on any listed claim.</li><li>That a formal artifact matches the informal statement without an attributed correspondence entry.</li></ul>
+</section>
+{% endblock %}

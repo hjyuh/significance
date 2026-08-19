@@ -10,6 +10,12 @@ explain the difficult steps, let named people add bounded review, and preserve
 later reuse or canonicalization. The standalone site demonstrates the format;
 an existing tracker can link to the pages or consume the YAML directly.
 
+Significance is also an open successor path for the kind of external-data
+record that used to sit beside problem pages on ErdősProblems.com. It is not a
+replacement for that community or its problem statements: `/problems/` is a
+small, attributed index of links into the venue, while each Significance
+record carries reusable evidence, digestion, reviewer scope, and open work.
+
 It mechanically validates provenance and a narrow set of evidence
 predicates (schema shape, attribution completeness, execution receipts,
 append-only history). **It does not mechanically determine mathematical
@@ -31,8 +37,9 @@ mathematics itself.
 v0.1, with the schema, CLI, static record renderer, React/vinext presentation
 shell, research-preview Lean evidence adapter, and CI implemented. See
 `docs/design.md` for the design rationale, `SECURITY.md` for the Lean adapter's
-threat model, and `docs/export.md` / `docs/moderation.md` for the integration
-proposal and assessment/outreach policy.
+threat model, `docs/export.md` / `docs/moderation.md` for the integration
+proposal and assessment/outreach policy, and `docs/successor-roadmap.md` for
+the staged path from a portable layer to community reuse.
 
 ```
 significance init                       # interactively scaffold a new record
@@ -85,6 +92,9 @@ Pages:
 - `/reviewers/` — an alphabetical census of named identities with recorded work; reviewer pages contain entries and links, never scores or ranks.
 - `/backlog/` — an activity-sorted map of active records, hidden until the configured minimum corpus size is reached.
 - `/how-to-file-a-claim/` — a one-page intake standard and copyable template.
+- `/problems/` — a partial, portable index of linked venue problems. It is
+  generated from `problem_reference` fields; it is not a second problem
+  database and makes no claim of complete coverage.
 - Record pages begin with a reader summary and `review_map`: the main
   deduction, delicate steps, prerequisites, and needs-checking items.
 - `/boards/ten-results/` — one row per result in the August 2026 release,
@@ -107,6 +117,10 @@ Two optional blocks in a record's YAML:
 - `review_map` — an attributed guide to where a reviewer should begin, what
   looks delicate, and what background is needed. It directs reading; it does
   not issue a verdict.
+- `problem_reference` — an attributed link to the venue problem a record
+  concerns (`venue`, stable problem id, URL, and basis). This is the small
+  interoperability seam through which a tracker can link out or import a
+  record without surrendering its own presentation or editorial control.
 
 Open invitations may also carry `how` (what somebody would actually do, pinned
 to an exact revision) and `respond` (where the answer goes). Status is
@@ -144,7 +158,8 @@ deployed layout, `--boards`, and `--site-config`.
 - `build/` — the small Sites packaging plugin; deployment identity is local
   metadata and is not committed.
 - `public/records/` — generated static record pages, index, stylesheet, and
-  record-summary JSON.
+  record-summary JSON. `public/problems/` is the generated linked-problem
+  index.
 - `tests/` — schema, CLI, and renderer tests, including
   `tests/fixtures/broken/` (deliberately invalid records) and
   `tests/fixtures/hostile/` (schema-valid records carrying adversarial

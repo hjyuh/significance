@@ -83,6 +83,7 @@
       "type": "array",
       "items": { "$ref": "#/$defs/dependency" }
     },
+    "problem_reference": { "$ref": "#/$defs/problem_reference" },
     "history": {
       "type": "array",
       "minItems": 1,
@@ -765,6 +766,22 @@
         "note": { "type": "string", "maxLength": 240 }
       },
       "oneOf": [{ "required": ["record"] }, { "required": ["external"] }]
+    },
+
+    "problem_reference": {
+      "description": "An attributed link from this record to the problem or venue entry it describes.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["venue", "problem_id", "url", "basis", "asserted_by", "asserted_at"],
+      "properties": {
+        "venue": { "type": "string", "minLength": 1 },
+        "problem_id": { "type": "string", "minLength": 1 },
+        "url": { "type": "string", "format": "uri" },
+        "basis": { "$ref": "#/$defs/basis" },
+        "asserted_by": { "$ref": "#/$defs/party_id" },
+        "asserted_at": { "$ref": "#/$defs/iso_datetime" },
+        "locator": { "$ref": "#/$defs/locator" }
+      }
     },
 
     "record_id_ref": { "type": "string", "pattern": "^[0-9]{4}(-[a-z0-9]+){2,}$" },

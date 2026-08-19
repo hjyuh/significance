@@ -33,6 +33,16 @@ author_relationship:
   locator:
     url: "https://www.erdosproblems.com/forum/thread/653/proof-claims"
 
+problem_reference:
+  venue: "ErdősProblems.com"
+  problem_id: "653"
+  url: "https://www.erdosproblems.com/653"
+  basis: source_quote
+  asserted_by: significance-editor
+  asserted_at: "2026-08-16T15:19:21Z"
+  locator:
+    url: "https://www.erdosproblems.com/forum/thread/653/proof-claims"
+
 claim:
   id: claim-main
   display_math: >-

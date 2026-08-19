@@ -42,6 +42,15 @@
     <p class="claim-source">{{ m.attribution(record.claim.text) }}</p>
   </header>
 
+  {% set problem = record.get('problem_reference') %}
+  {% if problem %}
+  <section class="band problem-reference" aria-labelledby="problem-reference-heading">
+    <p class="lbl" id="problem-reference-heading">Problem link</p>
+    <p class="problem-reference-value">{{ problem.venue }} #{{ problem.problem_id }} · {{ m.external_link(problem.url, 'open the original problem page') }}</p>
+    <p class="meta">{{ m.attribution(problem) }}</p>
+  </section>
+  {% endif %}
+
   <section class="band record-relationship" aria-labelledby="relationship-heading">
     <p class="lbl" id="relationship-heading">Author involvement</p>
     {% if ar %}

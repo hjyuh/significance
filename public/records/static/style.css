@@ -200,6 +200,9 @@ h1.claim-math {
 
 .credit { color: var(--dim); }
 
+.problem-reference { background: var(--bg-rail); }
+.problem-reference-value { margin: 0 0 6px; color: var(--fg-body); font-size: 15px; }
+
 /* The reviewer map is the first practical reading aid on a record. Keep it
    quieter than the claim, but more prominent than hashes and receipts. */
 .start-here { background: color-mix(in srgb, var(--bg-rail) 55%, var(--bg)); }

@@ -211,6 +211,7 @@ def site_links(
     has_orientation: bool = False,
     has_reviewers: bool = False,
     has_backlog: bool = False,
+    has_problems: bool = False,
     has_intake: bool = True,
 ) -> dict:
     """Where the auxiliary pages live, from the point of view of one page.
@@ -248,6 +249,8 @@ def site_links(
             links["reviewers"] = "/reviewers/index.html"
         if has_backlog:
             links["backlog"] = "/backlog/index.html"
+        if has_problems:
+            links["problems"] = "/problems/index.html"
         if has_intake:
             links["intake"] = "/how-to-file-a-claim/index.html"
         return links
@@ -265,6 +268,8 @@ def site_links(
         links["reviewers"] = f"{root_prefix}reviewers/index.html"
     if has_backlog:
         links["backlog"] = f"{root_prefix}backlog/index.html"
+    if has_problems:
+        links["problems"] = f"{root_prefix}problems/index.html"
     if has_intake:
         links["intake"] = f"{root_prefix}how-to-file-a-claim/index.html"
     return links
@@ -373,6 +378,7 @@ def build_site(
                 backlog_enabled
                 and len(all_record_files) >= int(config.get("backlog_min_records", 5))
             ),
+            has_problems=any(r.get("problem_reference") for r in valid_records),
             has_intake=True,
         )
 
@@ -447,6 +453,35 @@ def build_site(
     # from the site root, so it is addressed absolutely.
     pages_prefix = "/records/" if deployed else "../"
     pages_links = links_for("../")
+
+    linked_problems = [
+        {
+            "record_id": record["record_id"],
+            "record_version": record["record_version"],
+            "claim": record["claim"]["text"]["value"],
+            "venue": record["problem_reference"]["venue"],
+            "problem_id": record["problem_reference"]["problem_id"],
+            "url": record["problem_reference"]["url"],
+            "evidence_count": len(record.get("evidence", [])),
+            "open_count": sum(
+                1 for invitation in record.get("open_invitations", [])
+                if invitation.get("status", "open") == "open"
+            ),
+        }
+        for record in built_records
+        if record.get("problem_reference")
+    ]
+    if linked_problems:
+        linked_problems.sort(key=lambda item: (item["venue"], item["problem_id"]))
+        _write_page(
+            pages_dir / "problems",
+            env.get_template("problems.html.jinja").render(
+                problems=linked_problems,
+                root_prefix=pages_prefix,
+                links=pages_links,
+            ),
+        )
+        result.pages.append("problems")
 
     _write_page(
         pages_dir / "request",
