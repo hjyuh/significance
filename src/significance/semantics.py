@@ -285,13 +285,21 @@ def check_review_map(record: dict) -> list[Violation]:
         for index, entry in enumerate(entries):
             if not isinstance(entry, dict) or not isinstance(entry.get("text"), str):
                 continue
-            location = f"review_map.{group}" if group == "main_deduction" else f"review_map.{group}[{index}]"
+            location = (
+                f"review_map.{group}"
+                if group == "main_deduction"
+                else f"review_map.{group}[{index}]"
+            )
             count = word_count(entry["text"])
             if count > REVIEW_MAP_ENTRY_MAX_WORDS:
                 violations.append(
                     Violation(
                         "review-map-entry-too-long",
-                        f"{count} words, over the {REVIEW_MAP_ENTRY_MAX_WORDS}-word cap for a focused reviewer-map entry",
+                        (
+                            f"{count} words, over the "
+                            f"{REVIEW_MAP_ENTRY_MAX_WORDS}-word cap for a focused "
+                            "reviewer-map entry"
+                        ),
                         f"{location}.text",
                     )
                 )
