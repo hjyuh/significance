@@ -28,7 +28,7 @@ contact_email: "[FILL: maintainer address, or leave as-is to omit the mailto lin
 # it blames themselves. It is never derived from a request -- see the header of
 # db/config.ts on the other half of this project for the same rule and the
 # attack behind it.
-site_url: "https://hjyuh.github.io/significance"
+site_url: "https://significance-math.z20mallouk.chatgpt.site"
 
 # Shown on /request/ when set. Deliberately unset by default: a turnaround
 # printed on a page and missed is worse than no turnaround at all, so this

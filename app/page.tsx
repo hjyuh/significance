@@ -87,7 +87,9 @@ export default function Home() {
         <p className="lede">
           Significance shows the exact mathematical claim, the source version,
           what has been checked, who said what, and what still needs review. It
-          records evidence without pretending to settle the mathematics.
+          records evidence without pretending to settle the mathematics. The
+          format is portable, so an existing problem tracker can link to or
+          consume the same record.
         </p>
       </section>
 
@@ -173,6 +175,11 @@ export default function Home() {
           <span>03</span>
           <h2>Open to correction</h2>
           <p>Specific reproduction, correspondence, and review tasks invite useful work.</p>
+        </article>
+        <article>
+          <span>04</span>
+          <h2>Built to travel</h2>
+          <p>Ordinary YAML and stable pages let an existing tracker reuse the record.</p>
         </article>
       </section>
 

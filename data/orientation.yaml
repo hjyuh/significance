@@ -30,6 +30,36 @@ intro:
   asserted_at: "2026-08-07T00:00:00Z"
 
 sections:
+  - id: from-proof-to-community
+    heading: "From a generated proof to work others can use"
+    body: >-
+      Terence Tao's essay “Mathematics in the age of AI” describes a pipeline:
+      generation, verification, clear communication, community digestion and
+      acceptance, then canonicalization. Significance treats that as a set of
+      separate questions rather than a single status label. A record can show
+      the claim, the evidence, the parts a reader can explain, the people who
+      have engaged with it, and whether later work has absorbed or reused it.
+      Each entry keeps its author, date, source and scope, so progress at one
+      stage is not mistaken for progress at another.
+    basis: editorial_inference
+    asserted_by: significance-editor
+    asserted_at: "2026-08-19T00:00:00Z"
+    locator:
+      url: "https://arxiv.org/abs/2608.16753"
+
+  - id: portable-layer
+    heading: "A layer an existing tracker can use"
+    body: >-
+      Significance is a reference implementation of an open record format,
+      not a request that a problem site move its community elsewhere. An
+      existing tracker can link to a record, copy selected fields into its own
+      summary, or read the YAML directly. The standalone pages are a working
+      demonstration; the useful outcome is a reviewer map and bounded open
+      task that can travel back to the place where mathematicians already work.
+    basis: editorial_inference
+    asserted_by: significance-editor
+    asserted_at: "2026-08-19T00:00:00Z"
+
   - id: what-is-happening
     heading: "What is actually happening"
     body: >-

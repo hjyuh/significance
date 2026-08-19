@@ -4,6 +4,12 @@ Significance is an open format and toolchain for recording claims, evidence,
 interpretations, and open verification needs around AI-assisted mathematics
 in a way that is **attributable, version-bound, and portable**.
 
+It is a small reference implementation of a workflow from generated proof to
+usable mathematical work: record the claim, make the evidence reproducible,
+explain the difficult steps, let named people add bounded review, and preserve
+later reuse or canonicalization. The standalone site demonstrates the format;
+an existing tracker can link to the pages or consume the YAML directly.
+
 It mechanically validates provenance and a narrow set of evidence
 predicates (schema shape, attribution completeness, execution receipts,
 append-only history). **It does not mechanically determine mathematical

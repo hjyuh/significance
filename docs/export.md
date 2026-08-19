@@ -78,6 +78,22 @@ Significance is committing to build:
    if nobody consumes or republishes the records, the format should
    stop, not be pushed harder.
 
+## The workflow a tracker can expose
+
+The format is designed around the stages that become easy to lose when proof
+claims arrive faster than people can read them: generation, verification,
+communication, community digestion and acceptance, and canonicalization. A
+consumer does not need to reproduce the standalone Significance site to use
+that workflow. It can show an author's claim and source version, attach a
+reviewer's bounded map of the delicate steps, link to evidence, and leave the
+open task beside the original claim. The stages remain separate: a successful
+build is not a mathematical review, a clear explanation is not a verification,
+and a review is not canonicalization.
+
+This framing follows the workflow discussed in Terence Tao, [“Mathematics in
+the age of AI”](https://arxiv.org/abs/2608.16753); it does not imply his
+endorsement of Significance.
+
 ## Coordinating
 
 There is no dedicated integration channel yet. Open an issue or PR
