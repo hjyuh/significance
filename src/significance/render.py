@@ -330,6 +330,7 @@ def site_links(
     has_problems: bool = False,
     has_frontier: bool = False,
     has_intake: bool = True,
+    has_feed: bool = False,
 ) -> dict:
     """Where the auxiliary pages live, from the point of view of one page.
 
@@ -372,6 +373,8 @@ def site_links(
             links["frontier"] = "/frontier/index.html"
         if has_intake:
             links["intake"] = "/how-to-file-a-claim/index.html"
+        if has_feed:
+            links["feed"] = "/feed.xml"
         return links
 
     links = {
@@ -393,6 +396,8 @@ def site_links(
         links["frontier"] = f"{root_prefix}frontier/index.html"
     if has_intake:
         links["intake"] = f"{root_prefix}how-to-file-a-claim/index.html"
+    if has_feed:
+        links["feed"] = f"{root_prefix}feed.xml"
     return links
 
 
@@ -508,6 +513,7 @@ def build_site(
                 for r in valid_records
             ),
             has_intake=True,
+            has_feed=True,
         )
 
     env = _environment()
@@ -581,6 +587,12 @@ def build_site(
     # from the site root, so it is addressed absolutely.
     pages_prefix = "/records/" if deployed else "../"
     pages_links = links_for("../")
+    # Reviewer and problem detail pages are two levels below the site root in
+    # the self-contained layout. They need their own navigation prefix; using
+    # the auxiliary-page prefix here makes links such as
+    # `reviewers/orientation/` and `problems/glossary/` dead on arrival.
+    detail_prefix = "/records/" if deployed else "../../"
+    detail_links = links_for(detail_prefix)
 
     linked_problems = [
         {
@@ -641,8 +653,8 @@ def build_site(
                 pages_dir / "problems" / group["slug"],
                 env.get_template("problem.html.jinja").render(
                     problem=group,
-                    root_prefix=("/records/" if deployed else "../../"),
-                    links=pages_links,
+                    root_prefix=detail_prefix,
+                    links=detail_links,
                 ),
             )
             result.pages.append(f"problem:{group['slug']}")
@@ -792,8 +804,8 @@ def build_site(
             pages_dir / "reviewers" / reviewer["id"],
             env.get_template("reviewer.html.jinja").render(
                 reviewer=reviewer,
-                root_prefix=("/records/" if deployed else "../../"),
-                links=pages_links,
+                root_prefix=detail_prefix,
+                links=detail_links,
             ),
         )
         result.pages.append(f"reviewer:{reviewer['id']}")

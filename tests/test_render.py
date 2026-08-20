@@ -153,6 +153,21 @@ def test_build_produces_problem_json_and_atom_feed(tmp_path):
     assert all(any(record_id in entry_id for record_id in PUBLIC_RECORD_IDS) for entry_id in ids)
 
 
+def test_nested_pages_keep_navigation_at_site_root(tmp_path):
+    out = tmp_path / "site"
+    build_site(RECORDS_DIR, out)
+
+    for path in (
+        out / "problems" / "erdosproblems-com-653" / "index.html",
+        out / "reviewers" / "significance-ci" / "index.html",
+    ):
+        html = path.read_text(encoding="utf-8")
+        assert 'href="../../orientation/index.html"' in html
+        assert 'href="../../static/style.css?v=' in html
+        assert 'href="../../feed.xml"' in html
+        assert 'href="../orientation/index.html"' not in html
+
+
 def test_source_inspection_does_not_count_as_written_review(tmp_path):
     # Living-author drafts are kept outside the public repository. When the
     # private fixture bundle is absent (as it is in a clean checkout), the

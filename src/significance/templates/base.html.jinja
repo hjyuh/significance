@@ -24,6 +24,7 @@
 {% if links.get('frontier') %}<a href="{{ links.frontier }}">Open work</a>{% endif %}
 {% if links.get('problems') %}<a href="{{ links.problems }}">Problems</a>{% endif %}
 {% if links.get('glossary') %}<a href="{{ links.glossary }}">Glossary</a>{% endif %}
+{% if links.get('feed') %}<a href="{{ links.feed }}">Atom feed</a>{% endif %}
 {% for board_id, board_url in links.boards.items() %}
 <a href="{{ board_url }}">{{ board_id|replace('-', ' ') }}</a>
 {% endfor %}
