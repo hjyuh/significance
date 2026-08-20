@@ -90,6 +90,24 @@ export function buildRecord(state: WizardState): Record<string, unknown> {
         ...(state.needsChecking.length ? { needs_checking: state.needsChecking.map((entry) => reviewMapEntry(entry, nowText)) } : {}),
       },
     } : {}),
+    ...(state.formalizationTarget.value ? {
+      formalization_handoff: {
+        target: attributedValue(state.formalizationTarget, nowText),
+        system: attributedValue(state.formalizationSystem, nowText),
+        status: state.formalizationStatus,
+        ...(state.formalizationOpenQuestion.value ? { open_questions: [attributedValue(state.formalizationOpenQuestion, nowText)] } : {}),
+        ...(state.formalizationRepository ? {
+          repository: {
+            ...(state.formalizationRepository ? { url: state.formalizationRepository } : {}),
+            ...(state.formalizationCommit ? { commit: state.formalizationCommit } : {}),
+            ...(state.formalizationToolchain ? { toolchain: state.formalizationToolchain } : {}),
+          },
+        } : {}),
+        basis: "editorial_inference",
+        asserted_by: state.formalizationTarget.assertedBy,
+        asserted_at: nowText,
+      },
+    } : {}),
     manuscript: {
       url: state.manuscriptUrl,
       label: state.manuscriptLabel,

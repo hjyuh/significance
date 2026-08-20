@@ -167,6 +167,52 @@ review_map:
       asserted_by: significance-editor
       asserted_at: "2026-08-17T00:00:00Z"
 
+# This is a formalization handoff: it makes the existing Lean artifact useful
+# to someone deciding what to formalize or audit next.
+formalization_handoff:
+  target:
+    value: "The manuscript's Theorem 1.1 and the Comparator target for a finitely presented non-sofic group."
+    basis: editorial_inference
+    asserted_by: significance-editor
+    asserted_at: "2026-08-20T14:00:00Z"
+  system:
+    value: "Lean 4 with the repository's Comparator challenge"
+    basis: editorial_inference
+    asserted_by: significance-editor
+    asserted_at: "2026-08-20T14:00:00Z"
+  status: artifact_reproduced
+  definitions:
+    - value: "Soficity, the concrete unit group named in the manuscript, and finitely presented group must be compared before treating the paper and code as the same target."
+      basis: editorial_inference
+      asserted_by: significance-editor
+      asserted_at: "2026-08-20T14:00:00Z"
+  prerequisites:
+    - value: "Basic group presentations, sofic approximations, property (T), and the repository's Comparator workflow."
+      basis: editorial_inference
+      asserted_by: significance-editor
+      asserted_at: "2026-08-20T14:00:00Z"
+  open_questions:
+    - value: "Trace the declaration chain and record exactly where the concrete Leavitt-algebra statement does or does not meet the broader formal target."
+      basis: editorial_inference
+      asserted_by: significance-editor
+      asserted_at: "2026-08-20T14:00:00Z"
+    - value: "If extending the formalization, identify the smallest missing declaration rather than attempting the whole manuscript at once."
+      basis: editorial_inference
+      asserted_by: significance-editor
+      asserted_at: "2026-08-20T14:00:00Z"
+  repository:
+    url: "https://github.com/openai/ten-proofs/tree/c510a55434c0935cde446e5a372699a4671438f6"
+    commit: "c510a55434c0935cde446e5a372699a4671438f6"
+    toolchain: "Lean 4.32.0; toolchain pinned by digest in the receipt"
+  correspondence:
+    value: "The pinned receipt confirms that the formal artifact builds and its declared axiom policy is respected; correspondence with the manuscript remains a separate human reading task."
+    basis: editorial_inference
+    asserted_by: significance-editor
+    asserted_at: "2026-08-20T14:00:00Z"
+  basis: editorial_inference
+  asserted_by: significance-editor
+  asserted_at: "2026-08-20T14:00:00Z"
+
 # One sentence for somebody writing about this claim who does not want to
 # overstate it. A suggestion, never a requirement.
 accurate_wording:

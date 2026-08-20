@@ -842,6 +842,14 @@ pre.copy-status-text {
   line-height: 1.6;
 }
 
+/* --- formalization handoff --------------------------------------------------
+   A practical bridge from an informal claim to a formalizer. Keep it calm and
+   factual: the work-state describes the artifact, never the mathematics. */
+.handoff-intro { margin: 0 0 16px; max-width: 68ch; color: var(--fg-body); line-height: 1.6; }
+.handoff-facts { margin-bottom: 18px; }
+.handoff-group { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--hair); }
+.handoff-group .review-map-list { margin-bottom: 0; }
+
 details.technical-details {
   margin-top: 12px;
   color: var(--muted);

@@ -117,6 +117,10 @@ Two optional blocks in a record's YAML:
 - `review_map` — an attributed guide to where a reviewer should begin, what
   looks delicate, and what background is needed. It directs reading; it does
   not issue a verdict.
+- `formalization_handoff` — an optional, attributed bridge for a formalizer:
+  the target statement, formal system, work state, definitions, prerequisites,
+  code revision, correspondence note, and smallest open questions. Its state
+  describes formalization work, not the mathematics.
 - `problem_reference` — an attributed link to the venue problem a record
   concerns (`venue`, stable problem id, URL, and basis). This is the small
   interoperability seam through which a tracker can link out or import a

@@ -48,6 +48,9 @@ the schema):
 - `open_invitations[]` — outstanding requests (e.g. "please formalize
   Theorem 1.2's boundary case"), which a tracker with its own open-tasks
   concept might want to surface directly.
+- `formalization_handoff` — an optional handoff packet for formalizers: target,
+  system, work state, definitions, prerequisites, code revision, correspondence,
+  and open questions, each kept attributable where it carries a claim.
 
 Nothing in a record is permitted to assert that a claim is verified,
 correct, or refuted (see the schema's own top-level description and

@@ -1,5 +1,13 @@
 # Schema changelog
 
+## 1 — 2026-08-20
+
+Added optional `formalization_handoff`, an attributed bridge from an informal
+claim to a formalization target. It records the system, work state, definitions,
+prerequisites, repository revision, correspondence note, and open questions.
+The state describes formalization work only; it is not a verdict on the
+mathematics.
+
 ## 1 - 2026-08-12 (draft state)
 
 Added an optional `draft` flag so non-public editorial previews cannot render

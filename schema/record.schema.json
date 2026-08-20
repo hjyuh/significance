@@ -55,6 +55,7 @@
     "author_relationship": { "$ref": "#/$defs/author_relationship" },
     "plain_summary": { "$ref": "#/$defs/plain_summary" },
     "review_map": { "$ref": "#/$defs/review_map" },
+    "formalization_handoff": { "$ref": "#/$defs/formalization_handoff" },
     "accurate_wording": { "$ref": "#/$defs/accurate_wording" },
     "manuscript": { "$ref": "#/$defs/manuscript" },
     "evidence": {
@@ -352,6 +353,39 @@
         "location": { "type": "string", "minLength": 1, "maxLength": 240 },
         "reason": { "type": "string", "minLength": 1, "maxLength": 600 },
         "pointer": { "type": "string", "minLength": 1, "maxLength": 240 },
+        "basis": { "$ref": "#/$defs/basis" },
+        "asserted_by": { "$ref": "#/$defs/party_id" },
+        "asserted_at": { "$ref": "#/$defs/iso_datetime" },
+        "locator": { "$ref": "#/$defs/locator" }
+      }
+    },
+
+    "formalization_handoff": {
+      "description": "An attributed handoff from an informal claim to someone who may formalize it. This records preparation and open work, not mathematical truth.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target", "system", "status", "basis", "asserted_by", "asserted_at"],
+      "properties": {
+        "target": { "$ref": "#/$defs/attributed_value" },
+        "system": { "$ref": "#/$defs/attributed_value" },
+        "status": {
+          "type": "string",
+          "enum": ["not_started", "statement_prepared", "proof_incomplete", "artifact_reported", "artifact_reproduced"]
+        },
+        "definitions": { "type": "array", "items": { "$ref": "#/$defs/attributed_value" } },
+        "prerequisites": { "type": "array", "items": { "$ref": "#/$defs/attributed_value" } },
+        "open_questions": { "type": "array", "items": { "$ref": "#/$defs/attributed_value" } },
+        "repository": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["url"],
+          "properties": {
+            "url": { "type": "string", "format": "uri" },
+            "commit": { "type": "string", "minLength": 7, "maxLength": 80 },
+            "toolchain": { "type": "string", "maxLength": 240 }
+          }
+        },
+        "correspondence": { "$ref": "#/$defs/attributed_value" },
         "basis": { "$ref": "#/$defs/basis" },
         "asserted_by": { "$ref": "#/$defs/party_id" },
         "asserted_at": { "$ref": "#/$defs/iso_datetime" },

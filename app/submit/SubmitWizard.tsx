@@ -352,6 +352,17 @@ export default function SubmitWizard() {
           <ReviewEntryFields label="Most delicate step or risk" entry={state.riskPoints[0] ?? EMPTY_REVIEW_ENTRY} onChange={(v) => setState((s) => ({ ...s, riskPoints: [v] }))} thirdPartyLocked={thirdParty} allowReason />
           <ReviewEntryFields label="Background a reviewer needs" entry={state.prerequisites[0] ?? EMPTY_REVIEW_ENTRY} onChange={(v) => setState((s) => ({ ...s, prerequisites: [v] }))} thirdPartyLocked={thirdParty} />
           <ReviewEntryFields label="Optional: a specific thing that needs checking" entry={state.needsChecking[0] ?? EMPTY_REVIEW_ENTRY} onChange={(v) => setState((s) => ({ ...s, needsChecking: [v] }))} thirdPartyLocked={thirdParty} allowReason />
+          <fieldset className="wizard-fieldset">
+            <legend>Optional: formalization handoff</legend>
+            <p className="wizard-hint">Give a formalizer a starting point: the target, system, code revision, and smallest open question. This describes formalization work, not the mathematics.</p>
+            <AttributedFields label="Formalization target" draft={state.formalizationTarget} onChange={(v) => setState((s) => ({ ...s, formalizationTarget: v }))} thirdPartyLocked={thirdParty} />
+            <AttributedFields label="Formal system" draft={state.formalizationSystem} onChange={(v) => setState((s) => ({ ...s, formalizationSystem: v }))} thirdPartyLocked={thirdParty} />
+            <label>Work state<select value={state.formalizationStatus} onChange={(e) => setState((s) => ({ ...s, formalizationStatus: e.target.value as typeof s.formalizationStatus }))}><option value="not_started">Not started</option><option value="statement_prepared">Statement prepared</option><option value="proof_incomplete">Proof incomplete</option><option value="artifact_reported">Artifact reported</option><option value="artifact_reproduced">Artifact reproduced</option></select></label>
+            <label>Repository URL<input value={state.formalizationRepository} onChange={(e) => setState((s) => ({ ...s, formalizationRepository: e.target.value }))} placeholder="https://github.com/..." /></label>
+            <label>Commit or version<input value={state.formalizationCommit} onChange={(e) => setState((s) => ({ ...s, formalizationCommit: e.target.value }))} /></label>
+            <label>Toolchain<input value={state.formalizationToolchain} onChange={(e) => setState((s) => ({ ...s, formalizationToolchain: e.target.value }))} placeholder="Lean 4 + Mathlib" /></label>
+            <AttributedFields label="Smallest open formalization question" draft={state.formalizationOpenQuestion} onChange={(v) => setState((s) => ({ ...s, formalizationOpenQuestion: v }))} thirdPartyLocked={thirdParty} />
+          </fieldset>
         </section>
       ) : null}
 

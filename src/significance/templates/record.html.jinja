@@ -121,6 +121,33 @@
   </section>
   {% endif %}
 
+  {% set handoff = record.get('formalization_handoff') %}
+  {% if handoff %}
+  <section class="band formalization-handoff" aria-labelledby="formalization-heading">
+    <p class="lbl" id="formalization-heading">Formalization handoff</p>
+    <p class="handoff-intro">A compact map for someone who wants to formalize this claim. It records preparation and open work, not a mathematical verdict.</p>
+    <dl class="facts handoff-facts">
+      <dt>Target</dt>
+      <dd>{{ handoff.target.value }} {{ m.attribution(handoff.target) }}</dd>
+      <dt>System</dt>
+      <dd>{{ handoff.system.value }} {{ m.attribution(handoff.system) }}</dd>
+      <dt>Work state</dt>
+      <dd>{{ handoff.status|replace('_', ' ')|capitalize }}</dd>
+      {% if handoff.get('repository') %}
+      <dt>Code</dt>
+      <dd>{{ m.external_link(handoff.repository.url, 'formalization repository') }}{% if handoff.repository.get('commit') %} · commit <code>{{ handoff.repository.commit|short_hash }}</code>{% endif %}{% if handoff.repository.get('toolchain') %}<span class="meta"> · {{ handoff.repository.toolchain }}</span>{% endif %}</dd>
+      {% endif %}
+    </dl>
+    {% for label, items in [('Definitions', handoff.get('definitions', [])), ('Prerequisites', handoff.get('prerequisites', [])), ('Open questions', handoff.get('open_questions', []))] %}
+    {% if items %}
+    <div class="handoff-group"><p class="map-label">{{ label }}</p><ul class="review-map-list">{% for item in items %}<li><p class="prose">{{ item.value }}</p><p class="meta">{{ m.attribution(item) }}</p></li>{% endfor %}</ul></div>
+    {% endif %}
+    {% endfor %}
+    {% if handoff.get('correspondence') %}<p class="meta"><strong>Paper/code correspondence:</strong> {{ handoff.correspondence.value }} {{ m.attribution(handoff.correspondence) }}</p>{% endif %}
+    <p class="meta">{{ m.attribution(handoff) }}</p>
+  </section>
+  {% endif %}
+
   <section class="band review-coverage" aria-labelledby="coverage-heading">
     <p class="lbl" id="coverage-heading">Review activity</p>
     <dl class="coverage-list">

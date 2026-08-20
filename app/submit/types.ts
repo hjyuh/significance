@@ -90,6 +90,8 @@ export interface ReviewMapEntryDraft {
   locator?: LocatorDraft;
 }
 
+export type FormalizationStatus = "not_started" | "statement_prepared" | "proof_incomplete" | "artifact_reported" | "artifact_reproduced";
+
 export interface WizardState {
   submitterRole: SubmitterRole | null;
   submitterPartyId: string;
@@ -111,6 +113,13 @@ export interface WizardState {
   riskPoints: ReviewMapEntryDraft[];
   prerequisites: ReviewMapEntryDraft[];
   needsChecking: ReviewMapEntryDraft[];
+  formalizationTarget: AttributedDraft;
+  formalizationSystem: AttributedDraft;
+  formalizationStatus: FormalizationStatus;
+  formalizationRepository: string;
+  formalizationCommit: string;
+  formalizationToolchain: string;
+  formalizationOpenQuestion: AttributedDraft;
 }
 
 export const AI_PROVENANCE_ROLES = [
@@ -147,5 +156,12 @@ export function emptyWizardState(): WizardState {
     riskPoints: [],
     prerequisites: [],
     needsChecking: [],
+    formalizationTarget: { ...EMPTY_ATTRIBUTED },
+    formalizationSystem: { ...EMPTY_ATTRIBUTED },
+    formalizationStatus: "not_started",
+    formalizationRepository: "",
+    formalizationCommit: "",
+    formalizationToolchain: "",
+    formalizationOpenQuestion: { ...EMPTY_ATTRIBUTED },
   };
 }

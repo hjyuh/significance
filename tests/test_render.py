@@ -86,6 +86,8 @@ def test_build_produces_index_and_record_page(tmp_path):
     assert "Limits" in record_html
     assert "Author involvement" in record_html
     assert "Review activity" in record_html
+    assert "Formalization handoff" in record_html
+    assert "Paper/code correspondence" in record_html
     assert "OpenAI did not participate in or confirm this Significance record" in record_html
     assert "Math assessments</dt><dd>0" in record_html
     assert "Summary" in record_html and "Significance" in record_html

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none';">
 <title>2026-openai-nonsofic-groups — Significance</title>
-<link rel="stylesheet" href="../static/style.css?v=fa0981b09ab4">
+<link rel="stylesheet" href="../static/style.css?v=3577e0161bbd">
 </head>
 <body>
 <header class="topline">
@@ -71,6 +71,25 @@
     <div class="review-map-group"><p class="map-label">Risk points</p><ul class="review-map-list"><li><p class="prose">The central risk is the gap between the manuscript&#39;s concrete unit-group theorem and the formal target&#39;s broader finitely-presented existence statement.</p><p class="meta">Theorem 1.1 and Comparator/Challenge.lean · <span class="attribution">Significance’s interpretation · Significance editor · 2026-08-17</span></p></li><li><p class="prose">The proof&#39;s use of property (T), Kun&#39;s theorem, and the expander decomposition is the main mathematical reading target after correspondence.</p><p class="meta">Sections 5–8 · <span class="attribution">Significance’s interpretation · Significance editor · 2026-08-17</span></p></li></ul></div>
     <div class="review-map-group"><p class="map-label">Useful background</p><ul class="review-map-list"><li><p class="prose">Basic soficity, property (T), expander graphs, and the role of a finitely presented group presentation.</p><p class="meta">Manuscript Sections 2–4 and the cited Kun theorem · <span class="attribution">Significance’s interpretation · Significance editor · 2026-08-17</span></p></li></ul></div>
     <div class="review-map-group"><p class="map-label">Needs checking</p><ul class="review-map-list"><li><p class="prose">Compare the theorem represented by the Lean/Comparator target with the concrete group named in the manuscript. <span class="meta">— The existing receipt establishes execution and axioms, not informal/formal correspondence.</span></p><p class="meta">Challenge.lean, Solution.lean, and manuscript Theorem 1.1 · <span class="attribution">Significance’s interpretation · Significance editor · 2026-08-17</span></p></li><li><a href="https://github.com/hjyuh/significance/issues/new?template=needs-checking.yml">Suggest another focused check</a></li></ul></div>
+  </section>
+
+  <section class="band formalization-handoff" aria-labelledby="formalization-heading">
+    <p class="lbl" id="formalization-heading">Formalization handoff</p>
+    <p class="handoff-intro">A compact map for someone who wants to formalize this claim. It records preparation and open work, not a mathematical verdict.</p>
+    <dl class="facts handoff-facts">
+      <dt>Target</dt>
+      <dd>The manuscript&#39;s Theorem 1.1 and the Comparator target for a finitely presented non-sofic group. <span class="attribution">Significance’s interpretation · Significance editor · 2026-08-20</span></dd>
+      <dt>System</dt>
+      <dd>Lean 4 with the repository&#39;s Comparator challenge <span class="attribution">Significance’s interpretation · Significance editor · 2026-08-20</span></dd>
+      <dt>Work state</dt>
+      <dd>Artifact reproduced</dd>
+      <dt>Code</dt>
+      <dd><a href="https://github.com/openai/ten-proofs/tree/c510a55434c0935cde446e5a372699a4671438f6">formalization repository</a> · commit <code>c510a55434c0…</code><span class="meta"> · Lean 4.32.0; toolchain pinned by digest in the receipt</span></dd>
+    </dl>
+    <div class="handoff-group"><p class="map-label">Definitions</p><ul class="review-map-list"><li><p class="prose">Soficity, the concrete unit group named in the manuscript, and finitely presented group must be compared before treating the paper and code as the same target.</p><p class="meta"><span class="attribution">Significance’s interpretation · Significance editor · 2026-08-20</span></p></li></ul></div>
+    <div class="handoff-group"><p class="map-label">Prerequisites</p><ul class="review-map-list"><li><p class="prose">Basic group presentations, sofic approximations, property (T), and the repository&#39;s Comparator workflow.</p><p class="meta"><span class="attribution">Significance’s interpretation · Significance editor · 2026-08-20</span></p></li></ul></div>
+    <div class="handoff-group"><p class="map-label">Open questions</p><ul class="review-map-list"><li><p class="prose">Trace the declaration chain and record exactly where the concrete Leavitt-algebra statement does or does not meet the broader formal target.</p><p class="meta"><span class="attribution">Significance’s interpretation · Significance editor · 2026-08-20</span></p></li><li><p class="prose">If extending the formalization, identify the smallest missing declaration rather than attempting the whole manuscript at once.</p><p class="meta"><span class="attribution">Significance’s interpretation · Significance editor · 2026-08-20</span></p></li></ul></div>
+<p class="meta"><strong>Paper/code correspondence:</strong> The pinned receipt confirms that the formal artifact builds and its declared axiom policy is respected; correspondence with the manuscript remains a separate human reading task. <span class="attribution">Significance’s interpretation · Significance editor · 2026-08-20</span></p>    <p class="meta"><span class="attribution">Significance’s interpretation · Significance editor · 2026-08-20</span></p>
   </section>
 
   <section class="band review-coverage" aria-labelledby="coverage-heading">

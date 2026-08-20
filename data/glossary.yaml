@@ -107,6 +107,13 @@ terms:
       The short, attributed guide at the top of a record that says where to
       begin, what looks delicate, and what background a reader needs.
 
+  - slug: formalization-handoff
+    term: "formalization handoff"
+    definition: >-
+      A short, attributed map from an informal claim to the definitions,
+      tools, existing code, and next open task someone would need to formalize
+      it.
+
   - slug: needs-checking
     term: "needs checking"
     definition: >-
