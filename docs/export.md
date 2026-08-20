@@ -27,6 +27,21 @@ neither should anything that links to it). `record_id` is the only part
 of that URL a consumer should depend on; everything else about the
 rendered page's layout may change between v0.1 minor revisions.
 
+## Machine-readable endpoints
+
+The static build also writes an Atom feed at `/feed.xml`. It contains one
+entry per current record and is suitable for polling by a problem tracker;
+the entry links to the stable record page and its summary does not imply a
+mathematical verdict.
+
+For records linked to a problem, the build writes one grouped JSON endpoint at
+`/problems/<venue>-<problem-id>/index.json`. The endpoint has
+`export_schema_version: 1`, the original problem URL, and every valid
+Significance record associated with that problem. It is grouped rather than
+one-file-per-record so consumers do not silently miss a second claim about
+the same problem. The JSON preserves the source record, including attribution,
+freshness, evidence, and open work; private renderer-only keys are omitted.
+
 ## What a consumer would be reading
 
 The fields most relevant to an external tracker, briefly (full detail in

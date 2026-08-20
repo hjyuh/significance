@@ -8,7 +8,9 @@ body:
       value: |
         Keep this small and specific. Name one record, one paper location,
         and why the step deserves attention. This is a reading request, not a
-        verdict or a score.
+        verdict or a score. Opening this issue does not publish evidence; if
+        someone checks it, the result can be proposed later through a pull
+        request. See docs/discussion-to-record.md for that path.
 
   - type: input
     id: record
@@ -50,3 +52,34 @@ body:
       description: Link the exact manuscript version if possible.
     validations:
       required: true
+
+  - type: input
+    id: issue-author
+    attributes:
+      label: How should we identify you?
+      description: >-
+        Name or handle for attribution if this question is included in a
+        record. Leave a note if you prefer not to be named; anonymous claims
+        are not published as attributed record entries.
+      placeholder: gh:example or Your Name
+    validations:
+      required: true
+
+  - type: dropdown
+    id: requested-follow-up
+    attributes:
+      label: What would you like to happen next?
+      description: This is a request, not a commitment or an automatic status change.
+      options:
+        - Leave this as an open reading task
+        - I checked this and will describe what I found below
+        - Please contact me before drafting a record entry
+    validations:
+      required: true
+
+  - type: textarea
+    id: checked-result
+    attributes:
+      label: If you checked it, what did you find?
+      description: Optional. Give the exact step, source revision, and result. Do not state a verdict without the argument supporting it.
+      placeholder: I traced ... at PDF hash ... and found ...

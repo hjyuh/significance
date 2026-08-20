@@ -18,6 +18,10 @@ import hashlib
 import json
 import re
 import shutil
+import unicodedata
+import xml.etree.ElementTree as ET
+from collections import defaultdict
+from copy import deepcopy
 from dataclasses import dataclass, field
 from datetime import date, datetime
 from pathlib import Path
@@ -60,6 +64,16 @@ _HASH_RE = re.compile(r"(?<![a-f0-9])([a-f0-9]{40}|[a-f0-9]{64})(?![a-f0-9])", r
 _URL_RE = re.compile(r"https?://[^\s]+", re.IGNORECASE)
 
 
+def problem_slug(venue: object, problem_id: object) -> str:
+    """Stable, filesystem-safe key for a linked problem page."""
+    value = unicodedata.normalize(
+        "NFKD", f"{venue or 'problem'}-{problem_id or 'unknown'}"
+    ).encode("ascii", "ignore").decode().lower()
+    value = re.sub(r"[^a-z0-9]+", "-", value).strip("-")
+    return value or "problem"
+_PATH_PART_RE = re.compile(r"[^A-Za-z0-9._-]+")
+
+
 def safe_href(url) -> str | None:
     """Only http(s) URLs may become an href. Everything else (javascript:,
     data:, vbscript:, bare garbage) is rejected; callers fall back to
@@ -95,6 +109,108 @@ def readable_text(value: object) -> object:
         return value
     shortened = short_hash(value)
     return _URL_RE.sub(lambda match: match.group(0).split("/")[2] + "/…", shortened)
+
+
+def _jsonable(value: object) -> object:
+    """Return record data in the JSON-compatible, public form.
+
+    The renderer adds private ``_`` keys while calculating display state. They
+    are implementation details, not part of the portable export. Dates are
+    handled here as well so a consumer gets the same values regardless of
+    whether a YAML loader represents them as strings or date objects.
+    """
+    if isinstance(value, dict):
+        return {
+            str(key): _jsonable(item)
+            for key, item in value.items()
+            if not str(key).startswith("_")
+        }
+    if isinstance(value, (list, tuple)):
+        return [_jsonable(item) for item in value]
+    if isinstance(value, (date, datetime)):
+        return value.isoformat()
+    return value
+
+
+def _path_part(value: object) -> str:
+    """Make a stable, harmless URL path component from external identifiers."""
+    text = _PATH_PART_RE.sub("-", str(value)).strip(".-")
+    return text or "unknown"
+
+
+def _problem_key(record: dict) -> tuple[str, str] | None:
+    problem = record.get("problem_reference")
+    if not isinstance(problem, dict):
+        return None
+    venue = problem.get("venue")
+    problem_id = problem.get("problem_id")
+    if not isinstance(venue, str) or not isinstance(problem_id, (str, int)):
+        return None
+    return venue, str(problem_id)
+
+
+def _record_date(record: dict) -> str:
+    """Choose the newest dated record event for deterministic feed entries."""
+    candidates: list[str] = []
+    for section in (record.get("freshness", {}), record.get("manuscript", {})):
+        for key in ("checked_at", "retrieved_at"):
+            value = section.get(key)
+            if isinstance(value, str) and value:
+                candidates.append(value)
+    for key in ("author_relationship", "claim"):
+        value = record.get(key, {}).get("asserted_at")
+        if isinstance(value, str) and value:
+            candidates.append(value)
+    for key in ("evidence", "attestations", "open_invitations", "digestions"):
+        for item in record.get(key, []) or []:
+            if not isinstance(item, dict):
+                continue
+            for date_key in ("asserted_at", "created_at", "taken_at", "done_at"):
+                value = item.get(date_key)
+                if isinstance(value, str) and value:
+                    candidates.append(value)
+    # Atom requires a timestamp. This sentinel is only used for malformed or
+    # unusually sparse records; valid records normally have several dates.
+    return max(candidates) if candidates else "1970-01-01T00:00:00Z"
+
+
+def _write_json(path: Path, value: object) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(_jsonable(value), ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
+
+
+def _write_feed(path: Path, records: list[dict], public_url: str | None) -> None:
+    """Write a small Atom feed of record changes for polling consumers."""
+    atom = "http://www.w3.org/2005/Atom"
+    feed = ET.Element(f"{{{atom}}}feed")
+    ET.SubElement(feed, f"{{{atom}}}title").text = "Significance records"
+    feed_id = f"{public_url.rstrip('/')}/feed.xml" if public_url else "urn:significance:feed"
+    ET.SubElement(feed, f"{{{atom}}}id").text = feed_id
+    dates = [_record_date(record) for record in records]
+    ET.SubElement(feed, f"{{{atom}}}updated").text = max(dates, default="1970-01-01T00:00:00Z")
+    if public_url:
+        ET.SubElement(
+            feed, f"{{{atom}}}link", rel="self", href=f"{public_url.rstrip('/')}/feed.xml"
+        )
+    for record in records:
+        record_id = record["record_id"]
+        page_url = f"{public_url.rstrip('/')}/{record_id}/" if public_url else record_id
+        entry = ET.SubElement(feed, f"{{{atom}}}entry")
+        title = record.get("claim", {}).get("text", {}).get("value", record_id)
+        ET.SubElement(entry, f"{{{atom}}}title").text = title
+        ET.SubElement(entry, f"{{{atom}}}id").text = page_url
+        ET.SubElement(entry, f"{{{atom}}}updated").text = _record_date(record)
+        ET.SubElement(entry, f"{{{atom}}}link", href=page_url)
+        ET.SubElement(entry, f"{{{atom}}}summary").text = (
+            f"Record v{record.get('record_version', '?')}; "
+            f"{len(record.get('evidence', []))} evidence entries; "
+            f"{len(record.get('open_invitations', []))} open invitations."
+        )
+    ET.register_namespace("", atom)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(ET.tostring(feed, encoding="utf-8", xml_declaration=True))
 
 
 def mathml(latex: object) -> Markup:
@@ -212,6 +328,7 @@ def site_links(
     has_reviewers: bool = False,
     has_backlog: bool = False,
     has_problems: bool = False,
+    has_frontier: bool = False,
     has_intake: bool = True,
 ) -> dict:
     """Where the auxiliary pages live, from the point of view of one page.
@@ -251,6 +368,8 @@ def site_links(
             links["backlog"] = "/backlog/index.html"
         if has_problems:
             links["problems"] = "/problems/index.html"
+        if has_frontier:
+            links["frontier"] = "/frontier/index.html"
         if has_intake:
             links["intake"] = "/how-to-file-a-claim/index.html"
         return links
@@ -270,6 +389,8 @@ def site_links(
         links["backlog"] = f"{root_prefix}backlog/index.html"
     if has_problems:
         links["problems"] = f"{root_prefix}problems/index.html"
+    if has_frontier:
+        links["frontier"] = f"{root_prefix}frontier/index.html"
     if has_intake:
         links["intake"] = f"{root_prefix}how-to-file-a-claim/index.html"
     return links
@@ -379,6 +500,13 @@ def build_site(
                 and len(all_record_files) >= int(config.get("backlog_min_records", 5))
             ),
             has_problems=any(r.get("problem_reference") for r in valid_records),
+            has_frontier=any(
+                any(
+                    i.get("status", "open") in {"open", "taken"}
+                    for i in r.get("open_invitations", [])
+                )
+                for r in valid_records
+            ),
             has_intake=True,
         )
 
@@ -467,21 +595,91 @@ def build_site(
                 1 for invitation in record.get("open_invitations", [])
                 if invitation.get("status", "open") == "open"
             ),
+            "record_href": (
+                f"/records/{record['record_id']}/index.html"
+                if deployed
+                else f"../../{record['record_id']}/index.html"
+            ),
         }
         for record in built_records
         if record.get("problem_reference")
     ]
     if linked_problems:
         linked_problems.sort(key=lambda item: (item["venue"], item["problem_id"]))
+        grouped_problems: dict[str, dict] = {}
+        for item in linked_problems:
+            key = problem_slug(item["venue"], item["problem_id"])
+            group = grouped_problems.setdefault(
+                key,
+                {
+                    "slug": key,
+                    "venue": item["venue"],
+                    "problem_id": item["problem_id"],
+                    "url": item["url"],
+                    "records": [],
+                },
+            )
+            group["records"].append(item)
+        for group in grouped_problems.values():
+            group["record_count"] = len(group["records"])
+            group["evidence_count"] = sum(r["evidence_count"] for r in group["records"])
+            group["open_count"] = sum(r["open_count"] for r in group["records"])
         _write_page(
             pages_dir / "problems",
             env.get_template("problems.html.jinja").render(
                 problems=linked_problems,
+                problem_groups=sorted(
+                    grouped_problems.values(),
+                    key=lambda item: (item["venue"], item["problem_id"]),
+                ),
                 root_prefix=pages_prefix,
                 links=pages_links,
             ),
         )
+        for group in grouped_problems.values():
+            _write_page(
+                pages_dir / "problems" / group["slug"],
+                env.get_template("problem.html.jinja").render(
+                    problem=group,
+                    root_prefix=("/records/" if deployed else "../../"),
+                    links=pages_links,
+                ),
+            )
+            result.pages.append(f"problem:{group['slug']}")
         result.pages.append("problems")
+
+    # Machine-readable problem exports. These are intentionally separate from
+    # the HTML dossier: a tracker can consume the JSON without scraping the
+    # presentation, and a problem may have several linked records.
+    problem_groups_for_export: dict[tuple[str, str], list[dict]] = defaultdict(list)
+    for record in built_records:
+        key = _problem_key(record)
+        if key is not None:
+            problem_groups_for_export[key].append(record)
+    for (venue, problem_id), group in sorted(problem_groups_for_export.items()):
+        group.sort(key=lambda record: record["record_id"])
+        endpoint = pages_dir / "problems" / problem_slug(venue, problem_id) / "index.json"
+        payload = {
+            "export_schema_version": 1,
+            "kind": "significance_problem",
+            "venue": venue,
+            "problem_id": problem_id,
+            "problem_url": group[0]["problem_reference"]["url"],
+            "records": [
+                {
+                    "record_id": record["record_id"],
+                    "record": deepcopy(record),
+                }
+                for record in group
+            ],
+        }
+        _write_json(endpoint, payload)
+        result.pages.append(f"problem-json:{problem_slug(venue, problem_id)}")
+
+    # Consumers can poll this without scraping HTML. The feed contains one
+    # entry per current record; full evidence remains in the JSON exports.
+    _write_feed(pages_dir / "feed.xml", built_records, public_url)
+    result.pages.append("feed")
 
     _write_page(
         pages_dir / "request",
@@ -645,6 +843,42 @@ def build_site(
             ),
         )
         result.pages.append("backlog")
+
+    # Frontier: every currently actionable invitation, grouped only by record
+    # and task kind. This is a work queue, not a ranking of claims.
+    frontier_rows = []
+    for record in built_records:
+        for index, invitation in enumerate(record.get("open_invitations", [])):
+            status = invitation.get("status", "open")
+            if status not in {"open", "taken"}:
+                continue
+            frontier_rows.append(
+                {
+                    "record": record,
+                    "invitation": invitation,
+                    "index": index,
+                    "record_href": (
+                        f"/records/{record['record_id']}/index.html"
+                        if deployed
+                        else f"../{record['record_id']}/index.html"
+                    ),
+                }
+            )
+    if frontier_rows:
+        frontier_rows.sort(
+            key=lambda row: (
+                row["invitation"].get("status", "open") != "open",
+                row["record"]["record_id"],
+                row["index"],
+            )
+        )
+        _write_page(
+            pages_dir / "frontier",
+            env.get_template("frontier.html.jinja").render(
+                rows=frontier_rows, root_prefix=pages_prefix, links=pages_links
+            ),
+        )
+        result.pages.append("frontier")
 
     # A board page sits two directories below its root (boards/<id>/), so its
     # relative prefix is one level deeper than the other auxiliary pages.

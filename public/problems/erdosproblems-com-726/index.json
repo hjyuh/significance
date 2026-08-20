@@ -1,0 +1,282 @@
+{
+  "export_schema_version": 1,
+  "kind": "significance_problem",
+  "venue": "ErdősProblems.com",
+  "problem_id": "726",
+  "problem_url": "https://www.erdosproblems.com/726",
+  "records": [
+    {
+      "record_id": "2026-rafikzeraoulia-erdos-726",
+      "record": {
+        "schema_version": 1,
+        "record_id": "2026-rafikzeraoulia-erdos-726",
+        "record_version": 2,
+        "record_state": "active",
+        "draft": false,
+        "freshness": {
+          "result": "current",
+          "observed_source_version": "zenodo-21882603-v1.0",
+          "confirmed_source_version": "zenodo-21882603-v1.0",
+          "checked_at": "2026-08-16T15:19:21Z"
+        },
+        "parties": {
+          "rafikzeraoulia2025": {
+            "pseudonym": "Rafikzeraoulia2025",
+            "verification_method": {
+              "kind": "pseudonymous",
+              "identifier": "https://www.erdosproblems.com/forum/user/Rafikzeraoulia2025"
+            }
+          },
+          "significance-editor": {
+            "pseudonym": "Significance editor",
+            "verification_method": {
+              "kind": "pseudonymous",
+              "identifier": "significance-project"
+            }
+          },
+          "robsneiderman": {
+            "pseudonym": "RobSneiderman",
+            "verification_method": {
+              "kind": "pseudonymous",
+              "identifier": "https://www.erdosproblems.com/forum/thread/726/proof-claims"
+            }
+          }
+        },
+        "author_relationship": {
+          "status": "author_confirmed_description",
+          "note": "Rafik Zeraoulia reviewed and approved the claim description, source version, hash, and reviewer map by correspondence on 2026-08-18.",
+          "basis": "author_attestation",
+          "asserted_by": "rafikzeraoulia2025",
+          "asserted_at": "2026-08-18T05:08:00Z",
+          "locator": {
+            "url": "https://www.erdosproblems.com/forum/thread/726/proof-claims"
+          }
+        },
+        "problem_reference": {
+          "venue": "ErdősProblems.com",
+          "problem_id": "726",
+          "url": "https://www.erdosproblems.com/726",
+          "basis": "source_quote",
+          "asserted_by": "significance-editor",
+          "asserted_at": "2026-08-16T15:19:21Z",
+          "locator": {
+            "url": "https://www.erdosproblems.com/forum/thread/726/proof-claims"
+          }
+        },
+        "claim": {
+          "id": "claim-main",
+          "text": {
+            "value": "The paper proves Problem #726 conditionally on an explicitly stated reciprocal-prime equidistribution hypothesis.",
+            "basis": "source_quote",
+            "asserted_by": "rafikzeraoulia2025",
+            "asserted_at": "2026-08-11T05:16:05Z",
+            "locator": {
+              "url": "https://www.erdosproblems.com/forum/thread/726/proof-claims",
+              "quote": "The paper proves Problem #726 conditionally on an explicitly stated reciprocal-prime equidistribution hypothesis."
+            }
+          },
+          "scope": {
+            "value": "The proof-claim page labels this submission as a full proof claim and its notes call it conditional.",
+            "basis": "source_quote",
+            "asserted_by": "rafikzeraoulia2025",
+            "asserted_at": "2026-08-11T05:16:05Z",
+            "locator": {
+              "url": "https://www.erdosproblems.com/forum/thread/726/proof-claims",
+              "quote": "A full proof claimed by Rafik Zeraoulia. This is a conditional result, not an unconditional resolution of Problem #726."
+            }
+          }
+        },
+        "plain_summary": {
+          "claimed": "The public proof-claim page says that the submission addresses Problem #726 conditionally and links to a Zenodo manuscript. The page classifies it as a full proof claim, while a public commenter suggested calling it a partial proof; Rafik confirms that it should remain clearly conditional.",
+          "checked": "Significance fetched the proof-claim page and its linked Zenodo PDF, checked the Zenodo version metadata, and computed the PDF SHA-256 hash recorded here.",
+          "not_checked": "Significance has not independently checked the stated hypothesis against the literature or checked the conditional deduction and error accumulation. Independent verification remains open.",
+          "basis": "digest",
+          "asserted_by": "significance-editor",
+          "asserted_at": "2026-08-16T15:19:21Z"
+        },
+        "manuscript": {
+          "url": "https://zenodo.org/records/21882603/files/EGRS_Conditional_Resolution.pdf?download=1",
+          "label": "A Conditional Resolution of an Erdős-Graham-Ruzsa-Straus Conjecture on Reciprocal Sums over Primes",
+          "immutable_version_id": "zenodo-21882603-v1.0",
+          "sha256": "dae18ee07e2b0c69a4557f77bf91525de4cc829a575e71ebb79f404e1b20512d",
+          "retrieved_at": "2026-08-16T15:19:21Z"
+        },
+        "evidence": [
+          {
+            "id": "ev-source-inspection",
+            "kind": "source_inspection",
+            "description": "Significance fetched the queued proof-claim page, followed its direct Zenodo manuscript link, confirmed the public v1.0 metadata, and computed the PDF hash above. The page exposed no formal artifact and no substantive review comment about this claim.",
+            "basis": "machine_result",
+            "asserted_by": "significance-editor",
+            "asserted_at": "2026-08-16T15:19:21Z",
+            "locator": {
+              "url": "https://www.erdosproblems.com/forum/thread/726/proof-claims"
+            }
+          },
+          {
+            "id": "ev-community-classification",
+            "kind": "source_inspection",
+            "description": "A public commenter suggested that this conditional submission be called a partial proof. This records the comment as a public classification, not as Significance's verdict.",
+            "basis": "source_quote",
+            "asserted_by": "robsneiderman",
+            "asserted_at": "2026-08-12T16:15:00Z",
+            "locator": {
+              "url": "https://www.erdosproblems.com/forum/thread/726/proof-claims",
+              "quote": "I would put this as a partial proof, not full."
+            }
+          }
+        ],
+        "ai_provenance": {
+          "disclosure": {
+            "value": "The proof claim is submitted as using OpenAI GPT-5.6 Thinking.",
+            "basis": "source_quote",
+            "asserted_by": "rafikzeraoulia2025",
+            "asserted_at": "2026-08-11T05:16:05Z",
+            "locator": {
+              "url": "https://www.erdosproblems.com/forum/thread/726/proof-claims",
+              "quote": "A full proof claimed by Rafik Zeraoulia (using OpenAI GPT-5.6 Thinking)."
+            }
+          },
+          "roles": [
+            {
+              "role": "proof_generation",
+              "model": "OpenAI GPT-5.6 Thinking",
+              "basis": "source_quote",
+              "asserted_by": "rafikzeraoulia2025",
+              "locator": {
+                "url": "https://www.erdosproblems.com/forum/thread/726/proof-claims"
+              }
+            }
+          ]
+        },
+        "review_map": {
+          "main_deduction": {
+            "text": "Follow the conditional deduction from Hypothesis 3.1 to the asymptotic in Theorem 1.1.",
+            "location": "Theorem 1.1 and Section 6",
+            "pointer": "Trace the small, intermediate, and large-prime ranges through Lemma 6.1.",
+            "basis": "author_attestation",
+            "asserted_by": "rafikzeraoulia2025",
+            "asserted_at": "2026-08-18T05:08:00Z"
+          },
+          "risks": [
+            {
+              "text": "Hypothesis 3.1 is the main dependency: its range, smoothness norm, and error term must be read exactly and kept separate from known theorems.",
+              "location": "Hypothesis 3.1 and Remark 3.2",
+              "basis": "author_attestation",
+              "asserted_by": "rafikzeraoulia2025",
+              "asserted_at": "2026-08-18T05:08:00Z"
+            },
+            {
+              "text": "The final estimate depends on the continuum cancellation and on all three prime ranges contributing only the claimed error.",
+              "location": "Lemma 6.1 and the proof of Theorem 1.1",
+              "basis": "author_attestation",
+              "asserted_by": "rafikzeraoulia2025",
+              "asserted_at": "2026-08-18T05:08:00Z"
+            }
+          ],
+          "prerequisites": [
+            {
+              "text": "Basic Mertens estimates for reciprocal primes, dyadic decomposition, and smooth partial summation.",
+              "pointer": "Sections 3–6; compare the cited prime-equidistribution result separately.",
+              "basis": "author_attestation",
+              "asserted_by": "rafikzeraoulia2025",
+              "asserted_at": "2026-08-18T05:08:00Z"
+            }
+          ],
+          "needs_checking": [
+            {
+              "text": "First compare Hypothesis 3.1 with the cited literature before reading the conditional deduction.",
+              "location": "Hypothesis 3.1 and the cited proposition",
+              "reason": "The paper itself says the required range is presently unproved.",
+              "basis": "author_attestation",
+              "asserted_by": "rafikzeraoulia2025",
+              "asserted_at": "2026-08-18T05:08:00Z"
+            }
+          ]
+        },
+        "digestions": [
+          {
+            "audience": "general_mathematician",
+            "kind": "plain_language",
+            "stratum": "editor",
+            "text": "This record is a review map, not a substitute for the manuscript: it identifies the exact claim, source version, and bounded open tasks so a reader can decide whether to inspect a particular passage. The result is conditional, not an unconditional resolution.",
+            "basis": "editorial_inference",
+            "asserted_by": "significance-editor",
+            "source_claims": [
+              "claim-main"
+            ]
+          },
+          {
+            "audience": "non_specialist",
+            "kind": "plain_language",
+            "stratum": "editor",
+            "text": "This page records what the author claims and what Significance checked about the source file. It does not explain or judge the proof.",
+            "basis": "editorial_inference",
+            "asserted_by": "significance-editor",
+            "source_claims": [
+              "claim-main"
+            ]
+          }
+        ],
+        "open_invitations": [
+          {
+            "kind": "hypothesis_scope",
+            "target": "Check Hypothesis 3.1 and Remark 3.2 against the cited literature.",
+            "how": "Use the exact PDF in manuscript.url. Compare the interval, exp(P^c) range, C^3 norm, and error term with the cited Matomaki--Radziwill-- Shao--Tao--Teravainen result. Record whether the paper labels its hypothesis as conjectural and does not present the citation as a proof of it; this is a source-and-scope check, not a proof verdict.",
+            "respond": {
+              "url": "https://github.com/hjyuh/significance/issues/new?template=invitation-response.yml"
+            },
+            "created_by": "significance-editor",
+            "created_at": "2026-08-16T15:19:21Z"
+          },
+          {
+            "kind": "weighted_reduction",
+            "target": "Check Lemma 3.3, Proposition 5.1, and Corollary 5.2.",
+            "how": "Check the partial-summation step, the smooth approximation and boundary error, and the parameter ranges used to pass from dyadic blocks to the intermediate scales. Record the first gap or the bounded steps followed; do not rate the rest of the manuscript.",
+            "respond": {
+              "url": "https://github.com/hjyuh/significance/issues/new?template=invitation-response.yml"
+            },
+            "created_by": "significance-editor",
+            "created_at": "2026-08-16T15:19:21Z"
+          },
+          {
+            "kind": "main_cancellation",
+            "target": "Check Lemma 6.1 and the decomposition used in the proof of Theorem 1.1.",
+            "how": "Follow the split at the polylogarithmic cutoff Y for small, intermediate, and large primes. Check how Lemma 6.1 supplies the cancellation and whether the three errors combine to O(log log log n). Report only the passages read, not a whole-paper conclusion.",
+            "respond": {
+              "url": "https://github.com/hjyuh/significance/issues/new?template=invitation-response.yml"
+            },
+            "created_by": "significance-editor",
+            "created_at": "2026-08-16T15:19:21Z"
+          },
+          {
+            "kind": "alternate_hypothesis",
+            "target": "Optionally check Hypothesis 8.1 and Proposition 8.2.",
+            "how": "Verify that the exponential-sum hypothesis has the stated frequency range and norms, and that the argument really implies Hypothesis 3.1. Treat the result as a separate bounded implication; it does not make the hypothesis known.",
+            "respond": {
+              "url": "https://github.com/hjyuh/significance/issues/new?template=invitation-response.yml"
+            },
+            "created_by": "significance-editor",
+            "created_at": "2026-08-16T15:19:21Z"
+          }
+        ],
+        "history": [
+          {
+            "id": "evt-created",
+            "type": "created",
+            "at": "2026-08-16T15:19:21Z",
+            "by": "significance-editor",
+            "note": "Drafted from queued proof-claim URL and its directly linked Zenodo PDF; not published and not author-confirmed."
+          },
+          {
+            "id": "evt-author-confirmed",
+            "type": "author-confirmed",
+            "at": "2026-08-18T05:08:00Z",
+            "by": "rafikzeraoulia2025",
+            "note": "Author reviewed and approved the claim scope, source version, hash, and reviewer map for publication; independent verification remains open."
+          }
+        ]
+      }
+    }
+  ]
+}

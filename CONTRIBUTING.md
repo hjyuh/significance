@@ -17,7 +17,10 @@ deduction, the steps you consider most delicate, the background a reader needs,
 and the passages you most want independently examined. Those answers become
 attributed `review_map` entries. Readers can propose an additional anchored
 need through the record page's "Suggest another focused check" link; it is
-merged only as an attributed pull request.
+merged only as an attributed pull request. The complete
+[discussion-to-record guide](docs/discussion-to-record.md) explains how an
+issue or invitation response becomes a version-bound record entry; discussion
+is never promoted automatically.
 
 ## Are you an author, or recording someone else's work?
 

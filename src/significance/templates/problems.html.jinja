@@ -1,7 +1,7 @@
 {% extends "base.html.jinja" %}
 {% import "macros.jinja" as m %}
 {% block title %}Problems — Significance{% endblock %}
-{% block topline_meta %}{{ problems|length }} linked problem record{{ '' if problems|length == 1 else 's' }}{% endblock %}
+{% block topline_meta %}{{ problem_groups|length }} problem{{ '' if problem_groups|length == 1 else 's' }} · {{ problems|length }} record{{ '' if problems|length == 1 else 's' }}{% endblock %}
 {% block content %}
 <section class="band">
   <p class="lbl">Linked problems</p>
@@ -10,11 +10,11 @@
 </section>
 <section class="band">
   <ul class="records-index">
-  {% for item in problems %}
+  {% for item in problem_groups %}
     <li>
       <div>
-        <p class="record-claim"><a href="../records/{{ item.record_id }}/index.html">{{ item.claim }}</a></p>
-        <p class="record-id">{{ item.venue }} #{{ item.problem_id }} · record v{{ item.record_version }}</p>
+        <p class="record-claim"><a href="{{ root_prefix }}problems/{{ item.slug }}/index.html">{{ item.venue }} #{{ item.problem_id }}</a></p>
+        <p class="record-id">{{ item.record_count }} Significance record{{ '' if item.record_count == 1 else 's' }}</p>
       </div>
       <p class="record-state">
         <span>{{ m.external_link(item.url, 'Open problem page') }}</span>

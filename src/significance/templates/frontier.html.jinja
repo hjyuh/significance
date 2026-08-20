@@ -1,0 +1,26 @@
+{% extends "base.html.jinja" %}
+{% import "macros.jinja" as m %}
+{% block title %}Open work — Significance{% endblock %}
+{% block topline_meta %}{{ rows|length }} open task{{ '' if rows|length == 1 else 's' }}{% endblock %}
+{% block content %}
+<section class="band">
+  <p class="lbl">Open work</p>
+  <h1 class="claim-text">A task someone can pick up.</h1>
+  <p class="prose">These are bounded checks recorded by the claimants or editors. Choose one task, follow its instructions, and report what you found. The list is not a ranking of claims.</p>
+</section>
+<section class="band">
+  <ul class="frontier-list">
+  {% for row in rows %}
+    {% set task = row.invitation %}
+    <li class="frontier-item">
+      <p class="meta">{{ task.get('status', 'open')|capitalize }} · {{ task.get('kind', 'task')|replace('_', ' ') }} · <a href="{{ row.record_href }}">{{ row.record.record_id }}</a></p>
+      <h2>{{ task.target }}</h2>
+      {% if task.get('how') %}<p class="prose">{{ task.how|readable_text }}</p>{% endif %}
+      {% if task.get('status') == 'taken' %}<p class="meta">Taken by {{ task.taken_by }} · {{ task.taken_at[:10] }}{% if task.get('taken_note') %} · {{ task.taken_note }}{% endif %}</p>{% endif %}
+      {% set respond = task.get('respond') or {} %}
+      {% if task.get('status', 'open') == 'open' and respond.get('url')|safe_href %}<p><a href="{{ respond.get('url')|safe_href }}">Report what you found</a></p>{% endif %}
+    </li>
+  {% endfor %}
+  </ul>
+</section>
+{% endblock %}

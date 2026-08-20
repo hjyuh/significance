@@ -1,0 +1,26 @@
+{% extends "base.html.jinja" %}
+{% import "macros.jinja" as m %}
+{% block title %}{{ problem.venue }} #{{ problem.problem_id }} — Significance{% endblock %}
+{% block topline_meta %}{{ problem.records|length }} Significance record{{ '' if problem.records|length == 1 else 's' }}{% endblock %}
+{% block content %}
+<section class="band">
+  <p class="lbl">Problem</p>
+  <h1 class="claim-text">{{ problem.venue }} #{{ problem.problem_id }}</h1>
+  <p class="prose">This page gathers the records Significance has linked to this problem. It is a partial evidence and review layer, not a verdict on any claim.</p>
+  <p>{{ m.external_link(problem.url, 'Open the original problem page') }}</p>
+</section>
+<section class="band">
+  <p class="lbl">Claims and evidence</p>
+  <ul class="records-index">
+  {% for item in problem.records %}
+    <li>
+      <div>
+        <p class="record-claim"><a href="{{ item.record_href }}">{{ item.claim }}</a></p>
+        <p class="record-id">{{ item.record_id }} · record v{{ item.record_version }}</p>
+      </div>
+      <p class="record-state"><span>{{ item.evidence_count }} evidence</span><span>{{ item.open_count }} open task{{ '' if item.open_count == 1 else 's' }}</span></p>
+    </li>
+  {% endfor %}
+  </ul>
+</section>
+{% endblock %}

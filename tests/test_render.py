@@ -12,11 +12,12 @@ from __future__ import annotations
 
 import json
 import re
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 from significance.boards import load_board
 from significance.records import load_record
-from significance.render import build_site, load_glossary, mathml, safe_href
+from significance.render import build_site, load_glossary, mathml, problem_slug, safe_href
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 RECORDS_DIR = REPO_ROOT / "records"
@@ -56,9 +57,6 @@ def test_build_produces_index_and_record_page(tmp_path):
     assert (out / "static" / "style.css").exists()
 
     summaries = json.loads((out / "index.json").read_text(encoding="utf-8"))
-    # `records` and `boards`. The file was a bare array until the board needed
-    # somewhere to be linked from and the rule that the React shell may only
-    # present generated data left exactly one place to put it.
     assert sorted(summaries) == ["boards", "records"]
     sources = [load_record(RECORDS_DIR / f"{record_id}.yaml") for record_id in PUBLIC_RECORD_IDS]
     assert summaries["records"] == [
@@ -93,11 +91,66 @@ def test_build_produces_index_and_record_page(tmp_path):
     assert "Summary" in record_html and "Significance" in record_html
     assert "Record note" in record_html and "Significance" in record_html
     assert "Confirming a description would not confirm the mathematics" not in record_html
-    # No scores/badges/verdict language (word-boundary: "ai_provenance" is a
-    # legitimate heading and contains "proven" as a substring).
     lower = record_html.lower()
     for banned in ("verified", "proven", "score", "badge"):
         assert not re.search(rf"\b{banned}\b", lower), banned
+
+
+def test_problem_pages_and_frontier_are_generated_with_resolving_links(tmp_path):
+    out = tmp_path / "site"
+    result = build_site(RECORDS_DIR, out)
+
+    assert "problems" in result.pages
+    assert "problem:erdosproblems-com-653" in result.pages
+    assert "frontier" in result.pages
+    problem_index = (out / "problems" / "index.html").read_text(encoding="utf-8")
+    problem_page = (
+        out / "problems" / "erdosproblems-com-653" / "index.html"
+    ).read_text(encoding="utf-8")
+    frontier = (out / "frontier" / "index.html").read_text(encoding="utf-8")
+    assert "problems/erdosproblems-com-653/index.html" in problem_index
+    assert "../2026-rafikzeraoulia-erdos-653/index.html" in problem_page
+    assert "../2026-rafikzeraoulia-erdos-653/index.html" in frontier
+    assert "A task someone can pick up" in frontier
+
+
+def test_deployed_problem_and_frontier_links_target_records_root(tmp_path):
+    records_out = tmp_path / "public" / "records"
+    pages_out = tmp_path / "public"
+    build_site(RECORDS_DIR, records_out, pages_out=pages_out)
+    problem_page = (
+        pages_out / "problems" / "erdosproblems-com-653" / "index.html"
+    ).read_text(encoding="utf-8")
+    frontier = (pages_out / "frontier" / "index.html").read_text(encoding="utf-8")
+    assert "/records/2026-rafikzeraoulia-erdos-653/index.html" in problem_page
+    assert "/records/2026-rafikzeraoulia-erdos-653/index.html" in frontier
+
+
+def test_problem_slug_is_stable_and_ascii():
+    assert problem_slug("ErdősProblems.com", "653") == "erdosproblems-com-653"
+
+
+def test_build_produces_problem_json_and_atom_feed(tmp_path):
+    out = tmp_path / "site"
+    build_site(RECORDS_DIR, out)
+
+    problem_json = out / "problems" / "erdosproblems-com-653" / "index.json"
+    assert problem_json.exists()
+    payload = json.loads(problem_json.read_text(encoding="utf-8"))
+    assert payload["export_schema_version"] == 1
+    assert payload["kind"] == "significance_problem"
+    assert payload["venue"] == "ErdősProblems.com"
+    assert payload["problem_id"] == "653"
+    assert payload["records"][0]["record_id"] == "2026-rafikzeraoulia-erdos-653"
+    assert "_stale" not in problem_json.read_text(encoding="utf-8")
+
+    feed = ET.parse(out / "feed.xml")
+    atom = "{http://www.w3.org/2005/Atom}"
+    assert feed.getroot().tag == f"{atom}feed"
+    entries = feed.findall(f"{atom}entry")
+    assert len(entries) == len(PUBLIC_RECORD_IDS)
+    ids = {entry.findtext(f"{atom}id") for entry in entries}
+    assert all(any(record_id in entry_id for record_id in PUBLIC_RECORD_IDS) for entry_id in ids)
 
 
 def test_source_inspection_does_not_count_as_written_review(tmp_path):

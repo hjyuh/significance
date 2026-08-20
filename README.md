@@ -39,7 +39,8 @@ shell, research-preview Lean evidence adapter, and CI implemented. See
 `docs/design.md` for the design rationale, `SECURITY.md` for the Lean adapter's
 threat model, `docs/export.md` / `docs/moderation.md` for the integration
 proposal and assessment/outreach policy, and `docs/successor-roadmap.md` for
-the staged path from a portable layer to community reuse.
+the staged path from a portable layer to community reuse. `docs/database.md`
+describes the canonical corpus, write path, and interoperability boundary.
 
 ```
 significance init                       # interactively scaffold a new record
@@ -136,6 +137,9 @@ hash, with an optional short review note; strata are displayed separately.
 Readers can suggest a single anchored `needs_checking` item through the GitHub
 issue template linked on record pages. It becomes part of a record only through
 the ordinary attributed pull-request review.
+The [discussion-to-record guide](docs/discussion-to-record.md) explains how a
+focused issue or invitation response becomes a version-bound review,
+assessment, or evidence entry; discussion is never promoted automatically.
 
 `significance validate` checks boards as well as records, choosing by the
 `kind: board` discriminator. `significance build` gains `--pages-out` for the
