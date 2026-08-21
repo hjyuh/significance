@@ -14,7 +14,7 @@
     {% set task = row.invitation %}
     <li class="frontier-item">
       <p class="meta">{{ task.get('status', 'open')|capitalize }} · {{ task.get('kind', 'task')|replace('_', ' ') }} · <a href="{{ row.record_href }}">{{ row.record.record_id }}</a></p>
-      <h2>{{ task.target }}</h2>
+      <h2><a href="{{ row.task_href }}">{{ task.target }}</a></h2>
       {% if task.get('how') %}<p class="prose">{{ task.how|readable_text }}</p>{% endif %}
       {% if task.get('status') == 'taken' %}<p class="meta">Taken by {{ task.taken_by }} · {{ task.taken_at[:10] }}{% if task.get('taken_note') %} · {{ task.taken_note }}{% endif %}</p>{% endif %}
       {% set respond = task.get('respond') or {} %}

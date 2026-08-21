@@ -1,0 +1,7 @@
+id: att-example
+task_id: task
+reviewer: reviewer
+manuscript_sha256: "0000000000000000000000000000000000000000000000000000000000000000"
+asserted_at: "2026-08-20T00:00:00Z"
+method: read
+finding: I read the scoped passage.

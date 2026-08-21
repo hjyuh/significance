@@ -1,0 +1,18 @@
+schema_version: 1
+record_id: 2026-example-task-kind
+record_version: 1
+record_state: active
+freshness: {result: unknown, checked_at: "2026-08-20T00:00:00Z"}
+parties:
+  editor: {name: Editor, verification_method: {kind: github_identity}}
+claim:
+  id: example
+  text: {value: Example claim, basis: source_quote, asserted_by: editor, asserted_at: "2026-08-20T00:00:00Z", locator: {page: 1}}
+  scope: {value: Example scope, basis: source_quote, asserted_by: editor, asserted_at: "2026-08-20T00:00:00Z", locator: {page: 1}}
+manuscript: {url: "https://example.org/paper.pdf", label: paper, sha256: "0000000000000000000000000000000000000000000000000000000000000000", retrieved_at: "2026-08-20T00:00:00Z"}
+evidence: [{id: source, kind: source_inspection, description: inspected, basis: source_quote, asserted_by: editor, asserted_at: "2026-08-20T00:00:00Z", locator: {page: 1}}]
+ai_provenance:
+  disclosure: {value: none, basis: source_quote, asserted_by: editor, asserted_at: "2026-08-20T00:00:00Z", locator: {page: 1}}
+  roles: []
+open_invitations: [{task_id: task, kind: reading, target: passage, task_kind: unknown, created_by: editor, created_at: "2026-08-20T00:00:00Z"}]
+history: [{id: evt-created, type: created, at: "2026-08-20T00:00:00Z", by: editor}]

@@ -361,7 +361,7 @@
         {% set oi_status = oi.get('status', 'open') %}
         <p class="meta">Status: {{ oi_status }}{% if oi_status == 'taken' %} · {{ oi.taken_by }} · {{ oi.taken_at[:10] }}{% if oi.taken_note %} · {{ oi.taken_note }}{% endif %}{% endif %}{% if oi_status == 'done' and oi.done_ref %} · <a href="#evidence-{{ oi.done_ref }}">Recorded result</a>{% endif %}</p>
         <p class="invitation-kind">{% if oi.kind == 'mathematical_review' %}Mathematical reading{% elif oi.kind == 'correspondence' %}Compare the statements{% elif oi.kind == 'reproduction' %}Rerun the artifact{% else %}{{ oi.kind|replace('_', ' ') }}{% endif %}</p>
-        <p class="invitation-target">{{ oi.target|short_hash }}</p>
+        <p class="invitation-target">{% if oi_status in ('open', 'taken') %}<a href="{{ task_root }}{{ oi.task_id or ('task-' ~ loop.index) }}/index.html">{{ oi.target|short_hash }}</a>{% else %}{{ oi.target|short_hash }}{% endif %}</p>
         {# The affordance appears only where instructions exist. An invitation
            without `how` renders exactly as it did before this feature: a
            "take this task" control on a task with no instructions promises

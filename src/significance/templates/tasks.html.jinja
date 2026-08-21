@@ -1,0 +1,21 @@
+{% extends "base.html.jinja" %}
+{% block title %}Take a check — Significance{% endblock %}
+{% block topline_meta %}{{ rows|length }} bounded task{{ '' if rows|length == 1 else 's' }}{% endblock %}
+{% block content %}
+<section class="band">
+  <p class="lbl">Take a check</p>
+  <h1 class="claim-text">One bounded task at a time.</h1>
+  <p class="prose">Choose a passage, use the pinned source, and report what you checked and found. This list is not a ranking.</p>
+</section>
+<section class="band">
+  <table><thead><tr><th>Task</th><th>Record</th><th>Effort</th><th>Prerequisites</th><th>Status</th></tr></thead><tbody>
+  {% for row in rows %}{% set task = row.invitation %}<tr>
+    <td><a href="{{ row.task_href }}">{{ task.target }}</a></td>
+    <td><a href="{{ row.record_href }}">{{ row.record.record_id }}</a></td>
+    <td>{{ task.get('effort_estimate', 'Not estimated') }}{% if task.get('effort_estimate') %}<span class="meta"> · estimated by {{ task.created_by }}</span>{% endif %}</td>
+    <td>{% if task.get('prerequisites') %}{{ task.prerequisites|join('; ') }}{% else %}None recorded{% endif %}</td>
+    <td>{{ task.get('status', 'open') }}</td>
+  </tr>{% endfor %}
+  </tbody></table>
+</section>
+{% endblock %}

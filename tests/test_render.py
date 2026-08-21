@@ -168,6 +168,25 @@ def test_nested_pages_keep_navigation_at_site_root(tmp_path):
         assert 'href="../orientation/index.html"' not in html
 
 
+def test_scoped_task_pages_and_index_are_generated(tmp_path):
+    out = tmp_path / "site"
+    result = build_site(RECORDS_DIR, out)
+    assert "tasks" in result.pages
+    task_index = (out / "tasks" / "index.html").read_text(encoding="utf-8")
+    task_page = (
+        out
+        / "tasks"
+        / "2026-rafikzeraoulia-erdos-653"
+        / "restricted-center-incidence"
+        / "index.html"
+    ).read_text(encoding="utf-8")
+    assert "5 bounded tasks" in task_index or "bounded tasks" in task_index
+    assert "a87ca77b143fd6382ce3882fbef2320c3d037ed92d4128fe078689784bfc4147" in task_page
+    assert "Open pre-filled attestation issue" in task_page
+    assert "State what you checked and found" in task_page
+    assert "restricted-center-incidence" in task_page
+
+
 def test_source_inspection_does_not_count_as_written_review(tmp_path):
     # Living-author drafts are kept outside the public repository. When the
     # private fixture bundle is absent (as it is in a clean checkout), the

@@ -6,6 +6,7 @@ import sys
 from pathlib import Path
 
 from significance.diff import diff_records, format_diff_human
+from significance.incorporate import incorporate_attestation
 from significance.init import scaffold_record, write_record
 from significance.records import load_record, validator
 from significance.render import build_site
@@ -45,6 +46,13 @@ def _build_parser() -> argparse.ArgumentParser:
             "pages live under /records/ and those pages do not."
         ),
     )
+
+    p_incorporate = sub.add_parser(
+        "incorporate-attestation", help="add a reviewed scoped attestation to a record"
+    )
+    p_incorporate.add_argument("input", help="YAML or JSON attestation file")
+    p_incorporate.add_argument("--record", required=True, help="record id to update")
+    p_incorporate.add_argument("--records-dir", default="records")
     p_build.add_argument(
         "--boards",
         help="directory of status boards to render. Defaults to boards/ at the repo root.",
@@ -106,6 +114,16 @@ def _cmd_build(args) -> int:
     return 1 if result.skipped else 0
 
 
+def _cmd_incorporate(args) -> int:
+    try:
+        path = incorporate_attestation(args.input, args.record, args.records_dir)
+    except (OSError, ValueError) as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
+    print(f"Updated {path}; review and commit the change.")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = _build_parser()
     args = parser.parse_args(argv)
@@ -114,6 +132,7 @@ def main(argv: list[str] | None = None) -> int:
         "validate": _cmd_validate,
         "diff": _cmd_diff,
         "build": _cmd_build,
+        "incorporate-attestation": _cmd_incorporate,
     }
     return handlers[args.command](args)
 

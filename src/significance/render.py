@@ -25,6 +25,7 @@ from copy import deepcopy
 from dataclasses import dataclass, field
 from datetime import date, datetime
 from pathlib import Path
+from urllib.parse import urlencode
 
 from jinja2 import Environment, FileSystemLoader
 from latex2mathml.converter import convert as latex_to_mathml
@@ -71,6 +72,49 @@ def problem_slug(venue: object, problem_id: object) -> str:
     ).encode("ascii", "ignore").decode().lower()
     value = re.sub(r"[^a-z0-9]+", "-", value).strip("-")
     return value or "problem"
+
+
+def task_id(invitation: dict, index: int) -> str:
+    """Return the explicit task id, or a stable legacy fallback."""
+    return invitation.get("task_id") or f"task-{index + 1}"
+
+
+def _attestation_yaml(record: dict, invitation: dict, task: str) -> str:
+    """Build the reviewer-facing YAML skeleton from record data only."""
+    payload = {
+        "id": f"att-{task}",
+        "task_id": task,
+        "reviewer": "[your name or handle]",
+        "scope": invitation["target"],
+        "manuscript_sha256": record["manuscript"]["sha256"],
+        "asserted_at": "[YYYY-MM-DDTHH:MM:SSZ]",
+        "method": "[what you actually did: read / rederived / rebuilt / compared]",
+        "finding": "[what you checked and found about exactly this scope]",
+        "limits": "[what you did not check — optional but encouraged]",
+    }
+    yaml = YAML()
+    from io import StringIO
+
+    output = StringIO()
+    yaml.dump(payload, output)
+    return output.getvalue()
+
+
+def _attestation_issue_url(invitation: dict, record: dict, task: str) -> str | None:
+    response = (invitation.get("respond") or {}).get("url")
+    if not safe_href(response):
+        return None
+    response = response.replace("template=invitation-response.yml", "template=attestation.yml")
+    query = urlencode(
+        {
+            "title": f"Scoped attestation: {record['record_id']} / {task}",
+            "record": record["record_id"],
+            "task": task,
+            "revision": record["manuscript"]["sha256"],
+            "scope": invitation["target"],
+        }
+    )
+    return response + ("&" if "?" in response else "?") + query
 _PATH_PART_RE = re.compile(r"[^A-Za-z0-9._-]+")
 
 
@@ -331,6 +375,7 @@ def site_links(
     has_frontier: bool = False,
     has_intake: bool = True,
     has_feed: bool = False,
+    has_tasks: bool = False,
 ) -> dict:
     """Where the auxiliary pages live, from the point of view of one page.
 
@@ -375,6 +420,8 @@ def site_links(
             links["intake"] = "/how-to-file-a-claim/index.html"
         if has_feed:
             links["feed"] = "/feed.xml"
+        if has_tasks:
+            links["tasks"] = "/tasks/index.html"
         return links
 
     links = {
@@ -398,6 +445,8 @@ def site_links(
         links["intake"] = f"{root_prefix}how-to-file-a-claim/index.html"
     if has_feed:
         links["feed"] = f"{root_prefix}feed.xml"
+    if has_tasks:
+        links["tasks"] = f"{root_prefix}tasks/index.html"
     return links
 
 
@@ -514,6 +563,11 @@ def build_site(
             ),
             has_intake=True,
             has_feed=True,
+            has_tasks=any(
+                i.get("status", "open") in {"open", "taken"}
+                for r in valid_records
+                for i in r.get("open_invitations", [])
+            ),
         )
 
     env = _environment()
@@ -567,6 +621,9 @@ def build_site(
             status_text=record_status_text(record, record_url),
             root_prefix="../",
             links=links_for("../"),
+            task_root=(
+                f"/tasks/{record_id}/" if deployed else f"../tasks/{record_id}/"
+            ),
         )
         _write_page(out_dir / record_id, html)
 
@@ -795,7 +852,10 @@ def build_site(
     _write_page(
         pages_dir / "reviewers",
         env.get_template("reviewers.html.jinja").render(
-            reviewers=reviewer_rows, root_prefix=pages_prefix, links=pages_links
+            reviewers=reviewer_rows,
+            root_prefix=pages_prefix,
+            links=pages_links,
+            public_url=public_url,
         ),
     )
     result.pages.append("reviewers")
@@ -806,6 +866,7 @@ def build_site(
                 reviewer=reviewer,
                 root_prefix=detail_prefix,
                 links=detail_links,
+                public_url=public_url,
             ),
         )
         result.pages.append(f"reviewer:{reviewer['id']}")
@@ -874,6 +935,14 @@ def build_site(
                         if deployed
                         else f"../{record['record_id']}/index.html"
                     ),
+                    "task_href": (
+                        f"/tasks/{record['record_id']}/{task_id(invitation, index)}/index.html"
+                        if deployed
+                        else (
+                            f"../tasks/{record['record_id']}/"
+                            f"{task_id(invitation, index)}/index.html"
+                        )
+                    ),
                 }
             )
     if frontier_rows:
@@ -891,6 +960,55 @@ def build_site(
             ),
         )
         result.pages.append("frontier")
+
+    # Each actionable invitation gets a stable reviewer-facing page. The page
+    # is generated entirely from the record so the manuscript hash and scope
+    # cannot drift from the task that invited the work.
+    task_rows = []
+    for record in built_records:
+        for index, invitation in enumerate(record.get("open_invitations", [])):
+            status = invitation.get("status", "open")
+            if status not in {"open", "taken"}:
+                continue
+            tid = task_id(invitation, index)
+            task_rows.append(
+                {
+                    "record": record,
+                    "invitation": invitation,
+                    "task_id": tid,
+                    "record_href": (
+                        f"/records/{record['record_id']}/index.html"
+                        if deployed
+                        else f"../{record['record_id']}/index.html"
+                    ),
+                    "task_href": (
+                        f"/tasks/{record['record_id']}/{tid}/index.html"
+                        if deployed
+                        else f"../../tasks/{record['record_id']}/{tid}/index.html"
+                    ),
+                    "issue_url": _attestation_issue_url(invitation, record, tid),
+                    "attestation_yaml": _attestation_yaml(record, invitation, tid),
+                }
+            )
+    if task_rows:
+        task_rows.sort(key=lambda row: (row["record"]["record_id"], row["task_id"]))
+        _write_page(
+            pages_dir / "tasks",
+            env.get_template("tasks.html.jinja").render(
+                rows=task_rows, root_prefix=pages_prefix, links=pages_links
+            ),
+        )
+        result.pages.append("tasks")
+        for row in task_rows:
+            _write_page(
+                pages_dir / "tasks" / row["record"]["record_id"] / row["task_id"],
+                env.get_template("task.html.jinja").render(
+                    row=row,
+                    root_prefix=("/" if deployed else "../../../"),
+                    links=links_for("/" if deployed else "../../../"),
+                ),
+            )
+            result.pages.append(f"task:{row['record']['record_id']}:{row['task_id']}")
 
     # A board page sits two directories below its root (boards/<id>/), so its
     # relative prefix is one level deeper than the other auxiliary pages.

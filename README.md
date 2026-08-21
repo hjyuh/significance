@@ -211,3 +211,10 @@ paid-reviewer service.
 ## License
 
 Apache-2.0. See `LICENSE`.
+## Taking a check
+
+Open [the task list](https://hjyuh.github.io/significance/tasks/) and choose one bounded task. Its page pins the manuscript hash, scope, entry points, prerequisites, and estimated effort. Use the pre-filled GitHub issue to report what you actually checked and found; do not write a verdict about the whole proof.
+
+## Incorporating an attestation
+
+An editor reviews the issue, adds the contributor as a declared party, and saves the scoped YAML attestation. Run `significance incorporate-attestation attestation.yaml --record <record-id>`; the command rejects a stale manuscript hash, verdict language, unknown task, or undeclared reviewer, then marks the task done and appends history. Review the diff and commit it normally—nothing auto-publishes.

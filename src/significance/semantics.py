@@ -492,12 +492,37 @@ def check_invitation_state(record: dict) -> list[Violation]:
     return violations
 
 
+def check_invitation_task_kinds(record: dict) -> list[Violation]:
+    """Keep the optional task taxonomy closed when an invitation opts in."""
+    allowed = {"read_check", "rederive", "reproduce_build", "statement_audit"}
+    violations = []
+    for i, invitation in enumerate(record.get("open_invitations") or []):
+        if not isinstance(invitation, dict) or "task_kind" not in invitation:
+            continue
+        if invitation.get("task_kind") not in allowed:
+            violations.append(
+                Violation(
+                    "task-kind-unknown",
+                    (
+                        f"task_kind must be one of {sorted(allowed)}, "
+                        f"got {invitation.get('task_kind')!r}"
+                    ),
+                    f"open_invitations[{i}].task_kind",
+                )
+            )
+    return violations
+
+
 def check_review_notes(record: dict) -> list[Violation]:
     violations = []
     for i, attestation in enumerate(record.get("attestations") or []):
         note = attestation.get("review_note") if isinstance(attestation, dict) else None
         if isinstance(note, str):
             violations.extend(verdict_violations(note, f"attestations[{i}].review_note"))
+        for field in ("method", "finding", "limits"):
+            value = attestation.get(field) if isinstance(attestation, dict) else None
+            if isinstance(value, str):
+                violations.extend(verdict_violations(value, f"attestations[{i}].{field}"))
     return violations
 
 
@@ -675,6 +700,7 @@ def semantic_violations(record: dict, known_ids: set[str] | None = None) -> list
         *check_review_map(record),
         *check_invitation_instructions(record),
         *check_invitation_state(record),
+        *check_invitation_task_kinds(record),
         *check_review_notes(record),
         *(check_dependencies(record, known_ids) if known_ids is not None else []),
         *check_freshness_recomputation(record),

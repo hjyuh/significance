@@ -46,6 +46,7 @@ def test_valid_record_has_no_violations():
         ("plain-summary-verdict.yaml", "verdict-language"),
         ("plain-language-verdict.yaml", "verdict-language"),
         ("invitation-empty-how.yaml", "empty-invitation-instructions"),
+        ("task-kind-unknown.yaml", "task-kind-unknown"),
     ],
 )
 def test_single_record_broken_fixture(fixture_name, expected_rule):

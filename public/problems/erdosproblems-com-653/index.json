@@ -195,6 +195,13 @@
         "open_invitations": [
           {
             "kind": "proof_bookkeeping",
+            "task_id": "restricted-center-incidence",
+            "task_kind": "rederive",
+            "effort_estimate": "[FILL: editor estimate]",
+            "prerequisites": [
+              "incidence geometry basics"
+            ],
+            "entry_points": "Theorem 1.1, Proposition 2.1, Section 3",
             "target": "Check Theorem 1.1 and the Section 3 deduction from the incidence bound to the exponent.",
             "how": "Use the exact PDF in manuscript.url. Check the low-R center selection, the bounds M <= T and L <= T^2, the terms used from Theorem 2.2, and the optimization that gives beta(alpha) and theta. Report the first step you cannot justify, or say which bounded steps you followed; this is not a review of the whole paper.",
             "respond": {
@@ -205,6 +212,13 @@
           },
           {
             "kind": "incidence_hypotheses",
+            "task_id": "distance-count-conversion",
+            "task_kind": "read_check",
+            "effort_estimate": "[FILL: editor estimate]",
+            "prerequisites": [
+              "Theorem 2.2 as cited in the manuscript"
+            ],
+            "entry_points": "Theorem 1.1, Proposition 2.1, Section 3",
             "target": "Check the hypotheses of Theorem 2.2 where it is applied to the constructed circles.",
             "how": "Check that the circle family and selected centers satisfy the exact distinctness, multiplicity, and range assumptions of the cited Pach--Tardos incidence theorem. Record the numbered passage examined; do not infer that the main theorem follows from this check alone.",
             "respond": {

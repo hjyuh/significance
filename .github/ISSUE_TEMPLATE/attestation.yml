@@ -1,0 +1,58 @@
+name: Scoped attestation
+description: Report what you checked on one bounded Significance task.
+title: "Scoped attestation: "
+labels: ["attestation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        State what you checked and found—not whether the whole proof is correct.
+        This report is attached to one source version and one scope.
+  - type: input
+    id: record
+    attributes:
+      label: Record
+    validations: { required: true }
+  - type: input
+    id: task
+    attributes:
+      label: Task
+    validations: { required: true }
+  - type: input
+    id: revision
+    attributes:
+      label: Manuscript SHA-256
+    validations: { required: true }
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+    validations: { required: true }
+  - type: input
+    id: reviewer
+    attributes:
+      label: Name or handle for attribution
+    validations: { required: true }
+  - type: input
+    id: date
+    attributes:
+      label: Date
+      placeholder: YYYY-MM-DD
+    validations: { required: true }
+  - type: textarea
+    id: method
+    attributes:
+      label: Method
+      description: What you actually did: read, rederived, rebuilt, or compared.
+    validations: { required: true }
+  - type: textarea
+    id: finding
+    attributes:
+      label: Finding
+      description: State what you checked and found about this scope only—not a verdict on the whole proof.
+    validations: { required: true }
+  - type: textarea
+    id: limits
+    attributes:
+      label: Limits
+      description: What you did not check? Optional but encouraged.

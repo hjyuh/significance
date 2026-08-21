@@ -179,6 +179,11 @@ digestions:
 
 open_invitations:
   - kind: proof_bookkeeping
+    task_id: restricted-center-incidence
+    task_kind: rederive
+    effort_estimate: "[FILL: editor estimate]"
+    prerequisites: ["incidence geometry basics"]
+    entry_points: "Theorem 1.1, Proposition 2.1, Section 3"
     target: "Check Theorem 1.1 and the Section 3 deduction from the incidence bound to the exponent."
     how: >-
       Use the exact PDF in manuscript.url. Check the low-R center selection,
@@ -191,6 +196,11 @@ open_invitations:
     created_by: significance-editor
     created_at: "2026-08-16T15:19:21Z"
   - kind: incidence_hypotheses
+    task_id: distance-count-conversion
+    task_kind: read_check
+    effort_estimate: "[FILL: editor estimate]"
+    prerequisites: ["Theorem 2.2 as cited in the manuscript"]
+    entry_points: "Theorem 1.1, Proposition 2.1, Section 3"
     target: "Check the hypotheses of Theorem 2.2 where it is applied to the constructed circles."
     how: >-
       Check that the circle family and selected centers satisfy the exact

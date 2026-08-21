@@ -737,6 +737,7 @@
       "additionalProperties": false,
       "required": ["kind", "target", "created_by", "created_at"],
       "properties": {
+        "task_id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
         "kind": { "type": "string", "minLength": 1 },
         "target": { "type": "string", "minLength": 1 },
         "created_by": {
@@ -762,7 +763,11 @@
             "url": { "type": "string", "format": "uri" },
             "mailto": { "type": "string", "minLength": 1 }
           }
-        }
+        },
+        "effort_estimate": { "type": "string", "maxLength": 120 },
+        "prerequisites": { "type": "array", "items": { "type": "string", "maxLength": 200 } },
+        "task_kind": { "type": "string", "maxLength": 40 },
+        "entry_points": { "type": "string", "maxLength": 240 }
       }
     },
 
@@ -772,11 +777,15 @@
       "required": ["id", "reviewer", "scope", "manuscript_sha256", "asserted_by", "asserted_at"],
       "properties": {
         "id": { "type": "string", "minLength": 1 },
+        "task_id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
         "reviewer": { "$ref": "#/$defs/party_id" },
         "scope": { "type": "string", "minLength": 1 },
         "depth": { "type": "string", "minLength": 1 },
         "manuscript_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
         "review_note": { "type": "string", "maxLength": 1200 },
+        "method": { "type": "string", "maxLength": 1200 },
+        "finding": { "type": "string", "maxLength": 2000 },
+        "limits": { "type": "string", "maxLength": 1200 },
         "link": { "type": "string", "format": "uri" },
         "stratum": { "type": "string", "enum": ["author", "editor", "community", "domain_expert", "machine"] },
         "asserted_by": { "$ref": "#/$defs/party_id" },

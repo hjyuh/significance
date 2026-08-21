@@ -221,6 +221,13 @@
         "open_invitations": [
           {
             "kind": "hypothesis_scope",
+            "task_id": "hypothesis-3-1-scope",
+            "task_kind": "statement_audit",
+            "effort_estimate": "[FILL: editor estimate]",
+            "prerequisites": [
+              "Hypothesis 3.1 and the cited literature"
+            ],
+            "entry_points": "Hypothesis 3.1, Lemma 3.3",
             "target": "Check Hypothesis 3.1 and Remark 3.2 against the cited literature.",
             "how": "Use the exact PDF in manuscript.url. Compare the interval, exp(P^c) range, C^3 norm, and error term with the cited Matomaki--Radziwill-- Shao--Tao--Teravainen result. Record whether the paper labels its hypothesis as conjectural and does not present the citation as a proof of it; this is a source-and-scope check, not a proof verdict.",
             "respond": {
@@ -231,6 +238,13 @@
           },
           {
             "kind": "weighted_reduction",
+            "task_id": "theorem-1-1-error-accumulation",
+            "task_kind": "rederive",
+            "effort_estimate": "[FILL: editor estimate]",
+            "prerequisites": [
+              "partial summation and smooth approximation"
+            ],
+            "entry_points": "Lemma 3.3, Proposition 5.1, Corollary 5.2, Theorem 1.1",
             "target": "Check Lemma 3.3, Proposition 5.1, and Corollary 5.2.",
             "how": "Check the partial-summation step, the smooth approximation and boundary error, and the parameter ranges used to pass from dyadic blocks to the intermediate scales. Record the first gap or the bounded steps followed; do not rate the rest of the manuscript.",
             "respond": {

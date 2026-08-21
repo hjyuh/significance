@@ -343,6 +343,11 @@ importance_claims:
 
 open_invitations:
   - kind: reproduction
+    task_id: nonsofic-lean-rerun
+    task_kind: reproduce_build
+    effort_estimate: "[FILL: editor estimate]"
+    prerequisites: ["Lean 4.32.0", "pinned commit and toolchain in this record's evidence"]
+    entry_points: "NonSoficGroup, ComparatorChallenges/D_NonSoficGroup.json"
     target: "Reproduce NonSoficGroup at commit c510a55434c0935cde446e5a372699a4671438f6 under Lean 4.32.0 and run its Comparator/Nanoda challenge."
     how: >-
       Clone https://github.com/openai/ten-proofs and check out
