@@ -11,7 +11,10 @@
     <li>
       <div>
         <p class="record-claim"><a href="{{ r.record_id }}/index.html">{% if r.claim.get('display_math') %}<span class="claim-math-inline" aria-label="{{ r.claim.text.value }}">{{ r.claim.display_math|mathml }}</span>{% else %}{{ r.claim.text.value }}{% endif %}</a></p>
-        <p class="record-id">{{ r.record_id }} · v{{ r.record_version }} · {{ r.claim.text.get('basis', '?') }} / {{ r.claim.text.get('asserted_by', '?') }}</p>
+        {% set claimant = r.get('parties', {}).get(r.claim.text.get('asserted_by', ''), {}) %}
+        {% set problem = r.get('problem_reference') %}
+        <p class="record-id">{% if problem %}{{ problem.venue }} #{{ problem.problem_id }} · {% endif %}v{{ r.record_version }} · {% if claimant.get('name') %}{{ claimant.name }}{% elif claimant.get('pseudonym') %}{{ claimant.pseudonym }}{% else %}Claimant not named{% endif %}</p>
+        <p class="record-actions"><a href="{{ r.record_id }}/index.html">Read the record</a> · <a href="{{ r.record_id }}/index.html#open-checks">See open checks</a></p>
       </div>
       <p class="record-state">
         <span>{% if r.get('draft') %}Editorial draft{% elif r.record_state == 'active' %}Active{% else %}{{ r.record_state|replace('_', ' ')|capitalize }}{% endif %}</span>

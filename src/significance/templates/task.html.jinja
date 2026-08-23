@@ -10,6 +10,8 @@
     <dt>Task type</dt><dd>{{ task.get('task_kind', task.get('kind', 'bounded check'))|replace('_', ' ') }}</dd>
     {% if task.get('entry_points') %}<dt>Entry points</dt><dd>{{ task.entry_points }}</dd>{% endif %}
     <dt>Source PDF</dt><dd><a class="button" href="{{ row.record.manuscript.url }}">Download the exact manuscript</a><br><span class="meta">{{ row.record.manuscript.label }} · version <code>{{ row.record.manuscript.sha256|short_hash }}</code></span></dd>
+    {% set handoff = row.record.get('formalization_handoff', {}) %}
+    {% if handoff.get('repository') %}<dt>Code</dt><dd><a href="{{ handoff.repository.url }}">Open the formalization repository</a>{% if handoff.repository.get('commit') %} · pinned commit <code>{{ handoff.repository.commit|short_hash }}</code>{% endif %}</dd>{% endif %}
     {% if task.get('effort_estimate') %}<dt>Effort</dt><dd>{{ task.effort_estimate }} <span class="meta">(estimated by {{ task.created_by }})</span></dd>{% endif %}
     {% if task.get('prerequisites') %}<dt>Prerequisites</dt><dd>{{ task.prerequisites|join('; ') }}</dd>{% endif %}
   </dl>
