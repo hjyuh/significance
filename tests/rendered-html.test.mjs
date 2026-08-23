@@ -88,3 +88,9 @@ test("the homepage derives its record facts from the generated index", () => {
     /2026-openai-nonsofic-groups|2026-anthropic-zeta-two-thirds|2026-08-01|2026-08-10|L_F2\(1,2\)|0\.67250|three scoped invitations/,
   );
 });
+
+test("the static record index renders display mathematics", () => {
+  const index = readFileSync("public/records/index.html", "utf8");
+  assert.match(index, /class="claim-math-inline"/);
+  assert.match(index, /<mfrac>/);
+});

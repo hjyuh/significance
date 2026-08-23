@@ -10,7 +10,7 @@
     {% for r in records %}
     <li>
       <div>
-        <p class="record-claim"><a href="{{ r.record_id }}/index.html">{{ r.claim.text.value }}</a></p>
+        <p class="record-claim"><a href="{{ r.record_id }}/index.html">{% if r.claim.get('display_math') %}<span class="claim-math-inline" aria-label="{{ r.claim.text.value }}">{{ r.claim.display_math|mathml }}</span>{% else %}{{ r.claim.text.value }}{% endif %}</a></p>
         <p class="record-id">{{ r.record_id }} · v{{ r.record_version }} · {{ r.claim.text.get('basis', '?') }} / {{ r.claim.text.get('asserted_by', '?') }}</p>
       </div>
       <p class="record-state">
