@@ -41,6 +41,7 @@ threat model, `docs/export.md` / `docs/moderation.md` for the integration
 proposal and assessment/outreach policy, and `docs/successor-roadmap.md` for
 the staged path from a portable layer to community reuse. `docs/database.md`
 describes the canonical corpus, write path, and interoperability boundary.
+For a model-readable handoff, see `docs/current-state.md`.
 
 ```
 significance init                       # interactively scaffold a new record

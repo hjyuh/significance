@@ -846,6 +846,11 @@ def build_site(
             ),
             None,
         )
+        row["display_name"] = (
+            (party.get("name") or party.get("pseudonym"))
+            if isinstance(party, dict)
+            else row["id"].replace("-", " ")
+        )
         if party and party.get("affiliation"):
             row["affiliation"] = party["affiliation"]
     reviewer_rows = sorted(reviewer_map.values(), key=lambda x: x["id"].lower())

@@ -52,6 +52,7 @@ def test_incorporation_marks_task_done_and_appends_history(tmp_path):
     assert updated["open_invitations"][0]["status"] == "done"
     assert updated["open_invitations"][0]["done_ref"] == "att-task-one"
     assert updated["history"][-1]["type"] == "attestation_added"
+    assert updated["record_version"] == record["record_version"] + 1
 
 
 def test_incorporation_rejects_hash_mismatch(tmp_path):

@@ -61,6 +61,10 @@ def incorporate_attestation(
         raise ValueError(f"attestation id already exists: {attestation['id']}")
     attestation.setdefault("stratum", "community")
     candidate = deepcopy(record)
+    # Incorporation is a record mutation. Bump the authored record version in
+    # the same atomic write so `validate --base` cannot reject an otherwise
+    # valid attestation for a forgotten manual edit.
+    candidate["record_version"] = int(record["record_version"]) + 1
     candidate.setdefault("attestations", []).append(attestation)
     task_index = next(
         i

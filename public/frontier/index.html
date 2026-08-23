@@ -10,10 +10,10 @@
 <body>
 <header class="topline">
 <a class="wordmark" href="/records/index.html">SIGNIFICANCE</a>
-<p class="topline-meta">12 open tasks</p>
+<p class="topline-meta">15 open tasks</p>
 <nav class="topline-nav" aria-label="Site">
 <a href="/orientation/index.html">What is going on</a><a href="/request/index.html">Request or correct a record</a>
-<a href="/how-to-file-a-claim/index.html">How to file a claim</a><a href="/reviewers/index.html">Reviewers</a><a href="/frontier/index.html">Open work</a><a href="/problems/index.html">Problems</a><a href="/glossary/index.html">Glossary</a><a href="/feed.xml">Atom feed</a><a href="/tasks/index.html">Take a check</a><a href="/boards/ten-results/index.html">ten results</a>
+<a href="/how-to-file-a-claim/index.html">How to file a claim</a><a href="/reviewers/index.html">Reviewers</a><a href="/backlog/index.html">Backlog</a><a href="/frontier/index.html">Open work</a><a href="/problems/index.html">Problems</a><a href="/glossary/index.html">Glossary</a><a href="/feed.xml">Atom feed</a><a href="/tasks/index.html">Take a check</a><a href="/boards/ten-results/index.html">ten results</a>
 </nav>
 </header>
 <div class="shell">
@@ -25,6 +25,18 @@
 </section>
 <section class="band">
   <ul class="frontier-list">
+    <li class="frontier-item">
+      <p class="meta">Open · formal reproduction · <a href="/records/2026-alexchengyuli-erdos-848/index.html">2026-alexchengyuli-erdos-848</a></p>
+      <h2><a href="/tasks/2026-alexchengyuli-erdos-848/erdos-848-lean-reproduction/index.html">Reproduce the pinned Lean release and report the build and certificate result within the published-cache replay trust boundary.</a></h2>
+<p class="prose">Check out tag v1.0.5-kernel at commit bb8e1b10b006…. Download all 75 cache-shard ZIP files together with the manifest and checksum assets, place them in one directory, and run python -B scripts/install_release_cache.py --asset-dir &lt;download-directory&gt; --prepare-dependencies --kernel --memory-mib 32768. Do not run lake update. Record the toolchain, commands, result, resource limits, and log hash. This checks reproducibility, not the truth of the mathematical claim.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=attestation.yml">Report what you found</a></p>    </li>
+    <li class="frontier-item">
+      <p class="meta">Open · certificate reading · <a href="/records/2026-alexchengyuli-erdos-848/index.html">2026-alexchengyuli-erdos-848</a></p>
+      <h2><a href="/tasks/2026-alexchengyuli-erdos-848/erdos-848-certificate-audit/index.html">Read one certificate-generation path and record the exact passages followed.</a></h2>
+<p class="prose">Follow this concrete declaration path from paper/theorem-map.json: Erdos848.PaperGeneratedCertificateProvider.all_N -&gt; numericalCertificates.fiveSharp -&gt; GeneratedTailR263EvenOneFinite23.sharpCertificate -&gt; E1Finite23SharpCertificate -&gt; e1FiniteSharpFourLeafPasses_sound -&gt; erdos848FiveToTenMillionClose -&gt; PaperCertificateProvider.fiveToTenMillion. Record the exact declarations and commands checked, without rating the whole proof.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=attestation.yml">Report what you found</a></p>    </li>
+    <li class="frontier-item">
+      <p class="meta">Open · correspondence · <a href="/records/2026-alexchengyuli-erdos-848/index.html">2026-alexchengyuli-erdos-848</a></p>
+      <h2><a href="/tasks/2026-alexchengyuli-erdos-848/erdos-848-statement-correspondence/index.html">Compare the paper&#39;s exact all-N statement with the pinned Lean declaration, recording both the paper version and the pinned machine-proof version.</a></h2>
+<p class="prose">Record the paper version and the pinned machine-proof version, list the definitions and declarations compared, and record any remaining correspondence question; do not characterize the whole proof. The author reports that editorial revisions after v1.0.5-kernel did not change the theorem, Lean source tree, theorem map, or mathematical conclusion; that report is not an independent finding.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=attestation.yml">Report what you found</a></p>    </li>
     <li class="frontier-item">
       <p class="meta">Open · reproduction · <a href="/records/2026-anthropic-zeta-two-thirds/index.html">2026-anthropic-zeta-two-thirds</a></p>
       <h2><a href="/tasks/2026-anthropic-zeta-two-thirds/task-1/index.html">Independently build the Theorem D Lean targets and run their axiom audit at commit 3635e74826a4c1fcece7d1cd2b6fa75e43a00510.</a></h2>

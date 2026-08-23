@@ -9,12 +9,12 @@
   <dl class="facts">
     <dt>Task type</dt><dd>{{ task.get('task_kind', task.get('kind', 'bounded check'))|replace('_', ' ') }}</dd>
     {% if task.get('entry_points') %}<dt>Entry points</dt><dd>{{ task.entry_points }}</dd>{% endif %}
-    <dt>Manuscript</dt><dd><a href="{{ row.record.manuscript.url }}">{{ row.record.manuscript.label }}</a> · <code>{{ row.record.manuscript.sha256|short_hash }}</code></dd>
+    <dt>Source PDF</dt><dd><a class="button" href="{{ row.record.manuscript.url }}">Download the exact manuscript</a><br><span class="meta">{{ row.record.manuscript.label }} · version <code>{{ row.record.manuscript.sha256|short_hash }}</code></span></dd>
     {% if task.get('effort_estimate') %}<dt>Effort</dt><dd>{{ task.effort_estimate }} <span class="meta">(estimated by {{ task.created_by }})</span></dd>{% endif %}
     {% if task.get('prerequisites') %}<dt>Prerequisites</dt><dd>{{ task.prerequisites|join('; ') }}</dd>{% endif %}
   </dl>
 </section>
 <section class="band"><p class="lbl">Status</p><p class="prose">{{ task.get('status', 'open')|capitalize }}{% if task.get('status') == 'taken' %} by {{ task.taken_by }} since {{ task.taken_at[:10] }}{% endif %}.</p></section>
-<section class="band"><p class="lbl">How to do this</p><ol><li>Get the exact manuscript above and confirm its full SHA-256 hash is <code>{{ row.record.manuscript.sha256 }}</code>.</li><li>Read or reproduce only the stated scope and note the method you actually used.</li><li>Submit what you found through the pre-filled issue or propose the YAML below by pull request.</li></ol>{% if row.issue_url %}<p><a class="button" href="{{ row.issue_url }}">Open pre-filled attestation issue</a></p>{% endif %}</section>
+<section class="band"><p class="lbl">How to do this</p><ol><li>Download the exact manuscript above and start with the stated entry points. The version hash identifies the file for the eventual record; you do not need to calculate it before reading.</li><li>Read or reproduce only the stated scope and note the method you actually used.</li>{% if row.issue_url %}<li>Submit what you found through the linked attestation form below, using the record, task, scope, and manuscript hash shown here.</li>{% else %}<li>Submit what you found through a pull request using the YAML template below.</li>{% endif %}</ol>{% if row.issue_url %}<p><a class="button" href="{{ row.issue_url }}">Open attestation form</a></p>{% endif %}</section>
 <section class="band"><p class="lbl">Attestation template</p><p class="prose">Fill only what you did. State what you checked and found—not whether the whole proof is correct.</p><pre class="copy-block">{{ row.attestation_yaml }}</pre></section>
 {% endblock %}

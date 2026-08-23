@@ -24,6 +24,7 @@ RECORDS_DIR = REPO_ROOT / "records"
 EXAMPLE_RECORD = REPO_ROOT / "examples" / "synthetic-ramsey-k7.yaml"
 PUBLIC_RECORD_ID = "2026-openai-nonsofic-groups"
 PUBLIC_RECORD_IDS = [
+    "2026-alexchengyuli-erdos-848",
     "2026-anthropic-zeta-two-thirds",
     PUBLIC_RECORD_ID,
     "2026-rafikzeraoulia-erdos-653",
@@ -182,7 +183,7 @@ def test_scoped_task_pages_and_index_are_generated(tmp_path):
     ).read_text(encoding="utf-8")
     assert "5 bounded tasks" in task_index or "bounded tasks" in task_index
     assert "a87ca77b143fd6382ce3882fbef2320c3d037ed92d4128fe078689784bfc4147" in task_page
-    assert "Open pre-filled attestation issue" in task_page
+    assert "Open attestation form" in task_page
     assert "State what you checked and found" in task_page
     assert "restricted-center-incidence" in task_page
 
@@ -191,7 +192,8 @@ def test_source_inspection_does_not_count_as_written_review(tmp_path):
     # Living-author drafts are kept outside the public repository. When the
     # private fixture bundle is absent (as it is in a clean checkout), the
     # public corpus cannot exercise this privacy-only rendering assertion.
-    if not DRAFTS_DIR.exists():
+    draft_fixture = DRAFTS_DIR / "2026-zeraoulia-erdos-653.yaml"
+    if not draft_fixture.exists():
         return
     out = tmp_path / "draft-site"
     result = build_site(DRAFTS_DIR, out)

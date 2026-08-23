@@ -61,7 +61,7 @@ test("the homepage derives its record facts from the generated index", () => {
   // needed somewhere to be linked from, and the rule that the shell may only
   // present generated data left exactly one place to put it.
   assert.deepEqual(Object.keys(summaries).sort(), ["boards", "records"]);
-  assert.equal(summaries.records.length, 4);
+  assert.equal(summaries.records.length, 5);
   const byId = Object.fromEntries(summaries.records.map((record) => [record.record_id, record]));
   assert.equal(byId["2026-openai-nonsofic-groups"].freshness, "current");
   assert.equal(byId["2026-openai-nonsofic-groups"].evidence_count, 2);

@@ -1,6 +1,19 @@
 {
   "records": [
     {
+      "record_id": "2026-alexchengyuli-erdos-848",
+      "record_version": 1,
+      "record_state": "active",
+      "claim": "The submission claims a full proof that, for every N >= 1, the maximum size of a set A subset of {1, ..., N} such that ab + 1 is nonsquarefree for every a, b in A is floor((N + 18)/25).",
+      "claim_mathml": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\"><mrow><mo>&#x0007C;</mo><mi>A</mi><mo>&#x0007C;</mo><mo>&#x02264;</mo><mrow><mo stretchy=\"true\" fence=\"true\" form=\"prefix\">&#x0230A;</mo><mfrac><mrow><mi>N</mi><mo>&#x0002B;</mo><mn>18</mn></mrow><mrow><mn>25</mn></mrow></mfrac><mo stretchy=\"true\" fence=\"true\" form=\"postfix\">&#x0230B;</mo></mrow></mrow></math>",
+      "claim_basis": "source_quote",
+      "claim_asserted_by": "significance-editor",
+      "freshness": "current",
+      "freshness_checked_at": "2026-08-22T15:00:00Z",
+      "evidence_count": 3,
+      "open_invitation_count": 3
+    },
+    {
       "record_id": "2026-anthropic-zeta-two-thirds",
       "record_version": 2,
       "record_state": "active",
