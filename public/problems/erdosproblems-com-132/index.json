@@ -1,0 +1,266 @@
+{
+  "export_schema_version": 1,
+  "kind": "significance_problem",
+  "venue": "ErdősProblems.com",
+  "problem_id": "132",
+  "problem_url": "https://www.erdosproblems.com/132",
+  "records": [
+    {
+      "record_id": "2026-evanbeller-erdos-132",
+      "record": {
+        "schema_version": 1,
+        "record_id": "2026-evanbeller-erdos-132",
+        "record_version": 1,
+        "record_state": "active",
+        "draft": false,
+        "freshness": {
+          "result": "current",
+          "observed_source_version": "proof-claim-218 and GitHub ffd0920dedff01f04f1c605754384a6a5207f662",
+          "confirmed_source_version": "proof-claim-218 and GitHub ffd0920dedff01f04f1c605754384a6a5207f662",
+          "checked_at": "2026-08-23T19:11:00Z"
+        },
+        "parties": {
+          "b4ller": {
+            "name": "Evan Beller",
+            "verification_method": {
+              "kind": "pseudonymous",
+              "identifier": "https://www.erdosproblems.com/forum/user/b4ller"
+            }
+          },
+          "significance-editor": {
+            "pseudonym": "Significance editor",
+            "verification_method": {
+              "kind": "pseudonymous",
+              "identifier": "significance-project"
+            }
+          }
+        },
+        "author_relationship": {
+          "status": "author_confirmed_description",
+          "note": "Evan Beller reviewed the rendered draft and confirmed the scope, description, and two proposed checks on 2026-08-24.",
+          "basis": "author_attestation",
+          "asserted_by": "b4ller",
+          "asserted_at": "2026-08-24T08:54:00Z",
+          "locator": {
+            "url": "https://www.erdosproblems.com/dm/"
+          }
+        },
+        "problem_reference": {
+          "venue": "ErdősProblems.com",
+          "problem_id": "132",
+          "url": "https://www.erdosproblems.com/132",
+          "basis": "source_quote",
+          "asserted_by": "significance-editor",
+          "asserted_at": "2026-08-23T19:11:00Z",
+          "locator": {
+            "url": "https://www.erdosproblems.com/forum/thread/132/proof-claims#proof-claim-218"
+          }
+        },
+        "claim": {
+          "id": "claim-main",
+          "text": {
+            "value": "The submission claims a proof of the first assertion of Erdős Problem #132 for n = 8: every eight-point planar set has two distinct distances occurring at most eight times.",
+            "basis": "source_quote",
+            "asserted_by": "b4ller",
+            "asserted_at": "2026-08-23T06:00:18Z",
+            "locator": {
+              "url": "https://www.erdosproblems.com/forum/thread/132/proof-claims#proof-claim-218",
+              "quote": "We prove the first assertion of Erdős Problem #132 for n=8."
+            }
+          },
+          "scope": {
+            "value": "This is only the n = 8 case of the first assertion; the general problem remains open.",
+            "basis": "source_quote",
+            "asserted_by": "b4ller",
+            "asserted_at": "2026-08-23T06:00:18Z",
+            "locator": {
+              "url": "https://www.erdosproblems.com/forum/thread/132/proof-claims#proof-claim-218"
+            }
+          }
+        },
+        "plain_summary": {
+          "claimed": "A public proof claim says the n = 8 case of the first assertion of Problem #132 is proved. It is not a claim to resolve the general problem.",
+          "checked": "Significance inspected the proof-claim page, downloaded the linked proof PDF, and recorded the linked formalization repository and its public commit.",
+          "not_checked": "Significance has not assessed the geometric deduction, the cited classification results, the Lean correspondence, or the finite computation.",
+          "basis": "digest",
+          "asserted_by": "significance-editor",
+          "asserted_at": "2026-08-23T19:11:00Z"
+        },
+        "manuscript": {
+          "url": "https://github.com/EvanBeller/erdos-132/blob/master/paper/erdos132_n8.pdf?raw=1",
+          "label": "Erdős Problem #132, n = 8 proof writeup",
+          "immutable_version_id": "github-EvanBeller-erdos-132-ffd0920dedff01f04f1c605754384a6a5207f662",
+          "sha256": "5d3faea03531035426c9f5ca8ece9c8db90ff2cdaff4238f3eb1090747c5b209",
+          "retrieved_at": "2026-08-23T19:11:00Z"
+        },
+        "evidence": [
+          {
+            "id": "ev-source-inspection",
+            "kind": "source_inspection",
+            "description": "The public proof-claim page and its linked PDF and formalization repository were inspected. This is source inspection, not a mathematical review.",
+            "basis": "editorial_inference",
+            "asserted_by": "significance-editor",
+            "asserted_at": "2026-08-23T19:11:00Z",
+            "locator": {
+              "url": "https://www.erdosproblems.com/forum/thread/132/proof-claims#proof-claim-218"
+            }
+          },
+          {
+            "id": "ev-formalization-reported",
+            "kind": "external_formal_artifact",
+            "repo": "https://github.com/EvanBeller/erdos-132/tree/master/formalization",
+            "commit": "ffd0920dedff01f04f1c605754384a6a5207f662",
+            "description": "The claim page links a Lean formalization directory. No independent build receipt is recorded here.",
+            "basis": "source_quote",
+            "asserted_by": "b4ller",
+            "asserted_at": "2026-08-23T06:00:18Z",
+            "locator": {
+              "url": "https://www.erdosproblems.com/forum/thread/132/proof-claims#proof-claim-218"
+            }
+          }
+        ],
+        "ai_provenance": {
+          "disclosure": {
+            "value": "The public claim says the writeup used OpenAI Codex and ChatGPT.",
+            "basis": "source_quote",
+            "asserted_by": "b4ller",
+            "asserted_at": "2026-08-23T06:00:18Z",
+            "locator": {
+              "url": "https://www.erdosproblems.com/forum/thread/132/proof-claims#proof-claim-218"
+            }
+          },
+          "roles": [
+            {
+              "role": "prose_editing",
+              "model": "OpenAI Codex; ChatGPT",
+              "basis": "source_quote",
+              "asserted_by": "b4ller",
+              "locator": {
+                "url": "https://www.erdosproblems.com/forum/thread/132/proof-claims#proof-claim-218"
+              }
+            }
+          ]
+        },
+        "review_map": {
+          "main_deduction": {
+            "text": "Check the (9,9,9,1) multiplicity reduction, the two seven-point deletions, and the overlap-rigidity contradiction.",
+            "location": "The proof PDF; formalization directory",
+            "pointer": "The claim identifies the profile reduction and overlap-rigidity lemma as the central route.",
+            "basis": "source_quote",
+            "asserted_by": "b4ller",
+            "asserted_at": "2026-08-23T06:00:18Z",
+            "locator": {
+              "url": "https://www.erdosproblems.com/forum/thread/132/proof-claims#proof-claim-218"
+            }
+          },
+          "risks": [
+            {
+              "text": "Check that the cited classification of seven-point three-distance sets applies exactly to each deletion.",
+              "location": "Proof PDF, deletion and classification argument",
+              "basis": "editorial_inference",
+              "asserted_by": "significance-editor",
+              "asserted_at": "2026-08-23T19:11:00Z"
+            },
+            {
+              "text": "Check the overlap-rigidity lemma and the contradiction from the two distinct diameter endpoints.",
+              "location": "Proof PDF, overlap-rigidity lemma",
+              "basis": "source_quote",
+              "asserted_by": "b4ller",
+              "asserted_at": "2026-08-23T06:00:18Z",
+              "locator": {
+                "url": "https://www.erdosproblems.com/forum/thread/132/proof-claims#proof-claim-218"
+              }
+            }
+          ],
+          "prerequisites": [
+            {
+              "text": "The Hopf–Pannwitz diameter bound, basic distance multiplicity counting, and the cited seven-point classification.",
+              "pointer": "Proof PDF references and introduction",
+              "basis": "editorial_inference",
+              "asserted_by": "significance-editor",
+              "asserted_at": "2026-08-23T19:11:00Z"
+            }
+          ],
+          "needs_checking": [
+            {
+              "text": "Reconstruct the finite n = 8 argument and compare the Lean declarations with the informal statement.",
+              "location": "Proof PDF and formalization directory",
+              "reason": "The public claim reports formal verification conditional on cited literature inputs; no independent check is recorded.",
+              "basis": "source_quote",
+              "asserted_by": "b4ller",
+              "asserted_at": "2026-08-23T06:00:18Z",
+              "locator": {
+                "url": "https://www.erdosproblems.com/forum/thread/132/proof-claims#proof-claim-218"
+              }
+            }
+          ]
+        },
+        "digestions": [
+          {
+            "audience": "general_mathematician",
+            "kind": "plain_language",
+            "stratum": "editor",
+            "text": "This is a bounded n = 8 result, not a solution of the general distance problem. A reader can begin with the multiplicity profile and the two deletion arguments.",
+            "basis": "editorial_inference",
+            "asserted_by": "significance-editor",
+            "source_claims": [
+              "claim-main"
+            ]
+          }
+        ],
+        "open_invitations": [
+          {
+            "kind": "geometric_check",
+            "task_id": "erdos-132-n8-geometry",
+            "task_kind": "read_check",
+            "effort_estimate": "about 90 minutes",
+            "prerequisites": [
+              "Planar distance geometry and the cited seven-point classification"
+            ],
+            "entry_points": "Multiplicity profile, deletion argument, and overlap-rigidity lemma",
+            "target": "Check the n = 8 geometric deduction only; report the exact passages followed and any first unresolved step.",
+            "how": "Use the pinned PDF. Check the profile reduction, both seven-point deletions, the overlap lemma, and the final contradiction. Do not rate the whole paper.",
+            "respond": {
+              "url": "https://github.com/hjyuh/significance/issues/new?template=attestation.yml"
+            },
+            "created_by": "significance-editor",
+            "created_at": "2026-08-23T19:11:00Z"
+          },
+          {
+            "kind": "formal_correspondence",
+            "task_id": "erdos-132-lean-correspondence",
+            "task_kind": "statement_audit",
+            "effort_estimate": "about 60 minutes",
+            "prerequisites": [
+              "Lean 4 and the repository's formalization directory"
+            ],
+            "entry_points": "formalization/ and the n = 8 theorem in the PDF",
+            "target": "Compare the formal theorem and definitions with the informal n = 8 claim.",
+            "how": "List the declarations compared and record where correspondence is clear or remains open; do not infer proof correctness from compilation.",
+            "respond": {
+              "url": "https://github.com/hjyuh/significance/issues/new?template=attestation.yml"
+            },
+            "created_by": "significance-editor",
+            "created_at": "2026-08-23T19:11:00Z"
+          }
+        ],
+        "history": [
+          {
+            "id": "evt-created",
+            "type": "created",
+            "at": "2026-08-23T19:11:00Z",
+            "by": "significance-editor",
+            "note": "Private draft prepared from proof-claim-218 and its linked public artifacts; not published and not author-confirmed."
+          },
+          {
+            "id": "evt-author-confirmed",
+            "type": "author-confirmed",
+            "at": "2026-08-24T08:54:00Z",
+            "by": "b4ller",
+            "note": "Author reviewed the rendered draft and approved publication; independent verification remains open."
+          }
+        ]
+      }
+    }
+  ]
+}

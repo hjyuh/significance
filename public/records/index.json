@@ -27,6 +27,19 @@
       "open_invitation_count": 3
     },
     {
+      "record_id": "2026-evanbeller-erdos-132",
+      "record_version": 1,
+      "record_state": "active",
+      "claim": "The submission claims a proof of the first assertion of Erdős Problem #132 for n = 8: every eight-point planar set has two distinct distances occurring at most eight times.",
+      "claim_mathml": null,
+      "claim_basis": "source_quote",
+      "claim_asserted_by": "b4ller",
+      "freshness": "current",
+      "freshness_checked_at": "2026-08-23T19:11:00Z",
+      "evidence_count": 2,
+      "open_invitation_count": 2
+    },
+    {
       "record_id": "2026-openai-nonsofic-groups",
       "record_version": 8,
       "record_state": "active",
