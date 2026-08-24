@@ -26,6 +26,7 @@ PUBLIC_RECORD_ID = "2026-openai-nonsofic-groups"
 PUBLIC_RECORD_IDS = [
     "2026-alexchengyuli-erdos-848",
     "2026-anthropic-zeta-two-thirds",
+    "2026-evanbeller-erdos-132",
     PUBLIC_RECORD_ID,
     "2026-rafikzeraoulia-erdos-653",
     "2026-rafikzeraoulia-erdos-726",
