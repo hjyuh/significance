@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none';">
+<title>Open work — Significance</title>
+<link rel="stylesheet" href="../static/style.css?v=3c7178b69640">
+</head>
+<body>
+<header class="topline">
+<a class="wordmark" href="../index.html">SIGNIFICANCE</a>
+<p class="topline-meta">10 open tasks</p>
+<nav class="topline-nav" aria-label="Site">
+<a href="../orientation/index.html">What is going on</a><a href="../request/index.html">Request or correct a record</a>
+<a href="../how-to-file-a-claim/index.html">How to file a claim</a><a href="../reviewers/index.html">Reviewers</a><a href="../frontier/index.html">Open work</a><a href="../problems/index.html">Problems</a><a href="../glossary/index.html">Glossary</a><a href="../feed.xml">Atom feed</a><a href="../tasks/index.html">Take a check</a><a href="../boards/ten-results/index.html">ten results</a>
+</nav>
+</header>
+<div class="shell">
+<main>
+<section class="band">
+  <p class="lbl">Open work</p>
+  <h1 class="claim-text">A task someone can pick up.</h1>
+  <p class="prose">These are bounded checks recorded by the claimants or editors. Choose one task, follow its instructions, and report what you found. The list is not a ranking of claims.</p>
+</section>
+<section class="band">
+  <ul class="frontier-list">
+    <li class="frontier-item">
+      <p class="meta">Open · formal reproduction · <a href="../2026-alexchengyuli-erdos-848/index.html">2026-alexchengyuli-erdos-848</a></p>
+      <h2><a href="../tasks/2026-alexchengyuli-erdos-848/erdos-848-lean-reproduction/index.html">Reproduce the pinned Lean release and report the build and certificate result within the published-cache replay trust boundary.</a></h2>
+<p class="prose">Check out tag v1.0.5-kernel at commit bb8e1b10b006…. Download all 75 cache-shard ZIP files together with the manifest and checksum assets, place them in one directory, and run python -B scripts/install_release_cache.py --asset-dir &lt;download-directory&gt; --prepare-dependencies --kernel --memory-mib 32768. Do not run lake update. Record the toolchain, commands, result, resource limits, and log hash. This checks reproducibility, not the truth of the mathematical claim.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=attestation.yml">Report what you found</a></p>    </li>
+    <li class="frontier-item">
+      <p class="meta">Open · certificate reading · <a href="../2026-alexchengyuli-erdos-848/index.html">2026-alexchengyuli-erdos-848</a></p>
+      <h2><a href="../tasks/2026-alexchengyuli-erdos-848/erdos-848-certificate-audit/index.html">Read one certificate-generation path and record the exact passages followed.</a></h2>
+<p class="prose">Follow this concrete declaration path from paper/theorem-map.json: Erdos848.PaperGeneratedCertificateProvider.all_N -&gt; numericalCertificates.fiveSharp -&gt; GeneratedTailR263EvenOneFinite23.sharpCertificate -&gt; E1Finite23SharpCertificate -&gt; e1FiniteSharpFourLeafPasses_sound -&gt; erdos848FiveToTenMillionClose -&gt; PaperCertificateProvider.fiveToTenMillion. Record the exact declarations and commands checked, without rating the whole proof.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=attestation.yml">Report what you found</a></p>    </li>
+    <li class="frontier-item">
+      <p class="meta">Open · correspondence · <a href="../2026-alexchengyuli-erdos-848/index.html">2026-alexchengyuli-erdos-848</a></p>
+      <h2><a href="../tasks/2026-alexchengyuli-erdos-848/erdos-848-statement-correspondence/index.html">Compare the paper&#39;s exact all-N statement with the pinned Lean declaration, recording both the paper version and the pinned machine-proof version.</a></h2>
+<p class="prose">Record the paper version and the pinned machine-proof version, list the definitions and declarations compared, and record any remaining correspondence question; do not characterize the whole proof. The author reports that editorial revisions after v1.0.5-kernel did not change the theorem, Lean source tree, theorem map, or mathematical conclusion; that report is not an independent finding.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=attestation.yml">Report what you found</a></p>    </li>
+    <li class="frontier-item">
+      <p class="meta">Open · analytic reading · <a href="../2026-erichou-erdos-906/index.html">2026-erichou-erdos-906</a></p>
+      <h2><a href="../tasks/2026-erichou-erdos-906/erdos-906-small-ball-jensen/index.html">Read the small-ball and Jensen steps and report the exact scope followed.</a></h2>
+<p class="prose">Record the passages read, definitions used, and any specific question or reconstruction; do not rate the whole paper.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=attestation.yml">Report what you found</a></p>    </li>
+    <li class="frontier-item">
+      <p class="meta">Open · formal correspondence · <a href="../2026-erichou-erdos-906/index.html">2026-erichou-erdos-906</a></p>
+      <h2><a href="../tasks/2026-erichou-erdos-906/erdos-906-lean-analytic-correspondence/index.html">Compare the formal theorem with the analytic statement in the manuscript.</a></h2>
+<p class="prose">List the declarations and definitions compared, and record where correspondence is clear or still open.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=attestation.yml">Report what you found</a></p>    </li>
+    <li class="frontier-item">
+      <p class="meta">Open · reference check · <a href="../2026-erichou-erdos-906/index.html">2026-erichou-erdos-906</a></p>
+      <h2><a href="../tasks/2026-erichou-erdos-906/erdos-906-boas-reddy/index.html">Check the comparison as a manuscript claim against the cited papers.</a></h2>
+<p class="prose">Report the passages read and whether the citation supports the wording; do not diagnose an unverified gap.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=attestation.yml">Report what you found</a></p>    </li>
+    <li class="frontier-item">
+      <p class="meta">Open · geometric check · <a href="../2026-evanbeller-erdos-132/index.html">2026-evanbeller-erdos-132</a></p>
+      <h2><a href="../tasks/2026-evanbeller-erdos-132/erdos-132-n8-geometry/index.html">Check the n = 8 geometric deduction only; report the exact passages followed and any first unresolved step.</a></h2>
+<p class="prose">Use the pinned PDF. Check the profile reduction, both seven-point deletions, the overlap lemma, and the final contradiction. Do not rate the whole paper.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=attestation.yml">Report what you found</a></p>    </li>
+    <li class="frontier-item">
+      <p class="meta">Open · formal correspondence · <a href="../2026-evanbeller-erdos-132/index.html">2026-evanbeller-erdos-132</a></p>
+      <h2><a href="../tasks/2026-evanbeller-erdos-132/erdos-132-lean-correspondence/index.html">Compare the formal theorem and definitions with the informal n = 8 claim.</a></h2>
+<p class="prose">List the declarations compared and record where correspondence is clear or remains open; do not infer proof correctness from compilation.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=attestation.yml">Report what you found</a></p>    </li>
+    <li class="frontier-item">
+      <p class="meta">Open · additive combinatorics check · <a href="../2026-rajveerkapoor-erdos-153/index.html">2026-rajveerkapoor-erdos-153</a></p>
+      <h2><a href="../tasks/2026-rajveerkapoor-erdos-153/erdos-153-scale-summation/index.html">Check one bounded scale-summation segment and report the exact passages followed.</a></h2>
+<p class="prose">Use the pinned PDF. Check the definitions, hypotheses, and inequality directions in the selected segment; report the first unresolved step without rating the whole paper.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=attestation.yml">Report what you found</a></p>    </li>
+    <li class="frontier-item">
+      <p class="meta">Open · reduction check · <a href="../2026-rajveerkapoor-erdos-153/index.html">2026-rajveerkapoor-erdos-153</a></p>
+      <h2><a href="../tasks/2026-rajveerkapoor-erdos-153/erdos-153-concentration-reduction/index.html">Check whether the stated failure conditions follow from the preceding inequalities.</a></h2>
+<p class="prose">Record each implication checked and any hypothesis whose use needs clarification; do not infer an unconditional solution.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=attestation.yml">Report what you found</a></p>    </li>
+  </ul>
+</section>
+</main>
+</div>
+<footer class="site-footer">
+<p>Significance mechanically validates provenance and a narrow set of evidence predicates. It does not mechanically determine mathematical truth.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,897 @@
+/* Ledger styling. Dense monospace scaffolding, one sans display face for
+   claims and prose. Deliberately no color-coded badges, pills, or icons:
+   record_state, freshness, and receipt results are plain text at the same
+   weight as any other label, because none of them is a verdict on the
+   mathematics. The only accent color is reserved for open invitations —
+   an invitation to do work, not a judgment of a claim. */
+
+:root {
+  color-scheme: dark light;
+
+  --bg: #111311;
+  --bg-rail: #0c0e0c;
+  --fg: #dfe2dd;
+  --fg-strong: #ffffff;
+  --fg-body: #eceeeb;
+  --dim: #a8afa6;
+  --muted: #7d857c;
+  --rule: #2b2f2b;
+  --hair: #212521;
+  --edge: #3d4a3f;
+  --note: #9ec4ad;
+
+  --mono: ui-monospace, "SFMono-Regular", "SF Mono", Menlo, Consolas, monospace;
+  --sans: system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+
+  --frame: 1180px;
+  --rail-w: 340px;
+  --pad: 42px;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f7f7f4;
+    --bg-rail: #eeeeea;
+    --fg: #1d201c;
+    --fg-strong: #000000;
+    --fg-body: #1d201c;
+    --dim: #3f453e;
+    --muted: #6b7269;
+    --rule: #d2d5cd;
+    --hair: #e3e5de;
+    --edge: #a9b6ab;
+    --note: #2c5c44;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+a { color: inherit; text-decoration-color: var(--muted); }
+a:hover { color: var(--fg-strong); text-decoration-color: currentColor; }
+
+code {
+  font-family: var(--mono);
+  font-size: 1em;
+  word-break: break-all;
+}
+
+/* Record data carries bare repository URLs, arXiv links, and hashes: single
+   unbreakable tokens that would otherwise overflow their grid column and
+   bleed out of the evidence card. */
+dl.facts dd,
+.side-by-side p,
+.row .v,
+.meta,
+.prose a,
+.records-index .record-id { overflow-wrap: anywhere; }
+
+/* ---------- frame ---------- */
+
+.topline,
+.shell,
+.site-footer {
+  max-width: var(--frame);
+  margin: 0 auto;
+}
+
+.topline {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: baseline;
+  gap: 10px 28px;
+  padding: 20px 32px 18px;
+  border-bottom: 1px solid var(--rule);
+  font-size: 11.5px;
+}
+
+.wordmark {
+  color: var(--fg-strong);
+  letter-spacing: 0.14em;
+  text-decoration: none;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.topline-meta { margin: 0; color: var(--muted); text-align: right; font-family: var(--mono); }
+
+.shell { display: grid; grid-template-columns: minmax(0, 1fr); }
+
+.shell.with-rail { grid-template-columns: minmax(0, 1fr) var(--rail-w); }
+.shell.with-rail > main { border-right: 1px solid var(--rule); }
+
+.rail { background: var(--bg-rail); }
+
+.site-footer {
+  padding: 18px 28px 34px;
+  border-top: 1px solid var(--rule);
+  color: var(--muted);
+  font-size: 11.5px;
+}
+
+.site-footer p { margin: 0; max-width: 72ch; }
+
+/* ---------- bands and labels ---------- */
+
+.band {
+  padding: 38px var(--pad) 42px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.band:last-child { border-bottom: 0; }
+
+.lbl {
+  margin: 0 0 18px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.lbl-sub {
+  margin: -8px 0 14px;
+  font-family: var(--sans);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.prose {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--dim);
+  text-wrap: pretty;
+}
+
+/* ---------- claim ---------- */
+
+.record-hero {
+  padding-top: 54px;
+  padding-bottom: 50px;
+  background: linear-gradient(180deg, var(--bg-rail), var(--bg));
+}
+
+.eyebrow {
+  margin: 0 0 18px;
+  color: var(--note);
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.claim-source { margin: 22px 0 0; }
+
+h1.claim-text {
+  margin: 0;
+  font-family: var(--sans);
+  max-width: 24ch;
+  font-size: clamp(30px, 4.3vw, 48px);
+  font-weight: 560;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+  color: var(--fg-strong);
+  text-wrap: pretty;
+}
+
+h1.claim-math {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 6px;
+}
+
+.claim-math math {
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  color: var(--fg-strong);
+  font-size: clamp(13px, 2vw, 26px);
+}
+
+.credit { color: var(--dim); }
+
+.problem-reference { background: var(--bg-rail); }
+.problem-reference-value { margin: 0 0 6px; color: var(--fg-body); font-size: 15px; }
+
+/* The reviewer map is the first practical reading aid on a record. Keep it
+   quieter than the claim, but more prominent than hashes and receipts. */
+.start-here { background: color-mix(in srgb, var(--bg-rail) 55%, var(--bg)); }
+.review-map-main { max-width: 72ch; margin-bottom: 26px; }
+.map-label {
+  margin: 0 0 7px;
+  color: var(--note);
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.review-map-group { max-width: 72ch; margin-top: 22px; }
+.review-map-list { margin: 0; padding-left: 1.2rem; }
+.review-map-list li { margin: 0 0 16px; padding-left: 4px; }
+.review-map-list li:last-child { margin-bottom: 0; }
+.review-map-list .prose { margin: 0; }
+.review-map-list .meta, .review-map-main .meta { margin-top: 4px; }
+
+.banner {
+  margin: 0 0 20px;
+  padding: 12px 14px;
+  border: 1px solid var(--edge);
+  font-size: 12.5px;
+}
+
+.banner strong { color: var(--fg-strong); font-weight: 500; }
+
+/* ---------- attributed facts ---------- */
+
+dl.facts {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  gap: 10px 20px;
+  margin: 0;
+}
+
+dl.facts dt {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+dl.facts dd { margin: 0; }
+
+.attribution, .locator, .meta {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+/* ---------- evidence ---------- */
+
+ol.ledger {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: ev;
+}
+
+ol.ledger > li {
+  display: grid;
+  grid-template-columns: 1.9rem minmax(0, 1fr);
+  gap: 0 14px;
+  padding: 22px 0;
+  border-top: 1px solid var(--rule);
+}
+
+ol.ledger > li:last-child { border-bottom: 1px solid var(--rule); }
+
+ol.ledger > li::before {
+  counter-increment: ev;
+  content: counter(ev, decimal-leading-zero);
+  color: var(--muted);
+}
+
+.evidence-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 16px;
+  margin-bottom: 10px;
+}
+
+.evidence-head h3 {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fg-strong);
+}
+
+.evidence-head .kind { color: var(--muted); font-family: var(--mono); font-size: 11.5px; }
+
+.side-by-side {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 16px;
+  margin: 0 0 12px;
+}
+
+.side-by-side > div {
+  border-left: 1px solid var(--rule);
+  padding-left: 12px;
+}
+
+.side-by-side h4 {
+  margin: 0 0 4px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.side-by-side p {
+  margin: 0 0 8px;
+  font-family: var(--sans);
+  font-size: 15px;
+  color: var(--dim);
+}
+
+.side-by-side p:last-child { margin-bottom: 0; }
+.side-by-side code { font-size: 12px; color: var(--fg); }
+
+.rows { display: flex; flex-direction: column; color: var(--dim); font-size: 13.5px; }
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  padding: 5px 0;
+  border-top: 1px solid var(--hair);
+}
+
+.row:last-child { border-bottom: 1px solid var(--hair); }
+
+.row .k {
+  flex: none;
+  width: 9rem;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.row .v { flex: 1 1 16rem; min-width: 0; }
+
+.reported-note {
+  margin: 0 0 8px;
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.assessment-target { margin: 0 0 8px; color: var(--muted); }
+
+.author-response {
+  margin-top: 10px;
+  border-left: 1px solid var(--muted);
+  padding-left: 12px;
+}
+
+.author-response h4 {
+  margin: 0 0 3px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.author-response p {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 13.5px;
+  color: var(--dim);
+}
+
+/* ---------- digestion and importance ---------- */
+
+.digestion-text {
+  margin: 0 0 18px;
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--fg-body);
+  text-wrap: pretty;
+}
+
+/* ---------- closing disclaimer ---------- */
+
+.what-this-does-not-establish ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+
+/* ---------- rail ---------- */
+
+.rail .band { padding: 30px 28px 32px; }
+
+.state-list { display: flex; flex-direction: column; margin: 0; }
+
+.state-list > div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 10px;
+  padding: 7px 0;
+  border-top: 1px solid var(--hair);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.state-list > div:last-child { border-bottom: 1px solid var(--hair); }
+.state-list dt { color: var(--muted); }
+.state-list dd { margin: 0; }
+
+ul.invitations {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+ul.invitations li { border: 1px solid var(--edge); padding: 18px 18px 16px; }
+
+.invitation-kind {
+  margin: 0 0 8px;
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--note);
+}
+
+.invitation-target {
+  margin: 0 0 10px;
+  font-family: var(--sans);
+  font-size: 15px;
+  color: var(--fg-body);
+  text-wrap: pretty;
+}
+
+.invitation-origin { margin: 0; color: var(--muted); font-size: 11.5px; }
+
+ul.roles {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+}
+
+ul.roles li { padding: 7px 0; border-top: 1px solid var(--hair); }
+ul.roles li:last-child { border-bottom: 1px solid var(--hair); }
+ul.roles .role { color: var(--fg-body); }
+ul.roles .role-meta { color: var(--muted); }
+
+ul.history {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  font-size: 12px;
+}
+
+ul.history .event-id { color: var(--fg-body); }
+ul.history .event-meta { display: block; color: var(--muted); }
+.history-note { display: block; margin-bottom: 5px; color: var(--fg-body); font-family: var(--sans); font-size: 13px; line-height: 1.5; }
+
+/* ---------- index ---------- */
+
+.records-index {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.records-index > li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 12rem;
+  gap: 8px 24px;
+  padding: 20px 0;
+  border-top: 1px solid var(--rule);
+}
+
+.records-index > li:last-child { border-bottom: 1px solid var(--rule); }
+
+.records-index .record-claim {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--fg-strong);
+  text-wrap: pretty;
+}
+
+.records-index .record-claim a { text-decoration: none; }
+.records-index .record-claim a:hover { text-decoration: underline; }
+.records-index .claim-math-inline math { display: inline-block; max-width: 100%; vertical-align: middle; }
+.records-index .record-id { margin: 8px 0 0; color: var(--muted); font-size: 11.5px; }
+.records-index .record-actions { margin: 10px 0 0; font-size: 12px; }
+.records-index .record-actions a { color: var(--accent); }
+.records-index .record-state { margin: 0; color: var(--dim); font-size: 11.5px; }
+.records-index .record-state span { display: block; }
+
+.next-action { margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--rule); }
+
+/* ---------- narrow ---------- */
+
+@media (max-width: 900px) {
+  :root { --pad: 24px; }
+  .topline { grid-template-columns: minmax(0, 1fr); padding: 18px 24px; }
+  .topline-meta { text-align: left; }
+  .topline-nav { grid-column: 1; }
+  .record-hero { padding-top: 42px; padding-bottom: 40px; }
+  .shell.with-rail { grid-template-columns: minmax(0, 1fr); }
+  .shell.with-rail > main { border-right: 0; }
+  .rail { border-top: 1px solid var(--rule); }
+  dl.facts { grid-template-columns: minmax(0, 1fr); gap: 2px 0; }
+  dl.facts dt { margin-top: 8px; }
+  .row .k { width: auto; }
+  .records-index > li { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* --- plain-language summary -------------------------------------------------
+   The first block on a record page, for a reader who does not know this
+   project's vocabulary. Deliberately the calmest thing on the page: no
+   accent border, no background tint, no colour that could be read as a
+   status light. It reads as prose because it is prose — a restatement, not
+   a finding. The only visual weight it carries is being first. */
+.plain-summary dl.plain-summary-list {
+  display: grid;
+  grid-template-columns: minmax(0, 180px) minmax(0, 1fr);
+  gap: 18px 30px;
+  margin: 0 0 22px;
+}
+
+.plain-summary dl.plain-summary-list > div {
+  display: contents;
+}
+
+.plain-summary dt {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--dim);
+}
+
+.plain-summary dd {
+  margin: 0;
+  max-width: 62ch;
+  color: var(--fg-body);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+/* --- author relationship and review coverage -----------------------------
+   These answer two questions that must survive screenshots: did the author
+   participate, and how much work was actually done? Neither uses a badge,
+   colour, percentage, or whole-paper score. */
+.relationship-value,
+.coverage-boundary {
+  margin: 0 0 8px;
+  max-width: 68ch;
+  font-family: var(--sans);
+  color: var(--fg-body);
+  font-size: 15.5px;
+  line-height: 1.7;
+}
+
+.record-relationship { background: var(--bg-rail); }
+
+.coverage-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0 0 16px;
+  background: var(--hair);
+  border: 1px solid var(--hair);
+}
+
+.coverage-list > div {
+  padding: 18px;
+  background: var(--bg);
+}
+
+.coverage-list dt {
+  color: var(--muted);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.coverage-list dd {
+  margin: 4px 0 0;
+  color: var(--fg-strong);
+  font-size: 24px;
+  font-weight: 560;
+}
+
+.coverage-boundary strong { font-weight: 500; }
+
+@media (max-width: 720px) {
+  .plain-summary dl.plain-summary-list {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2px 0;
+  }
+  .plain-summary dt { margin-top: 10px; }
+  .coverage-list { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* --- site nav ---------------------------------------------------------------
+   Text links, no buttons, no accent. Sits under the wordmark rather than
+   beside it so that a narrow screen does not have to choose between the
+   project name and the way out of the page. */
+.topline-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  grid-column: 1 / -1;
+  margin-top: 4px;
+  font-family: var(--sans);
+  font-size: 13px;
+}
+
+.topline-nav a { color: var(--dim); }
+.topline-nav a:hover { color: var(--fg-strong); }
+
+/* The message body offered when no contact address is configured. Rendered as
+   text to be copied, not as a link, because there is nowhere for a link to
+   go. */
+pre.mail-template {
+  margin: 12px 0 0;
+  padding: 14px 16px;
+  border: 1px solid var(--hair);
+  background: var(--bg-rail);
+  color: var(--fg-body);
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+
+/* --- actionable invitations -------------------------------------------------
+   The instructions are expanded rather than hidden behind a disclosure
+   control: the rail is the place a helper looks for something to do, and a
+   task whose contents are one click away is a task most people never read.
+   The action is a text link, not a button — nothing here is urgent and
+   nothing is a call to action. */
+.invitation-task {
+  margin: 8px 0 0;
+  padding: 10px 0 0;
+  border-top: 1px solid var(--hair);
+}
+
+.invitation-how-label {
+  margin: 0 0 6px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--note);
+}
+
+.invitation-how {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--fg-body);
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.invitation-target { overflow-wrap: anywhere; word-break: break-word; }
+
+.invitation-respond {
+  margin: 8px 0 0;
+  font-size: 13px;
+}
+
+/* --- status board -----------------------------------------------------------
+   No status dots, no green, no red, no ordering by how well a row is doing.
+   Every one of those is a verdict wearing a colour, and a reader who wants a
+   ranking has to make it themselves — which is the correct amount of work for
+   a judgement this project does not make.
+
+   Placeholder rows are dimmed slightly and nothing more. They are not hidden:
+   nine empty rows is the honest picture of how much of the release anyone here
+   has examined. */
+ol.board-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1px;
+  background: var(--hair);
+  border: 1px solid var(--hair);
+}
+
+.board-row {
+  padding: 18px 20px;
+  background: var(--bg);
+}
+
+.board-row-head h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--fg-strong);
+}
+
+.board-row-record { margin: 4px 0 10px; font-size: 13px; }
+
+.board-row-claim {
+  margin: 8px 0 4px;
+  max-width: 68ch;
+  color: var(--fg-body);
+  line-height: 1.6;
+}
+
+.board-row-artifacts,
+.board-row-status { margin: 10px 0 6px; }
+
+.board-row-empty {
+  margin: 8px 0 0;
+  max-width: 68ch;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.board-row-placeholder .board-row-head h2 {
+  color: var(--muted);
+  font-weight: 400;
+  font-family: var(--mono);
+  font-size: 14px;
+}
+
+/* --- glossary ---------------------------------------------------------------
+   Terms in the page are links, not <abbr>: `title` alone is unreachable by
+   keyboard in every major browser, so it fails exactly the readers most likely
+   to need the definition. The dotted underline says "there is more here"
+   without turning the label into a call to action. */
+a.term {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px dotted var(--edge);
+}
+
+a.term:hover,
+a.term:focus { color: var(--fg-strong); border-bottom-color: var(--fg-strong); }
+
+dl.glossary { margin: 0; }
+
+dl.glossary > div {
+  padding: 12px 0;
+  border-top: 1px solid var(--hair);
+}
+
+dl.glossary > div:first-child { border-top: none; }
+dl.glossary > div:target { border-left: 2px solid var(--note); padding-left: 12px; }
+
+dl.glossary dt {
+  margin: 0 0 4px;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--fg-strong);
+}
+
+dl.glossary dd {
+  margin: 0;
+  max-width: 66ch;
+  color: var(--fg-body);
+  line-height: 1.6;
+}
+
+/* --- copy-status export -----------------------------------------------------
+   Selectable text, not a button: these pages ship default-src 'none' with no
+   script, and a copy button would mean admitting JavaScript to every record
+   page to save one keystroke. The box makes the boundaries of the selection
+   obvious, which is the part a person actually needs. */
+details.copy-status { margin: 0; }
+
+details.copy-status > summary {
+  cursor: pointer;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--note);
+}
+
+.copy-status-help {
+  margin: 8px 0 6px;
+  font-size: 13px;
+  color: var(--muted);
+  max-width: 62ch;
+}
+
+pre.copy-status-text {
+  margin: 0;
+  padding: 14px 16px;
+  border: 1px solid var(--hair);
+  background: var(--bg-rail);
+  color: var(--fg-body);
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  overflow-x: auto;
+  user-select: all;
+}
+
+/* --- suggested wording ------------------------------------------------------
+   Set as a quotation rather than a headline: it is a sentence offered for
+   someone else's prose, not a statement the site is making in its own voice. */
+.accurate-wording-value {
+  margin: 0 0 8px;
+  padding-left: 14px;
+  border-left: 2px solid var(--edge);
+  max-width: 62ch;
+  font-family: var(--sans);
+  font-size: 17px;
+  color: var(--fg-body);
+  line-height: 1.6;
+}
+
+/* --- formalization handoff --------------------------------------------------
+   A practical bridge from an informal claim to a formalizer. Keep it calm and
+   factual: the work-state describes the artifact, never the mathematics. */
+.handoff-intro { margin: 0 0 16px; max-width: 68ch; color: var(--fg-body); line-height: 1.6; }
+.handoff-facts { margin-bottom: 18px; }
+.handoff-group { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--hair); }
+.handoff-group .review-map-list { margin-bottom: 0; }
+
+details.technical-details {
+  margin-top: 12px;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 11.5px;
+}
+
+details.technical-details summary { cursor: pointer; }
+
+/* --- translated summaries ---------------------------------------------------
+   Each is its own block with its own attribution. dir="rtl" is set from the
+   record's lang tag, so an Arabic strip reads right-to-left while the English
+   attribution line under it stays left-to-right. */
+.plain-summary-translation {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--hair);
+}
+
+.plain-summary-translation[dir="rtl"] dl.plain-summary-list { text-align: right; }
+
+/* --- orientation ------------------------------------------------------------
+   Long-form prose for somebody who arrived from a headline. Wider measure than
+   a record's fields and no columns: this page is read top to bottom, which is
+   the one page here that is. */
+.orientation-heading {
+  margin: 0 0 10px;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--fg-strong);
+}
+
+.orientation-section .prose { max-width: 68ch; line-height: 1.7; }
+
+ul.orientation-next {
+  margin: 0;
+  padding-left: 18px;
+  max-width: 68ch;
+  line-height: 1.7;
+}

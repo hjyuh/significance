@@ -1,0 +1,259 @@
+{
+  "export_schema_version": 1,
+  "kind": "significance_problem",
+  "venue": "ErdősProblems.com",
+  "problem_id": "153",
+  "problem_url": "https://www.erdosproblems.com/153",
+  "records": [
+    {
+      "record_id": "2026-rajveerkapoor-erdos-153",
+      "record": {
+        "schema_version": 1,
+        "record_id": "2026-rajveerkapoor-erdos-153",
+        "record_version": 1,
+        "record_state": "active",
+        "draft": true,
+        "freshness": {
+          "result": "current",
+          "observed_source_version": "proof-claim-217 and GitHub 377027d9a3d55a881fecd6618f200d180d4a08ca",
+          "confirmed_source_version": "proof-claim-217 and GitHub 377027d9a3d55a881fecd6618f200d180d4a08ca",
+          "checked_at": "2026-08-23T19:11:00Z"
+        },
+        "parties": {
+          "rajveerkapoor": {
+            "name": "Rajveer Kapoor",
+            "verification_method": {
+              "kind": "pseudonymous",
+              "identifier": "https://www.erdosproblems.com/forum/user/RajveerKapoor"
+            }
+          },
+          "significance-editor": {
+            "pseudonym": "Significance editor",
+            "verification_method": {
+              "kind": "pseudonymous",
+              "identifier": "significance-project"
+            }
+          }
+        },
+        "author_relationship": {
+          "status": "public_sources_only",
+          "note": "Private draft prepared from public materials. The claimant has not reviewed or approved this record.",
+          "basis": "editorial_inference",
+          "asserted_by": "significance-editor",
+          "asserted_at": "2026-08-23T19:11:00Z",
+          "locator": {
+            "url": "https://www.erdosproblems.com/forum/thread/153/proof-claims#proof-claim-217"
+          }
+        },
+        "problem_reference": {
+          "venue": "ErdősProblems.com",
+          "problem_id": "153",
+          "url": "https://www.erdosproblems.com/153",
+          "basis": "source_quote",
+          "asserted_by": "significance-editor",
+          "asserted_at": "2026-08-23T19:11:00Z",
+          "locator": {
+            "url": "https://www.erdosproblems.com/forum/thread/153/proof-claims#proof-claim-217"
+          }
+        },
+        "claim": {
+          "id": "claim-main",
+          "text": {
+            "value": "The submission claims a partial result toward Erdős Problem #153: a logarithmic lower bound for the average squared gap statistic Q(A), with a reduction of the remaining general case to a concentration scenario.",
+            "basis": "source_quote",
+            "asserted_by": "rajveerkapoor",
+            "asserted_at": "2026-08-21T12:34:55Z",
+            "locator": {
+              "url": "https://www.erdosproblems.com/forum/thread/153/proof-claims#proof-claim-217",
+              "quote": "A partial proof claimed by Rajveer Kapoor."
+            }
+          },
+          "scope": {
+            "value": "The claim explicitly does not cover the general case; it covers specified diameter and dyadically non-concentrated families and gives a reduction for the remainder.",
+            "basis": "source_quote",
+            "asserted_by": "rajveerkapoor",
+            "asserted_at": "2026-08-21T12:34:55Z",
+            "locator": {
+              "url": "https://www.erdosproblems.com/forum/thread/153/proof-claims#proof-claim-217"
+            }
+          }
+        },
+        "plain_summary": {
+          "claimed": "A public proof claim gives a partial result for the Sidon-set gap statistic in Problem #153, including a logarithmic bound in several regimes and a reduction of the remaining case.",
+          "checked": "Significance inspected the proof-claim page, downloaded the linked proof PDF, and recorded the linked code repository and public commit.",
+          "not_checked": "Significance has not assessed the scale decomposition, energy inequality, finite optimization, or whether the reduction covers every claimed family.",
+          "basis": "digest",
+          "asserted_by": "significance-editor",
+          "asserted_at": "2026-08-23T19:11:00Z"
+        },
+        "manuscript": {
+          "url": "https://github.com/RajveerKapoor/erdos-work/blob/main/papers/erdos-153.pdf?raw=1",
+          "label": "Erdős Problem #153 partial proof writeup",
+          "immutable_version_id": "github-RajveerKapoor-erdos-work-377027d9a3d55a881fecd6618f200d180d4a08ca",
+          "sha256": "424ac4ed101db24a235ffdebf53bdd9f7dd90c5a63f6b1e298a802804681efd8",
+          "retrieved_at": "2026-08-23T19:11:00Z"
+        },
+        "evidence": [
+          {
+            "id": "ev-source-inspection",
+            "kind": "source_inspection",
+            "description": "The public proof-claim page and its linked PDF and code repository were inspected. This is source inspection, not a mathematical review.",
+            "basis": "editorial_inference",
+            "asserted_by": "significance-editor",
+            "asserted_at": "2026-08-23T19:11:00Z",
+            "locator": {
+              "url": "https://www.erdosproblems.com/forum/thread/153/proof-claims#proof-claim-217"
+            }
+          },
+          {
+            "id": "ev-code-repository",
+            "kind": "external_formal_artifact",
+            "repo": "https://github.com/RajveerKapoor/erdos-work",
+            "commit": "377027d9a3d55a881fecd6618f200d180d4a08ca",
+            "description": "The claim links code and an LP witness. No independent reproduction is recorded here.",
+            "basis": "source_quote",
+            "asserted_by": "rajveerkapoor",
+            "asserted_at": "2026-08-21T12:34:55Z",
+            "locator": {
+              "url": "https://www.erdosproblems.com/forum/thread/153/proof-claims#proof-claim-217"
+            }
+          }
+        ],
+        "ai_provenance": {
+          "disclosure": {
+            "value": "The public claim says the partial proof used Claude Opus 5 (xhigh effort).",
+            "basis": "source_quote",
+            "asserted_by": "rajveerkapoor",
+            "asserted_at": "2026-08-21T12:34:55Z",
+            "locator": {
+              "url": "https://www.erdosproblems.com/forum/thread/153/proof-claims#proof-claim-217"
+            }
+          },
+          "roles": [
+            {
+              "role": "proof_generation",
+              "model": "Claude Opus 5 (xhigh effort)",
+              "basis": "source_quote",
+              "asserted_by": "rajveerkapoor",
+              "locator": {
+                "url": "https://www.erdosproblems.com/forum/thread/153/proof-claims#proof-claim-217"
+              }
+            }
+          ]
+        },
+        "review_map": {
+          "main_deduction": {
+            "text": "Follow the dyadic scale decomposition, the interval Cauchy–Schwarz step, and the energy inequality to the logarithmic bound; then inspect the reduction for the remaining concentrated case.",
+            "location": "Proof PDF: theorem, scale decomposition, and reduction",
+            "pointer": "The claimant identifies the finite relaxation and its witness as the point where their attempts stopped.",
+            "basis": "source_quote",
+            "asserted_by": "rajveerkapoor",
+            "asserted_at": "2026-08-21T12:34:55Z",
+            "locator": {
+              "url": "https://www.erdosproblems.com/forum/thread/153/proof-claims#proof-claim-217"
+            }
+          },
+          "risks": [
+            {
+              "text": "Check the use and exact hypotheses of the sharp energy inequality in the scale summation.",
+              "location": "Proof PDF, energy inequality and scale decomposition",
+              "basis": "editorial_inference",
+              "asserted_by": "significance-editor",
+              "asserted_at": "2026-08-23T19:11:00Z"
+            },
+            {
+              "text": "Check the reduction from failure of the bound to the stated endpoint concentration conditions.",
+              "location": "Proof PDF, Reduction",
+              "basis": "source_quote",
+              "asserted_by": "rajveerkapoor",
+              "asserted_at": "2026-08-21T12:34:55Z",
+              "locator": {
+                "url": "https://www.erdosproblems.com/forum/thread/153/proof-claims#proof-claim-217"
+              }
+            }
+          ],
+          "prerequisites": [
+            {
+              "text": "Sidon sets, additive energy, dyadic decompositions, and the definition of the average squared gap statistic.",
+              "pointer": "Problem statement and proof introduction",
+              "basis": "editorial_inference",
+              "asserted_by": "significance-editor",
+              "asserted_at": "2026-08-23T19:11:00Z"
+            }
+          ],
+          "needs_checking": [
+            {
+              "text": "Check one bounded scale-summation passage and the stated finite LP relaxation; do not treat the partial result as a general resolution.",
+              "location": "Proof PDF, scale decomposition and LP witness",
+              "reason": "The public entry labels the claim partial and identifies a remaining bottleneck.",
+              "basis": "source_quote",
+              "asserted_by": "rajveerkapoor",
+              "asserted_at": "2026-08-21T12:34:55Z",
+              "locator": {
+                "url": "https://www.erdosproblems.com/forum/thread/153/proof-claims#proof-claim-217"
+              }
+            }
+          ]
+        },
+        "digestions": [
+          {
+            "audience": "general_mathematician",
+            "kind": "plain_language",
+            "stratum": "editor",
+            "text": "This is a partial result for Problem #153. It proves the claimed growth in specified regimes and maps the unresolved general case to a concentration scenario; it does not change the problem's open status.",
+            "basis": "editorial_inference",
+            "asserted_by": "significance-editor",
+            "source_claims": [
+              "claim-main"
+            ]
+          }
+        ],
+        "open_invitations": [
+          {
+            "kind": "additive_combinatorics_check",
+            "task_id": "erdos-153-scale-summation",
+            "task_kind": "read_check",
+            "effort_estimate": "about 90 minutes",
+            "prerequisites": [
+              "Sidon sets and additive energy"
+            ],
+            "entry_points": "Scale decomposition, interval Cauchy–Schwarz, and energy inequality",
+            "target": "Check one bounded scale-summation segment and report the exact passages followed.",
+            "how": "Use the pinned PDF. Check the definitions, hypotheses, and inequality directions in the selected segment; report the first unresolved step without rating the whole paper.",
+            "respond": {
+              "url": "https://github.com/hjyuh/significance/issues/new?template=attestation.yml"
+            },
+            "created_by": "significance-editor",
+            "created_at": "2026-08-23T19:11:00Z"
+          },
+          {
+            "kind": "reduction_check",
+            "task_id": "erdos-153-concentration-reduction",
+            "task_kind": "read_check",
+            "effort_estimate": "about 60 minutes",
+            "prerequisites": [
+              "The definition of Q(A) and the concentration parameters in the manuscript"
+            ],
+            "entry_points": "Reduction and endpoint conditions",
+            "target": "Check whether the stated failure conditions follow from the preceding inequalities.",
+            "how": "Record each implication checked and any hypothesis whose use needs clarification; do not infer an unconditional solution.",
+            "respond": {
+              "url": "https://github.com/hjyuh/significance/issues/new?template=attestation.yml"
+            },
+            "created_by": "significance-editor",
+            "created_at": "2026-08-23T19:11:00Z"
+          }
+        ],
+        "history": [
+          {
+            "id": "evt-created",
+            "type": "created",
+            "at": "2026-08-23T19:11:00Z",
+            "by": "significance-editor",
+            "note": "Private draft prepared from proof-claim-217 and its linked public artifacts; not published and not author-confirmed."
+          }
+        ]
+      }
+    }
+  ]
+}
