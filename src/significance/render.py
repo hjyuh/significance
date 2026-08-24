@@ -612,7 +612,17 @@ def build_site(
                 except ValueError:
                     invitation["_stale"] = False
         record_id = record["record_id"]
-        record_url = f"{public_url}/records/{record_id}/" if public_url else None
+        # GitHub Pages uses the self-contained layout (`-o site/`), where
+        # record pages live at the site root.  The hosted preview layout uses
+        # `--pages-out` and places them under `/records/`.  Keep share links
+        # aligned with the layout that produced the page, and normalize the
+        # configured URL so a trailing slash never becomes `//`.
+        if public_url:
+            site_base = public_url.rstrip("/")
+            record_path = f"/records/{record_id}/" if deployed else f"/{record_id}/"
+            record_url = f"{site_base}{record_path}"
+        else:
+            record_url = None
         html = record_template.render(
             record=record,
             record_lookup={r["record_id"]: r for r in valid_records},
