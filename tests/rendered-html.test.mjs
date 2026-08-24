@@ -61,7 +61,7 @@ test("the homepage derives its record facts from the generated index", () => {
   // needed somewhere to be linked from, and the rule that the shell may only
   // present generated data left exactly one place to put it.
   assert.deepEqual(Object.keys(summaries).sort(), ["boards", "records"]);
-  assert.equal(summaries.records.length, 5);
+  assert.equal(summaries.records.length, 6);
   const byId = Object.fromEntries(summaries.records.map((record) => [record.record_id, record]));
   assert.equal(byId["2026-openai-nonsofic-groups"].freshness, "current");
   assert.equal(byId["2026-openai-nonsofic-groups"].evidence_count, 2);
@@ -71,6 +71,7 @@ test("the homepage derives its record facts from the generated index", () => {
   assert.equal(byId["2026-anthropic-zeta-two-thirds"].open_invitation_count, 3);
   assert.equal(byId["2026-rafikzeraoulia-erdos-653"].freshness, "current");
   assert.equal(byId["2026-rafikzeraoulia-erdos-726"].freshness, "current");
+  assert.equal(byId["2026-evanbeller-erdos-132"].freshness, "current");
 
   // Board counts are generated, not counted in JSX: the homepage must not be
   // able to disagree with the board about how much of it is filled in.
