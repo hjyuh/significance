@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none';">
+<title>2026-alexchengyuli-erdos-848 — Significance</title>
+<link rel="stylesheet" href="../static/style.css?v=e7d1d530b173">
+</head>
+<body>
+<header class="topline">
+<a class="wordmark" href="../index.html">SIGNIFICANCE</a>
+<p class="topline-meta">Checked 2026-08-22 · source current · v1</p>
+<nav class="topline-nav" aria-label="Site">
+<a href="../orientation/index.html">What is going on</a><a href="../request/index.html">Request or correct a record</a>
+<a href="../how-to-file-a-claim/index.html">How to file a claim</a><a href="../reviewers/index.html">Reviewers</a><a href="../backlog/index.html">Backlog</a><a href="../frontier/index.html">Open work</a><a href="../problems/index.html">Problems</a><a href="../glossary/index.html">Glossary</a><a href="../feed.xml">Atom feed</a><a href="../tasks/index.html">Take a check</a><a href="../boards/ten-results/index.html">ten results</a>
+</nav>
+</header>
+<div class="shell with-rail">
+<main>
+<article class="record">
+
+
+  <header class="band record-hero">
+    <p class="eyebrow">Claim from Significance editor</p>
+    <h1 class="claim-text claim-math" aria-label="The submission claims a full proof that, for every N &gt;= 1, the maximum size of a set A subset of {1, ..., N} such that ab + 1 is nonsquarefree for every a, b in A is floor((N + 18)/25)."><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mo>&#x0007C;</mo><mi>A</mi><mo>&#x0007C;</mo><mo>&#x02264;</mo><mrow><mo stretchy="true" fence="true" form="prefix">&#x0230A;</mo><mfrac><mrow><mi>N</mi><mo>&#x0002B;</mo><mn>18</mn></mrow><mrow><mn>25</mn></mrow></mfrac><mo stretchy="true" fence="true" form="postfix">&#x0230B;</mo></mrow></mrow></math></h1>
+    <p class="claim-source"><span class="attribution">Quoted from the source · Significance editor · 2026-08-22</span><span class="locator"> · <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7230480">View source</a></span></p>
+  </header>
+
+  <section class="band problem-reference" aria-labelledby="problem-reference-heading">
+    <p class="lbl" id="problem-reference-heading">Problem link</p>
+    <p class="problem-reference-value">ErdősProblems.com #848 · <a href="https://www.erdosproblems.com/848">open the original problem page</a></p>
+    <p class="meta"><span class="attribution">Quoted from the source · Significance editor · 2026-08-22</span><span class="locator"> · <a href="https://www.erdosproblems.com/forum/thread/848/proof-claims">View source</a></span></p>
+  </section>
+
+  <section class="band record-relationship" aria-labelledby="relationship-heading">
+    <p class="lbl" id="relationship-heading">Author involvement</p>
+    <p class="relationship-value">Alex Chengyu Li confirmed that the public paper, repository, and pinned release may be used for a Significance record, and confirmed that the three bounded task descriptions accurately reflect the public release. Published with the author&#39;s confirmed description; publication does not assert independent mathematical verification.</p>
+    <p class="meta"><span class="credit">Record note · alexchengyuli · 2026-08-22</span></p>
+  </section>
+
+  <section class="band plain-summary" aria-labelledby="plain-summary-heading">
+    <p class="lbl" id="plain-summary-heading">Summary · for readers</p>
+    <dl class="plain-summary-list">
+      <div>
+        <dt>In one sentence</dt>
+        <dd>The public proof-claim page links a paper and Lean repository for a claimed solution of Erdős Problem #848. The author confirms that the public release is the intended material.</dd>
+      </div>
+    </dl>
+    <p class="meta"><span class="credit">Reader summary · Significance · 2026-08-22</span></p>
+
+  </section>
+
+  <section class="band start-here" aria-labelledby="start-here-heading">
+    <p class="lbl" id="start-here-heading">Start here · for reviewers</p>
+    <div class="review-map-main">
+      <p class="map-label">Main deduction</p>
+      <p class="prose">Begin with the paper&#39;s main theorem and the finite certificate-generation steps, then compare the stated theorem with the Lean target.</p>
+<p class="meta">SSRN abstract; paper theorem; Erdos848.PaperGeneratedCertificateProvider.all_N · The author has confirmed the public release as the intended material. · <span class="attribution">Significance’s interpretation · Significance editor · 2026-08-22</span></p>    </div>
+    <div class="review-map-group"><p class="map-label">Risk points</p><ul class="review-map-list"><li><p class="prose">The finite certificate-generation and finite-range arguments are the first bounded reading targets.</p><p class="meta">Exact Hall reformulation; finite range N &lt;= 5*10^6; uniform tail estimate · <span class="attribution">Significance’s interpretation · Significance editor · 2026-08-22</span></p></li><li><p class="prose">The formalized theorem and the paper&#39;s informal statement should be compared before treating the Lean result as correspondence.</p><p class="meta">Lean target and paper&#39;s main theorem · <span class="attribution">Significance’s interpretation · Significance editor · 2026-08-22</span></p></li></ul></div>
+    <div class="review-map-group"><p class="map-label">Useful background</p><ul class="review-map-list"><li><p class="prose">The Erdos Problem #848 definitions, Hall reformulation, finite certificates, and the repository&#39;s Lean build instructions.</p><p class="meta">Paper abstract and repository README · <span class="attribution">Significance’s interpretation · Significance editor · 2026-08-22</span></p></li></ul></div>
+    <div class="review-map-group"><p class="map-label">Needs checking</p><ul class="review-map-list"><li><a href="https://github.com/hjyuh/significance/issues/new?template=needs-checking.yml">Suggest another focused check</a></li></ul></div>
+  </section>
+
+  <section class="band formalization-handoff" aria-labelledby="formalization-heading">
+    <p class="lbl" id="formalization-heading">Formalization handoff</p>
+    <p class="handoff-intro">A compact map for someone who wants to formalize this claim. It records preparation and open work, not a mathematical verdict.</p>
+    <dl class="facts handoff-facts">
+      <dt>Target</dt>
+      <dd>The paper&#39;s exact all-N extremal statement and Erdos848.PaperGeneratedCertificateProvider.all_N. <span class="attribution">Significance’s interpretation · Significance editor · 2026-08-22</span></dd>
+      <dt>System</dt>
+      <dd>Lean 4 with the repository&#39;s pinned release and certificate checker. <span class="attribution">Quoted from the source · Significance editor · 2026-08-22</span><span class="locator"> · <a href="https://github.com/crabsatellite/erdos-848-squarefree-product/blob/bb8e1b10b0066639ee3440ba983c3f9774667d42/README.md">View source</a></span></dd>
+      <dt>Work state</dt>
+      <dd>Artifact reported</dd>
+      <dt>Code</dt>
+      <dd><a href="https://github.com/crabsatellite/erdos-848-squarefree-product">formalization repository</a> · commit <code>bb8e1b10b006…</code></dd>
+    </dl>
+    <div class="handoff-group"><p class="map-label">Definitions</p><ul class="review-map-list"><li><p class="prose">The squarefree-product condition, exact extremal bound, finite certificates, and the paper-to-Lean theorem map must be compared.</p><p class="meta"><span class="attribution">Significance’s interpretation · Significance editor · 2026-08-22</span></p></li></ul></div>
+    <div class="handoff-group"><p class="map-label">Prerequisites</p><ul class="review-map-list"><li><p class="prose">Basic extremal number theory, squarefree integers, Hall&#39;s theorem, and the repository&#39;s Lean build instructions.</p><p class="meta"><span class="attribution">Significance’s interpretation · Significance editor · 2026-08-22</span></p></li></ul></div>
+    <div class="handoff-group"><p class="map-label">Open questions</p><ul class="review-map-list"><li><p class="prose">Does the Lean declaration exactly match the paper&#39;s all-N theorem?</p><p class="meta"><span class="attribution">Significance’s interpretation · Significance editor · 2026-08-22</span></p></li><li><p class="prose">Can an independent build reproduce the reported kernel-checked result and certificate checks?</p><p class="meta"><span class="attribution">Stated by the author · alexchengyuli · 2026-08-22</span><span class="locator"> · <a href="https://www.erdosproblems.com/dm/">View source</a></span></p></li></ul></div>
+<p class="meta"><strong>Paper/code correspondence:</strong> The reported formal artifact is evidence about the pinned Lean files; correspondence with the paper&#39;s exact theorem remains a separate reading task. <span class="attribution">Significance’s interpretation · Significance editor · 2026-08-22</span></p>    <p class="meta"><span class="attribution">Significance’s interpretation · Significance editor · 2026-08-22</span></p>
+  </section>
+
+  <section class="band review-coverage" aria-labelledby="coverage-heading">
+    <p class="lbl" id="coverage-heading">Review activity</p>
+    <dl class="coverage-list">
+      <div><dt>Independent reruns</dt><dd>0</dd></div>
+      <div><dt>Math assessments</dt><dd>0</dd></div>
+      <div><dt>Written reviews</dt><dd>0</dd></div>
+      <div><dt>Open checks</dt><dd>3</dd></div>
+    </dl>
+    <div class="coverage-notes">
+      <p class="coverage-boundary"><strong>What Significance checked:</strong> Significance inspected the public claim page, paper link, repository link, and the pinned v1.0.5-kernel release information.</p>
+      <p class="coverage-boundary"><strong>Still open:</strong> Significance has not independently rebuilt the repository, audited the finite certificates, or assessed the mathematical argument. Verification tasks remain open.</p>
+    </div>
+  </section>
+
+
+  <section class="band">
+    <details class="copy-status">
+<summary>Copy for sharing</summary>
+<p class="copy-status-help">Copy and paste this summary.</p>
+<pre class="copy-status-text">The public proof-claim page links a paper and Lean repository for a claimed
+solution of Erdős Problem #848. The author confirms that the public release
+is the intended material.
+
+Checked: Significance inspected the public claim page, paper link,
+repository link, and the pinned v1.0.5-kernel release information.
+
+Not checked: Significance has not independently rebuilt the repository,
+audited the finite certificates, or assessed the mathematical argument.
+Verification tasks remain open.
+
+As of 2026-08-22T15:00:00Z (freshness: current)
+Full record: https://hjyuh.github.io/significance/2026-alexchengyuli-erdos-848/
+Significance records evidence. It does not judge the mathematics.
+</pre>
+</details>
+  </section>
+
+  <div class="band">
+    <dl class="facts">
+      <dt>Scope</dt>
+      <dd>The record concerns the paper and the v1.0.5-kernel Lean formalization release, not a conclusion that the mathematical claim is established. <span class="attribution">Stated by the author · alexchengyuli · 2026-08-22</span><span class="locator"> · <a href="https://www.erdosproblems.com/dm/">View source</a></span></dd>
+      <dt>Source</dt>
+      <dd>
+        <a href="https://raw.githubusercontent.com/crabsatellite/erdos-848-squarefree-product/bb8e1b10b0066639ee3440ba983c3f9774667d42/paper/Li_Erdos_848_Kernel_Checked_Exact_Extremal_Bound_2026.pdf">Pinned repository PDF (the public claim also links SSRN 7230480)</a>
+        <span class="meta"> · github-crabsatellite-erdos-848-bb8e1b10 · retrieved 2026-08-22T15:00:00Z</span>
+        <div class="meta"><a class="term" href="../glossary/index.html#term-manuscript-hash" title="A fingerprint of the exact file a record was built from, so that a later reader can tell whether they are looking at the same document.">sha256</a> <code>54a910e7bcda…</code></div>
+      </dd>
+    </dl>
+  </div>
+
+  <section class="band">
+    <p class="lbl">Evidence — 3 entries</p>
+    <ol class="ledger">
+      <li id="evidence-ev-source-inspection" class="evidence-card evidence-source_inspection">
+        <div>
+          <div class="evidence-head">
+            <h3>Source inspection</h3>
+            <span class="kind">ev-source-inspection</span>
+          </div>
+
+          <p class="reported-note">Public-source and version check only. This is not a mathematical review.</p>
+          <p class="prose">Significance inspected the public proof-claim page and the linked paper and repository references. This is a source-and-version check, not a mathematical review.</p>
+          <p class="meta"><span class="attribution">Significance’s interpretation · Significance editor · 2026-08-22</span><span class="locator"> · <a href="https://www.erdosproblems.com/forum/thread/848/proof-claims#proof-claim-204">View source</a></span></p>
+
+        </div>
+      </li>
+      <li id="evidence-ev-formalization-reported" class="evidence-card evidence-external_formal_artifact">
+        <div>
+          <div class="evidence-head">
+            <h3>Formal code published by the source</h3>
+            <span class="kind">ev-formalization-reported</span>
+          </div>
+
+          <p class="reported-note">Published by the source. Any independent rerun appears as a separate entry.</p>
+          <p class="prose">The author reports that the complete publication proof and finite certificates are incorporated into the public Lean project and kernel-checked. Significance has not independently reproduced that run.</p>
+          <p class="meta"><a href="https://github.com/crabsatellite/erdos-848-squarefree-product">Open link</a> @ <code>bb8e1b10b006…</code> · <span class="attribution">Stated by the author · alexchengyuli · 2026-08-22</span><span class="locator"> · <a href="https://www.erdosproblems.com/dm/">View source</a></span></p>
+
+        </div>
+      </li>
+      <li id="evidence-ev-ssrn-source" class="evidence-card evidence-source_inspection">
+        <div>
+          <div class="evidence-head">
+            <h3>Source inspection</h3>
+            <span class="kind">ev-ssrn-source</span>
+          </div>
+
+          <p class="reported-note">Public-source and version check only. This is not a mathematical review.</p>
+          <p class="prose">The public proof-claim page links the manuscript record at SSRN 7230480; the pinned repository PDF above is recorded separately as the byte-hashed artifact available for this draft.</p>
+          <p class="meta"><span class="attribution">Quoted from the source · Significance editor · 2026-08-22</span><span class="locator"> · <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7230480">View source</a></span></p>
+
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section class="band">
+    <p class="lbl">Plain-language explanation</p>
+    <p class="digestion-text plain-language">This private draft records where the public claim and formal artifact live, and turns the next reading into bounded tasks. It does not decide whether the mathematical claim holds.</p>
+    <p class="meta"><span class="credit">Explanation · Significance</span></p>
+  </section>
+
+  <section class="band what-this-does-not-establish">
+    <p class="lbl">Limits</p>
+    <ul>
+      <li>This record does not issue a whole-paper correctness judgement.</li>
+<li>Open invitations identify work not yet represented by a completed evidence entry.</li><li>No independent reproduction or mathematical assessment is represented unless an evidence entry above says otherwise.</li>    </ul>
+  </section>
+
+</article>
+</main>
+<aside class="rail">
+
+  <div class="band">
+    <p class="lbl">Record details</p>
+    <dl class="state-list">
+      <div><dt>Publication state</dt><dd>Active record</dd></div>
+      <div><dt>Record version</dt><dd>1</dd></div>
+      <div><dt>Source check</dt><dd>Current</dd></div>
+      <div><dt>Source version</dt><dd>v1.0.5-kernel</dd></div>
+      <div><dt>Last checked</dt><dd>2026-08-22</dd></div>
+    </dl>
+  </div>
+
+  <div class="band" id="open-checks">
+    <p class="lbl">Open checks — 3</p>
+    <p class="lbl-sub">Each is a focused task.</p>
+    <ul class="invitations">
+      <li>
+        <p class="meta">Status: open</p>
+        <p class="invitation-kind">formal reproduction</p>
+        <p class="invitation-target"><a href="../tasks/2026-alexchengyuli-erdos-848/erdos-848-lean-reproduction/index.html">Reproduce the pinned Lean release and report the build and certificate result within the published-cache replay trust boundary.</a></p>
+        <div class="invitation-task">
+          <p class="invitation-how-label">Take this task</p>
+          <p class="invitation-how">Check out tag v1.0.5-kernel at commit bb8e1b10b006…. Download all 75 cache-shard ZIP files together with the manifest and checksum assets, place them in one directory, and run python -B scripts/install_release_cache.py --asset-dir &lt;download-directory&gt; --prepare-dependencies --kernel --memory-mib 32768. Do not run lake update. Record the toolchain, commands, result, resource limits, and log hash. This checks reproducibility, not the truth of the mathematical claim.</p>
+          <p class="invitation-respond">
+<a href="https://github.com/hjyuh/significance/issues/new?template=attestation.yml">Report what you found</a>          </p>
+        </div>
+        <p class="invitation-origin">Prepared by Significance editor · 2026-08-22</p>
+      </li>
+      <li>
+        <p class="meta">Status: open</p>
+        <p class="invitation-kind">certificate reading</p>
+        <p class="invitation-target"><a href="../tasks/2026-alexchengyuli-erdos-848/erdos-848-certificate-audit/index.html">Read one certificate-generation path and record the exact passages followed.</a></p>
+        <div class="invitation-task">
+          <p class="invitation-how-label">Take this task</p>
+          <p class="invitation-how">Follow this concrete declaration path from paper/theorem-map.json: Erdos848.PaperGeneratedCertificateProvider.all_N -&gt; numericalCertificates.fiveSharp -&gt; GeneratedTailR263EvenOneFinite23.sharpCertificate -&gt; E1Finite23SharpCertificate -&gt; e1FiniteSharpFourLeafPasses_sound -&gt; erdos848FiveToTenMillionClose -&gt; PaperCertificateProvider.fiveToTenMillion. Record the exact declarations and commands checked, without rating the whole proof.</p>
+          <p class="invitation-respond">
+<a href="https://github.com/hjyuh/significance/issues/new?template=attestation.yml">Report what you found</a>          </p>
+        </div>
+        <p class="invitation-origin">Prepared by Significance editor · 2026-08-22</p>
+      </li>
+      <li>
+        <p class="meta">Status: open</p>
+        <p class="invitation-kind">Compare the statements</p>
+        <p class="invitation-target"><a href="../tasks/2026-alexchengyuli-erdos-848/erdos-848-statement-correspondence/index.html">Compare the paper&#39;s exact all-N statement with the pinned Lean declaration, recording both the paper version and the pinned machine-proof version.</a></p>
+        <div class="invitation-task">
+          <p class="invitation-how-label">Take this task</p>
+          <p class="invitation-how">Record the paper version and the pinned machine-proof version, list the definitions and declarations compared, and record any remaining correspondence question; do not characterize the whole proof. The author reports that editorial revisions after v1.0.5-kernel did not change the theorem, Lean source tree, theorem map, or mathematical conclusion; that report is not an independent finding.</p>
+          <p class="invitation-respond">
+<a href="https://github.com/hjyuh/significance/issues/new?template=attestation.yml">Report what you found</a>          </p>
+        </div>
+        <p class="invitation-origin">Prepared by Significance editor · 2026-08-22</p>
+      </li>
+    </ul>
+  </div>
+
+  <section class="band" aria-labelledby="looked-heading">
+    <p class="lbl" id="looked-heading">Who has looked at this</p>
+<p class="prose">No named reviewer has recorded work on this claim yet.</p>  </section>
+
+
+  <div class="band">
+    <p class="lbl">Reported AI use</p>
+    <p class="prose">The public proof-claim page reports use of ChatGPT 5.5, ChatGPT 5.6, and a personally developed AI-assisted research and proof-engineering system. The pinned manuscript separately reports using OpenAI Codex for code navigation, drafting and copy-editing, and assistance with Lean 4 source and verification scripts. These are author/source statements; Significance does not treat AI output as independent proof or verification.</p>
+    <p class="meta"><span class="attribution">Quoted from the source · Significance editor · 2026-08-22</span><span class="locator"> · <a href="https://www.erdosproblems.com/forum/thread/848/proof-claims#proof-claim-204">View source</a></span></p>
+    <ul class="roles">
+      <li><span class="role">Writing the formal proof</span><span class="role-meta"> — OpenAI Codex · Quoted from the source · Significance editor</span></li>
+      <li><span class="role">Writing and editing</span><span class="role-meta"> — OpenAI Codex · Quoted from the source · Significance editor</span></li>
+    </ul>
+  </div>
+
+  <div class="band">
+    <p class="lbl">History</p>
+    <ul class="history">
+      <li>
+<span class="history-note">Private draft prepared from public materials and the author&#39;s permission to prepare a record; not published.</span>        <span class="event-meta">created · 2026-08-22 · Significance editor</span>
+      </li>
+    </ul>
+  </div>
+
+</aside>
+</div>
+<footer class="site-footer">
+<p>Significance mechanically validates provenance and a narrow set of evidence predicates. It does not mechanically determine mathematical truth.</p>
+</footer>
+</body>
+</html>
