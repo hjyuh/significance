@@ -3,6 +3,16 @@
 {% block topline_meta %}{{ records|length }} record{{ '' if records|length == 1 else 's' }} · clear records for AI-assisted mathematics{% endblock %}
 
 {% block content %}
+<section class="band index-start" aria-labelledby="start-heading">
+  <p class="lbl">Start here</p>
+  <h1 id="start-heading">Want to help with one claim?</h1>
+  <p class="prose">Pick one focused check, read only the linked passage, and report what you found. Or send us one link and we will prepare the record.</p>
+  <div class="index-actions">
+    {% if links.get('tasks') %}<a class="index-action-primary" href="{{ links.tasks }}">Take one focused check →</a>{% endif %}
+    <a class="index-action-secondary" href="{{ links.request }}">Submit or correct a claim</a>
+  </div>
+  <p class="meta">No Significance account is needed to read or begin. GitHub sign-in is only required for the GitHub reporting route; a request can also be sent by email when configured.</p>
+</section>
 <section class="band">
   <p class="lbl">Records</p>
   {% if records %}

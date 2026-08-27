@@ -129,6 +129,15 @@ dl.facts dd,
 
 .band:last-child { border-bottom: 0; }
 
+.index-start { background: var(--bg-rail); }
+.index-start h1 { max-width: 25ch; margin: 0; color: var(--fg-strong); font-size: clamp(1.8rem, 4vw, 2.8rem); line-height: 1.1; letter-spacing: -.025em; font-weight: 500; }
+.index-start .prose { max-width: 62ch; margin: 18px 0 0; }
+.index-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.index-actions a { display: inline-block; padding: 10px 15px; border: 1px solid var(--edge); font-family: var(--mono); font-size: 12px; text-decoration: none; }
+.index-action-primary { background: var(--note); border-color: var(--note) !important; color: var(--bg); }
+.index-action-secondary { color: var(--note); }
+.index-start > .meta { max-width: 72ch; margin: 14px 0 0; }
+
 .lbl {
   margin: 0 0 18px;
   font-family: var(--mono);
