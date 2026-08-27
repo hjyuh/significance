@@ -111,6 +111,26 @@ main { width: min(1080px, 100%); margin: 0 auto; }
   color: var(--dim);
 }
 
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.hero-actions a {
+  display: inline-block;
+  padding: 10px 16px;
+  border: 1px solid var(--edge);
+  font-family: var(--mono);
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.hero-action-primary { color: var(--bg); background: var(--note); border-color: var(--note) !important; }
+.hero-action-secondary { color: var(--note); }
+.hero-account-note { margin: 14px 0 0; color: var(--muted); font-size: 12px; }
+
 .records { padding: 34px 28px 46px; border-bottom: 1px solid var(--rule); }
 
 .records-list { display: grid; gap: 14px; }

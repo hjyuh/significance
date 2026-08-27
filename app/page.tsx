@@ -91,6 +91,11 @@ export default function Home() {
           format is portable, so an existing problem tracker can link to or
           consume the same record.
         </p>
+        <div className="hero-actions" aria-label="Start here">
+          <a className="hero-action-primary" href="/tasks/index.html">Take one focused check →</a>
+          <a className="hero-action-secondary" href="/request/index.html">Submit or correct a claim</a>
+        </div>
+        <p className="hero-account-note">No Significance account is needed to read or start. A GitHub account is used only if you choose to report through GitHub.</p>
       </section>
 
       <section className="records" aria-labelledby="records-heading">
