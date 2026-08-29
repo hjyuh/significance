@@ -27,7 +27,13 @@ EVIDENCE_KINDS = [
     "source_inspection",
     "informal_review",
     "mathematical_assessment",
+    "exposition",
+    "palomar_entry",
 ]
+#: Offered by name in `init`, and enforced by the schema and validator. Kept in
+#: step with `schema/record.schema.json`.
+EXPOSITION_VENUES = ["erdosproblems", "mathematical_discourse", "arxiv", "blog", "other"]
+LINK_BASIS_CHOICES = ["source_link", "author_attestation"]
 AI_ROLES = [
     "problem_selection",
     "literature_search",
@@ -216,6 +222,35 @@ def _scaffold_evidence_item(prompt_fn, party_ids, index) -> dict:
         item["reviewer"] = _ask_choice(prompt_fn, "  reviewer (party id)", party_ids)
         item["text"] = _ask(prompt_fn, "  review text")
         item["basis"] = _ask_choice(prompt_fn, "  basis", BASIS_CHOICES)
+        item["asserted_by"] = _ask_choice(prompt_fn, "  asserted_by", party_ids)
+        item["asserted_at"] = _now()
+
+    elif kind == "exposition":
+        # An exposition is not a review, so `init` asks for coverage rather
+        # than for an opinion: the scope line is what stops a row that says
+        # "an account exists" from being read as "an account approves".
+        item["venue"] = _ask_choice(prompt_fn, "  venue", EXPOSITION_VENUES)
+        if item["venue"] == "other":
+            item["venue_label"] = _ask(prompt_fn, "  venue_label (the venue's name)")
+        item["author"] = _ask_choice(prompt_fn, "  author (party id)", party_ids)
+        item["date"] = _ask(prompt_fn, "  date the exposition was published (YYYY-MM-DD)")
+        item["url"] = _ask(prompt_fn, "  url")
+        item["scope"] = _ask(prompt_fn, "  what it covers and what it excludes")
+        item["basis"] = _ask_choice(prompt_fn, "  basis", LINK_BASIS_CHOICES)
+        item["asserted_by"] = _ask_choice(prompt_fn, "  asserted_by", party_ids)
+        item["asserted_at"] = _now()
+
+    elif kind == "palomar_entry":
+        # No caveat is asked for. It is rendered from the code with every
+        # entry, and a record that could supply one could supply a weaker one.
+        item["url"] = _ask(prompt_fn, "  registry entry url")
+        item["date"] = _ask(prompt_fn, "  entry date as the registry shows it (YYYY-MM-DD)")
+        artifact_ref = _ask(
+            prompt_fn, "  what it ties to (declaration, path, commit)", required=False
+        )
+        if artifact_ref:
+            item["artifact_ref"] = artifact_ref
+        item["basis"] = _ask_choice(prompt_fn, "  basis", LINK_BASIS_CHOICES)
         item["asserted_by"] = _ask_choice(prompt_fn, "  asserted_by", party_ids)
         item["asserted_at"] = _now()
 

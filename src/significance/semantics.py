@@ -427,6 +427,141 @@ def check_plain_language_digestions(record: dict) -> list[Violation]:
     return violations
 
 
+#: The venues an exposition may name. Kept in step with the schema enum; the
+#: validator repeats the check so a record built against an older copy of the
+#: schema still fails here rather than rendering a venue the templates have no
+#: label for.
+EXPOSITION_VENUES = ("erdosproblems", "mathematical_discourse", "arxiv", "blog", "other")
+
+_HTTP_URL_RE = re.compile(r"^https?://[^\s]+$", re.IGNORECASE)
+
+#: Rendered with every palomar_entry, from here, never from the record. The
+#: registry's own framing of its intake is the load-bearing half: a record that
+#: could reword this could quietly upgrade a directory listing into a review.
+PALOMAR_CAVEAT = (
+    "Palomar intake checks fall short of peer review (registry's own framing); "
+    "correspondence with the claimed theorem is not established by this entry."
+)
+
+
+def _url_violations(
+    value: object, rule_missing: str, subject: str, location: str
+) -> list[Violation]:
+    """A link-shaped evidence entry is its link; without one it points nowhere.
+
+    Presence is checked here rather than in the schema's `required` list so the
+    failure has one name instead of two, the same reason `open_invitations[].how`
+    is emptiness-checked here.
+    """
+    if not isinstance(value, str) or not value.strip():
+        return [
+            Violation(
+                rule_missing,
+                f"{subject} records no url; the entry exists to point at something published "
+                "elsewhere, and without the link it points at nothing",
+                location,
+            )
+        ]
+    if not _HTTP_URL_RE.match(value.strip()):
+        return [
+            Violation(
+                rule_missing,
+                f"{subject} url {value!r} is not an http(s) URL; the renderer will not link it, "
+                "so the entry would render as an exposition nobody can open",
+                location,
+            )
+        ]
+    return []
+
+
+def check_exposition_evidence(record: dict) -> list[Violation]:
+    """An exposition entry says a thing was written, where, by whom, and about what.
+
+    It is not a review, so the one field in it that could drift into being one —
+    `scope`, which describes coverage — answers to the verdict lint. "Expounds
+    the Lean proof" is scope; "expounds the Lean proof, which is correct" is a
+    finding this project does not make, in a field nobody would think to check.
+    """
+    violations: list[Violation] = []
+    parties = record.get("parties") or {}
+    for index, entry in enumerate(record.get("evidence") or []):
+        if not isinstance(entry, dict) or entry.get("kind") != "exposition":
+            continue
+        location = f"evidence[{index}]"
+
+        violations.extend(
+            _url_violations(
+                entry.get("url"), "exposition-missing-url", "exposition", location + ".url"
+            )
+        )
+
+        venue = entry.get("venue")
+        if isinstance(venue, str) and venue not in EXPOSITION_VENUES:
+            violations.append(
+                Violation(
+                    "exposition-unknown-venue",
+                    f"venue {venue!r} is not one of {list(EXPOSITION_VENUES)}",
+                    location + ".venue",
+                )
+            )
+        if venue == "other" and not (entry.get("venue_label") or "").strip():
+            violations.append(
+                Violation(
+                    "exposition-venue-unnamed",
+                    "venue is 'other' but venue_label is missing; an exposition from an unnamed "
+                    "venue cannot be looked up or asked about",
+                    location + ".venue_label",
+                )
+            )
+
+        author = entry.get("author")
+        if isinstance(author, str) and author not in parties:
+            violations.append(
+                Violation(
+                    "unknown-party",
+                    f"exposition author references undeclared party {author!r}",
+                    location + ".author",
+                )
+            )
+
+        scope = entry.get("scope")
+        if not isinstance(scope, str) or not scope.strip():
+            violations.append(
+                Violation(
+                    "exposition-empty-scope",
+                    "scope is empty; an exposition row with no stated coverage invites the "
+                    "reader to assume it covers everything",
+                    location + ".scope",
+                )
+            )
+        else:
+            violations.extend(verdict_violations(scope, location + ".scope"))
+
+        label = entry.get("venue_label")
+        if isinstance(label, str) and label.strip():
+            violations.extend(verdict_violations(label, location + ".venue_label"))
+
+    return violations
+
+
+def check_palomar_entries(record: dict) -> list[Violation]:
+    """A registry entry is a pointer. The caveat that says so is not in the record."""
+    violations: list[Violation] = []
+    for index, entry in enumerate(record.get("evidence") or []):
+        if not isinstance(entry, dict) or entry.get("kind") != "palomar_entry":
+            continue
+        location = f"evidence[{index}]"
+        violations.extend(
+            _url_violations(
+                entry.get("url"), "palomar-missing-url", "palomar_entry", location + ".url"
+            )
+        )
+        artifact_ref = entry.get("artifact_ref")
+        if isinstance(artifact_ref, str) and artifact_ref.strip():
+            violations.extend(verdict_violations(artifact_ref, location + ".artifact_ref"))
+    return violations
+
+
 def check_invitation_instructions(record: dict) -> list[Violation]:
     """`how` is optional; a `how` that is there and says nothing is not.
 
@@ -494,7 +629,7 @@ def check_invitation_state(record: dict) -> list[Violation]:
 
 def check_invitation_task_kinds(record: dict) -> list[Violation]:
     """Keep the optional task taxonomy closed when an invitation opts in."""
-    allowed = {"read_check", "rederive", "reproduce_build", "statement_audit"}
+    allowed = {"read_check", "rederive", "reproduce_build", "statement_audit", "exposition"}
     violations = []
     for i, invitation in enumerate(record.get("open_invitations") or []):
         if not isinstance(invitation, dict) or "task_kind" not in invitation:
@@ -698,6 +833,8 @@ def semantic_violations(record: dict, known_ids: set[str] | None = None) -> list
         *check_accurate_wording(record),
         *check_plain_language_digestions(record),
         *check_review_map(record),
+        *check_exposition_evidence(record),
+        *check_palomar_entries(record),
         *check_invitation_instructions(record),
         *check_invitation_state(record),
         *check_invitation_task_kinds(record),

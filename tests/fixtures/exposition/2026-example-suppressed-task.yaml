@@ -1,0 +1,75 @@
+# A published record that has asked not to be sent an exposition task.
+# Fictional test data. The suppression removes the derived task and nothing
+# else: the digestion column still says "none yet", because none is the number
+# of expositions recorded, and suppressing a task does not make one appear.
+schema_version: 1
+record_id: 2026-example-suppressed-task
+record_version: 1
+record_state: active
+
+freshness:
+  result: current
+  observed_source_version: "v1"
+  confirmed_source_version: "v1"
+  checked_at: "2026-08-20T00:00:00Z"
+
+parties:
+  editor:
+    pseudonym: "Significance editor"
+    verification_method:
+      kind: pseudonymous
+      identifier: significance-project
+  expositor:
+    name: "M. Expositor"
+    verification_method:
+      kind: pseudonymous
+      identifier: "https://www.erdosproblems.com/forum/user/expositor"
+
+claim:
+  id: claim-main
+  text:
+    value: "Every fictional lattice is fictionally modular."
+    basis: source_quote
+    asserted_by: editor
+    asserted_at: "2026-08-20T00:00:00Z"
+    locator:
+      page: 1
+  scope:
+    value: "Fictional scope: the statement above and nothing wider."
+    basis: source_quote
+    asserted_by: editor
+    asserted_at: "2026-08-20T00:00:00Z"
+    locator:
+      page: 1
+
+manuscript:
+  url: "https://example.org/2026-example-suppressed-task.pdf"
+  label: "Fictional manuscript"
+  sha256: "0000000000000000000000000000000000000000000000000000000000000000"
+  retrieved_at: "2026-08-20T00:00:00Z"
+
+evidence:
+  - id: ev-source
+    kind: source_inspection
+    description: "The fictional source page was located and hashed."
+    basis: editorial_inference
+    asserted_by: editor
+    asserted_at: "2026-08-20T00:00:00Z"
+
+suppress_derived_tasks: [exposition]
+
+ai_provenance:
+  disclosure:
+    value: "None reported."
+    basis: source_quote
+    asserted_by: editor
+    asserted_at: "2026-08-20T00:00:00Z"
+    locator:
+      page: 1
+  roles: []
+
+history:
+  - id: evt-created
+    type: created
+    at: "2026-08-20T00:00:00Z"
+    by: editor

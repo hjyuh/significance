@@ -13,6 +13,7 @@
 {%- elif basis == 'editorial_inference' -%}Significance’s interpretation
 {%- elif basis == 'machine_result' -%}Automated result
 {%- elif basis == 'digest' -%}Plain-language restatement
+{%- elif basis == 'source_link' -%}Recorded from the linked page
 {%- else -%}{{ basis|replace('_', ' ') }}
 {%- endif -%}
 {%- endmacro %}
@@ -35,7 +36,24 @@
 {%- elif kind == 'source_inspection' -%}Source inspection
 {%- elif kind == 'informal_review' -%}Written review
 {%- elif kind == 'mathematical_assessment' -%}Mathematical assessment
+{%- elif kind == 'exposition' -%}Exposition published elsewhere
+{%- elif kind == 'palomar_entry' -%}Palomar registry entry
 {%- else -%}{{ kind|replace('_', ' ') }}
+{%- endif -%}
+{%- endmacro %}
+
+{# The venue's name, from the closed enum where there is one and from the
+   record's own venue_label only when the venue is `other` — which the
+   validator requires to be present in that case, so this never renders a
+   nameless venue. #}
+{% macro exposition_venue_label(ev) -%}
+{%- set venue = ev.get('venue') -%}
+{%- if venue == 'erdosproblems' -%}erdosproblems.com
+{%- elif venue == 'mathematical_discourse' -%}Mathematical Discourse
+{%- elif venue == 'arxiv' -%}arXiv
+{%- elif venue == 'blog' -%}Blog post
+{%- elif venue == 'other' -%}{{ ev.get('venue_label', 'Other venue') }}
+{%- else -%}{{ (venue or 'unnamed venue')|replace('_', ' ') }}
 {%- endif -%}
 {%- endmacro %}
 
@@ -50,8 +68,8 @@
 {%- endif -%}
 {%- endmacro %}
 
-{% macro attribution(node) -%}
-<span class="attribution">{{ basis_label(node.get('basis', '?')) }}{% if node.get('asserted_by') %} · {{ party_label(node.asserted_by) }}{% endif %}{% if node.get('asserted_at') %} · {{ node.asserted_at[:10] }}{% endif %}</span>
+{% macro attribution(node, default_basis='?') -%}
+<span class="attribution">{{ basis_label(node.get('basis', default_basis)) }}{% if node.get('asserted_by') %} · {{ party_label(node.asserted_by) }}{% endif %}{% if node.get('asserted_at') %} · {{ node.asserted_at[:10] }}{% endif %}</span>
 {%- if node.get('locator') %}
 <span class="locator">
 {%- if node.locator.get('section') %} §{{ node.locator.section }}{% endif -%}

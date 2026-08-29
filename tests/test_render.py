@@ -17,7 +17,14 @@ from pathlib import Path
 
 from significance.boards import load_board
 from significance.records import load_record
-from significance.render import build_site, load_glossary, mathml, problem_slug, safe_href
+from significance.render import (
+    build_site,
+    derived_exposition_task,
+    load_glossary,
+    mathml,
+    problem_slug,
+    safe_href,
+)
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 RECORDS_DIR = REPO_ROOT / "records"
@@ -577,3 +584,149 @@ def test_placeholder_fill_slots_never_reach_the_page(tmp_path):
     # One marker per row, from its name slot -- not three.
     assert page.count("[FILL: verify from release]") == len(placeholders)
     assert "Manuscript" not in page.split("Nobody here has researched")[1]
+
+
+# --- exposition, registry entries, component dates, derived tasks -----------
+
+EXPOSITION_DIR = REPO_ROOT / "tests" / "fixtures" / "exposition"
+EXPOSITION_BOARDS = REPO_ROOT / "tests" / "fixtures" / "exposition-boards"
+
+
+def _exposition_site(tmp_path):
+    out = tmp_path / "site"
+    result = build_site(EXPOSITION_DIR, out, boards_dir=EXPOSITION_BOARDS)
+    assert result.skipped == {}
+    return out
+
+
+def test_expositions_are_ordered_and_never_counted_as_reviews(tmp_path):
+    out = _exposition_site(tmp_path)
+    html = (out / "2026-example-exposition-row" / "index.html").read_text(encoding="utf-8")
+
+    # The row is on the page, with its venue, its author, and its stated scope.
+    assert "Exposition published elsewhere" in html
+    assert "erdosproblems.com" in html
+    assert "paper-to-Lean correspondence is excluded" in html
+
+    # And the review-activity block on the same page still reports none. This
+    # is the assertion the whole evidence class turns on: an exposition may
+    # restate a proof in full and has still reviewed nothing.
+    assert "<dt>Written reviews</dt><dd>0</dd>" in html
+    assert "<dt>Math assessments</dt><dd>0</dd>" in html
+
+
+def test_an_exposition_does_not_enter_the_reviewer_census(tmp_path):
+    out = _exposition_site(tmp_path)
+    reviewers = (out / "reviewers" / "index.html").read_text(encoding="utf-8")
+    assert "expositor" not in reviewers.lower()
+    assert not (out / "reviewers" / "expositor").exists()
+
+
+def test_component_dates_render_as_a_vector_with_dashes_for_the_unknown(tmp_path):
+    out = _exposition_site(tmp_path)
+    html = (out / "2026-example-exposition-row" / "index.html").read_text(encoding="utf-8")
+
+    assert "<dt>Preprint</dt><dd>2026-07-01</dd>" in html
+    assert "<dt>Exposition</dt><dd>2026-08-15</dd>" in html
+    # No formal artifact and no registry entry on this record: a dash, not the
+    # retrieval date standing in for one.
+    assert "<dt>Formalization</dt><dd>\u2014</dd>" in html
+    assert "Component dates (preprint / exposition / formalization)." in html
+
+    # No combined release date is computed anywhere on the page.
+    assert "effective release" not in html.lower()
+
+
+def test_the_palomar_caveat_is_rendered_from_the_code_every_time(tmp_path):
+    out = _exposition_site(tmp_path)
+    html = (out / "2026-example-palomar-row" / "index.html").read_text(encoding="utf-8")
+
+    assert "Palomar registry entry" in html
+    assert "Palomar intake checks fall short of peer review" in html
+    assert "correspondence with the claimed theorem is not established by this entry" in html
+
+    # The caveat is not in the record, so it cannot have come from one.
+    source = (EXPOSITION_DIR / "2026-example-palomar-row.yaml").read_text(encoding="utf-8")
+    assert "fall short of peer review" not in source
+
+    # A registry entry dates the formalization column, labelled as such.
+    assert "<dt>Formalization</dt><dd>2026-08-10</dd>" in html
+    assert "Palomar registry entry" in html
+
+
+def test_derived_exposition_tasks_appear_only_where_they_are_missing(tmp_path):
+    out = _exposition_site(tmp_path)
+    tasks = (out / "tasks" / "index.html").read_text(encoding="utf-8")
+
+    # The record without an exposition gets one, marked as derived.
+    assert 'id="derived-exposition-2026-example-palomar-row"' in tasks
+    assert "Derived by the build" in tasks
+    assert "[FILL by editor: intended reader level]" in tasks
+
+    # The record that has one does not.
+    assert "derived-exposition-2026-example-exposition-row" not in tasks
+    # Nor does the record that asked not to be sent one.
+    assert "derived-exposition-2026-example-suppressed-task" not in tasks
+
+    # Derived tasks are build output only: no YAML, and no per-task page with
+    # an attestation form, because nobody invited this work.
+    for record_file in EXPOSITION_DIR.glob("*.yaml"):
+        assert "derived-exposition" not in record_file.read_text(encoding="utf-8")
+    assert not (out / "tasks" / "2026-example-palomar-row" / "derived-exposition").exists()
+
+
+def test_a_derived_task_disappears_when_an_exposition_lands(tmp_path):
+    # The reason these are derived rather than written: the gap closes itself.
+    record = load_record(EXPOSITION_DIR / "2026-example-palomar-row.yaml")
+    assert derived_exposition_task(record) is not None
+    record["evidence"].append(
+        {
+            "id": "ev-exposition",
+            "kind": "exposition",
+            "venue": "blog",
+            "author": "editor",
+            "date": "2026-08-21",
+            "url": "https://example.org/post",
+            "scope": "Expounds the statement.",
+            "basis": "source_link",
+            "asserted_by": "editor",
+            "asserted_at": "2026-08-21T00:00:00Z",
+        }
+    )
+    assert derived_exposition_task(record) is None
+
+
+def test_a_draft_record_is_never_sent_an_exposition_task():
+    # Soliciting an expository account of an unapproved draft would publish it
+    # by the back door.
+    record = load_record(EXPOSITION_DIR / "2026-example-palomar-row.yaml")
+    record["draft"] = True
+    assert derived_exposition_task(record) is None
+    record["draft"] = False
+    record["record_state"] = "withdrawn"
+    assert derived_exposition_task(record) is None
+
+
+def test_the_board_digestion_column_derives_from_the_records(tmp_path):
+    out = _exposition_site(tmp_path)
+    html = (out / "boards" / "expo-board" / "index.html").read_text(encoding="utf-8")
+
+    assert "1 exposition</a>" in html
+    assert "#expositions" in html
+    # Missing, and invitable: the "none yet" links to the derived task.
+    assert "tasks/index.html#derived-exposition-2026-example-palomar-row" in html
+    # Missing, with the task suppressed: still "none yet", now with no link.
+    assert html.count("none yet") == 2
+    assert "derived-exposition-2026-example-suppressed-task" not in html
+    # The column says what it is counting, and what it is not.
+    assert "not a review count" in html
+
+
+def test_the_public_corpus_still_renders_its_dates_strip(tmp_path):
+    # Every published record gains the strip; none of them has a recorded
+    # preprint date yet, and the strip says so rather than inventing one.
+    out = tmp_path / "site"
+    build_site(RECORDS_DIR, out)
+    html = (out / PUBLIC_RECORD_ID / "index.html").read_text(encoding="utf-8")
+    assert "Component dates (preprint / exposition / formalization)." in html
+    assert "<dt>Preprint</dt><dd>\u2014</dd>" in html

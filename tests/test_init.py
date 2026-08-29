@@ -82,3 +82,50 @@ def test_write_record_round_trips(tmp_path):
     assert reloaded["record_id"] == record["record_id"]
     errors = list(validator().iter_errors(reloaded))
     assert errors == []
+
+
+def test_scaffold_can_write_an_exposition_row():
+    # `init` offers the kind, and the scaffolded row validates: an exposition
+    # entered here is the same object the schema and the renderer expect.
+    answers = list(_ANSWERS)
+    start = answers.index("external_formal_artifact")
+    answers[start:start + 6] = [
+        "exposition",  # evidence kind
+        "",  # evidence id (default ev-1)
+        "erdosproblems",  # venue
+        "author-x",  # exposition author
+        "2026-08-15",  # date
+        "https://www.erdosproblems.com/848",  # url
+        "Expounds the main lemma; the formalization is excluded.",  # scope
+        "source_link",  # basis
+        "author-x",  # asserted_by
+    ]
+    record = scaffold_record(_canned_prompt(answers))
+    errors = list(validator().iter_errors(record))
+    assert errors == [], "\n".join(str(e) for e in errors)
+    entry = record["evidence"][0]
+    assert entry["kind"] == "exposition"
+    assert entry["venue"] == "erdosproblems"
+    assert entry["basis"] == "source_link"
+
+
+def test_scaffold_never_asks_for_a_palomar_caveat():
+    # The caveat is rendered from the code. If init could collect one, a record
+    # could carry a shorter one.
+    answers = list(_ANSWERS)
+    start = answers.index("external_formal_artifact")
+    answers[start:start + 6] = [
+        "palomar_entry",  # evidence kind
+        "",  # evidence id (default ev-1)
+        "https://example.org/palomar/entry/1",  # url
+        "2026-08-10",  # entry date
+        "",  # artifact_ref (optional, skipped)
+        "source_link",  # basis
+        "author-x",  # asserted_by
+    ]
+    record = scaffold_record(_canned_prompt(answers))
+    errors = list(validator().iter_errors(record))
+    assert errors == [], "\n".join(str(e) for e in errors)
+    entry = record["evidence"][0]
+    assert entry["kind"] == "palomar_entry"
+    assert "caveat" not in entry

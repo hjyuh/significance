@@ -1,0 +1,86 @@
+# A record carrying one exposition row. Fictional test data.
+#
+# The exposition is here to prove a negative as much as a positive: the row
+# renders, the component-dates strip picks up its date, the board's digestion
+# column counts it -- and the review-activity block on the same page still
+# reports zero written reviews, because an exposition is not one.
+schema_version: 1
+record_id: 2026-example-exposition-row
+record_version: 1
+record_state: active
+
+freshness:
+  result: current
+  observed_source_version: "v1"
+  confirmed_source_version: "v1"
+  checked_at: "2026-08-20T00:00:00Z"
+
+parties:
+  editor:
+    pseudonym: "Significance editor"
+    verification_method:
+      kind: pseudonymous
+      identifier: significance-project
+  expositor:
+    name: "M. Expositor"
+    verification_method:
+      kind: pseudonymous
+      identifier: "https://www.erdosproblems.com/forum/user/expositor"
+
+claim:
+  id: claim-main
+  text:
+    value: "Every finite fictional graph has a fictional spanning tree."
+    basis: source_quote
+    asserted_by: editor
+    asserted_at: "2026-08-20T00:00:00Z"
+    locator:
+      page: 1
+  scope:
+    value: "Fictional scope: the statement above and nothing wider."
+    basis: source_quote
+    asserted_by: editor
+    asserted_at: "2026-08-20T00:00:00Z"
+    locator:
+      page: 1
+
+manuscript:
+  url: "https://example.org/2026-example-exposition-row.pdf"
+  label: "Fictional manuscript"
+  published_at: "2026-07-01"
+  sha256: "0000000000000000000000000000000000000000000000000000000000000000"
+  retrieved_at: "2026-08-20T00:00:00Z"
+
+evidence:
+  - id: ev-source
+    kind: source_inspection
+    description: "The fictional source page was located and hashed."
+    basis: editorial_inference
+    asserted_by: editor
+    asserted_at: "2026-08-20T00:00:00Z"
+  - id: ev-exposition
+    kind: exposition
+    venue: erdosproblems
+    author: expositor
+    date: "2026-08-15"
+    url: "https://www.erdosproblems.com/848"
+    scope: "Expounds the main lemma; the paper-to-Lean correspondence is excluded."
+    basis: source_link
+    asserted_by: editor
+    asserted_at: "2026-08-20T00:00:00Z"
+
+ai_provenance:
+  disclosure:
+    value: "None reported."
+    basis: source_quote
+    asserted_by: editor
+    asserted_at: "2026-08-20T00:00:00Z"
+    locator:
+      page: 1
+  roles: []
+
+history:
+  - id: evt-created
+    type: created
+    at: "2026-08-20T00:00:00Z"
+    by: editor

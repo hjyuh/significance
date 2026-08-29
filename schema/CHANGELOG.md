@@ -1,5 +1,44 @@
 # Schema changelog
 
+## 1 — 2026-08-29
+
+Added two evidence kinds for work published elsewhere, plus the fields the
+surfaces derived from them need. All additive within `schema_version: 1`.
+
+`exposition` records that somebody wrote or recorded an account of this work:
+`venue` (closed enum: erdosproblems, mathematical_discourse, arxiv, blog,
+other), `venue_label` (required by the validator when the venue is `other`),
+`author` as a declared party, `date`, `url`, and `scope` — what the exposition
+covers and excludes. It is not a review and is not counted as one: the
+review-activity block and the reviewer census both ignore this kind.
+`significance validate` owns url presence and http(s) form
+(`exposition-missing-url`), the venue-label rule (`exposition-venue-unnamed`),
+author resolution (`unknown-party`), non-empty scope
+(`exposition-empty-scope`), and the verdict lint on `scope` and `venue_label`.
+
+`palomar_entry` records an entry in the Palomar formalization registry: `url`,
+`date` as the registry shows it, and an optional `artifact_ref`. There is
+deliberately no `caveat` property and `additionalProperties` is false: the
+caveat is a fixed label rendered from `semantics.PALOMAR_CAVEAT` with every
+entry, so no record can shorten, soften, or omit it. `palomar-missing-url` is
+enforced by the validator.
+
+Both kinds take `basis` from a new `link_basis` enum (`source_link`,
+`author_attestation`), separate from `basis` so that a link can never stand in
+for a quote, a receipt, or an editorial finding. Absent, `source_link` is
+assumed by the renderer.
+
+Also added: `manuscript.published_at` (optional `iso_date`, the day the source
+says the manuscript version was released — distinct from `retrieved_at`, which
+is when this project fetched the file), the shared `iso_date` definition, and
+`suppress_derived_tasks: [exposition]`, which turns off the build-derived
+exposition task for one record. `open_invitations[].task_kind` gains
+`exposition` so an editor-written exposition task validates as the derived ones
+render.
+
+Older copies of this schema will reject a record using either new kind; pull
+the current schema before validating one.
+
 ## 1 — 2026-08-20
 
 Added optional `formalization_handoff`, an attributed bridge from an informal

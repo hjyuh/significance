@@ -47,6 +47,9 @@ def test_valid_record_has_no_violations():
         ("plain-language-verdict.yaml", "verdict-language"),
         ("invitation-empty-how.yaml", "empty-invitation-instructions"),
         ("task-kind-unknown.yaml", "task-kind-unknown"),
+        ("exposition-missing-url.yaml", "exposition-missing-url"),
+        ("exposition-verdict-in-scope.yaml", "verdict-language"),
+        ("palomar-missing-url.yaml", "palomar-missing-url"),
     ],
 )
 def test_single_record_broken_fixture(fixture_name, expected_rule):
@@ -276,3 +279,85 @@ def test_respond_requires_at_least_one_channel():
     record["open_invitations"][0]["respond"] = {}
     violations = schema_violations(record, validator())
     assert violations, "expected an empty respond object to be refused"
+
+
+# --- exposition and registry evidence (Tao-alignment release) ---------------
+
+EXPOSITION_DIR = REPO_ROOT / "tests" / "fixtures" / "exposition"
+
+
+def _exposition_record():
+    return load_record(EXPOSITION_DIR / "2026-example-exposition-row.yaml")
+
+
+def _exposition_entry(record):
+    return next(e for e in record["evidence"] if e["kind"] == "exposition")
+
+
+def test_exposition_fixtures_validate():
+    violations = validate_paths([str(EXPOSITION_DIR)])
+    assert violations == [], "\n".join(str(v) for v in violations)
+
+
+def test_an_exposition_url_must_be_http():
+    # safe_href refuses anything else at render time, so a javascript: URL
+    # would render as inert text and the row would silently stop being a link
+    # to anything. Refusing it here means the failure is named where it can be
+    # fixed rather than absorbed by the template.
+    record = _exposition_record()
+    _exposition_entry(record)["url"] = "javascript:alert(1)"
+    assert {v.rule for v in semantic_violations(record)} == {"exposition-missing-url"}
+
+
+def test_an_exposition_from_venue_other_must_name_the_venue():
+    record = _exposition_record()
+    _exposition_entry(record)["venue"] = "other"
+    assert {v.rule for v in semantic_violations(record)} == {"exposition-venue-unnamed"}
+
+    _exposition_entry(record)["venue_label"] = "A named seminar series"
+    assert semantic_violations(record) == []
+
+
+def test_an_exposition_author_must_be_a_declared_party():
+    # Same rule the rest of the record answers to: an exposition by somebody
+    # this record has never named is an exposition nobody can be asked about.
+    record = _exposition_record()
+    _exposition_entry(record)["author"] = "nobody-declared"
+    assert {v.rule for v in semantic_violations(record)} == {"unknown-party"}
+
+
+def test_exposition_scope_is_verdict_linted():
+    record = _exposition_record()
+    _exposition_entry(record)["scope"] = "Expounds the proof, which is correct."
+    assert {v.rule for v in semantic_violations(record)} == {"verdict-language"}
+
+
+def test_an_empty_exposition_scope_is_refused():
+    # A row with no stated coverage invites the reader to assume it covers
+    # everything, which is the assumption the field exists to prevent.
+    record = _exposition_record()
+    _exposition_entry(record)["scope"] = "   "
+    assert "exposition-empty-scope" in {v.rule for v in semantic_violations(record)}
+
+
+def test_a_palomar_entry_may_not_carry_its_own_caveat():
+    # The caveat is a fixed rendered label. If a record could carry one, a
+    # record could carry a shorter one.
+    record = load_record(EXPOSITION_DIR / "2026-example-palomar-row.yaml")
+    entry = next(e for e in record["evidence"] if e["kind"] == "palomar_entry")
+    entry["caveat"] = "Reviewed."
+    assert {v.rule for v in schema_violations(record, validator())} == {"forbidden-field"}
+
+
+def test_palomar_artifact_ref_is_verdict_linted():
+    record = load_record(EXPOSITION_DIR / "2026-example-palomar-row.yaml")
+    entry = next(e for e in record["evidence"] if e["kind"] == "palomar_entry")
+    entry["artifact_ref"] = "Theorem main, proven in the pinned repository"
+    assert "verdict-language" in {v.rule for v in semantic_violations(record)}
+
+
+def test_suppress_derived_tasks_accepts_only_known_kinds():
+    record = load_record(EXPOSITION_DIR / "2026-example-suppressed-task.yaml")
+    assert semantic_violations(record) == []
+    record["suppress_derived_tasks"] = ["everything"]
+    assert schema_violations(record, validator()), "expected an unknown suppression kind to fail"

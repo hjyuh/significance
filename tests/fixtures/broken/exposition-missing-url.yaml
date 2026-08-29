@@ -1,0 +1,32 @@
+# An exposition entry with no url. The entry exists to say that an account of
+# this work was published somewhere; without the link it says only that one was
+# published somewhere, which nobody can check, open, or attribute. Presence is
+# enforced by `significance validate` rather than by the schema's required list
+# so the failure has one name.
+schema_version: 1
+record_id: 2026-example-exposition-no-url
+record_version: 1
+record_state: active
+freshness: {result: unknown, checked_at: "2026-08-20T00:00:00Z"}
+parties:
+  editor: {name: Editor, verification_method: {kind: github_identity}}
+  expositor: {name: Expositor, verification_method: {kind: pseudonymous, identifier: expositor}}
+claim:
+  id: example
+  text: {value: Example claim, basis: source_quote, asserted_by: editor, asserted_at: "2026-08-20T00:00:00Z", locator: {page: 1}}
+  scope: {value: Example scope, basis: source_quote, asserted_by: editor, asserted_at: "2026-08-20T00:00:00Z", locator: {page: 1}}
+manuscript: {url: "https://example.org/paper.pdf", label: paper, sha256: "0000000000000000000000000000000000000000000000000000000000000000", retrieved_at: "2026-08-20T00:00:00Z"}
+evidence:
+  - id: exposition
+    kind: exposition
+    venue: erdosproblems
+    author: expositor
+    date: "2026-08-19"
+    scope: "Expounds the main lemma; the formalization is not discussed."
+    basis: source_link
+    asserted_by: editor
+    asserted_at: "2026-08-20T00:00:00Z"
+ai_provenance:
+  disclosure: {value: none, basis: source_quote, asserted_by: editor, asserted_at: "2026-08-20T00:00:00Z", locator: {page: 1}}
+  roles: []
+history: [{id: evt-created, type: created, at: "2026-08-20T00:00:00Z", by: editor}]

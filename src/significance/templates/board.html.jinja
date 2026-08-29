@@ -69,6 +69,17 @@
       </dl>
       {% endif %}
 
+      {% set digestion = row_digestion.get(row.id) if row_digestion else None %}
+      {% if digestion %}
+      {# Derived from the linked record's exposition evidence, never stated on
+         the board. A board that carried its own count could disagree with the
+         record it links, and the disagreement would be invisible. #}
+      <p class="board-row-digestion">Digestion:
+        {% if digestion.href %}<a href="{{ digestion.href }}">{{ digestion.label }}</a>{% else %}{{ digestion.label }}{% endif %}
+        <span class="meta">· expositions recorded on the linked record; not a review count</span>
+      </p>
+      {% endif %}
+
       {% if row.get('status') %}
       <dl class="facts board-row-status">
         <dt>Checked</dt>

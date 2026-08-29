@@ -1,6 +1,6 @@
 schema_version: 1
 record_id: 2026-anthropic-zeta-two-thirds
-record_version: 2
+record_version: 3
 record_state: active
 
 freshness:
@@ -295,6 +295,9 @@ open_invitations:
       comparator/PrintAxioms.lean and lake env lean
       comparator/PrintAxioms/Multiplicity.lean. Report commands, platform,
       exit codes, and the SHA-256 of the complete log.
+    effort_estimate: "about 60–90 minutes with the repository cache; longer if dependencies must build from source"
+    prerequisites:
+      - "Lean command-line use and the pinned repository toolchain"
     respond:
       url: "https://github.com/hjyuh/significance/issues/new?template=invitation-response.yml"
     created_by: significance-editor
@@ -311,6 +314,9 @@ open_invitations:
       State whether the interval conventions, multiplicity, critical-line
       count, limit formulation, and constant match; identify every mismatch
       or unresolved definition explicitly.
+    effort_estimate: "about 60–90 minutes"
+    prerequisites:
+      - "Lean source reading and the paper's counting notation"
     respond:
       url: "https://github.com/hjyuh/significance/issues/new?template=invitation-response.yml"
     created_by: significance-editor
@@ -325,6 +331,9 @@ open_invitations:
       use of the unconditional prime-side second moment. Name the first step
       you cannot justify, or state the bounded portion you checked; do not give
       a paper-wide score.
+    effort_estimate: "about 3–5 hours"
+    prerequisites:
+      - "Analytic number theory and the paper's Weil-form notation"
     respond:
       url: "https://github.com/hjyuh/significance/issues/new?template=invitation-response.yml"
     created_by: significance-editor
@@ -343,3 +352,8 @@ history:
     at: "2026-08-11T12:00:00Z"
     by: significance-editor
     note: "Made the absence of author participation explicit and added derived review-coverage presentation; no claim or evidence entry changed."
+  - id: evt-task-estimates
+    type: metadata_added
+    at: "2026-08-29T19:42:00Z"
+    by: significance-editor
+    note: "Added bounded effort estimates and prerequisites to the three existing open invitations; their scopes and evidence remained unchanged."

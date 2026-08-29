@@ -70,7 +70,22 @@ The current release includes:
 - verdict-lint for review notes and fixtures for malformed provenance, stale
   confirmations, missing hashes, invalid dependencies, and verdict language;
 - a Lean evidence adapter that reports build/axiom evidence under a named trust
-  profile. It does not prove the attached analytic argument.
+  profile. It does not prove the attached analytic argument;
+- `exposition` and `palomar_entry` evidence for work published elsewhere, the
+  per-record component-dates strip, build-derived exposition tasks with
+  per-record suppression, and the board's derived digestion column. See
+  README §"Exposition and registry evidence" and `schema/CHANGELOG.md`.
+
+Neither new evidence kind is a review and neither is counted as one: the
+review-activity block, the reviewer census, and the per-reviewer pages ignore
+both. The Palomar caveat is rendered from `semantics.PALOMAR_CAVEAT` with every
+registry entry and has no field in the schema, so a record cannot weaken it.
+
+No exposition or Palomar row has been seeded. At build time
+<https://www.erdosproblems.com/848> showed "Proof expositions (0)", so the #848
+record carries no exposition row and shows the derived task instead; no claim
+in this corpus has a Palomar entry. The seeding condition is publication, not
+intent — check the venue page again before adding a row.
 
 ## Public corpus
 
@@ -122,11 +137,19 @@ from code changes alone. Publication and outreach require explicit human approva
 
 ## Verification and test status
 
-Latest isolated validation of the two private drafts returned no errors. The latest
-draft build completed two records into a private preview. The targeted incorporation
-and renderer tests passed (`33 passed`); the earlier full Python suite passed (`136
-passed`), and the JavaScript test/build suite was green before the latest draft-only
-changes. Re-run the full suites before committing or deploying.
+After the exposition/registry release: `uv run pytest` passes (`167 passed`),
+`uv run ruff check src tests adapters/lean` is clean, `npm run lint` is clean,
+and `npm test` (records build, `vinext build`, 5 rendered-HTML tests, 26
+submit-check tests) is green. `uv run significance validate records/` and the
+drafts directory report no violations. Re-run the full suites before committing
+or deploying.
+
+On a Linux checkout whose `node_modules/` was installed on Windows, `npm test`
+fails before it starts, in `vinext build` and in `tsx`, for missing
+`@rolldown/binding-linux-x64-gnu` and `@esbuild/linux-x64`. That is the
+platform-binary problem, not a test failure: install the platform packages
+(`npm i --no-save` keeps `package-lock.json` untouched) or reinstall
+`node_modules/` on the platform you are testing on.
 
 Useful commands from the repository root (the project uses `uv`):
 

@@ -1,0 +1,33 @@
+# A verdict smuggled into an exposition's scope. `scope` describes what an
+# exposition covers, and it is the field most likely to drift: "expounds the
+# main lemma" is coverage, "expounds the main lemma and shows the argument is
+# correct" is a finding this project does not make, sitting in a field a reader
+# would never think to check for one.
+schema_version: 1
+record_id: 2026-example-exposition-verdict
+record_version: 1
+record_state: active
+freshness: {result: unknown, checked_at: "2026-08-20T00:00:00Z"}
+parties:
+  editor: {name: Editor, verification_method: {kind: github_identity}}
+  expositor: {name: Expositor, verification_method: {kind: pseudonymous, identifier: expositor}}
+claim:
+  id: example
+  text: {value: Example claim, basis: source_quote, asserted_by: editor, asserted_at: "2026-08-20T00:00:00Z", locator: {page: 1}}
+  scope: {value: Example scope, basis: source_quote, asserted_by: editor, asserted_at: "2026-08-20T00:00:00Z", locator: {page: 1}}
+manuscript: {url: "https://example.org/paper.pdf", label: paper, sha256: "0000000000000000000000000000000000000000000000000000000000000000", retrieved_at: "2026-08-20T00:00:00Z"}
+evidence:
+  - id: exposition
+    kind: exposition
+    venue: erdosproblems
+    author: expositor
+    date: "2026-08-19"
+    url: "https://www.erdosproblems.com/848"
+    scope: "Expounds the main lemma and shows the argument is correct."
+    basis: source_link
+    asserted_by: editor
+    asserted_at: "2026-08-20T00:00:00Z"
+ai_provenance:
+  disclosure: {value: none, basis: source_quote, asserted_by: editor, asserted_at: "2026-08-20T00:00:00Z", locator: {page: 1}}
+  roles: []
+history: [{id: evt-created, type: created, at: "2026-08-20T00:00:00Z", by: editor}]

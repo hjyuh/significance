@@ -1,6 +1,6 @@
 {% extends "base.html.jinja" %}
 {% block title %}Take a check — Significance{% endblock %}
-{% block topline_meta %}{{ rows|length }} bounded task{{ '' if rows|length == 1 else 's' }}{% endblock %}
+{% block topline_meta %}{{ rows|length }} bounded task{{ '' if rows|length == 1 else 's' }}{% if derived_rows %} · {{ derived_rows|length }} derived{% endif %}{% endblock %}
 {% block content %}
 <section class="band">
   <p class="lbl">Take a check</p>
@@ -8,6 +8,7 @@
   <p class="prose">Choose a passage, use the pinned source, and report what you checked and found. This list is not a ranking.</p>
   <p class="meta">No Significance account is required. Open a task, read only its stated scope, and use the report link if you want to contribute.</p>
 </section>
+{% if rows %}
 <section class="band">
   <table><thead><tr><th>Task</th><th>Record</th><th>Effort</th><th>Prerequisites</th><th>Status</th></tr></thead><tbody>
   {% for row in rows %}{% set task = row.invitation %}<tr>
@@ -19,4 +20,25 @@
   </tr>{% endfor %}
   </tbody></table>
 </section>
+{% endif %}
+{% if derived_rows %}
+{# Derived tasks are marked as derived and kept in their own table, because
+   nobody wrote them. They are what a published record with no exposition
+   implies, computed at build time from the absence itself: no YAML entry
+   exists for them, so one real exposition row makes the corresponding line
+   here disappear without anyone deleting anything. The two editor-supplied
+   halves are left as [FILL] markers rather than guessed. #}
+<section class="band">
+  <p class="lbl">Derived — {{ derived_rows|length }} record{{ '' if derived_rows|length == 1 else 's' }} with no exposition recorded</p>
+  <p class="prose">Nobody proposed these. The build generates one for each published record that has no exposition evidence, and removes it again when an exposition is recorded. An editor fills in the reader level and effort before inviting anyone.</p>
+  <table><thead><tr><th>Task</th><th>Record</th><th>Effort</th><th>Origin</th></tr></thead><tbody>
+  {% for row in derived_rows %}{% set task = row.invitation %}<tr id="{{ row.anchor }}" class="task-derived">
+    <td>{{ task.target }}</td>
+    <td><a href="{{ row.record_href }}">{{ row.record.record_id }}</a></td>
+    <td>{{ task.effort_estimate }}</td>
+    <td><span class="task-origin-derived">Derived by the build</span></td>
+  </tr>{% endfor %}
+  </tbody></table>
+</section>
+{% endif %}
 {% endblock %}

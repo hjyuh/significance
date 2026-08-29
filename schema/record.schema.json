@@ -76,6 +76,12 @@
       "type": "array",
       "items": { "$ref": "#/$defs/open_invitation" }
     },
+    "suppress_derived_tasks": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "enum": ["exposition"] },
+      "description": "Kinds of build-derived task this record does not want solicited. The build generates an exposition task for any published record with no exposition evidence; listing `exposition` here turns that off for this record \u2014 for a claim under dispute, say, where inviting an expository account would be inviting the wrong work. It suppresses a task, never an evidence entry, and nothing about the mathematics follows from it."
+    },
     "attestations": {
       "type": "array",
       "items": { "$ref": "#/$defs/attestation" }
@@ -108,6 +114,11 @@
       "type": "string",
       "enum": ["source_quote", "author_attestation", "editorial_inference"]
     },
+    "link_basis": {
+      "description": "Basis values permitted for an entry that records the existence of something published elsewhere \u2014 an exposition, a registry entry. `source_link` says the linked page is the source and the entry claims nothing beyond it; `author_attestation` says the record's author told us. It is a separate enum rather than a member of `basis` so that a link can never stand in for a quote, a receipt, or an editorial finding. Absent, `source_link` is assumed by the renderer.",
+      "type": "string",
+      "enum": ["source_link", "author_attestation"]
+    },
     "party_id": {
       "type": "string",
       "pattern": "^[a-z][a-z0-9-]*$"
@@ -115,6 +126,12 @@
     "iso_datetime": {
       "type": "string",
       "format": "date-time"
+    },
+    "iso_date": {
+      "description": "A calendar day, YYYY-MM-DD. Used where the source itself only publishes a day \u2014 an exposition's posting date, a registry entry's date \u2014 and inventing a time of day would be inventing precision.",
+      "type": "string",
+      "format": "date",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
     },
     "party": {
       "type": "object",
@@ -400,7 +417,11 @@
       "properties": {
         "url": { "type": "string", "format": "uri" },
         "label": { "type": "string", "minLength": 1 },
-          "immutable_version_id": {
+          "published_at": {
+          "$ref": "#/$defs/iso_date",
+          "description": "The day the source itself says this manuscript version was released, where the source says. Distinct from `retrieved_at`, which is when this project fetched the file: the two are routinely months apart and the component-dates strip shows the first, so it is optional and rendered as a dash when absent rather than substituted from the second."
+        },
+        "immutable_version_id": {
             "type": "string",
             "description": "Host-provided immutable version identifier where one exists, e.g. an arXiv vN. Compared before hashes, since a regenerated PDF can differ byte-for-byte without a meaningful revision."
           },
@@ -470,7 +491,8 @@
         "kind": {
           "enum": [
             "formal_artifact", "external_formal_artifact",
-            "computational_reproduction", "source_inspection", "informal_review", "mathematical_assessment"
+            "computational_reproduction", "source_inspection", "informal_review", "mathematical_assessment",
+            "exposition", "palomar_entry"
           ]
         }
       },
@@ -498,6 +520,14 @@
         {
           "if": { "properties": { "kind": { "const": "mathematical_assessment" } } },
           "then": { "$ref": "#/$defs/evidence_mathematical_assessment" }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "exposition" } } },
+          "then": { "$ref": "#/$defs/evidence_exposition" }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "palomar_entry" } } },
+          "then": { "$ref": "#/$defs/evidence_palomar_entry" }
         }
       ]
     },
@@ -574,6 +604,73 @@
         "kind": { "const": "source_inspection" },
         "description": { "type": "string", "minLength": 1 },
         "basis": { "$ref": "#/$defs/basis" },
+        "asserted_by": { "$ref": "#/$defs/party_id" },
+        "asserted_at": { "$ref": "#/$defs/iso_datetime" },
+        "locator": { "$ref": "#/$defs/locator" }
+      }
+    },
+
+    "evidence_exposition": {
+      "description": "Somebody wrote or recorded an account of this work somewhere else: a per-problem exposition on erdosproblems.com, a Mathematical Discourse video, an arXiv note, a blog post. The entry records that the exposition exists, who made it, when, where, and what it says it covers. It is not a review and it is never counted as one \u2014 an exposition may restate a proof in full and still assert nothing about whether the proof is right, and the reviewer census deliberately ignores this kind.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "venue", "author", "date", "scope", "asserted_by", "asserted_at"],
+      "properties": {
+        "id": { "type": "string" },
+        "kind": { "const": "exposition" },
+        "venue": {
+          "type": "string",
+          "enum": ["erdosproblems", "mathematical_discourse", "arxiv", "blog", "other"]
+        },
+        "venue_label": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The venue's name, shown when `venue` is `other`. `significance validate` requires it in that case, so an exposition never renders as coming from somewhere unnamed."
+        },
+        "author": {
+          "$ref": "#/$defs/party_id",
+          "description": "Who made the exposition, as a declared party. An exposition by somebody this record has never named is an exposition nobody can be asked about."
+        },
+        "date": { "$ref": "#/$defs/iso_date" },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Where the exposition is. Presence and http(s) form are enforced by `significance validate` rather than by `required` here, so the failure has one name (`exposition-missing-url`) instead of two."
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1,
+          "description": "What the exposition covers and what it leaves out, in the expositor's or the editor's words \u2014 e.g. 'expounds the Lean proof; paper-Lean correspondence excluded'. Verdict language is refused here by the validator: this field says what was written about, never how it came out."
+        },
+        "basis": { "$ref": "#/$defs/link_basis" },
+        "asserted_by": { "$ref": "#/$defs/party_id" },
+        "asserted_at": { "$ref": "#/$defs/iso_datetime" },
+        "locator": { "$ref": "#/$defs/locator" }
+      }
+    },
+
+    "evidence_palomar_entry": {
+      "description": "This claim's formalization has an entry in the Palomar registry. The entry is a pointer, not a check: the registry's own framing is that its intake checks fall short of peer review, and nothing about correspondence with the claimed theorem follows from an entry existing. That caveat is a fixed rendered label rather than a field, so no record can weaken, reword, or omit it \u2014 which is why there is no `caveat` property here and why `additionalProperties` is false.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "date", "asserted_by", "asserted_at"],
+      "properties": {
+        "id": { "type": "string" },
+        "kind": { "const": "palomar_entry" },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "The registry entry itself. Presence and http(s) form are enforced by `significance validate` (`palomar-missing-url`)."
+        },
+        "date": {
+          "$ref": "#/$defs/iso_date",
+          "description": "The entry date as the registry shows it, not the date this record noticed it \u2014 that is `asserted_at`."
+        },
+        "artifact_ref": {
+          "type": "string",
+          "description": "Free text tying the registry entry to this record's formalization: a declaration name, a repository path, a commit. Verdict-linted like every other free-text field."
+        },
+        "basis": { "$ref": "#/$defs/link_basis" },
         "asserted_by": { "$ref": "#/$defs/party_id" },
         "asserted_at": { "$ref": "#/$defs/iso_datetime" },
         "locator": { "$ref": "#/$defs/locator" }

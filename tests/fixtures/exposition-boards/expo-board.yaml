@@ -1,0 +1,61 @@
+# A board over the exposition fixtures. Fictional test data.
+#
+# Three rows, one per fixture record, so the derived digestion column can be
+# exercised in each of its three states: counted, absent-and-invitable, and
+# absent-with-the-invitation-suppressed.
+
+kind: board
+schema_version: 1
+board_id: expo-board
+
+title: "Exposition fixtures"
+
+intro:
+  value: "A board over fictional records, used to check that the digestion column derives from exposition evidence rather than stating anything of its own."
+  basis: digest
+  asserted_by: editor
+  asserted_at: "2026-08-20T00:00:00Z"
+
+as_of: "2026-08-20T00:00:00Z"
+
+parties:
+  editor:
+    pseudonym: "Significance editor"
+    verification_method:
+      kind: pseudonymous
+      identifier: significance-project
+
+rows:
+  - id: row-exposition
+    state: recorded
+    result: "Fictional spanning trees"
+    record: 2026-example-exposition-row
+    status:
+      checked: "The fictional source page was located."
+      not_checked: "Nobody has read the argument."
+      as_of: "2026-08-20T00:00:00Z"
+      basis: digest
+      asserted_by: editor
+      asserted_at: "2026-08-20T00:00:00Z"
+  - id: row-palomar
+    state: recorded
+    result: "Fictional odd order"
+    record: 2026-example-palomar-row
+    status:
+      checked: "The fictional registry entry was located."
+      not_checked: "Nobody has read the argument."
+      as_of: "2026-08-20T00:00:00Z"
+      basis: digest
+      asserted_by: editor
+      asserted_at: "2026-08-20T00:00:00Z"
+  - id: row-suppressed
+    state: recorded
+    result: "Fictional modular lattices"
+    record: 2026-example-suppressed-task
+    status:
+      checked: "The fictional source page was located."
+      not_checked: "Nobody has read the argument."
+      as_of: "2026-08-20T00:00:00Z"
+      basis: digest
+      asserted_by: editor
+      asserted_at: "2026-08-20T00:00:00Z"

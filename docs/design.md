@@ -130,6 +130,28 @@ typed evidence entries:
 - `informal_review`: an attributed review that does not claim a global status.
 - `mathematical_assessment`: a named party's assessment of a precise target,
   with an author-response channel.
+- `source_inspection`: a bounded check that public sources, versions, and
+  hashes were located and transcribed. Explicitly not a mathematical review.
+- `exposition`: an account of this work published elsewhere — a per-problem
+  exposition, a video journal entry, a note, a post — with its venue, author,
+  date, link, and stated coverage. Presence and provenance only.
+- `palomar_entry`: an entry in the Palomar formalization registry, rendered
+  with a fixed caveat that lives in the code rather than in any record.
+
+The last two are pointers, and the site never counts them as reviews: the
+review-activity block, the reviewer census, and the per-reviewer pages ignore
+both kinds. An exposition may restate a proof in full and has still said
+nothing about whether the proof holds; a registry entry says a listing exists
+and, by the registry's own framing of its intake, nothing more. The temptation
+they create is precisely the one the typed-evidence design exists to resist —
+that a page with more activity on it should look better checked.
+
+**Component dates, uncombined.** A record page shows preprint, exposition, and
+formalization dates side by side and computes nothing from them. There is no
+effective release date, because whichever component the site chose would become
+the date everyone quoted, and which one counts as the release is a judgement
+the reader is better placed to make. An unrecorded component renders as a dash
+and is never substituted from a neighbouring field.
 
 Machine receipts bind the tool and version, runner image digest, execution
 time, result, log hash, and asserting automation identity. A manually authored
@@ -190,6 +212,18 @@ open_invitations:
 
 An invitation may be created by an author, reviewer, or editor. It should be a
 bounded task that another person can actually take.
+
+**Derived tasks.** One task kind is generated rather than written: a published
+record with no `exposition` evidence produces an exposition task on `/tasks/`,
+marked as derived and carrying `[FILL]` markers for the two halves an editor
+supplies. It is computed at build time from the absence itself and written into
+no record, so a real exposition row removes it without an edit — a task file
+that had to be deleted by hand would outlive the gap it described. A record may
+decline the solicitation with `suppress_derived_tasks: [exposition]`, which
+suppresses a task and asserts nothing about the mathematics. Derived tasks stay
+out of the frontier, the reviewer census, and the per-task attestation pages:
+nobody invited this work, and an attestation form on an uninvited task would
+imply somebody had.
 
 ## 7. Lean adapter and trust boundary
 

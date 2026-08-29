@@ -40,6 +40,20 @@
     <h1 class="claim-text">{{ record.claim.text.value }}</h1>
     {% endif %}
     <p class="claim-source">{{ m.attribution(record.claim.text) }}</p>
+
+    {# The component dates, side by side and uncombined. No "effective release
+       date" is computed here or anywhere: the moment this page picked one of
+       the three, that number would become the date everyone quoted, and which
+       component counts as the release is an argument this project has no
+       standing to settle. A component nobody recorded shows a dash — never the
+       retrieval date standing in for a publication date. #}
+    {% set dv = date_vector or {} %}
+    <dl class="date-vector">
+      <div><dt>Preprint</dt><dd>{{ dv.get('preprint') or '—' }}</dd></div>
+      <div><dt>Exposition</dt><dd>{{ dv.get('exposition') or '—' }}</dd></div>
+      <div><dt>Formalization</dt><dd>{{ dv.get('formalization') or '—' }}</dd></div>
+    </dl>
+    <p class="meta date-vector-caption">Component dates (preprint / exposition / formalization).{% if dv.get('formalization_source') %} Formalization date from the {{ dv.formalization_source }}.{% endif %}{% if dv.get('exposition_source') %} Exposition date from the {{ dv.exposition_source }}.{% endif %} A dash means no date is recorded, not that the component does not exist.</p>
   </header>
 
   {% set problem = record.get('problem_reference') %}
@@ -213,7 +227,7 @@
     </dl>
   </div>
 
-  <section class="band">
+  <section class="band" id="expositions">
     <p class="lbl">Evidence — {{ evidence|length }} {{ 'entry' if evidence|length == 1 else 'entries' }}</p>
     {% if evidence %}
     <ol class="ledger">
@@ -261,6 +275,25 @@
           <p class="reported-note">Public-source and version check only. This is not a mathematical review.</p>
           <p class="prose">{{ ev.description|readable_text }}</p>
           <p class="meta">{{ m.attribution(ev) }}</p>
+
+          {% elif ev.kind == 'exposition' %}
+          {# An exposition is not a review and is not counted as one anywhere on
+             this page: the review-activity block above ignores this kind
+             entirely. Somebody explaining a proof at length has still said
+             nothing about whether it holds. #}
+          <p class="reported-note">An account of this work published elsewhere. It is not a review, and it is not counted as one.</p>
+          <p class="prose">{{ m.exposition_venue_label(ev) }}{% if ev.get('date') %} · {{ ev.date }}{% endif %} · by {{ m.party_label(ev.author) }}</p>
+          <p class="prose"><strong>Stated coverage:</strong> {{ ev.scope }}</p>
+          <p class="meta">{% if ev.get('url') %}{{ m.external_link(ev.url, 'Open the exposition') }} · {% endif %}{{ m.attribution(ev, 'source_link') }}</p>
+
+          {% elif ev.kind == 'palomar_entry' %}
+          {# The caveat below is rendered from the code, not from the record. It
+             is not a field, so no record can shorten it, soften it, or leave it
+             out — which is the only way a registry pointer stays a pointer. #}
+          <p class="reported-note">An entry in the Palomar formalization registry.</p>
+          {% if ev.get('artifact_ref') %}<p class="prose"><strong>Ties to:</strong> {{ ev.artifact_ref|readable_text }}</p>{% endif %}
+          <p class="meta">{% if ev.get('url') %}{{ m.external_link(ev.url, 'Open the registry entry') }} · {% endif %}{% if ev.get('date') %}entry dated {{ ev.date }} · {% endif %}{{ m.attribution(ev, 'source_link') }}</p>
+          <p class="registry-caveat">{{ palomar_caveat }}</p>
 
           {% elif ev.kind == 'informal_review' %}
           <p class="prose">{{ ev.text }}</p>
@@ -327,6 +360,8 @@
       {% endif %}
       {% if computational_runs %}<li>A reproduced computation establishes only the recorded execution result under the pinned inputs and environment.</li>{% endif %}
       {% if assessments or informal_reviews %}<li>Reviews and assessments are attributed conclusions by their writers, not conclusions issued by Significance.</li>{% endif %}
+      {% if evidence|selectattr('kind', 'equalto', 'exposition')|list %}<li>An exposition entry records that somebody wrote or recorded an account of this work, and its stated coverage. It is not a review, is not counted as one, and says nothing about whether the account or the claim is right.</li>{% endif %}
+      {% if evidence|selectattr('kind', 'equalto', 'palomar_entry')|list %}<li>A Palomar registry entry is a pointer to a listing. {{ palomar_caveat }}</li>{% endif %}
       {% if record.get('open_invitations') %}<li>Open invitations identify work not yet represented by a completed evidence entry.</li>{% endif %}
       {% if not formal_runs and not computational_runs and not assessments and not informal_reviews %}<li>No independent reproduction or mathematical assessment is represented unless an evidence entry above says otherwise.</li>{% endif %}
     </ul>

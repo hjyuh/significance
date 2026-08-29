@@ -1,0 +1,29 @@
+# A Palomar entry with no registry link. A registry entry is a pointer and
+# nothing else — it carries no build, no receipt, and no correspondence — so an
+# entry that points nowhere asserts that a listing exists on this record's own
+# authority, which is the one thing evidence may never do.
+schema_version: 1
+record_id: 2026-example-palomar-no-url
+record_version: 1
+record_state: active
+freshness: {result: unknown, checked_at: "2026-08-20T00:00:00Z"}
+parties:
+  editor: {name: Editor, verification_method: {kind: github_identity}}
+  expositor: {name: Expositor, verification_method: {kind: pseudonymous, identifier: expositor}}
+claim:
+  id: example
+  text: {value: Example claim, basis: source_quote, asserted_by: editor, asserted_at: "2026-08-20T00:00:00Z", locator: {page: 1}}
+  scope: {value: Example scope, basis: source_quote, asserted_by: editor, asserted_at: "2026-08-20T00:00:00Z", locator: {page: 1}}
+manuscript: {url: "https://example.org/paper.pdf", label: paper, sha256: "0000000000000000000000000000000000000000000000000000000000000000", retrieved_at: "2026-08-20T00:00:00Z"}
+evidence:
+  - id: palomar
+    kind: palomar_entry
+    date: "2026-08-18"
+    artifact_ref: "Theorem main_result in the pinned repository"
+    basis: source_link
+    asserted_by: editor
+    asserted_at: "2026-08-20T00:00:00Z"
+ai_provenance:
+  disclosure: {value: none, basis: source_quote, asserted_by: editor, asserted_at: "2026-08-20T00:00:00Z", locator: {page: 1}}
+  roles: []
+history: [{id: evt-created, type: created, at: "2026-08-20T00:00:00Z", by: editor}]

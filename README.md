@@ -146,6 +146,54 @@ assessment, or evidence entry; discussion is never promoted automatically.
 `kind: board` discriminator. `significance build` gains `--pages-out` for the
 deployed layout, `--boards`, and `--site-config`.
 
+## Exposition and registry evidence
+
+Two evidence kinds record that something exists elsewhere. Both are pointers.
+Neither is a review, and neither is counted as one anywhere on the site: the
+review-activity block, the reviewer census, and the per-reviewer pages all
+ignore them.
+
+- `exposition` — somebody wrote or recorded an account of this work: a
+  per-problem exposition on erdosproblems.com, a Mathematical Discourse video,
+  an arXiv note, a blog post. The entry carries the venue (a closed enum, with
+  `venue_label` required when the venue is `other`), the expositor as a
+  declared party, the date, the URL, and a `scope` line saying what the
+  exposition covers and what it leaves out — "expounds the Lean proof;
+  paper-Lean correspondence excluded". `scope` is verdict-linted, because it is
+  the field most likely to drift from describing coverage into reporting an
+  outcome. What an exposition deliberately does not claim: that the exposition
+  is accurate, that the claim is right, or that anyone checked either.
+- `palomar_entry` — this claim's formalization has an entry in the Palomar
+  registry. It carries the entry URL, the entry date as the registry shows it,
+  and an optional `artifact_ref`. Every rendered entry is accompanied by a
+  fixed caveat, which lives in the code and not in any record so that no record
+  can shorten, reword, or omit it: *Palomar intake checks fall short of peer
+  review (registry's own framing); correspondence with the claimed theorem is
+  not established by this entry.* The schema has no `caveat` property and
+  forbids extra ones.
+
+Both kinds default to `basis: source_link`, a basis that exists so a link can
+never stand in for a quote, a receipt, or an editorial finding.
+
+Three related surfaces derive from them and store nothing of their own:
+
+- **Component dates.** Each record page shows a `preprint / exposition /
+  formalization` strip, with an unrecorded component rendered as a dash and
+  never substituted from a neighbouring field (`manuscript.retrieved_at` is not
+  a publication date; `manuscript.published_at` is the optional field that is).
+  No effective release date is computed or displayed — the components are shown
+  and the reader applies whatever rule they like.
+- **Derived exposition tasks.** A published record with no exposition row gains
+  an auto-generated task on `/tasks/`, marked as derived and carrying `[FILL]`
+  markers for the reader level and effort an editor supplies. It is generated
+  at build time and written into no YAML, so it disappears by itself when a
+  real exposition row lands. A record may opt out with
+  `suppress_derived_tasks: [exposition]`, which suppresses a solicitation and
+  nothing else.
+- **The board digestion column.** "n expositions", linking to the record's
+  evidence, or "none yet", linking to the derived task where there is one.
+  Derived from the linked record so the column cannot disagree with it.
+
 ## Repository layout
 
 - `schema/` — the record JSON Schema (draft 2020-12) and its changelog, plus

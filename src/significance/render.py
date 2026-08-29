@@ -42,7 +42,7 @@ from significance.boards import (
 )
 from significance.export_text import board_row_status_text, record_status_text
 from significance.records import load_record
-from significance.semantics import verdict_violations
+from significance.semantics import PALOMAR_CAVEAT, verdict_violations
 from significance.validate import collect_yaml_files, validate_paths
 from significance.violations import Violation
 
@@ -72,6 +72,119 @@ def problem_slug(venue: object, problem_id: object) -> str:
     ).encode("ascii", "ignore").decode().lower()
     value = re.sub(r"[^a-z0-9]+", "-", value).strip("-")
     return value or "problem"
+
+
+def expositions(record: dict) -> list[dict]:
+    """Exposition evidence rows, oldest first. Never a review count."""
+    rows = [
+        entry
+        for entry in record.get("evidence", []) or []
+        if isinstance(entry, dict) and entry.get("kind") == "exposition"
+    ]
+    rows.sort(key=lambda entry: (str(entry.get("date") or ""), str(entry.get("id") or "")))
+    return rows
+
+
+def _day(value: object) -> str | None:
+    """The YYYY-MM-DD prefix of a date or date-time, or None."""
+    if isinstance(value, (date, datetime)):
+        return value.isoformat()[:10]
+    if isinstance(value, str) and len(value) >= 10 and value[4] == "-" and value[7] == "-":
+        return value[:10]
+    return None
+
+
+def date_vector(record: dict) -> dict:
+    """The three component dates a reader needs to date a result, kept apart.
+
+    A single "release date" would be a derived judgement — whichever component
+    the site picked would become the date everyone quoted, and the argument
+    about which one is right is exactly the argument a record should leave to
+    its reader. So the strip shows the components, says where each came from,
+    and computes nothing from them. A component nobody has recorded renders as
+    a dash; it is never substituted from a neighbouring field (the retrieval
+    date is not the preprint date, and a build receipt is not a registry entry).
+    """
+    manuscript = record.get("manuscript") or {}
+    preprint = _day(manuscript.get("published_at"))
+
+    exposition_dates = [_day(entry.get("date")) for entry in expositions(record)]
+    exposition_dates = [value for value in exposition_dates if value]
+
+    formalization: str | None = None
+    formalization_source: str | None = None
+    evidence = [e for e in record.get("evidence", []) or [] if isinstance(e, dict)]
+    for kind, source_label, date_of in (
+        (
+            "formal_artifact",
+            "independent build receipt",
+            lambda e: _day((e.get("artifact_build") or {}).get("executed_at")),
+        ),
+        (
+            "external_formal_artifact",
+            "artifact reported by the source",
+            lambda e: _day(e.get("asserted_at")),
+        ),
+        ("palomar_entry", "Palomar registry entry", lambda e: _day(e.get("date"))),
+    ):
+        candidates = sorted(
+            value for value in (date_of(e) for e in evidence if e.get("kind") == kind) if value
+        )
+        if candidates:
+            formalization, formalization_source = candidates[0], source_label
+            break
+
+    return {
+        "preprint": preprint,
+        "preprint_source": "manuscript metadata" if preprint else None,
+        "exposition": min(exposition_dates) if exposition_dates else None,
+        "exposition_source": "earliest exposition entry" if exposition_dates else None,
+        "formalization": formalization,
+        "formalization_source": formalization_source,
+    }
+
+
+def is_published(record: dict) -> bool:
+    """A record the public site actually presents as a record.
+
+    Drafts and withdrawn/superseded records are excluded: soliciting an
+    expository account of something nobody has approved for publication would
+    publish it by the back door.
+    """
+    return record.get("record_state") == "active" and not record.get("draft")
+
+
+def derived_exposition_task(record: dict) -> dict | None:
+    """The exposition task a published record with no exposition rows implies.
+
+    Derived at build time and written into no YAML, so it disappears by itself
+    the day a real exposition row lands — which is the point: a task file that
+    had to be deleted by hand would outlive the gap it described. The two
+    editor-supplied halves (reader level, effort) are left as [FILL] markers
+    rather than guessed, on the board's rule that a filled-looking slot nobody
+    filled is worse than an obviously empty one.
+    """
+    if not is_published(record):
+        return None
+    if "exposition" in (record.get("suppress_derived_tasks") or []):
+        return None
+    if expositions(record):
+        return None
+    claim = ((record.get("claim") or {}).get("text") or {}).get("value") or record["record_id"]
+    short_name = claim if len(claim) <= 90 else claim[:87].rstrip() + "…"
+    return {
+        "task_id": "derived-exposition",
+        "task_kind": "exposition",
+        "kind": "exposition",
+        "status": "open",
+        "derived": True,
+        "target": (
+            f'Write an expository account of the claim in {record["record_id"]} '
+            f'— "{short_name}" — for [FILL by editor: intended reader level]'
+        ),
+        "effort_estimate": "[FILL]",
+        "created_by": "significance-editor",
+    }
 
 
 def task_id(invitation: dict, index: int) -> str:
@@ -567,7 +680,8 @@ def build_site(
                 i.get("status", "open") in {"open", "taken"}
                 for r in valid_records
                 for i in r.get("open_invitations", [])
-            ),
+            )
+            or any(derived_exposition_task(r) for r in valid_records),
         )
 
     env = _environment()
@@ -629,6 +743,8 @@ def build_site(
             cited_by=cited_by.get(record_id, []),
             glossary=glossary,
             status_text=record_status_text(record, record_url),
+            date_vector=date_vector(record),
+            palomar_caveat=PALOMAR_CAVEAT,
             root_prefix="../",
             links=links_for("../"),
             task_root=(
@@ -1005,12 +1121,42 @@ def build_site(
                     "attestation_yaml": _attestation_yaml(record, invitation, tid),
                 }
             )
-    if task_rows:
+    # Tasks nobody wrote down, implied by what a published record is missing.
+    # They are computed here and never written into a record, so a real
+    # exposition row removes one without an edit; and they are kept in their own
+    # list so that nothing downstream — the frontier, the reviewer census, the
+    # per-task attestation pages — can mistake a gap for somebody's invitation.
+    derived_rows = []
+    for record in built_records:
+        derived = derived_exposition_task(record)
+        if derived is None:
+            continue
+        derived_rows.append(
+            {
+                "record": record,
+                "invitation": derived,
+                "task_id": derived["task_id"],
+                "derived": True,
+                "anchor": f"derived-exposition-{record['record_id']}",
+                "record_href": (
+                    f"/records/{record['record_id']}/index.html"
+                    if deployed
+                    else f"../{record['record_id']}/index.html"
+                ),
+                "task_href": None,
+            }
+        )
+    derived_rows.sort(key=lambda row: row["record"]["record_id"])
+
+    if task_rows or derived_rows:
         task_rows.sort(key=lambda row: (row["record"]["record_id"], row["task_id"]))
         _write_page(
             pages_dir / "tasks",
             env.get_template("tasks.html.jinja").render(
-                rows=task_rows, root_prefix=pages_prefix, links=pages_links
+                rows=task_rows,
+                derived_rows=derived_rows,
+                root_prefix=pages_prefix,
+                links=pages_links,
             ),
         )
         result.pages.append("tasks")
@@ -1029,6 +1175,7 @@ def build_site(
     # relative prefix is one level deeper than the other auxiliary pages.
     board_prefix = "/records/" if deployed else "../../"
     board_template = env.get_template("board.html.jinja")
+    records_by_id = {record["record_id"]: record for record in built_records}
     for board in boards:
         # A records-index URL is a page (and therefore ends in index.html in
         # the self-contained layout), not a directory that record ids may be
@@ -1041,11 +1188,49 @@ def build_site(
             for row in board["rows"]
             if row.get("record")
         }
+        # The digestion column, derived from exposition evidence rather than
+        # stated on the board. A board that carried its own digestion count
+        # would be carrying evidence, which is the one thing the board schema
+        # exists to prevent; deriving it means the column cannot disagree with
+        # the record it links, and cannot outlive it.
+        row_digestion = {}
+        for row in board["rows"]:
+            linked = records_by_id.get(row.get("record")) if row.get("record") else None
+            if linked is None:
+                continue
+            found = expositions(linked)
+            rid = linked["record_id"]
+            if found:
+                row_digestion[row["id"]] = {
+                    "count": len(found),
+                    "label": f"{len(found)} exposition{'' if len(found) == 1 else 's'}",
+                    "href": (
+                        f"/records/{rid}/#expositions"
+                        if deployed
+                        else f"../../{rid}/index.html#expositions"
+                    ),
+                }
+            else:
+                has_derived = derived_exposition_task(linked) is not None
+                row_digestion[row["id"]] = {
+                    "count": 0,
+                    "label": "none yet",
+                    "href": (
+                        (
+                            f"/tasks/index.html#derived-exposition-{rid}"
+                            if deployed
+                            else f"../../tasks/index.html#derived-exposition-{rid}"
+                        )
+                        if has_derived
+                        else None
+                    ),
+                }
         _write_page(
             pages_dir / "boards" / board["board_id"],
             board_template.render(
                 board=board,
                 record_links=record_links,
+                row_digestion=row_digestion,
                 # No paste for a row that has no name yet. "Nobody has
                 # looked at this" is a real answer to "is this real?" — but
                 # only when the paragraph can say which result it is about,

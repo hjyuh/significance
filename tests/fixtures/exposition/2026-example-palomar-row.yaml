@@ -1,0 +1,82 @@
+# A record carrying a Palomar registry entry. Fictional test data.
+#
+# The caveat that renders with it is not in this file and cannot be: the schema
+# has no `caveat` property and forbids additional ones, so the sentence comes
+# from the code every time or not at all.
+schema_version: 1
+record_id: 2026-example-palomar-row
+record_version: 1
+record_state: active
+
+freshness:
+  result: current
+  observed_source_version: "v1"
+  confirmed_source_version: "v1"
+  checked_at: "2026-08-20T00:00:00Z"
+
+parties:
+  editor:
+    pseudonym: "Significance editor"
+    verification_method:
+      kind: pseudonymous
+      identifier: significance-project
+  expositor:
+    name: "M. Expositor"
+    verification_method:
+      kind: pseudonymous
+      identifier: "https://www.erdosproblems.com/forum/user/expositor"
+
+claim:
+  id: claim-main
+  text:
+    value: "Every fictional group of odd order is fictionally solvable."
+    basis: source_quote
+    asserted_by: editor
+    asserted_at: "2026-08-20T00:00:00Z"
+    locator:
+      page: 1
+  scope:
+    value: "Fictional scope: the statement above and nothing wider."
+    basis: source_quote
+    asserted_by: editor
+    asserted_at: "2026-08-20T00:00:00Z"
+    locator:
+      page: 1
+
+manuscript:
+  url: "https://example.org/2026-example-palomar-row.pdf"
+  label: "Fictional manuscript"
+  sha256: "0000000000000000000000000000000000000000000000000000000000000000"
+  retrieved_at: "2026-08-20T00:00:00Z"
+
+evidence:
+  - id: ev-source
+    kind: source_inspection
+    description: "The fictional source page was located and hashed."
+    basis: editorial_inference
+    asserted_by: editor
+    asserted_at: "2026-08-20T00:00:00Z"
+  - id: ev-palomar
+    kind: palomar_entry
+    url: "https://example.org/palomar/entry/1"
+    date: "2026-08-10"
+    artifact_ref: "Theorem fictional_main in the pinned repository"
+    basis: source_link
+    asserted_by: editor
+    asserted_at: "2026-08-20T00:00:00Z"
+
+ai_provenance:
+  disclosure:
+    value: "None reported."
+    basis: source_quote
+    asserted_by: editor
+    asserted_at: "2026-08-20T00:00:00Z"
+    locator:
+      page: 1
+  roles: []
+
+history:
+  - id: evt-created
+    type: created
+    at: "2026-08-20T00:00:00Z"
+    by: editor
