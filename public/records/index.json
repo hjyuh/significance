@@ -87,5 +87,10 @@
       "row_count": 10,
       "recorded_row_count": 1
     }
-  ]
+  ],
+  "site": {
+    "maintainer_name": null,
+    "repository_url": "https://github.com/hjyuh/significance",
+    "contact_email": null
+  }
 }

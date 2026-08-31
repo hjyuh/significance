@@ -66,7 +66,18 @@ def test_build_produces_index_and_record_page(tmp_path):
     assert (out / "static" / "style.css").exists()
 
     summaries = json.loads((out / "index.json").read_text(encoding="utf-8"))
-    assert sorted(summaries) == ["boards", "records"]
+    assert sorted(summaries) == ["boards", "records", "site"]
+
+    # The shell's /about/ page may only present what this builder generated,
+    # so the site block travels here. The shipped maintainer_name and
+    # contact_email carry [FILL] markers and must arrive as null: the page then
+    # says the channel is not set, instead of printing bracket text or a
+    # mailto link that goes nowhere.
+    assert summaries["site"] == {
+        "maintainer_name": None,
+        "repository_url": "https://github.com/hjyuh/significance",
+        "contact_email": None,
+    }
     sources = [load_record(RECORDS_DIR / f"{record_id}.yaml") for record_id in PUBLIC_RECORD_IDS]
     assert summaries["records"] == [
         {

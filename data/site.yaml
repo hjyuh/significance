@@ -14,6 +14,14 @@
 
 repository_url: "https://github.com/hjyuh/significance"
 
+# Who answers for this site, shown on /about/. Ships unset for the same reason
+# contact_email does: a site that will not say whose judgement is behind its
+# editorial entries has not earned the reader's, and a placeholder name printed
+# as if it were real is worse than an admission that nobody has filled this in.
+# While it carries the [FILL] marker, /about/ says the maintainer is not named
+# yet rather than printing the bracket text.
+maintainer_name: "[FILL: the name that answers for this site]"
+
 # The GitHub issue form at .github/ISSUE_TEMPLATE/record-request.yml. Kept as a
 # separate key rather than built by string-concatenation in a template, so that
 # moving or renaming the template is one edit in one place.

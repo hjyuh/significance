@@ -111,11 +111,20 @@ main { width: min(1080px, 100%); margin: 0 auto; }
   color: var(--dim);
 }
 
+.hero-action-note {
+  max-width: 58ch;
+  margin: 22px 0 0;
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 30px;
+  margin-top: 18px;
 }
 
 .hero-actions a {
@@ -145,18 +154,19 @@ main { width: min(1080px, 100%); margin: 0 auto; }
 
 .record-card:hover { border-color: var(--edge); }
 
-.record-topline {
+.record-cardmeta {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 4px 16px;
+  margin-top: 18px;
   color: var(--muted);
   font-family: var(--mono);
   font-size: 11.5px;
 }
 
 .record-card h3 {
-  margin: 24px 0 12px;
+  margin: 0 0 12px;
   font-family: var(--sans);
   font-size: clamp(1.5rem, 3.4vw, 2.3rem);
   font-weight: 500;
@@ -181,6 +191,49 @@ main { width: min(1080px, 100%); margin: 0 auto; }
   border-top: 1px solid var(--rule);
   color: var(--note);
   font-size: 13px;
+}
+
+/* The boards section had no rules at all: the card rendered flush to the
+   viewport edge with no border, which is why "1 of 10 rows recorded" read as a
+   broken page rather than as a result. It borrows the record card's box so the
+   two sections are the same kind of object. */
+.boards { padding: 34px 28px 46px; border-bottom: 1px solid var(--rule); }
+
+.board-card {
+  display: block;
+  padding: 28px 30px 30px;
+  border: 1px solid var(--rule);
+  background: var(--bg-inset);
+  text-decoration: none;
+}
+
+.board-card:hover { border-color: var(--edge); }
+
+.board-card h3 {
+  margin: 0 0 10px;
+  font-family: var(--sans);
+  font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--fg-strong);
+}
+
+.board-card p {
+  max-width: 68ch;
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--muted);
+}
+
+.board-note {
+  max-width: 62ch;
+  margin-top: 12px !important;
+  font-family: var(--sans) !important;
+  font-size: 13.5px !important;
+  line-height: 1.6;
+  color: var(--dim) !important;
 }
 
 .empty-records { margin: 0; color: var(--muted); }
@@ -224,11 +277,46 @@ footer {
 
 footer p { margin: 0; max-width: 72ch; }
 footer a { color: var(--note); }
+.footer-who a { white-space: nowrap; }
+
+/* /about/ is prose, not a ledger. It reuses the hero and the masthead and adds
+   only what a run of readable paragraphs needs. */
+.page-band { padding: 34px 28px 38px; border-bottom: 1px solid var(--rule); }
+
+.page-prose {
+  max-width: 68ch;
+  margin: 0 0 14px;
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--fg-body);
+}
+
+.page-prose:last-child { margin-bottom: 0; }
+.page-prose a { color: var(--note); }
+
+.page-list {
+  max-width: 68ch;
+  margin: 0;
+  padding-left: 20px;
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--fg-body);
+}
+
+.page-list li + li { margin-top: 10px; }
+
+@media (max-width: 900px) {
+  .page-band { padding: 26px 20px 30px; }
+}
 
 @media (max-width: 900px) {
   .hero { padding: 44px 20px 40px; }
   .records { padding: 26px 20px 34px; }
+  .boards { padding: 26px 20px 34px; }
   .record-card { padding: 22px 20px 24px; }
+  .board-card { padding: 22px 20px 24px; }
   .principles { grid-template-columns: 1fr; }
   .principles article { padding: 24px 20px 26px; }
   .principles article + article { border-left: 0; border-top: 1px solid var(--rule); }
@@ -247,6 +335,8 @@ footer a { color: var(--note); }
 .wizard-section > label input, .wizard-section > label textarea, .wizard-section > label select {
   display: block; width: 100%; margin-top: 6px; background: var(--bg-inset); color: var(--fg); border: 1px solid var(--rule); padding: 10px 12px; font-family: var(--sans); font-size: 14px;
 }
+
+.record-card > .record-card-math:first-child { margin-top: 0; }
 
 .record-card-math {
   margin: 24px 0 12px;

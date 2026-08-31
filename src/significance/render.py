@@ -253,6 +253,22 @@ def safe_email(address) -> str | None:
     return None
 
 
+def _configured(value: object) -> str | None:
+    """A site.yaml string somebody has actually filled in, or None.
+
+    The shipped values carry [FILL] markers. Treating a marker as a real value
+    would put the bracket text on the page, which reads as a bug to a visitor
+    and as an answer to a crawler; treating it as absent lets the page say
+    plainly that nobody has set this yet.
+    """
+    if not isinstance(value, str):
+        return None
+    text = value.strip()
+    if not text or text.lower().startswith(FILL_MARKER):
+        return None
+    return text
+
+
 def short_hash(value: object) -> object:
     """Shorten long Git hashes in reader-facing prose; source data stays full."""
     if not isinstance(value, str):
@@ -1284,6 +1300,18 @@ def build_site(
     index_data = {
         "records": record_summaries,
         "boards": [board_summary(board) for board in boards],
+        # The shell's /about/ page has to name who answers for this site, and
+        # it may only present what this builder generated. Every value runs
+        # through the same guard the Python pages use: anything still carrying
+        # a [FILL] marker, or an address a mailto: link may not hold, arrives
+        # as null. The shell then says the channel is not configured yet,
+        # which is the one thing worse than no contact line -- a contact line
+        # that goes nowhere -- avoided in the same way in both renderers.
+        "site": {
+            "maintainer_name": _configured(config.get("maintainer_name")),
+            "repository_url": safe_href(config.get("repository_url")),
+            "contact_email": safe_email(config.get("contact_email")),
+        },
     }
     (out_dir / "index.json").write_text(
         json.dumps(index_data, ensure_ascii=False, indent=2) + "\n",
