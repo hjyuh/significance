@@ -1,0 +1,320 @@
+{
+  "export_schema_version": 1,
+  "kind": "significance_problem",
+  "venue": "ErdősProblems.com",
+  "problem_id": "1212",
+  "problem_url": "https://www.erdosproblems.com/1212",
+  "records": [
+    {
+      "record_id": "2026-alexchengyuli-erdos-1212",
+      "record": {
+        "schema_version": 1,
+        "record_id": "2026-alexchengyuli-erdos-1212",
+        "record_version": 1,
+        "record_state": "active",
+        "draft": false,
+        "freshness": {
+          "result": "current",
+          "observed_source_version": "github-crabsatellite-erdos-1212-400001f0847afe36a26c588d34445210dbdc116e",
+          "confirmed_source_version": "github-crabsatellite-erdos-1212-400001f0847afe36a26c588d34445210dbdc116e",
+          "checked_at": "2026-09-08T14:30:26Z"
+        },
+        "parties": {
+          "alexchengyuli": {
+            "verification_method": {
+              "kind": "pseudonymous",
+              "identifier": "https://www.erdosproblems.com/forum/user/alexchengyuli"
+            },
+            "name": "Alex Chengyu Li"
+          },
+          "significance-editor": {
+            "pseudonym": "Significance editor",
+            "verification_method": {
+              "kind": "pseudonymous",
+              "identifier": "significance-project"
+            }
+          }
+        },
+        "author_relationship": {
+          "status": "author_contributed",
+          "note": "Thank you, please go ahead with the Significance record and independent verification. The paper lays out the construction, and the public repository contains the manuscript, formalization and audit instructions. Please use the current v1.0.1 release, with the disclosures as written:\nhttps://github.com/crabsatellite/erdos-1212-visible-lattice-path/releases/tag/v1.0.1",
+          "basis": "author_attestation",
+          "asserted_by": "alexchengyuli",
+          "asserted_at": "2026-09-08T06:14:00Z",
+          "locator": {
+            "url": "https://www.erdosproblems.com/dm/",
+            "section": "2026-09-08T06:14:00Z: author message supplied by the editor; private correspondence",
+            "quote": "Thank you, please go ahead with the Significance record and independent verification. The paper lays out the construction, and the public repository contains the manuscript, formalization and audit instructions. Please use the current v1.0.1 release, with the disclosures as written:\nhttps://github.com/crabsatellite/erdos-1212-visible-lattice-path/releases/tag/v1.0.1"
+          }
+        },
+        "problem_reference": {
+          "venue": "ErdősProblems.com",
+          "problem_id": "1212",
+          "url": "https://www.erdosproblems.com/1212",
+          "basis": "source_quote",
+          "asserted_by": "significance-editor",
+          "asserted_at": "2026-09-08T14:30:26Z",
+          "locator": {
+            "url": "https://www.erdosproblems.com/1212",
+            "quote": "Let $G$ be the graph with vertex set those pairs $(x,y)\\in \\mathbb{N}^2$ with $\\mathrm{gcd}(x,y)=1$, in which we join two vertices if the differ in only one coordinate, and there by $\\pm 1$. Is there a path going to infinity on $G$, say $P$, such that for all $(x,y)\\in P$ both $\\min(x,y)>1$ and at least one of $x$ or $y$ is composite?"
+          }
+        },
+        "claim": {
+          "id": "claim-main",
+          "text": {
+            "value": "We prove that this graph contains an infinite simple path, answering Erdős Problem 1212 affirmatively. More precisely, for almost every slope in a fixed interval away from the diagonal, there is a ray with that limiting coordinate ratio.",
+            "basis": "source_quote",
+            "asserted_by": "significance-editor",
+            "asserted_at": "2026-09-08T14:30:26Z",
+            "locator": {
+              "url": "https://raw.githubusercontent.com/crabsatellite/erdos-1212-visible-lattice-path/400001f0847afe36a26c588d34445210dbdc116e/paper/Li_Infinite_Paths_Composite_Restricted_Visible_Lattice_2026.pdf",
+              "page": 1,
+              "section": "Abstract",
+              "quote": "We prove that this graph contains an infinite simple path, answering Erdős Problem 1212 affirmatively. More precisely, for almost every slope in a fixed interval away from the diagonal, there is a ray with that limiting coordinate ratio."
+            }
+          },
+          "scope": {
+            "value": "This private draft concerns the author's claimed infinite path in the composite-restricted visible lattice and the author-selected v1.0.1 release. The optional monotonicity and bounded-turn strengthening is outside the reported scope. Statement correspondence and independent mathematical assessment remain open.",
+            "basis": "editorial_inference",
+            "asserted_by": "significance-editor",
+            "asserted_at": "2026-09-08T14:30:26Z",
+            "locator": {
+              "url": "https://github.com/crabsatellite/erdos-1212-visible-lattice-path/blob/400001f0847afe36a26c588d34445210dbdc116e/README.md",
+              "quote": "The optional monotonicity\nand bounded-turn strengthening is not asserted."
+            }
+          }
+        },
+        "plain_summary": {
+          "claimed": "Alex Chengyu Li reports an infinite simple path in the composite-restricted visible lattice and an almost-everywhere limiting-direction result. The author selected release v1.0.1 for this private draft.",
+          "checked": "Significance inspected the problem and claim pages, repository links, and pinned v1.0.1 version; resolved the tag to a commit; and computed the manuscript PDF SHA-256 from the raw file at that commit.",
+          "not_checked": "The mathematics has not been independently assessed. Significance has not reproduced the Lean build or established statement correspondence. The author-supplied correspondence task and independent verification remain open.",
+          "basis": "editorial_inference",
+          "asserted_by": "significance-editor",
+          "asserted_at": "2026-09-08T14:30:26Z"
+        },
+        "manuscript": {
+          "url": "https://raw.githubusercontent.com/crabsatellite/erdos-1212-visible-lattice-path/400001f0847afe36a26c588d34445210dbdc116e/paper/Li_Infinite_Paths_Composite_Restricted_Visible_Lattice_2026.pdf",
+          "label": "Infinite paths in the composite-restricted visible lattice",
+          "immutable_version_id": "github-crabsatellite-erdos-1212-400001f0847afe36a26c588d34445210dbdc116e",
+          "sha256": "2a31595c68ddde0f444c902568ec63ac9611d456838392af396827b79accae41",
+          "retrieved_at": "2026-09-08T14:23:09Z"
+        },
+        "evidence": [
+          {
+            "id": "ev-source-inspection",
+            "kind": "source_inspection",
+            "description": "Significance inspected the public problem and proof-claim pages and their source links, located the pinned manuscript version, and computed its SHA-256 from the downloaded PDF bytes. The mathematics has not been independently assessed; the author-supplied task remains open.",
+            "basis": "editorial_inference",
+            "asserted_by": "significance-editor",
+            "asserted_at": "2026-09-08T14:30:26Z",
+            "locator": {
+              "url": "https://www.erdosproblems.com/forum/thread/1212/proof-claims#proof-claim-278"
+            }
+          },
+          {
+            "id": "ev-ai-claim-disclosure",
+            "kind": "source_inspection",
+            "description": "A full proof claimed by Alex Chengyu Li (using Proof Engine (https://doi.org/10.2139/ssrn.7237460; https://doi.org/10.5281/zenodo.22346064), with ChatGPT 5.6 and ChatGPT 6 Astra).",
+            "basis": "source_quote",
+            "asserted_by": "significance-editor",
+            "asserted_at": "2026-09-08T14:30:26Z",
+            "locator": {
+              "url": "https://www.erdosproblems.com/forum/thread/1212/proof-claims#proof-claim-278",
+              "quote": "A full proof claimed by Alex Chengyu Li (using Proof Engine (https://doi.org/10.2139/ssrn.7237460; https://doi.org/10.5281/zenodo.22346064), with ChatGPT 5.6 and ChatGPT 6 Astra)."
+            }
+          },
+          {
+            "id": "ev-version-pin",
+            "kind": "source_inspection",
+            "description": "The author-selected tag v1.0.1 resolves to commit 400001f0847afe36a26c588d34445210dbdc116e. manuscript.url is the raw PDF at that commit; its SHA-256 is 2a31595c68ddde0f444c902568ec63ac9611d456838392af396827b79accae41, computed from 283837 downloaded bytes at 2026-09-08T14:23:09Z. The claim page still names v1.0.0; the author's later message selects v1.0.1.",
+            "basis": "editorial_inference",
+            "asserted_by": "significance-editor",
+            "asserted_at": "2026-09-08T14:30:26Z",
+            "locator": {
+              "url": "https://github.com/crabsatellite/erdos-1212-visible-lattice-path/releases/tag/v1.0.1"
+            }
+          },
+          {
+            "id": "ev-formalization-reported",
+            "kind": "external_formal_artifact",
+            "repo": "https://github.com/crabsatellite/erdos-1212-visible-lattice-path",
+            "commit": "400001f0847afe36a26c588d34445210dbdc116e",
+            "description": "The paper lays out the construction, and the public repository contains the manuscript, formalization and audit instructions.",
+            "basis": "author_attestation",
+            "asserted_by": "alexchengyuli",
+            "asserted_at": "2026-09-08T06:14:00Z",
+            "locator": {
+              "url": "https://www.erdosproblems.com/dm/",
+              "quote": "The paper lays out the construction, and the public repository contains the manuscript, formalization and audit instructions."
+            }
+          },
+          {
+            "id": "ev-author-first-task",
+            "kind": "source_inspection",
+            "description": "For a first afternoon-sized task, I would suggest checking statement correspondence: read Section 1 of the paper, then compare the graph and path conditions in Problem 1212 with Target.lean and the literal endpoint in AlgebraicCorridorKernelAudit.lean. The README links both files. In particular, check the composite-coordinate restriction, unit adjacency, and why the injective infinite path answers the original question. For someone comfortable reading Lean statements, I would budget roughly 1–2 hours for this bounded check, rather than a review of the whole proof. Any specific discrepancy or question would be welcome.",
+            "basis": "author_attestation",
+            "asserted_by": "alexchengyuli",
+            "asserted_at": "2026-09-08T06:14:00Z",
+            "locator": {
+              "url": "https://www.erdosproblems.com/dm/",
+              "section": "08 Sep 2026, 06:14: author-supplied first task",
+              "quote": "For a first afternoon-sized task, I would suggest checking statement correspondence: read Section 1 of the paper, then compare the graph and path conditions in Problem 1212 with Target.lean and the literal endpoint in AlgebraicCorridorKernelAudit.lean. The README links both files. In particular, check the composite-coordinate restriction, unit adjacency, and why the injective infinite path answers the original question. For someone comfortable reading Lean statements, I would budget roughly 1–2 hours for this bounded check, rather than a review of the whole proof. Any specific discrepancy or question would be welcome."
+            }
+          }
+        ],
+        "ai_provenance": {
+          "disclosure": {
+            "value": "During the preparation of this work, the author used an author-developed local implementation of the Proof Engine infrastructure (development version 2.0) for AI-assisted research. The project-level research framework is described in Proof Engine 2.0 [6]. See also Proof Engine Infrastructure (1.0) [7] for the complementary proof-development framework. The implementation uses replaceable AI-agent and execution-harness components; the present work used OpenAI Codex as its AI-agent component. The author is responsible for the definitions, statements, proofs, citations, code, and exposition.",
+            "basis": "source_quote",
+            "asserted_by": "significance-editor",
+            "asserted_at": "2026-09-08T14:30:26Z",
+            "locator": {
+              "url": "https://raw.githubusercontent.com/crabsatellite/erdos-1212-visible-lattice-path/400001f0847afe36a26c588d34445210dbdc116e/paper/Li_Infinite_Paths_Composite_Restricted_Visible_Lattice_2026.pdf",
+              "page": 7,
+              "section": "AI-assisted research",
+              "quote": "During the preparation of this work, the author used an author-developed local implementation of the Proof Engine infrastructure (development version 2.0) for AI-assisted research. The project-level research framework is described in Proof Engine 2.0 [6]. See also Proof Engine Infrastructure (1.0) [7] for the complementary proof-development framework. The implementation uses replaceable AI-agent and execution-harness components; the present work used OpenAI Codex as its AI-agent component. The author is responsible for the definitions, statements, proofs, citations, code, and exposition."
+            }
+          },
+          "roles": []
+        },
+        "review_map": {
+          "main_deduction": {
+            "text": "Compare Section 1's graph and path conditions with Problem 1212, Target.lean, and the literal endpoint in AlgebraicCorridorKernelAudit.lean.",
+            "location": "Section 1; Target.lean; AlgebraicCorridorKernelAudit.lean",
+            "basis": "editorial_inference",
+            "asserted_by": "significance-editor",
+            "asserted_at": "2026-09-08T14:30:26Z",
+            "locator": {
+              "url": "https://www.erdosproblems.com/dm/",
+              "quote": "For a first afternoon-sized task, I would suggest checking statement correspondence: read Section 1 of the paper, then compare the graph and path conditions in Problem 1212 with Target.lean and the literal endpoint in AlgebraicCorridorKernelAudit.lean. The README links both files. In particular, check the composite-coordinate restriction, unit adjacency, and why the injective infinite path answers the original question. For someone comfortable reading Lean statements, I would budget roughly 1–2 hours for this bounded check, rather than a review of the whole proof. Any specific discrepancy or question would be welcome."
+            }
+          },
+          "risks": [
+            {
+              "text": "Check that the composite-coordinate restriction and unit adjacency agree across the problem, paper, and named Lean statements.",
+              "location": "Graph and path conditions",
+              "basis": "editorial_inference",
+              "asserted_by": "significance-editor",
+              "asserted_at": "2026-09-08T14:30:26Z",
+              "locator": {
+                "url": "https://www.erdosproblems.com/dm/",
+                "quote": "For a first afternoon-sized task, I would suggest checking statement correspondence: read Section 1 of the paper, then compare the graph and path conditions in Problem 1212 with Target.lean and the literal endpoint in AlgebraicCorridorKernelAudit.lean. The README links both files. In particular, check the composite-coordinate restriction, unit adjacency, and why the injective infinite path answers the original question. For someone comfortable reading Lean statements, I would budget roughly 1–2 hours for this bounded check, rather than a review of the whole proof. Any specific discrepancy or question would be welcome."
+              }
+            },
+            {
+              "text": "Check the passage from the injective infinite path to the original question's path going to infinity.",
+              "location": "Injectivity and the original existence question",
+              "basis": "editorial_inference",
+              "asserted_by": "significance-editor",
+              "asserted_at": "2026-09-08T14:30:26Z",
+              "locator": {
+                "url": "https://www.erdosproblems.com/dm/",
+                "quote": "For a first afternoon-sized task, I would suggest checking statement correspondence: read Section 1 of the paper, then compare the graph and path conditions in Problem 1212 with Target.lean and the literal endpoint in AlgebraicCorridorKernelAudit.lean. The README links both files. In particular, check the composite-coordinate restriction, unit adjacency, and why the injective infinite path answers the original question. For someone comfortable reading Lean statements, I would budget roughly 1–2 hours for this bounded check, rather than a review of the whole proof. Any specific discrepancy or question would be welcome."
+              }
+            }
+          ],
+          "prerequisites": [
+            {
+              "text": "Section 1 of the paper, the repository README, and the two named Lean files; familiarity with reading Lean statements.",
+              "location": "Author's first-task prerequisites",
+              "basis": "editorial_inference",
+              "asserted_by": "significance-editor",
+              "asserted_at": "2026-09-08T14:30:26Z",
+              "locator": {
+                "url": "https://www.erdosproblems.com/dm/",
+                "quote": "For a first afternoon-sized task, I would suggest checking statement correspondence: read Section 1 of the paper, then compare the graph and path conditions in Problem 1212 with Target.lean and the literal endpoint in AlgebraicCorridorKernelAudit.lean. The README links both files. In particular, check the composite-coordinate restriction, unit adjacency, and why the injective infinite path answers the original question. For someone comfortable reading Lean statements, I would budget roughly 1–2 hours for this bounded check, rather than a review of the whole proof. Any specific discrepancy or question would be welcome."
+              }
+            }
+          ],
+          "needs_checking": [
+            {
+              "text": "List the statements and conditions compared and any specific discrepancy or remaining question within the author's bounded correspondence check.",
+              "location": "First task: statement correspondence",
+              "basis": "editorial_inference",
+              "asserted_by": "significance-editor",
+              "asserted_at": "2026-09-08T14:30:26Z",
+              "locator": {
+                "url": "https://www.erdosproblems.com/dm/",
+                "quote": "For a first afternoon-sized task, I would suggest checking statement correspondence: read Section 1 of the paper, then compare the graph and path conditions in Problem 1212 with Target.lean and the literal endpoint in AlgebraicCorridorKernelAudit.lean. The README links both files. In particular, check the composite-coordinate restriction, unit adjacency, and why the injective infinite path answers the original question. For someone comfortable reading Lean statements, I would budget roughly 1–2 hours for this bounded check, rather than a review of the whole proof. Any specific discrepancy or question would be welcome."
+              }
+            }
+          ]
+        },
+        "formalization_handoff": {
+          "target": {
+            "value": "The graph and path conditions in Problem 1212, Target.lean, and the literal endpoint in AlgebraicCorridorKernelAudit.lean.",
+            "basis": "editorial_inference",
+            "asserted_by": "significance-editor",
+            "asserted_at": "2026-09-08T14:30:26Z",
+            "locator": {
+              "url": "https://www.erdosproblems.com/dm/",
+              "quote": "For a first afternoon-sized task, I would suggest checking statement correspondence: read Section 1 of the paper, then compare the graph and path conditions in Problem 1212 with Target.lean and the literal endpoint in AlgebraicCorridorKernelAudit.lean. The README links both files. In particular, check the composite-coordinate restriction, unit adjacency, and why the injective infinite path answers the original question. For someone comfortable reading Lean statements, I would budget roughly 1–2 hours for this bounded check, rather than a review of the whole proof. Any specific discrepancy or question would be welcome."
+            }
+          },
+          "system": {
+            "value": "Lean 4",
+            "basis": "source_quote",
+            "asserted_by": "significance-editor",
+            "asserted_at": "2026-09-08T14:30:26Z",
+            "locator": {
+              "url": "https://github.com/crabsatellite/erdos-1212-visible-lattice-path/blob/400001f0847afe36a26c588d34445210dbdc116e/README.md",
+              "quote": "This repository provides the Lean 4 formalization accompanying"
+            }
+          },
+          "status": "artifact_reported",
+          "repository": {
+            "url": "https://github.com/crabsatellite/erdos-1212-visible-lattice-path",
+            "commit": "400001f0847afe36a26c588d34445210dbdc116e"
+          },
+          "correspondence": {
+            "value": "The formal artifact is author-reported and has not been independently reproduced. Its correspondence with the problem and paper remains the author's first open task.",
+            "basis": "editorial_inference",
+            "asserted_by": "significance-editor",
+            "asserted_at": "2026-09-08T14:30:26Z",
+            "locator": {
+              "url": "https://www.erdosproblems.com/dm/",
+              "quote": "For a first afternoon-sized task, I would suggest checking statement correspondence: read Section 1 of the paper, then compare the graph and path conditions in Problem 1212 with Target.lean and the literal endpoint in AlgebraicCorridorKernelAudit.lean. The README links both files. In particular, check the composite-coordinate restriction, unit adjacency, and why the injective infinite path answers the original question. For someone comfortable reading Lean statements, I would budget roughly 1–2 hours for this bounded check, rather than a review of the whole proof. Any specific discrepancy or question would be welcome."
+            }
+          },
+          "basis": "author_attestation",
+          "asserted_by": "alexchengyuli",
+          "asserted_at": "2026-09-08T06:14:00Z",
+          "locator": {
+            "url": "https://www.erdosproblems.com/dm/",
+            "quote": "The paper lays out the construction, and the public repository contains the manuscript, formalization and audit instructions."
+          }
+        },
+        "open_invitations": [
+          {
+            "kind": "correspondence",
+            "task_id": "erdos-1212-statement-correspondence",
+            "task_kind": "statement_audit",
+            "status": "open",
+            "effort_estimate": "about 1–2 hours for someone comfortable reading Lean statements",
+            "prerequisites": [
+              "Section 1 of the paper",
+              "the repository README and the two named Lean files"
+            ],
+            "entry_points": "Target.lean; AlgebraicCorridorKernelAudit.lean (literal endpoint)",
+            "target": "For a first afternoon-sized task, I would suggest checking statement correspondence: read Section 1 of the paper, then compare the graph and path conditions in Problem 1212 with Target.lean and the literal endpoint in AlgebraicCorridorKernelAudit.lean. The README links both files.",
+            "how": "In particular, check the composite-coordinate restriction, unit adjacency, and why the injective infinite path answers the original question. For someone comfortable reading Lean statements, I would budget roughly 1–2 hours for this bounded check, rather than a review of the whole proof. Any specific discrepancy or question would be welcome.",
+            "respond": {
+              "url": "https://github.com/hjyuh/significance/issues/new?template=attestation.yml"
+            },
+            "created_by": "alexchengyuli",
+            "created_at": "2026-09-08T06:14:00Z"
+          }
+        ],
+        "history": [
+          {
+            "id": "evt-created",
+            "type": "created",
+            "at": "2026-09-08T14:30:26Z",
+            "by": "significance-editor",
+            "note": "Private draft prepared from public materials with the author's permission; first open task supplied by the author; not published."
+          }
+        ]
+      }
+    }
+  ]
+}

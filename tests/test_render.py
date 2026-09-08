@@ -31,11 +31,13 @@ RECORDS_DIR = REPO_ROOT / "records"
 EXAMPLE_RECORD = REPO_ROOT / "examples" / "synthetic-ramsey-k7.yaml"
 PUBLIC_RECORD_ID = "2026-openai-nonsofic-groups"
 PUBLIC_RECORD_IDS = [
+    "2026-alexchengyuli-erdos-1212",
     "2026-alexchengyuli-erdos-848",
     "2026-anthropic-zeta-two-thirds",
     "2026-evanbeller-erdos-132",
     PUBLIC_RECORD_ID,
     "2026-rafikzeraoulia-erdos-653",
+    "2026-rafikzeraoulia-erdos-719",
     "2026-rafikzeraoulia-erdos-726",
 ]
 BROKEN_DIR = REPO_ROOT / "tests" / "fixtures" / "broken"

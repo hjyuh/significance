@@ -1,6 +1,19 @@
 {
   "records": [
     {
+      "record_id": "2026-alexchengyuli-erdos-1212",
+      "record_version": 1,
+      "record_state": "active",
+      "claim": "We prove that this graph contains an infinite simple path, answering Erdős Problem 1212 affirmatively. More precisely, for almost every slope in a fixed interval away from the diagonal, there is a ray with that limiting coordinate ratio.",
+      "claim_mathml": null,
+      "claim_basis": "source_quote",
+      "claim_asserted_by": "significance-editor",
+      "freshness": "current",
+      "freshness_checked_at": "2026-09-08T14:30:26Z",
+      "evidence_count": 5,
+      "open_invitation_count": 1
+    },
+    {
       "record_id": "2026-alexchengyuli-erdos-848",
       "record_version": 1,
       "record_state": "active",
@@ -64,6 +77,19 @@
       "freshness_checked_at": "2026-08-16T15:19:21Z",
       "evidence_count": 1,
       "open_invitation_count": 3
+    },
+    {
+      "record_id": "2026-rafikzeraoulia-erdos-719",
+      "record_version": 1,
+      "record_state": "active",
+      "claim": "For every 3-graph G on n ≤ 9 vertices, |E(G)| − 3ν(G) ≤ ex₃(n, K₄³). Equivalently, every such G admits an edge-disjoint decomposition into at most ex₃(n, K₄³) single triples and tetrahedra.",
+      "claim_mathml": null,
+      "claim_basis": "source_quote",
+      "claim_asserted_by": "significance-editor",
+      "freshness": "current",
+      "freshness_checked_at": "2026-09-08T14:30:26Z",
+      "evidence_count": 5,
+      "open_invitation_count": 1
     },
     {
       "record_id": "2026-rafikzeraoulia-erdos-726",

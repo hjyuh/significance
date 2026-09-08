@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none';">
+<title>2026-alexchengyuli-erdos-1212 — Significance</title>
+<link rel="stylesheet" href="../static/style.css?v=034053faa7ee">
+</head>
+<body>
+<header class="topline">
+<a class="wordmark" href="/records/index.html">SIGNIFICANCE</a>
+<p class="topline-meta">Checked 2026-09-08 · source current · v1</p>
+<nav class="topline-nav" aria-label="Site">
+<a href="/orientation/index.html">What is going on</a><a href="/request/index.html">Request or correct a record</a>
+<a href="/how-to-file-a-claim/index.html">How to file a claim</a><a href="/reviewers/index.html">Reviewers</a><a href="/backlog/index.html">Backlog</a><a href="/frontier/index.html">Open work</a><a href="/problems/index.html">Problems</a><a href="/glossary/index.html">Glossary</a><a href="/feed.xml">Atom feed</a><a href="/tasks/index.html">Take a check</a><a href="/boards/ten-results/index.html">ten results</a>
+</nav>
+</header>
+<div class="shell with-rail">
+<main>
+<article class="record">
+
+
+  <header class="band record-hero">
+    <p class="eyebrow">Claim from Significance editor</p>
+    <h1 class="claim-text">We prove that this graph contains an infinite simple path, answering Erdős Problem 1212 affirmatively. More precisely, for almost every slope in a fixed interval away from the diagonal, there is a ray with that limiting coordinate ratio.</h1>
+    <p class="claim-source"><span class="attribution">Quoted from the source · Significance editor · 2026-09-08</span><span class="locator"> §Abstract, p.1 · <a href="https://raw.githubusercontent.com/crabsatellite/erdos-1212-visible-lattice-path/400001f0847afe36a26c588d34445210dbdc116e/paper/Li_Infinite_Paths_Composite_Restricted_Visible_Lattice_2026.pdf">View source</a></span></p>
+
+    <dl class="date-vector">
+      <div><dt>Preprint</dt><dd>—</dd></div>
+      <div><dt>Exposition</dt><dd>—</dd></div>
+      <div><dt>Formalization</dt><dd>2026-09-08</dd></div>
+    </dl>
+    <p class="meta date-vector-caption">Component dates (preprint / exposition / formalization). Formalization date from the artifact reported by the source. A dash means no date is recorded, not that the component does not exist.</p>
+  </header>
+
+  <section class="band problem-reference" aria-labelledby="problem-reference-heading">
+    <p class="lbl" id="problem-reference-heading">Problem link</p>
+    <p class="problem-reference-value">ErdősProblems.com #1212 · <a href="https://www.erdosproblems.com/1212">open the original problem page</a></p>
+    <p class="meta"><span class="attribution">Quoted from the source · Significance editor · 2026-09-08</span><span class="locator"> · <a href="https://www.erdosproblems.com/1212">View source</a></span></p>
+  </section>
+
+  <section class="band record-relationship" aria-labelledby="relationship-heading">
+    <p class="lbl" id="relationship-heading">Author involvement</p>
+    <p class="relationship-value">Thank you, please go ahead with the Significance record and independent verification. The paper lays out the construction, and the public repository contains the manuscript, formalization and audit instructions. Please use the current v1.0.1 release, with the disclosures as written:
+https://github.com/crabsatellite/erdos-1212-visible-lattice-path/releases/tag/v1.0.1</p>
+    <p class="meta"><span class="credit">Record note · alexchengyuli · 2026-09-08</span></p>
+  </section>
+
+  <section class="band plain-summary" aria-labelledby="plain-summary-heading">
+    <p class="lbl" id="plain-summary-heading">Summary · for readers</p>
+    <dl class="plain-summary-list">
+      <div>
+        <dt>In one sentence</dt>
+        <dd>Alex Chengyu Li reports an infinite simple path in the composite-restricted visible lattice and an almost-everywhere limiting-direction result. The author selected release v1.0.1 for this private draft.</dd>
+      </div>
+    </dl>
+    <p class="meta"><span class="credit">Reader summary · Significance · 2026-09-08</span></p>
+
+  </section>
+
+  <section class="band start-here" aria-labelledby="start-here-heading">
+    <p class="lbl" id="start-here-heading">Start here · for reviewers</p>
+    <div class="review-map-main">
+      <p class="map-label">Main deduction</p>
+      <p class="prose">Compare Section 1&#39;s graph and path conditions with Problem 1212, Target.lean, and the literal endpoint in AlgebraicCorridorKernelAudit.lean.</p>
+<p class="meta">Section 1; Target.lean; AlgebraicCorridorKernelAudit.lean · <span class="attribution">Significance’s interpretation · Significance editor · 2026-09-08</span><span class="locator"> · <a href="https://www.erdosproblems.com/dm/">View source</a></span></p>    </div>
+    <div class="review-map-group"><p class="map-label">Risk points</p><ul class="review-map-list"><li><p class="prose">Check that the composite-coordinate restriction and unit adjacency agree across the problem, paper, and named Lean statements.</p><p class="meta">Graph and path conditions · <span class="attribution">Significance’s interpretation · Significance editor · 2026-09-08</span><span class="locator"> · <a href="https://www.erdosproblems.com/dm/">View source</a></span></p></li><li><p class="prose">Check the passage from the injective infinite path to the original question&#39;s path going to infinity.</p><p class="meta">Injectivity and the original existence question · <span class="attribution">Significance’s interpretation · Significance editor · 2026-09-08</span><span class="locator"> · <a href="https://www.erdosproblems.com/dm/">View source</a></span></p></li></ul></div>
+    <div class="review-map-group"><p class="map-label">Useful background</p><ul class="review-map-list"><li><p class="prose">Section 1 of the paper, the repository README, and the two named Lean files; familiarity with reading Lean statements.</p><p class="meta"><span class="attribution">Significance’s interpretation · Significance editor · 2026-09-08</span><span class="locator"> · <a href="https://www.erdosproblems.com/dm/">View source</a></span></p></li></ul></div>
+    <div class="review-map-group"><p class="map-label">Needs checking</p><ul class="review-map-list"><li><p class="prose">List the statements and conditions compared and any specific discrepancy or remaining question within the author&#39;s bounded correspondence check.</p><p class="meta">First task: statement correspondence · <span class="attribution">Significance’s interpretation · Significance editor · 2026-09-08</span><span class="locator"> · <a href="https://www.erdosproblems.com/dm/">View source</a></span></p></li><li><a href="https://github.com/hjyuh/significance/issues/new?template=needs-checking.yml">Suggest another focused check</a></li></ul></div>
+  </section>
+
+  <section class="band formalization-handoff" aria-labelledby="formalization-heading">
+    <p class="lbl" id="formalization-heading">Formalization handoff</p>
+    <p class="handoff-intro">A compact map for someone who wants to formalize this claim. It records preparation and open work, not a mathematical verdict.</p>
+    <dl class="facts handoff-facts">
+      <dt>Target</dt>
+      <dd>The graph and path conditions in Problem 1212, Target.lean, and the literal endpoint in AlgebraicCorridorKernelAudit.lean. <span class="attribution">Significance’s interpretation · Significance editor · 2026-09-08</span><span class="locator"> · <a href="https://www.erdosproblems.com/dm/">View source</a></span></dd>
+      <dt>System</dt>
+      <dd>Lean 4 <span class="attribution">Quoted from the source · Significance editor · 2026-09-08</span><span class="locator"> · <a href="https://github.com/crabsatellite/erdos-1212-visible-lattice-path/blob/400001f0847afe36a26c588d34445210dbdc116e/README.md">View source</a></span></dd>
+      <dt>Work state</dt>
+      <dd>Artifact reported</dd>
+      <dt>Code</dt>
+      <dd><a href="https://github.com/crabsatellite/erdos-1212-visible-lattice-path">formalization repository</a> · commit <code>400001f0847a…</code></dd>
+    </dl>
+<p class="meta"><strong>Paper/code correspondence:</strong> The formal artifact is author-reported and has not been independently reproduced. Its correspondence with the problem and paper remains the author&#39;s first open task. <span class="attribution">Significance’s interpretation · Significance editor · 2026-09-08</span><span class="locator"> · <a href="https://www.erdosproblems.com/dm/">View source</a></span></p>    <p class="meta"><span class="attribution">Stated by the author · alexchengyuli · 2026-09-08</span><span class="locator"> · <a href="https://www.erdosproblems.com/dm/">View source</a></span></p>
+  </section>
+
+  <section class="band review-coverage" aria-labelledby="coverage-heading">
+    <p class="lbl" id="coverage-heading">Review activity</p>
+    <dl class="coverage-list">
+      <div><dt>Independent reruns</dt><dd>0</dd></div>
+      <div><dt>Math assessments</dt><dd>0</dd></div>
+      <div><dt>Written reviews</dt><dd>0</dd></div>
+      <div><dt>Open checks</dt><dd>1</dd></div>
+    </dl>
+    <div class="coverage-notes">
+      <p class="coverage-boundary"><strong>What Significance checked:</strong> Significance inspected the problem and claim pages, repository links, and pinned v1.0.1 version; resolved the tag to a commit; and computed the manuscript PDF SHA-256 from the raw file at that commit.</p>
+      <p class="coverage-boundary"><strong>Still open:</strong> The mathematics has not been independently assessed. Significance has not reproduced the Lean build or established statement correspondence. The author-supplied correspondence task and independent verification remain open.</p>
+    </div>
+  </section>
+
+
+  <section class="band">
+    <details class="copy-status">
+<summary>Copy for sharing</summary>
+<p class="copy-status-help">Copy and paste this summary.</p>
+<pre class="copy-status-text">Alex Chengyu Li reports an infinite simple path in the composite-restricted
+visible lattice and an almost-everywhere limiting-direction result. The
+author selected release v1.0.1 for this private draft.
+
+Checked: Significance inspected the problem and claim pages, repository
+links, and pinned v1.0.1 version; resolved the tag to a commit; and computed
+the manuscript PDF SHA-256 from the raw file at that commit.
+
+Not checked: The mathematics has not been independently assessed.
+Significance has not reproduced the Lean build or established statement
+correspondence. The author-supplied correspondence task and independent
+verification remain open.
+
+As of 2026-09-08T14:30:26Z (freshness: current)
+Full record: https://hjyuh.github.io/significance/records/2026-alexchengyuli-erdos-1212/
+Significance records evidence. It does not judge the mathematics.
+</pre>
+</details>
+  </section>
+
+  <div class="band">
+    <dl class="facts">
+      <dt>Scope</dt>
+      <dd>This private draft concerns the author&#39;s claimed infinite path in the composite-restricted visible lattice and the author-selected v1.0.1 release. The optional monotonicity and bounded-turn strengthening is outside the reported scope. Statement correspondence and independent mathematical assessment remain open. <span class="attribution">Significance’s interpretation · Significance editor · 2026-09-08</span><span class="locator"> · <a href="https://github.com/crabsatellite/erdos-1212-visible-lattice-path/blob/400001f0847afe36a26c588d34445210dbdc116e/README.md">View source</a></span></dd>
+      <dt>Source</dt>
+      <dd>
+        <a href="https://raw.githubusercontent.com/crabsatellite/erdos-1212-visible-lattice-path/400001f0847afe36a26c588d34445210dbdc116e/paper/Li_Infinite_Paths_Composite_Restricted_Visible_Lattice_2026.pdf">Infinite paths in the composite-restricted visible lattice</a>
+        <span class="meta"> · github-crabsatellite-erdos-1212-400001f0847afe36a26c588d34445210dbdc116e · retrieved 2026-09-08T14:23:09Z</span>
+        <div class="meta"><a class="term" href="/glossary/index.html#term-manuscript-hash" title="A fingerprint of the exact file a record was built from, so that a later reader can tell whether they are looking at the same document.">sha256</a> <code>2a31595c68dd…</code></div>
+      </dd>
+    </dl>
+  </div>
+
+  <section class="band" id="expositions">
+    <p class="lbl">Evidence — 5 entries</p>
+    <ol class="ledger">
+      <li id="evidence-ev-source-inspection" class="evidence-card evidence-source_inspection">
+        <div>
+          <div class="evidence-head">
+            <h3>Source inspection</h3>
+            <span class="kind">ev-source-inspection</span>
+          </div>
+
+          <p class="reported-note">Public-source and version check only. This is not a mathematical review.</p>
+          <p class="prose">Significance inspected the public problem and proof-claim pages and their source links, located the pinned manuscript version, and computed its SHA-256 from the downloaded PDF bytes. The mathematics has not been independently assessed; the author-supplied task remains open.</p>
+          <p class="meta"><span class="attribution">Significance’s interpretation · Significance editor · 2026-09-08</span><span class="locator"> · <a href="https://www.erdosproblems.com/forum/thread/1212/proof-claims#proof-claim-278">View source</a></span></p>
+
+        </div>
+      </li>
+      <li id="evidence-ev-ai-claim-disclosure" class="evidence-card evidence-source_inspection">
+        <div>
+          <div class="evidence-head">
+            <h3>Source inspection</h3>
+            <span class="kind">ev-ai-claim-disclosure</span>
+          </div>
+
+          <p class="reported-note">Public-source and version check only. This is not a mathematical review.</p>
+          <p class="prose">A full proof claimed by Alex Chengyu Li (using Proof Engine (doi.org/… doi.org/… with ChatGPT 5.6 and ChatGPT 6 Astra).</p>
+          <p class="meta"><span class="attribution">Quoted from the source · Significance editor · 2026-09-08</span><span class="locator"> · <a href="https://www.erdosproblems.com/forum/thread/1212/proof-claims#proof-claim-278">View source</a></span></p>
+
+        </div>
+      </li>
+      <li id="evidence-ev-version-pin" class="evidence-card evidence-source_inspection">
+        <div>
+          <div class="evidence-head">
+            <h3>Source inspection</h3>
+            <span class="kind">ev-version-pin</span>
+          </div>
+
+          <p class="reported-note">Public-source and version check only. This is not a mathematical review.</p>
+          <p class="prose">The author-selected tag v1.0.1 resolves to commit 400001f0847a…. manuscript.url is the raw PDF at that commit; its SHA-256 is 2a31595c68dd…, computed from 283837 downloaded bytes at 2026-09-08T14:23:09Z. The claim page still names v1.0.0; the author&#39;s later message selects v1.0.1.</p>
+          <p class="meta"><span class="attribution">Significance’s interpretation · Significance editor · 2026-09-08</span><span class="locator"> · <a href="https://github.com/crabsatellite/erdos-1212-visible-lattice-path/releases/tag/v1.0.1">View source</a></span></p>
+
+        </div>
+      </li>
+      <li id="evidence-ev-formalization-reported" class="evidence-card evidence-external_formal_artifact">
+        <div>
+          <div class="evidence-head">
+            <h3>Formal code published by the source</h3>
+            <span class="kind">ev-formalization-reported</span>
+          </div>
+
+          <p class="reported-note">Published by the source. Any independent rerun appears as a separate entry.</p>
+          <p class="prose">The paper lays out the construction, and the public repository contains the manuscript, formalization and audit instructions.</p>
+          <p class="meta"><a href="https://github.com/crabsatellite/erdos-1212-visible-lattice-path">Open link</a> @ <code>400001f0847a…</code> · <span class="attribution">Stated by the author · alexchengyuli · 2026-09-08</span><span class="locator"> · <a href="https://www.erdosproblems.com/dm/">View source</a></span></p>
+
+        </div>
+      </li>
+      <li id="evidence-ev-author-first-task" class="evidence-card evidence-source_inspection">
+        <div>
+          <div class="evidence-head">
+            <h3>Source inspection</h3>
+            <span class="kind">ev-author-first-task</span>
+          </div>
+
+          <p class="reported-note">Public-source and version check only. This is not a mathematical review.</p>
+          <p class="prose">For a first afternoon-sized task, I would suggest checking statement correspondence: read Section 1 of the paper, then compare the graph and path conditions in Problem 1212 with Target.lean and the literal endpoint in AlgebraicCorridorKernelAudit.lean. The README links both files. In particular, check the composite-coordinate restriction, unit adjacency, and why the injective infinite path answers the original question. For someone comfortable reading Lean statements, I would budget roughly 1–2 hours for this bounded check, rather than a review of the whole proof. Any specific discrepancy or question would be welcome.</p>
+          <p class="meta"><span class="attribution">Stated by the author · alexchengyuli · 2026-09-08</span><span class="locator"> §08 Sep 2026, 06:14: author-supplied first task · <a href="https://www.erdosproblems.com/dm/">View source</a></span></p>
+
+        </div>
+      </li>
+    </ol>
+  </section>
+
+
+  <section class="band what-this-does-not-establish">
+    <p class="lbl">Limits</p>
+    <ul>
+      <li>This record does not issue a whole-paper correctness judgement.</li>
+<li>Open invitations identify work not yet represented by a completed evidence entry.</li><li>No independent reproduction or mathematical assessment is represented unless an evidence entry above says otherwise.</li>    </ul>
+  </section>
+
+</article>
+</main>
+<aside class="rail">
+
+  <div class="band">
+    <p class="lbl">Record details</p>
+    <dl class="state-list">
+      <div><dt>Publication state</dt><dd>Active record</dd></div>
+      <div><dt>Record version</dt><dd>1</dd></div>
+      <div><dt>Source check</dt><dd>Current</dd></div>
+      <div><dt>Source version</dt><dd>github-crabsatellite-erdos-1212-400001f0847afe36a26c588d34445210dbdc116e</dd></div>
+      <div><dt>Last checked</dt><dd>2026-09-08</dd></div>
+    </dl>
+  </div>
+
+  <div class="band" id="open-checks">
+    <p class="lbl">Open checks — 1</p>
+    <p class="lbl-sub">Each is a focused task.</p>
+    <ul class="invitations">
+      <li>
+        <p class="meta">Status: open</p>
+        <p class="invitation-kind">Compare the statements</p>
+        <p class="invitation-target"><a href="/tasks/2026-alexchengyuli-erdos-1212/erdos-1212-statement-correspondence/index.html">For a first afternoon-sized task, I would suggest checking statement correspondence: read Section 1 of the paper, then compare the graph and path conditions in Problem 1212 with Target.lean and the literal endpoint in AlgebraicCorridorKernelAudit.lean. The README links both files.</a></p>
+        <div class="invitation-task">
+          <p class="invitation-how-label">Take this task</p>
+          <p class="invitation-how">In particular, check the composite-coordinate restriction, unit adjacency, and why the injective infinite path answers the original question. For someone comfortable reading Lean statements, I would budget roughly 1–2 hours for this bounded check, rather than a review of the whole proof. Any specific discrepancy or question would be welcome.</p>
+          <p class="invitation-respond">
+<a href="https://github.com/hjyuh/significance/issues/new?template=attestation.yml">Report what you found</a>          </p>
+        </div>
+        <p class="invitation-origin">Prepared by alexchengyuli · 2026-09-08</p>
+      </li>
+    </ul>
+  </div>
+
+  <section class="band" aria-labelledby="looked-heading">
+    <p class="lbl" id="looked-heading">Who has looked at this</p>
+<p class="prose">No named reviewer has recorded work on this claim yet.</p>  </section>
+
+
+  <div class="band">
+    <p class="lbl">Reported AI use</p>
+    <p class="prose">During the preparation of this work, the author used an author-developed local implementation of the Proof Engine infrastructure (development version 2.0) for AI-assisted research. The project-level research framework is described in Proof Engine 2.0 [6]. See also Proof Engine Infrastructure (1.0) [7] for the complementary proof-development framework. The implementation uses replaceable AI-agent and execution-harness components; the present work used OpenAI Codex as its AI-agent component. The author is responsible for the definitions, statements, proofs, citations, code, and exposition.</p>
+    <p class="meta"><span class="attribution">Quoted from the source · Significance editor · 2026-09-08</span><span class="locator"> §AI-assisted research, p.7 · <a href="https://raw.githubusercontent.com/crabsatellite/erdos-1212-visible-lattice-path/400001f0847afe36a26c588d34445210dbdc116e/paper/Li_Infinite_Paths_Composite_Restricted_Visible_Lattice_2026.pdf">View source</a></span></p>
+  </div>
+
+  <div class="band">
+    <p class="lbl">History</p>
+    <ul class="history">
+      <li>
+<span class="history-note">Private draft prepared from public materials with the author&#39;s permission; first open task supplied by the author; not published.</span>        <span class="event-meta">created · 2026-09-08 · Significance editor</span>
+      </li>
+    </ul>
+  </div>
+
+</aside>
+</div>
+<footer class="site-footer">
+<p>Significance mechanically validates provenance and a narrow set of evidence predicates. It does not mechanically determine mathematical truth.</p>
+</footer>
+</body>
+</html>

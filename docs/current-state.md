@@ -100,40 +100,16 @@ record. It reports a clean build and axiom profile under its stated toolchain an
 profile, while its correspondence note explicitly says that the formal artifact
 does not by itself establish correspondence with the manuscript's concrete theorem.
 
-## Private drafts awaiting author review
+## Records added 2026-09-08
 
-Two drafts are prepared but are not public:
+Two records were promoted from private drafts into the public corpus:
 
-### Erdős #848 — Alex Chengyu Li (`alexchengyuli`)
-
-The draft records the exact all-`N` claim, the pinned repository PDF and hash, the
-separate SSRN artifact, the author's AI-use disclosures without implying that AI
-independently proved or verified the result, and three bounded tasks:
-
-1. reproduce the Lean release/cache build at tag `v1.0.5-kernel`;
-2. inspect the generated certificate declarations;
-3. compare the exact paper statement with the pinned Lean declaration.
-
-The reproduction task includes the author's cache-install procedure and says not
-to run `lake update`. Formalization status is `artifact_reported`, not independently
-reproduced. The draft remains private pending author review of the wording.
-
-### Erdős #906 — Eric Hou (`erichou`)
-
-The draft uses Eric Hou's canonical externally hosted manuscript PDF and separately
-lists arXiv v4 as a companion artifact. It points to the correct repository and
-commit, narrows the AI disclosure to the activities stated by the manuscript, and
-has three bounded tasks:
-
-1. inspect the small-ball/Jensen step;
-2. check Lean-to-analytic correspondence;
-3. examine the manuscript's Boas–Reddy comparison.
-
-Formalization status is `artifact_reported`; the Lean report is author-supplied and
-does not independently check the analytic proof. This draft also remains private.
-
-Do not publish either draft, add it to a public index/feed, or contact an author
-from code changes alone. Publication and outreach require explicit human approval.
+- `records/2026-alexchengyuli-erdos-1212.yaml`: Alex Chengyu Li's claimed
+  infinite-path theorem, pinned to release `v1.0.1`; statement correspondence
+  and independent assessment remain open.
+- `records/2026-rafikzeraoulia-erdos-719.yaml`: Zeraoulia Rafik's finite
+  `r = 3`, `n <= 9` result, pinned to Zenodo 22568303 version 1.1; the author's
+  first-pass statement-comparison task and independent assessment remain open.
 
 ## Verification and test status
 
