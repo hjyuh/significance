@@ -396,9 +396,10 @@ def _environment() -> Environment:
     env.filters["short_hash"] = short_hash
     env.filters["readable_text"] = readable_text
     env.filters["mathml"] = mathml
-    env.globals["style_version"] = hashlib.sha256(
-        _STATIC_DIR.joinpath("style.css").read_bytes()
-    ).hexdigest()[:12]
+    # Hash canonical LF bytes so the cache-busting URL is identical on
+    # Windows (where the checkout may use CRLF) and Linux CI.
+    style_bytes = _STATIC_DIR.joinpath("style.css").read_bytes().replace(b"\r\n", b"\n")
+    env.globals["style_version"] = hashlib.sha256(style_bytes).hexdigest()[:12]
     return env
 
 
