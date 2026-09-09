@@ -46,16 +46,20 @@ problem_reference:
   locator:
     url: https://www.erdosproblems.com/719
     quote: >-
-      Let $\mathrm{ex}_r(n;K_{r+1}^r)$ be the maximum number of $r$-edges that can be placed on $n$
-      vertices without forming a $K_{r+1}^r$ (the $r$-uniform complete graph on $r+1$ vertices). Is
+      Let $\mathrm{ex}_r(n;K_{r+1}^r)$ be the maximum number of $r$-edges that can
+      be placed on $n$
+      vertices without forming a $K_{r+1}^r$ (the $r$-uniform complete graph on $r+1$
+      vertices). Is
       every $r$-hypergraph $G$ on $n$ vertices the union of at most $\mathrm{ex}_{r}(n;K_{r+1}^r)$
       many copies of $K_r^r$ and $K_{r+1}^r$, no two of which share a $K_r^r$?
 claim:
   id: claim-main
   text:
     value: >-
-      For every 3-graph G on n ≤ 9 vertices, |E(G)| − 3ν(G) ≤ ex₃(n, K₄³). Equivalently, every such
-      G admits an edge-disjoint decomposition into at most ex₃(n, K₄³) single triples and tetrahedra.
+      For every 3-graph G on n ≤ 9 vertices, |E(G)| − 3ν(G) ≤ ex₃(n, K₄³). Equivalently,
+      every such
+      G admits an edge-disjoint decomposition into at most ex₃(n, K₄³) single triples
+      and tetrahedra.
     basis: source_quote
     asserted_by: significance-editor
     asserted_at: '2026-09-08T14:30:26Z'
@@ -64,33 +68,41 @@ claim:
         https://zenodo.org/records/22568303/files/Zeraoulia_Erdos_Sauer_3Graphs_n9_FINAL_WITH_DECLARATIONS.pdf?download=1
       page: 2
       section: Theorem 1.1
-      quote: For every 3-graph G on n ≤ 9 vertices, |E(G)| − 3ν(G) ≤ ex₃(n, K₄³). Equivalently, 
-        every such G admits an edge-disjoint decomposition into at most ex₃(n, K₄³) single triples 
-        and tetrahedra.
+      quote: For every 3-graph G on n ≤ 9 vertices, |E(G)| − 3ν(G) ≤ ex₃(n, 
+        K₄³). Equivalently, every such G admits an edge-disjoint decomposition 
+        into at most ex₃(n, K₄³) single triples and tetrahedra.
   scope:
     value: >-
-      The note also develops structural sufficient conditions around a maximum tetrahedron packing,
+      The note also develops structural sufficient conditions around a maximum tetrahedron
+      packing,
       but does not claim a proof of the general r = 3 conjecture.
     basis: editorial_inference
     asserted_by: significance-editor
     asserted_at: '2026-09-08T14:30:26Z'
     locator:
-      url: https://www.erdosproblems.com/forum/thread/719/proof-claims#proof-claim-275
+      url: 
+        https://www.erdosproblems.com/forum/thread/719/proof-claims#proof-claim-275
       section: Notes
       quote: >-
-        The general r=3 conjecture is not claimed to be solved; the new finite verification extends
+        The general r=3 conjecture is not claimed to be solved; the new finite verification
+        extends
         the known range through n=9.
 plain_summary:
   claimed: >-
-    Zeraoulia Rafik's public claim reports the r = 3 bound for hypergraphs on at most nine vertices,
-    plus structural sufficient conditions. The claim page explicitly excludes a solution of the general
+    Zeraoulia Rafik's public claim reports the r = 3 bound for hypergraphs on at most
+    nine vertices,
+    plus structural sufficient conditions. The claim page explicitly excludes a solution
+    of the general
     r = 3 conjecture.
   checked: >-
-    Significance inspected the problem and claim pages, followed the linked Zenodo note, checked its
+    Significance inspected the problem and claim pages, followed the linked Zenodo
+    note, checked its
     version 1.1 metadata, and computed the downloaded manuscript PDF SHA-256.
   not_checked: >-
-    The mathematics has not been independently assessed. The author-supplied first-pass task remains
-    open, including matching hypotheses, quantifiers, cases, and cited-result assumptions, and listing
+    The mathematics has not been independently assessed. The author-supplied first-pass
+    task remains
+    open, including matching hypotheses, quantifiers, cases, and cited-result assumptions,
+    and listing
     what was checked and what remains.
   basis: editorial_inference
   asserted_by: significance-editor
@@ -98,38 +110,47 @@ plain_summary:
 manuscript:
   url: 
     https://zenodo.org/records/22568303/files/Zeraoulia_Erdos_Sauer_3Graphs_n9_FINAL_WITH_DECLARATIONS.pdf?download=1
-  label: 'The Erdős–Sauer Clique Decomposition Problem for 3-Graphs: Verification through Nine Vertices
-    and Local Packing Reductions'
+  label: 'The Erdős–Sauer Clique Decomposition Problem for 3-Graphs: Verification
+    through Nine Vertices and Local Packing Reductions'
   immutable_version_id: zenodo-22568303-v1.1
   sha256: c4a5fbe38c626b5966260f90c52cdc27d94e33e7830a9a150f61b0f8a8f41887
   retrieved_at: '2026-09-08T14:25:08Z'
+  published_at: '2026-09-07'
 evidence:
 - id: ev-source-inspection
   kind: source_inspection
   description: >-
-    Significance inspected the public problem and proof-claim pages and their source links, located
-    the pinned manuscript version, and computed its SHA-256 from the downloaded PDF bytes. The mathematics
+    Significance inspected the public problem and proof-claim pages and their source
+    links, located
+    the pinned manuscript version, and computed its SHA-256 from the downloaded PDF
+    bytes. The mathematics
     has not been independently assessed; the author-supplied task remains open.
   basis: editorial_inference
   asserted_by: significance-editor
   asserted_at: '2026-09-08T14:30:26Z'
   locator:
-    url: https://www.erdosproblems.com/forum/thread/719/proof-claims#proof-claim-275
+    url: 
+      https://www.erdosproblems.com/forum/thread/719/proof-claims#proof-claim-275
 - id: ev-ai-claim-disclosure
   kind: source_inspection
-  description: A partial proof claimed by Rafik Zeraoulia (using OpenAI GPT-5.6 Thinking).
+  description: A partial proof claimed by Rafik Zeraoulia (using OpenAI GPT-5.6 
+    Thinking).
   basis: source_quote
   asserted_by: significance-editor
   asserted_at: '2026-09-08T14:30:26Z'
   locator:
-    url: https://www.erdosproblems.com/forum/thread/719/proof-claims#proof-claim-275
-    quote: A partial proof claimed by Rafik Zeraoulia (using OpenAI GPT-5.6 Thinking).
+    url: 
+      https://www.erdosproblems.com/forum/thread/719/proof-claims#proof-claim-275
+    quote: A partial proof claimed by Rafik Zeraoulia (using OpenAI GPT-5.6 
+      Thinking).
 - id: ev-version-pin
   kind: source_inspection
   description: >-
-    The proof-claim page links Zenodo record 22568303, whose metadata identifies Version 1.1. manuscript.url
+    The proof-claim page links Zenodo record 22568303, whose metadata identifies Version
+    1.1. manuscript.url
     names its PDF; the SHA-256 is c4a5fbe38c626b5966260f90c52cdc27d94e33e7830a9a150f61b0f8a8f41887,
-    computed from 302451 downloaded bytes at 2026-09-08T14:25:08Z. The file MD5 also matches Zenodo's
+    computed from 302451 downloaded bytes at 2026-09-08T14:25:08Z. The file MD5 also
+    matches Zenodo's
     displayed 3a9283706296b3704a643347dfc67ba4.
   basis: editorial_inference
   asserted_by: significance-editor
@@ -148,27 +169,47 @@ evidence:
 - id: ev-first-pass-scope
   kind: source_inspection
   description: >-
-    The author asks for a full-statement first pass, while the linked public claim explicitly limits
-    its result to r = 3 and n <= 9. Preserve the requested comparison as an open task: its deliverable
-    is a list of passages, hypotheses, quantifiers, cases, and references checked, with remaining
+    The author asks for a full-statement first pass, while the linked public claim
+    explicitly limits
+    its result to r = 3 and n <= 9. Preserve the requested comparison as an open task:
+    its deliverable
+    is a list of passages, hypotheses, quantifiers, cases, and references checked,
+    with remaining
     dependencies and scope differences listed. No whole-proof verdict is requested.
   basis: editorial_inference
   asserted_by: significance-editor
   asserted_at: '2026-09-08T14:30:26Z'
   locator:
-    url: https://www.erdosproblems.com/forum/thread/719/proof-claims#proof-claim-275
+    url: 
+      https://www.erdosproblems.com/forum/thread/719/proof-claims#proof-claim-275
     quote: >-
-      The general r=3 conjecture is not claimed to be solved; the new finite verification extends
+      The general r=3 conjecture is not claimed to be solved; the new finite verification
+      extends
       the known range through n=9.
+- id: ev-publication-date
+  kind: source_inspection
+  description: The DOI registry records an Issued date of 2026-09-07 for Zenodo 
+    22568303.
+  basis: editorial_inference
+  asserted_by: significance-editor
+  asserted_at: '2026-09-09T00:00:00Z'
+  locator:
+    url: https://api.datacite.org/dois/10.5281/zenodo.22568303
 ai_provenance:
   disclosure:
     value: >-
-      OpenAI ChatGPT was used as an AI-assisted tool during the preparation and revision of this manuscript,
-      including for mathematical exploration, checking intermediate arguments and calculations, identifying
-      possible logical gaps, improving exposition, and language editing. All AI-assisted suggestions
-      were treated as provisional and were independently reviewed, accepted, modified, or rejected
-      by the author. The author takes full responsibility for the accuracy, originality, integrity,
-      citations, mathematical claims, proofs, and conclusions of the final manuscript. The AI system
+      OpenAI ChatGPT was used as an AI-assisted tool during the preparation and revision
+      of this manuscript,
+      including for mathematical exploration, checking intermediate arguments and
+      calculations, identifying
+      possible logical gaps, improving exposition, and language editing. All AI-assisted
+      suggestions
+      were treated as provisional and were independently reviewed, accepted, modified,
+      or rejected
+      by the author. The author takes full responsibility for the accuracy, originality,
+      integrity,
+      citations, mathematical claims, proofs, and conclusions of the final manuscript.
+      The AI system
       is not an author and bears no responsibility for the work.
     basis: source_quote
     asserted_by: significance-editor
@@ -179,18 +220,25 @@ ai_provenance:
       page: 11
       section: Declarations / Artificial intelligence disclosure
       quote: >-
-        OpenAI ChatGPT was used as an AI-assisted tool during the preparation and revision of this
-        manuscript, including for mathematical exploration, checking intermediate arguments and calculations,
-        identifying possible logical gaps, improving exposition, and language editing. All AI-assisted
-        suggestions were treated as provisional and were independently reviewed, accepted, modified,
-        or rejected by the author. The author takes full responsibility for the accuracy, originality,
-        integrity, citations, mathematical claims, proofs, and conclusions of the final manuscript.
+        OpenAI ChatGPT was used as an AI-assisted tool during the preparation and
+        revision of this
+        manuscript, including for mathematical exploration, checking intermediate
+        arguments and calculations,
+        identifying possible logical gaps, improving exposition, and language editing.
+        All AI-assisted
+        suggestions were treated as provisional and were independently reviewed, accepted,
+        modified,
+        or rejected by the author. The author takes full responsibility for the accuracy,
+        originality,
+        integrity, citations, mathematical claims, proofs, and conclusions of the
+        final manuscript.
         The AI system is not an author and bears no responsibility for the work.
   roles: []
 review_map:
   main_deduction:
     text: >-
-      First pass: compare the note's main result with the full Problem 719 statement, recording the
+      First pass: compare the note's main result with the full Problem 719 statement,
+      recording the
       hypotheses, quantifiers, cases, and cited results examined and what remains.
     location: Exact problem statement and note's main result
     basis: editorial_inference
@@ -200,19 +248,23 @@ review_map:
       section: Private correspondence; message text withheld.
   risks:
   - text: >-
-      Match the requested full-statement comparison against the claim page's explicit r = 3 and
+      Match the requested full-statement comparison against the claim page's explicit
+      r = 3 and
       n <= 9 scope; record the difference without expanding the author's public claim.
     location: 'Claim page: Summary and Notes'
     basis: editorial_inference
     asserted_by: significance-editor
     asserted_at: '2026-09-08T14:30:26Z'
     locator:
-      url: https://www.erdosproblems.com/forum/thread/719/proof-claims#proof-claim-275
+      url: 
+        https://www.erdosproblems.com/forum/thread/719/proof-claims#proof-claim-275
       quote: >-
-        The general r=3 conjecture is not claimed to be solved; the new finite verification extends
+        The general r=3 conjecture is not claimed to be solved; the new finite verification
+        extends
         the known range through n=9.
   - text: >-
-      Check that hypotheses and quantifiers match, that no cases within the stated scope are untreated,
+      Check that hypotheses and quantifiers match, that no cases within the stated
+      scope are untreated,
       and that cited results apply under the assumptions actually available.
     location: Main result and its cited results
     basis: editorial_inference
@@ -222,7 +274,8 @@ review_map:
       section: Private correspondence; message text withheld.
   prerequisites:
   - text: >-
-      The exact Problem 719 statement, the linked note pinned here as version 1.1, and the references
+      The exact Problem 719 statement, the linked note pinned here as version 1.1,
+      and the references
       it cites.
     location: Author's first-task prerequisites
     basis: editorial_inference
@@ -232,8 +285,10 @@ review_map:
       section: Private correspondence; message text withheld.
   needs_checking:
   - text: >-
-      Produce a first-pass list of what was checked and what remains, including explicit remaining
-      dependencies and any gap or additional assumption encountered; this is not a verdict.
+      Produce a first-pass list of what was checked and what remains, including explicit
+      remaining
+      dependencies and any gap or additional assumption encountered; this is not a
+      verdict.
     location: 'First pass: full-statement comparison'
     basis: editorial_inference
     asserted_by: significance-editor
@@ -250,14 +305,17 @@ open_invitations:
   - the exact Problem 719 statement
   - the note, Zenodo 22568303 version 1.1 (pinned in this record)
   - the references it cites
-  entry_points: 'First pass: Problem 719 and the linked note, pinned here as Zenodo 22568303 version 1.1'
+  entry_points: 'First pass: Problem 719 and the linked note, pinned here as Zenodo
+    22568303 version 1.1'
   target: >-
-    Compare the note’s main result with Problem 719, explicitly recording the restriction to r = 3 and
+    Compare the note’s main result with Problem 719, explicitly recording the restriction
+    to r = 3 and
     n ≤ 9 and any differences from the general problem.
   how: |-
     Check hypotheses, quantifiers, coverage of cases, and assumptions needed by cited results using the pinned Zenodo version 1.1. Record checked passages, gaps, and remaining dependencies. Allow an initial 2–3 hours; full verification may require more work.
   respond:
-    url: https://github.com/hjyuh/significance/issues/new?template=attestation.yml
+    url: 
+      https://github.com/hjyuh/significance/issues/new?template=attestation.yml
   created_by: rafikzeraoulia2025
   created_at: '2026-09-07T20:50:00Z'
 history:
@@ -266,5 +324,6 @@ history:
   at: '2026-09-08T14:30:26Z'
   by: significance-editor
   note: >-
-    Private draft prepared from public materials with the author's permission; first open task supplied
+    Private draft prepared from public materials with the author's permission; first
+    open task supplied
     by the author; not published.

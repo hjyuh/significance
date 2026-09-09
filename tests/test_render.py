@@ -624,7 +624,7 @@ def test_an_exposition_does_not_enter_the_reviewer_census(tmp_path):
     assert not (out / "reviewers" / "expositor").exists()
 
 
-def test_component_dates_render_as_a_vector_with_dashes_for_the_unknown(tmp_path):
+def test_component_dates_render_as_a_vector_with_labels_for_the_unknown(tmp_path):
     out = _exposition_site(tmp_path)
     html = (out / "2026-example-exposition-row" / "index.html").read_text(encoding="utf-8")
 
@@ -632,7 +632,7 @@ def test_component_dates_render_as_a_vector_with_dashes_for_the_unknown(tmp_path
     assert "<dt>Exposition</dt><dd>2026-08-15</dd>" in html
     # No formal artifact and no registry entry on this record: a dash, not the
     # retrieval date standing in for one.
-    assert "<dt>Formalization</dt><dd>\u2014</dd>" in html
+    assert "<dt>Formalization</dt><dd>Not recorded</dd>" in html
     assert "Component dates (preprint / exposition / formalization)." in html
 
     # No combined release date is computed anywhere on the page.
@@ -731,4 +731,4 @@ def test_the_public_corpus_still_renders_its_dates_strip(tmp_path):
     build_site(RECORDS_DIR, out)
     html = (out / PUBLIC_RECORD_ID / "index.html").read_text(encoding="utf-8")
     assert "Component dates (preprint / exposition / formalization)." in html
-    assert "<dt>Preprint</dt><dd>\u2014</dd>" in html
+    assert "<dt>Preprint</dt><dd>Not recorded</dd>" in html

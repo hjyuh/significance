@@ -96,7 +96,8 @@
           "label": "The Erdős–Sauer Clique Decomposition Problem for 3-Graphs: Verification through Nine Vertices and Local Packing Reductions",
           "immutable_version_id": "zenodo-22568303-v1.1",
           "sha256": "c4a5fbe38c626b5966260f90c52cdc27d94e33e7830a9a150f61b0f8a8f41887",
-          "retrieved_at": "2026-09-08T14:25:08Z"
+          "retrieved_at": "2026-09-08T14:25:08Z",
+          "published_at": "2026-09-07"
         },
         "evidence": [
           {
@@ -154,6 +155,17 @@
             "locator": {
               "url": "https://www.erdosproblems.com/forum/thread/719/proof-claims#proof-claim-275",
               "quote": "The general r=3 conjecture is not claimed to be solved; the new finite verification extends the known range through n=9."
+            }
+          },
+          {
+            "id": "ev-publication-date",
+            "kind": "source_inspection",
+            "description": "The DOI registry records an Issued date of 2026-09-07 for Zenodo 22568303.",
+            "basis": "editorial_inference",
+            "asserted_by": "significance-editor",
+            "asserted_at": "2026-09-09T00:00:00Z",
+            "locator": {
+              "url": "https://api.datacite.org/dois/10.5281/zenodo.22568303"
             }
           }
         ],

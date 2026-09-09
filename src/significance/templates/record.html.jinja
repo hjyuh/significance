@@ -49,11 +49,11 @@
        retrieval date standing in for a publication date. #}
     {% set dv = date_vector or {} %}
     <dl class="date-vector">
-      <div><dt>Preprint</dt><dd>{{ dv.get('preprint') or '—' }}</dd></div>
-      <div><dt>Exposition</dt><dd>{{ dv.get('exposition') or '—' }}</dd></div>
-      <div><dt>Formalization</dt><dd>{{ dv.get('formalization') or '—' }}</dd></div>
+      <div><dt>Preprint</dt><dd>{{ dv.get('preprint') or 'Not recorded' }}</dd></div>
+      <div><dt>Exposition</dt><dd>{{ dv.get('exposition') or 'Not recorded' }}</dd></div>
+      <div><dt>Formalization</dt><dd>{{ dv.get('formalization') or 'Not recorded' }}</dd></div>
     </dl>
-    <p class="meta date-vector-caption">Component dates (preprint / exposition / formalization).{% if dv.get('formalization_source') %} Formalization date from the {{ dv.formalization_source }}.{% endif %}{% if dv.get('exposition_source') %} Exposition date from the {{ dv.exposition_source }}.{% endif %} A dash means no date is recorded, not that the component does not exist.</p>
+    <p class="meta date-vector-caption">Component dates (preprint / exposition / formalization).{% if dv.get('formalization_source') %} Formalization date from the {{ dv.formalization_source }}.{% endif %}{% if dv.get('exposition_source') %} Exposition date from the {{ dv.exposition_source }}.{% endif %} “Not recorded” means no dated source is recorded for that component. Preprint dates refer to the pinned manuscript version.</p>
   </header>
   <nav class="record-nav" aria-label="On this record">
     {% if record.get('plain_summary') %}<a href="#plain-summary-heading">Summary</a>{% endif %}

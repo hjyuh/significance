@@ -95,7 +95,8 @@
           "label": "Infinite paths in the composite-restricted visible lattice",
           "immutable_version_id": "github-crabsatellite-erdos-1212-400001f0847afe36a26c588d34445210dbdc116e",
           "sha256": "2a31595c68ddde0f444c902568ec63ac9611d456838392af396827b79accae41",
-          "retrieved_at": "2026-09-08T14:23:09Z"
+          "retrieved_at": "2026-09-08T14:23:09Z",
+          "published_at": "2026-09-07"
         },
         "evidence": [
           {
@@ -137,12 +138,13 @@
             "kind": "external_formal_artifact",
             "repo": "https://github.com/crabsatellite/erdos-1212-visible-lattice-path",
             "commit": "400001f0847afe36a26c588d34445210dbdc116e",
-            "description": "The linked project provides a manuscript and Lean artifacts with instructions for auditing them. Independent reproduction remains open.",
+            "description": "The specific Problem 1212 proof claim links this Lean repository as its formalization. The pinned v1.0.1 release was published on 2026-09-07 and includes the manuscript, Lean sources, and audit material. This records a published artifact, not an independent reproduction.",
             "basis": "editorial_inference",
             "asserted_by": "significance-editor",
-            "asserted_at": "2026-09-08T06:14:00Z",
+            "asserted_at": "2026-09-07T04:37:26Z",
             "locator": {
-              "url": "https://github.com/crabsatellite/erdos-1212-visible-lattice-path"
+              "url": "https://github.com/crabsatellite/erdos-1212-visible-lattice-path/releases/tag/v1.0.1",
+              "section": "Published release; linked formalization in Erdős Problems proof claim 278"
             }
           },
           {
@@ -154,6 +156,17 @@
             "asserted_at": "2026-09-08T06:14:00Z",
             "locator": {
               "section": "Private correspondence; message text withheld."
+            }
+          },
+          {
+            "id": "ev-publication-date",
+            "kind": "source_inspection",
+            "description": "The pinned v1.0.1 release containing this manuscript was published on 2026-09-07. This dates the pinned manuscript release, not its earliest circulation.",
+            "basis": "editorial_inference",
+            "asserted_by": "significance-editor",
+            "asserted_at": "2026-09-09T00:00:00Z",
+            "locator": {
+              "url": "https://github.com/crabsatellite/erdos-1212-visible-lattice-path/releases/tag/v1.0.1"
             }
           }
         ],
