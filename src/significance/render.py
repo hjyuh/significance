@@ -726,8 +726,12 @@ def build_site(
                     ).date()
                     # Use the record's pinned review date so committed output
                     # does not change merely because CI runs on another day.
-                    checked = record.get("freshness", {}).get("checked_at", "")[:10]
-                    as_of = date.fromisoformat(checked) if checked else date.today()
+                    checked_dates = [
+                        r.get("freshness", {}).get("checked_at", "")[:10]
+                        for r in valid_records
+                        if r.get("freshness", {}).get("checked_at", "")
+                    ]
+                    as_of = date.fromisoformat(max(checked_dates)) if checked_dates else date.today()
                     invitation["_stale"] = (as_of - taken).days > stale_days
                 except ValueError:
                     invitation["_stale"] = False
