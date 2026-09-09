@@ -724,7 +724,11 @@ def build_site(
                     taken = datetime.fromisoformat(
                         invitation["taken_at"].replace("Z", "+00:00")
                     ).date()
-                    invitation["_stale"] = (date.today() - taken).days > stale_days
+                    # Use the record's pinned review date so committed output
+                    # does not change merely because CI runs on another day.
+                    checked = record.get("freshness", {}).get("checked_at", "")[:10]
+                    as_of = date.fromisoformat(checked) if checked else date.today()
+                    invitation["_stale"] = (as_of - taken).days > stale_days
                 except ValueError:
                     invitation["_stale"] = False
         record_id = record["record_id"]
@@ -1005,7 +1009,14 @@ def build_site(
         result.pages.append(f"reviewer:{reviewer['id']}")
 
     if backlog_enabled and len(built_records) >= int(config.get("backlog_min_records", 5)):
-        today = date.today()
+        # Backlog ages are anchored to the newest pinned record review date,
+        # keeping generated assets reproducible across build dates.
+        review_dates = [
+            date.fromisoformat(r.get("freshness", {}).get("checked_at", "")[:10])
+            for r in built_records
+            if r.get("freshness", {}).get("checked_at", "")
+        ]
+        today = max(review_dates, default=date.today())
         rows = []
         for record in built_records:
             if record.get("record_state") != "active":
