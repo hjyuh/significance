@@ -731,7 +731,11 @@ def build_site(
                         for r in valid_records
                         if r.get("freshness", {}).get("checked_at", "")
                     ]
-                    as_of = date.fromisoformat(max(checked_dates)) if checked_dates else date.today()
+                    as_of = (
+                        date.fromisoformat(max(checked_dates))
+                        if checked_dates
+                        else date.today()
+                    )
                     invitation["_stale"] = (as_of - taken).days > stale_days
                 except ValueError:
                     invitation["_stale"] = False
