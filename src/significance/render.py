@@ -650,7 +650,9 @@ def build_site(
 
     static_out = out_dir / "static"
     static_out.mkdir(parents=True, exist_ok=True)
-    for asset in _STATIC_DIR.glob("*"):
+    # Keep the copy order stable across filesystems so a generated asset
+    # check produces the same tree on Windows and Linux.
+    for asset in sorted(_STATIC_DIR.glob("*"), key=lambda path: path.name):
         shutil.copy(asset, static_out / asset.name)
 
     def links_for(prefix: str) -> dict:
