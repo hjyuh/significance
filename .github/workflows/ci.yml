@@ -51,6 +51,7 @@ jobs:
         run: |
           if [ -n "$(git status --porcelain -- public/records)" ]; then
             git status --short -- public/records
+            git diff -- public/records/2026-alexchengyuli-erdos-1212/index.html | head -80
             exit 1
           fi
 
