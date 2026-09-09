@@ -966,3 +966,80 @@ dl.date-vector dd {
   font-size: 12px;
   color: var(--muted);
 }
+
+/* Reading rhythm: retain the ledger, give long mathematical records room. */
+:root { --frame: 1280px; --rail-w: 370px; }
+a { text-underline-offset: .2em; }
+a:focus-visible, summary:focus-visible {
+  outline: 2px solid var(--note);
+  outline-offset: 5px;
+}
+:target { scroll-margin-top: 24px; }
+.shell > main, .rail, .ledger li > div { min-width: 0; }
+.topline-nav { gap: 10px 22px; padding-top: 12px; line-height: 1.6; }
+.record-hero { padding-top: 44px; padding-bottom: 36px; }
+h1.claim-text {
+  max-width: 36ch;
+  font-size: clamp(26px, 2.7vw, 36px);
+  line-height: 1.32;
+  letter-spacing: -.025em;
+  text-wrap: pretty;
+}
+h1.claim-math { max-width: 100%; }
+.record .prose, .relationship-value, .coverage-boundary,
+.facts dd, .side-by-side p { font-size: 16px; line-height: 1.8; }
+.record .prose { max-width: 68ch; }
+.lbl { color: var(--dim); margin-bottom: 22px; }
+.record-nav {
+  display: flex; flex-wrap: wrap; gap: 10px 24px;
+  padding: 18px var(--pad); border-bottom: 1px solid var(--rule);
+  font-family: var(--mono); font-size: 12px;
+}
+.claim-source { line-height: 1.8; }
+.claim-source .locator { display: block; margin-top: 6px; }
+.date-vector { gap: 16px 32px; padding-top: 20px; border-top: 1px solid var(--hair); }
+.date-vector-caption { margin-top: 16px; line-height: 1.7; }
+.plain-summary-list { grid-template-columns: 1fr; gap: 8px; }
+.plain-summary-list dd { font-size: 18px; line-height: 1.75; }
+.facts { gap: 24px 24px; }
+.facts dd > .attribution, .facts dd > div > .attribution {
+  display: block; margin-top: 10px;
+}
+.attribution, .locator, .meta { line-height: 1.75; }
+.ledger > li { padding-top: 30px; padding-bottom: 30px; }
+.evidence-head { gap: 8px 16px; margin-bottom: 18px; }
+.evidence-head h3 { line-height: 1.4; }
+.evidence-head .kind { overflow-wrap: anywhere; }
+.reported-note { padding-left: 14px; border-left: 2px solid var(--rule); line-height: 1.7; }
+.rail .band { padding: 30px 26px; }
+.invitations li { padding: 20px; }
+.invitation-target { font-size: 17px; line-height: 1.55; }
+.invitation-how { font-size: 15px; line-height: 1.8; }
+.invitation-respond { line-height: 1.8; }
+.state-list > div { gap: 16px; }
+.state-list dd { text-align: right; overflow-wrap: anywhere; }
+.history li { padding-top: 16px; padding-bottom: 16px; }
+.history-note { line-height: 1.75; }
+.records .record-claim { line-height: 1.55; }
+.records .record-actions { color: var(--note); }
+.what-this-does-not-establish ul { line-height: 1.8; }
+@media (max-width: 1050px) {
+  .shell.with-rail { grid-template-columns: minmax(0, 1fr); }
+  .shell.with-rail > main { border-right: 0; }
+  .rail { border-top: 1px solid var(--rule); }
+  .rail .band { padding: 30px var(--pad); }
+  .invitations { max-width: 72ch; }
+}
+@media (max-width: 600px) {
+  :root { --pad: 20px; }
+  .band { padding-top: 28px; padding-bottom: 30px; }
+  .record-hero { padding-top: 32px; }
+  .topline { padding-left: 20px; padding-right: 20px; }
+  .topline-nav { gap: 10px 18px; font-size: 12px; }
+  .facts { gap: 6px; }
+  .facts dd { margin-bottom: 18px; }
+  .ledger > li { grid-template-columns: 1.2rem minmax(0, 1fr); gap: 10px; }
+  .side-by-side { grid-template-columns: minmax(0, 1fr); }
+  .side-by-side > div + div { border-left: 0; padding-left: 0; }
+  .record-nav { gap: 12px 20px; }
+}
