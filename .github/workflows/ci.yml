@@ -47,6 +47,7 @@ jobs:
         run: npm test
 
       - name: Generated record assets are committed
+        # Keep generated public pages byte-for-byte reproducible.
         run: |
           if [ -n "$(git status --porcelain -- public/records)" ]; then
             git status --short -- public/records
