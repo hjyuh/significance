@@ -37,14 +37,12 @@
         },
         "author_relationship": {
           "status": "author_contributed",
-          "note": "Thank you for your congratulations and for offering to prepare a Significance record for the 719 claim. Yes, please go ahead with a draft; I would be happy to review it before publication.\n\nPlease feel free to attribute this task to me as \"Zeraoulia Rafik.\" I would welcome a precise account of any gap or additional assumption needed.",
+          "note": "The author contributed a suggested review task. Private correspondence is not reproduced.",
           "basis": "author_attestation",
           "asserted_by": "rafikzeraoulia2025",
           "asserted_at": "2026-09-07T20:50:00Z",
           "locator": {
-            "url": "https://www.erdosproblems.com/dm/",
-            "section": "2026-09-07T20:50:00Z: author message supplied by the editor; private correspondence",
-            "quote": "Thank you for your congratulations and for offering to prepare a Significance record for the 719 claim. Yes, please go ahead with a draft; I would be happy to review it before publication.\n\nPlease feel free to attribute this task to me as \"Zeraoulia Rafik.\" I would welcome a precise account of any gap or additional assumption needed."
+            "section": "Private correspondence; message text withheld."
           }
         },
         "problem_reference": {
@@ -138,14 +136,12 @@
           {
             "id": "ev-author-first-task",
             "kind": "source_inspection",
-            "description": "For the first open task, my priority would be an independent check that the main result in the note establishes the full statement of Problem 719, with all hypotheses and quantifiers matched correctly and no cases left untreated. This should include checking that any cited results apply under the assumptions actually available.\n\nThe reviewer would need the exact problem statement, the latest version of my note, and the relevant references. I would suggest an initial two to three hours for this focused check, with any remaining dependencies explicitly listed; a complete verification may take longer.",
-            "basis": "author_attestation",
-            "asserted_by": "rafikzeraoulia2025",
+            "description": "Editorial summary of the author-suggested task: Compare the note’s main result with Problem 719, explicitly recording the restriction to r = 3 and n ≤ 9 and any differences from the general problem. Check hypotheses, quantifiers, coverage of cases, and assumptions needed by cited results using the pinned Zenodo version 1.1. Record checked passages, gaps, and remaining dependencies. Allow an initial 2–3 hours; full verification may require more work.",
+            "basis": "editorial_inference",
+            "asserted_by": "significance-editor",
             "asserted_at": "2026-09-07T20:50:00Z",
             "locator": {
-              "url": "https://www.erdosproblems.com/dm/",
-              "section": "07 Sep 2026, 20:50: author-supplied first task",
-              "quote": "For the first open task, my priority would be an independent check that the main result in the note establishes the full statement of Problem 719, with all hypotheses and quantifiers matched correctly and no cases left untreated. This should include checking that any cited results apply under the assumptions actually available.\n\nThe reviewer would need the exact problem statement, the latest version of my note, and the relevant references. I would suggest an initial two to three hours for this focused check, with any remaining dependencies explicitly listed; a complete verification may take longer."
+              "section": "Private correspondence; message text withheld."
             }
           },
           {
@@ -184,8 +180,7 @@
             "asserted_by": "significance-editor",
             "asserted_at": "2026-09-08T14:30:26Z",
             "locator": {
-              "url": "https://www.erdosproblems.com/dm/",
-              "quote": "For the first open task, my priority would be an independent check that the main result in the note establishes the full statement of Problem 719, with all hypotheses and quantifiers matched correctly and no cases left untreated. This should include checking that any cited results apply under the assumptions actually available.\n\nThe reviewer would need the exact problem statement, the latest version of my note, and the relevant references. I would suggest an initial two to three hours for this focused check, with any remaining dependencies explicitly listed; a complete verification may take longer."
+              "section": "Private correspondence; message text withheld."
             }
           },
           "risks": [
@@ -207,8 +202,7 @@
               "asserted_by": "significance-editor",
               "asserted_at": "2026-09-08T14:30:26Z",
               "locator": {
-                "url": "https://www.erdosproblems.com/dm/",
-                "quote": "For the first open task, my priority would be an independent check that the main result in the note establishes the full statement of Problem 719, with all hypotheses and quantifiers matched correctly and no cases left untreated. This should include checking that any cited results apply under the assumptions actually available.\n\nThe reviewer would need the exact problem statement, the latest version of my note, and the relevant references. I would suggest an initial two to three hours for this focused check, with any remaining dependencies explicitly listed; a complete verification may take longer."
+                "section": "Private correspondence; message text withheld."
               }
             }
           ],
@@ -220,8 +214,7 @@
               "asserted_by": "significance-editor",
               "asserted_at": "2026-09-08T14:30:26Z",
               "locator": {
-                "url": "https://www.erdosproblems.com/dm/",
-                "quote": "For the first open task, my priority would be an independent check that the main result in the note establishes the full statement of Problem 719, with all hypotheses and quantifiers matched correctly and no cases left untreated. This should include checking that any cited results apply under the assumptions actually available.\n\nThe reviewer would need the exact problem statement, the latest version of my note, and the relevant references. I would suggest an initial two to three hours for this focused check, with any remaining dependencies explicitly listed; a complete verification may take longer."
+                "section": "Private correspondence; message text withheld."
               }
             }
           ],
@@ -233,8 +226,7 @@
               "asserted_by": "significance-editor",
               "asserted_at": "2026-09-08T14:30:26Z",
               "locator": {
-                "url": "https://www.erdosproblems.com/dm/",
-                "quote": "For the first open task, my priority would be an independent check that the main result in the note establishes the full statement of Problem 719, with all hypotheses and quantifiers matched correctly and no cases left untreated. This should include checking that any cited results apply under the assumptions actually available.\n\nThe reviewer would need the exact problem statement, the latest version of my note, and the relevant references. I would suggest an initial two to three hours for this focused check, with any remaining dependencies explicitly listed; a complete verification may take longer."
+                "section": "Private correspondence; message text withheld."
               }
             }
           ]
@@ -252,8 +244,8 @@
               "the references it cites"
             ],
             "entry_points": "First pass: Problem 719 and the linked note, pinned here as Zenodo 22568303 version 1.1",
-            "target": "For the first open task, my priority would be an independent check that the main result in the note establishes the full statement of Problem 719, with all hypotheses and quantifiers matched correctly and no cases left untreated.",
-            "how": "This should include checking that any cited results apply under the assumptions actually available.\n\nThe reviewer would need the exact problem statement, the latest version of my note, and the relevant references. I would suggest an initial two to three hours for this focused check, with any remaining dependencies explicitly listed; a complete verification may take longer.",
+            "target": "Compare the note’s main result with Problem 719, explicitly recording the restriction to r = 3 and n ≤ 9 and any differences from the general problem.",
+            "how": "Check hypotheses, quantifiers, coverage of cases, and assumptions needed by cited results using the pinned Zenodo version 1.1. Record checked passages, gaps, and remaining dependencies. Allow an initial 2–3 hours; full verification may require more work.",
             "respond": {
               "url": "https://github.com/hjyuh/significance/issues/new?template=attestation.yml"
             },

@@ -30,19 +30,12 @@ parties:
 author_relationship:
   status: author_contributed
   note: |-
-    Thank you for your congratulations and for offering to prepare a Significance record for the 719 claim. Yes, please go ahead with a draft; I would be happy to review it before publication.
-
-    Please feel free to attribute this task to me as "Zeraoulia Rafik." I would welcome a precise account of any gap or additional assumption needed.
+    The author contributed a suggested review task. Private correspondence is not reproduced.
   basis: author_attestation
   asserted_by: rafikzeraoulia2025
   asserted_at: '2026-09-07T20:50:00Z'
   locator:
-    url: https://www.erdosproblems.com/dm/
-    section: '2026-09-07T20:50:00Z: author message supplied by the editor; private correspondence'
-    quote: |-
-      Thank you for your congratulations and for offering to prepare a Significance record for the 719 claim. Yes, please go ahead with a draft; I would be happy to review it before publication.
-
-      Please feel free to attribute this task to me as "Zeraoulia Rafik." I would welcome a precise account of any gap or additional assumption needed.
+    section: Private correspondence; message text withheld.
 problem_reference:
   venue: ErdősProblems.com
   problem_id: '719'
@@ -72,8 +65,8 @@ claim:
       page: 2
       section: Theorem 1.1
       quote: For every 3-graph G on n ≤ 9 vertices, |E(G)| − 3ν(G) ≤ ex₃(n, K₄³). Equivalently, 
-        every such G admits an edge-disjoint decomposition into at most ex₃(n, K₄³) single 
-        triples and tetrahedra.
+        every such G admits an edge-disjoint decomposition into at most ex₃(n, K₄³) single triples 
+        and tetrahedra.
   scope:
     value: >-
       The note also develops structural sufficient conditions around a maximum tetrahedron packing,
@@ -111,69 +104,62 @@ manuscript:
   sha256: c4a5fbe38c626b5966260f90c52cdc27d94e33e7830a9a150f61b0f8a8f41887
   retrieved_at: '2026-09-08T14:25:08Z'
 evidence:
-  - id: ev-source-inspection
-    kind: source_inspection
-    description: >-
-      Significance inspected the public problem and proof-claim pages and their source links, located
-      the pinned manuscript version, and computed its SHA-256 from the downloaded PDF bytes. The mathematics
-      has not been independently assessed; the author-supplied task remains open.
-    basis: editorial_inference
-    asserted_by: significance-editor
-    asserted_at: '2026-09-08T14:30:26Z'
-    locator:
-      url: https://www.erdosproblems.com/forum/thread/719/proof-claims#proof-claim-275
-  - id: ev-ai-claim-disclosure
-    kind: source_inspection
-    description: A partial proof claimed by Rafik Zeraoulia (using OpenAI GPT-5.6 Thinking).
-    basis: source_quote
-    asserted_by: significance-editor
-    asserted_at: '2026-09-08T14:30:26Z'
-    locator:
-      url: https://www.erdosproblems.com/forum/thread/719/proof-claims#proof-claim-275
-      quote: A partial proof claimed by Rafik Zeraoulia (using OpenAI GPT-5.6 Thinking).
-  - id: ev-version-pin
-    kind: source_inspection
-    description: >-
-      The proof-claim page links Zenodo record 22568303, whose metadata identifies Version 1.1. manuscript.url
-      names its PDF; the SHA-256 is c4a5fbe38c626b5966260f90c52cdc27d94e33e7830a9a150f61b0f8a8f41887,
-      computed from 302451 downloaded bytes at 2026-09-08T14:25:08Z. The file MD5 also matches Zenodo's
-      displayed 3a9283706296b3704a643347dfc67ba4.
-    basis: editorial_inference
-    asserted_by: significance-editor
-    asserted_at: '2026-09-08T14:30:26Z'
-    locator:
-      url: https://zenodo.org/records/22568303
-  - id: ev-author-first-task
-    kind: source_inspection
-    description: |-
-      For the first open task, my priority would be an independent check that the main result in the note establishes the full statement of Problem 719, with all hypotheses and quantifiers matched correctly and no cases left untreated. This should include checking that any cited results apply under the assumptions actually available.
-
-      The reviewer would need the exact problem statement, the latest version of my note, and the relevant references. I would suggest an initial two to three hours for this focused check, with any remaining dependencies explicitly listed; a complete verification may take longer.
-    basis: author_attestation
-    asserted_by: rafikzeraoulia2025
-    asserted_at: '2026-09-07T20:50:00Z'
-    locator:
-      url: https://www.erdosproblems.com/dm/
-      section: '07 Sep 2026, 20:50: author-supplied first task'
-      quote: |-
-        For the first open task, my priority would be an independent check that the main result in the note establishes the full statement of Problem 719, with all hypotheses and quantifiers matched correctly and no cases left untreated. This should include checking that any cited results apply under the assumptions actually available.
-
-        The reviewer would need the exact problem statement, the latest version of my note, and the relevant references. I would suggest an initial two to three hours for this focused check, with any remaining dependencies explicitly listed; a complete verification may take longer.
-  - id: ev-first-pass-scope
-    kind: source_inspection
-    description: >-
-      The author asks for a full-statement first pass, while the linked public claim explicitly limits
-      its result to r = 3 and n <= 9. Preserve the requested comparison as an open task: its deliverable
-      is a list of passages, hypotheses, quantifiers, cases, and references checked, with remaining
-      dependencies and scope differences listed. No whole-proof verdict is requested.
-    basis: editorial_inference
-    asserted_by: significance-editor
-    asserted_at: '2026-09-08T14:30:26Z'
-    locator:
-      url: https://www.erdosproblems.com/forum/thread/719/proof-claims#proof-claim-275
-      quote: >-
-        The general r=3 conjecture is not claimed to be solved; the new finite verification extends
-        the known range through n=9.
+- id: ev-source-inspection
+  kind: source_inspection
+  description: >-
+    Significance inspected the public problem and proof-claim pages and their source links, located
+    the pinned manuscript version, and computed its SHA-256 from the downloaded PDF bytes. The mathematics
+    has not been independently assessed; the author-supplied task remains open.
+  basis: editorial_inference
+  asserted_by: significance-editor
+  asserted_at: '2026-09-08T14:30:26Z'
+  locator:
+    url: https://www.erdosproblems.com/forum/thread/719/proof-claims#proof-claim-275
+- id: ev-ai-claim-disclosure
+  kind: source_inspection
+  description: A partial proof claimed by Rafik Zeraoulia (using OpenAI GPT-5.6 Thinking).
+  basis: source_quote
+  asserted_by: significance-editor
+  asserted_at: '2026-09-08T14:30:26Z'
+  locator:
+    url: https://www.erdosproblems.com/forum/thread/719/proof-claims#proof-claim-275
+    quote: A partial proof claimed by Rafik Zeraoulia (using OpenAI GPT-5.6 Thinking).
+- id: ev-version-pin
+  kind: source_inspection
+  description: >-
+    The proof-claim page links Zenodo record 22568303, whose metadata identifies Version 1.1. manuscript.url
+    names its PDF; the SHA-256 is c4a5fbe38c626b5966260f90c52cdc27d94e33e7830a9a150f61b0f8a8f41887,
+    computed from 302451 downloaded bytes at 2026-09-08T14:25:08Z. The file MD5 also matches Zenodo's
+    displayed 3a9283706296b3704a643347dfc67ba4.
+  basis: editorial_inference
+  asserted_by: significance-editor
+  asserted_at: '2026-09-08T14:30:26Z'
+  locator:
+    url: https://zenodo.org/records/22568303
+- id: ev-author-first-task
+  kind: source_inspection
+  description: |-
+    Editorial summary of the author-suggested task: Compare the note’s main result with Problem 719, explicitly recording the restriction to r = 3 and n ≤ 9 and any differences from the general problem. Check hypotheses, quantifiers, coverage of cases, and assumptions needed by cited results using the pinned Zenodo version 1.1. Record checked passages, gaps, and remaining dependencies. Allow an initial 2–3 hours; full verification may require more work.
+  basis: editorial_inference
+  asserted_by: significance-editor
+  asserted_at: '2026-09-07T20:50:00Z'
+  locator:
+    section: Private correspondence; message text withheld.
+- id: ev-first-pass-scope
+  kind: source_inspection
+  description: >-
+    The author asks for a full-statement first pass, while the linked public claim explicitly limits
+    its result to r = 3 and n <= 9. Preserve the requested comparison as an open task: its deliverable
+    is a list of passages, hypotheses, quantifiers, cases, and references checked, with remaining
+    dependencies and scope differences listed. No whole-proof verdict is requested.
+  basis: editorial_inference
+  asserted_by: significance-editor
+  asserted_at: '2026-09-08T14:30:26Z'
+  locator:
+    url: https://www.erdosproblems.com/forum/thread/719/proof-claims#proof-claim-275
+    quote: >-
+      The general r=3 conjecture is not claimed to be solved; the new finite verification extends
+      the known range through n=9.
 ai_provenance:
   disclosure:
     value: >-
@@ -211,94 +197,74 @@ review_map:
     asserted_by: significance-editor
     asserted_at: '2026-09-08T14:30:26Z'
     locator:
-      url: https://www.erdosproblems.com/dm/
-      quote: |-
-        For the first open task, my priority would be an independent check that the main result in the note establishes the full statement of Problem 719, with all hypotheses and quantifiers matched correctly and no cases left untreated. This should include checking that any cited results apply under the assumptions actually available.
-
-        The reviewer would need the exact problem statement, the latest version of my note, and the relevant references. I would suggest an initial two to three hours for this focused check, with any remaining dependencies explicitly listed; a complete verification may take longer.
+      section: Private correspondence; message text withheld.
   risks:
-    - text: >-
-        Match the requested full-statement comparison against the claim page's explicit r = 3 and
-        n <= 9 scope; record the difference without expanding the author's public claim.
-      location: 'Claim page: Summary and Notes'
-      basis: editorial_inference
-      asserted_by: significance-editor
-      asserted_at: '2026-09-08T14:30:26Z'
-      locator:
-        url: https://www.erdosproblems.com/forum/thread/719/proof-claims#proof-claim-275
-        quote: >-
-          The general r=3 conjecture is not claimed to be solved; the new finite verification extends
-          the known range through n=9.
-    - text: >-
-        Check that hypotheses and quantifiers match, that no cases within the stated scope are untreated,
-        and that cited results apply under the assumptions actually available.
-      location: Main result and its cited results
-      basis: editorial_inference
-      asserted_by: significance-editor
-      asserted_at: '2026-09-08T14:30:26Z'
-      locator:
-        url: https://www.erdosproblems.com/dm/
-        quote: |-
-          For the first open task, my priority would be an independent check that the main result in the note establishes the full statement of Problem 719, with all hypotheses and quantifiers matched correctly and no cases left untreated. This should include checking that any cited results apply under the assumptions actually available.
-
-          The reviewer would need the exact problem statement, the latest version of my note, and the relevant references. I would suggest an initial two to three hours for this focused check, with any remaining dependencies explicitly listed; a complete verification may take longer.
+  - text: >-
+      Match the requested full-statement comparison against the claim page's explicit r = 3 and
+      n <= 9 scope; record the difference without expanding the author's public claim.
+    location: 'Claim page: Summary and Notes'
+    basis: editorial_inference
+    asserted_by: significance-editor
+    asserted_at: '2026-09-08T14:30:26Z'
+    locator:
+      url: https://www.erdosproblems.com/forum/thread/719/proof-claims#proof-claim-275
+      quote: >-
+        The general r=3 conjecture is not claimed to be solved; the new finite verification extends
+        the known range through n=9.
+  - text: >-
+      Check that hypotheses and quantifiers match, that no cases within the stated scope are untreated,
+      and that cited results apply under the assumptions actually available.
+    location: Main result and its cited results
+    basis: editorial_inference
+    asserted_by: significance-editor
+    asserted_at: '2026-09-08T14:30:26Z'
+    locator:
+      section: Private correspondence; message text withheld.
   prerequisites:
-    - text: >-
-        The exact Problem 719 statement, the linked note pinned here as version 1.1, and the references
-        it cites.
-      location: Author's first-task prerequisites
-      basis: editorial_inference
-      asserted_by: significance-editor
-      asserted_at: '2026-09-08T14:30:26Z'
-      locator:
-        url: https://www.erdosproblems.com/dm/
-        quote: |-
-          For the first open task, my priority would be an independent check that the main result in the note establishes the full statement of Problem 719, with all hypotheses and quantifiers matched correctly and no cases left untreated. This should include checking that any cited results apply under the assumptions actually available.
-
-          The reviewer would need the exact problem statement, the latest version of my note, and the relevant references. I would suggest an initial two to three hours for this focused check, with any remaining dependencies explicitly listed; a complete verification may take longer.
+  - text: >-
+      The exact Problem 719 statement, the linked note pinned here as version 1.1, and the references
+      it cites.
+    location: Author's first-task prerequisites
+    basis: editorial_inference
+    asserted_by: significance-editor
+    asserted_at: '2026-09-08T14:30:26Z'
+    locator:
+      section: Private correspondence; message text withheld.
   needs_checking:
-    - text: >-
-        Produce a first-pass list of what was checked and what remains, including explicit remaining
-        dependencies and any gap or additional assumption encountered; this is not a verdict.
-      location: 'First pass: full-statement comparison'
-      basis: editorial_inference
-      asserted_by: significance-editor
-      asserted_at: '2026-09-08T14:30:26Z'
-      locator:
-        url: https://www.erdosproblems.com/dm/
-        quote: |-
-          For the first open task, my priority would be an independent check that the main result in the note establishes the full statement of Problem 719, with all hypotheses and quantifiers matched correctly and no cases left untreated. This should include checking that any cited results apply under the assumptions actually available.
-
-          The reviewer would need the exact problem statement, the latest version of my note, and the relevant references. I would suggest an initial two to three hours for this focused check, with any remaining dependencies explicitly listed; a complete verification may take longer.
+  - text: >-
+      Produce a first-pass list of what was checked and what remains, including explicit remaining
+      dependencies and any gap or additional assumption encountered; this is not a verdict.
+    location: 'First pass: full-statement comparison'
+    basis: editorial_inference
+    asserted_by: significance-editor
+    asserted_at: '2026-09-08T14:30:26Z'
+    locator:
+      section: Private correspondence; message text withheld.
 open_invitations:
-  - kind: first_pass_statement_comparison
-    task_id: erdos-719-full-statement-first-pass
-    task_kind: read_check
-    status: open
-    effort_estimate: initial 2–3 hours; a complete verification may take longer
-    prerequisites:
-      - the exact Problem 719 statement
-      - the note, Zenodo 22568303 version 1.1 (pinned in this record)
-      - the references it cites
-    entry_points: 'First pass: Problem 719 and the linked note, pinned here as Zenodo 22568303 version
-      1.1'
-    target: >-
-      For the first open task, my priority would be an independent check that the main result in the
-      note establishes the full statement of Problem 719, with all hypotheses and quantifiers matched
-      correctly and no cases left untreated.
-    how: |-
-      This should include checking that any cited results apply under the assumptions actually available.
-
-      The reviewer would need the exact problem statement, the latest version of my note, and the relevant references. I would suggest an initial two to three hours for this focused check, with any remaining dependencies explicitly listed; a complete verification may take longer.
-    respond:
-      url: https://github.com/hjyuh/significance/issues/new?template=attestation.yml
-    created_by: rafikzeraoulia2025
-    created_at: '2026-09-07T20:50:00Z'
+- kind: first_pass_statement_comparison
+  task_id: erdos-719-full-statement-first-pass
+  task_kind: read_check
+  status: open
+  effort_estimate: initial 2–3 hours; a complete verification may take longer
+  prerequisites:
+  - the exact Problem 719 statement
+  - the note, Zenodo 22568303 version 1.1 (pinned in this record)
+  - the references it cites
+  entry_points: 'First pass: Problem 719 and the linked note, pinned here as Zenodo 22568303 version 1.1'
+  target: >-
+    Compare the note’s main result with Problem 719, explicitly recording the restriction to r = 3 and
+    n ≤ 9 and any differences from the general problem.
+  how: |-
+    Check hypotheses, quantifiers, coverage of cases, and assumptions needed by cited results using the pinned Zenodo version 1.1. Record checked passages, gaps, and remaining dependencies. Allow an initial 2–3 hours; full verification may require more work.
+  respond:
+    url: https://github.com/hjyuh/significance/issues/new?template=attestation.yml
+  created_by: rafikzeraoulia2025
+  created_at: '2026-09-07T20:50:00Z'
 history:
-  - id: evt-created
-    type: created
-    at: '2026-09-08T14:30:26Z'
-    by: significance-editor
-    note: >-
-      Private draft prepared from public materials with the author's permission; first open task supplied
-      by the author; not published.
+- id: evt-created
+  type: created
+  at: '2026-09-08T14:30:26Z'
+  by: significance-editor
+  note: >-
+    Private draft prepared from public materials with the author's permission; first open task supplied
+    by the author; not published.

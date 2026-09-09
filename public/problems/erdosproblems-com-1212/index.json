@@ -37,14 +37,12 @@
         },
         "author_relationship": {
           "status": "author_contributed",
-          "note": "Thank you, please go ahead with the Significance record and independent verification. The paper lays out the construction, and the public repository contains the manuscript, formalization and audit instructions. Please use the current v1.0.1 release, with the disclosures as written:\nhttps://github.com/crabsatellite/erdos-1212-visible-lattice-path/releases/tag/v1.0.1",
+          "note": "The author contributed a suggested review task. Private correspondence is not reproduced.",
           "basis": "author_attestation",
           "asserted_by": "alexchengyuli",
           "asserted_at": "2026-09-08T06:14:00Z",
           "locator": {
-            "url": "https://www.erdosproblems.com/dm/",
-            "section": "2026-09-08T06:14:00Z: author message supplied by the editor; private correspondence",
-            "quote": "Thank you, please go ahead with the Significance record and independent verification. The paper lays out the construction, and the public repository contains the manuscript, formalization and audit instructions. Please use the current v1.0.1 release, with the disclosures as written:\nhttps://github.com/crabsatellite/erdos-1212-visible-lattice-path/releases/tag/v1.0.1"
+            "section": "Private correspondence; message text withheld."
           }
         },
         "problem_reference": {
@@ -139,26 +137,23 @@
             "kind": "external_formal_artifact",
             "repo": "https://github.com/crabsatellite/erdos-1212-visible-lattice-path",
             "commit": "400001f0847afe36a26c588d34445210dbdc116e",
-            "description": "The paper lays out the construction, and the public repository contains the manuscript, formalization and audit instructions.",
-            "basis": "author_attestation",
-            "asserted_by": "alexchengyuli",
+            "description": "The linked project provides a manuscript and Lean artifacts with instructions for auditing them. Independent reproduction remains open.",
+            "basis": "editorial_inference",
+            "asserted_by": "significance-editor",
             "asserted_at": "2026-09-08T06:14:00Z",
             "locator": {
-              "url": "https://www.erdosproblems.com/dm/",
-              "quote": "The paper lays out the construction, and the public repository contains the manuscript, formalization and audit instructions."
+              "url": "https://github.com/crabsatellite/erdos-1212-visible-lattice-path"
             }
           },
           {
             "id": "ev-author-first-task",
             "kind": "source_inspection",
-            "description": "For a first afternoon-sized task, I would suggest checking statement correspondence: read Section 1 of the paper, then compare the graph and path conditions in Problem 1212 with Target.lean and the literal endpoint in AlgebraicCorridorKernelAudit.lean. The README links both files. In particular, check the composite-coordinate restriction, unit adjacency, and why the injective infinite path answers the original question. For someone comfortable reading Lean statements, I would budget roughly 1–2 hours for this bounded check, rather than a review of the whole proof. Any specific discrepancy or question would be welcome.",
-            "basis": "author_attestation",
-            "asserted_by": "alexchengyuli",
+            "description": "Editorial summary of the author-suggested task: Compare the graph and path conditions in Section 1, Problem 1212, Target.lean, and AlgebraicCorridorKernelAudit.lean. Check composite-coordinate restrictions, unit adjacency, and the implication from an injective infinite path to a path going to infinity. Record discrepancies and unresolved questions. Allow approximately 1–2 hours for this statement comparison.",
+            "basis": "editorial_inference",
+            "asserted_by": "significance-editor",
             "asserted_at": "2026-09-08T06:14:00Z",
             "locator": {
-              "url": "https://www.erdosproblems.com/dm/",
-              "section": "08 Sep 2026, 06:14: author-supplied first task",
-              "quote": "For a first afternoon-sized task, I would suggest checking statement correspondence: read Section 1 of the paper, then compare the graph and path conditions in Problem 1212 with Target.lean and the literal endpoint in AlgebraicCorridorKernelAudit.lean. The README links both files. In particular, check the composite-coordinate restriction, unit adjacency, and why the injective infinite path answers the original question. For someone comfortable reading Lean statements, I would budget roughly 1–2 hours for this bounded check, rather than a review of the whole proof. Any specific discrepancy or question would be welcome."
+              "section": "Private correspondence; message text withheld."
             }
           }
         ],
@@ -185,8 +180,7 @@
             "asserted_by": "significance-editor",
             "asserted_at": "2026-09-08T14:30:26Z",
             "locator": {
-              "url": "https://www.erdosproblems.com/dm/",
-              "quote": "For a first afternoon-sized task, I would suggest checking statement correspondence: read Section 1 of the paper, then compare the graph and path conditions in Problem 1212 with Target.lean and the literal endpoint in AlgebraicCorridorKernelAudit.lean. The README links both files. In particular, check the composite-coordinate restriction, unit adjacency, and why the injective infinite path answers the original question. For someone comfortable reading Lean statements, I would budget roughly 1–2 hours for this bounded check, rather than a review of the whole proof. Any specific discrepancy or question would be welcome."
+              "section": "Private correspondence; message text withheld."
             }
           },
           "risks": [
@@ -197,8 +191,7 @@
               "asserted_by": "significance-editor",
               "asserted_at": "2026-09-08T14:30:26Z",
               "locator": {
-                "url": "https://www.erdosproblems.com/dm/",
-                "quote": "For a first afternoon-sized task, I would suggest checking statement correspondence: read Section 1 of the paper, then compare the graph and path conditions in Problem 1212 with Target.lean and the literal endpoint in AlgebraicCorridorKernelAudit.lean. The README links both files. In particular, check the composite-coordinate restriction, unit adjacency, and why the injective infinite path answers the original question. For someone comfortable reading Lean statements, I would budget roughly 1–2 hours for this bounded check, rather than a review of the whole proof. Any specific discrepancy or question would be welcome."
+                "section": "Private correspondence; message text withheld."
               }
             },
             {
@@ -208,8 +201,7 @@
               "asserted_by": "significance-editor",
               "asserted_at": "2026-09-08T14:30:26Z",
               "locator": {
-                "url": "https://www.erdosproblems.com/dm/",
-                "quote": "For a first afternoon-sized task, I would suggest checking statement correspondence: read Section 1 of the paper, then compare the graph and path conditions in Problem 1212 with Target.lean and the literal endpoint in AlgebraicCorridorKernelAudit.lean. The README links both files. In particular, check the composite-coordinate restriction, unit adjacency, and why the injective infinite path answers the original question. For someone comfortable reading Lean statements, I would budget roughly 1–2 hours for this bounded check, rather than a review of the whole proof. Any specific discrepancy or question would be welcome."
+                "section": "Private correspondence; message text withheld."
               }
             }
           ],
@@ -221,8 +213,7 @@
               "asserted_by": "significance-editor",
               "asserted_at": "2026-09-08T14:30:26Z",
               "locator": {
-                "url": "https://www.erdosproblems.com/dm/",
-                "quote": "For a first afternoon-sized task, I would suggest checking statement correspondence: read Section 1 of the paper, then compare the graph and path conditions in Problem 1212 with Target.lean and the literal endpoint in AlgebraicCorridorKernelAudit.lean. The README links both files. In particular, check the composite-coordinate restriction, unit adjacency, and why the injective infinite path answers the original question. For someone comfortable reading Lean statements, I would budget roughly 1–2 hours for this bounded check, rather than a review of the whole proof. Any specific discrepancy or question would be welcome."
+                "section": "Private correspondence; message text withheld."
               }
             }
           ],
@@ -234,8 +225,7 @@
               "asserted_by": "significance-editor",
               "asserted_at": "2026-09-08T14:30:26Z",
               "locator": {
-                "url": "https://www.erdosproblems.com/dm/",
-                "quote": "For a first afternoon-sized task, I would suggest checking statement correspondence: read Section 1 of the paper, then compare the graph and path conditions in Problem 1212 with Target.lean and the literal endpoint in AlgebraicCorridorKernelAudit.lean. The README links both files. In particular, check the composite-coordinate restriction, unit adjacency, and why the injective infinite path answers the original question. For someone comfortable reading Lean statements, I would budget roughly 1–2 hours for this bounded check, rather than a review of the whole proof. Any specific discrepancy or question would be welcome."
+                "section": "Private correspondence; message text withheld."
               }
             }
           ]
@@ -247,8 +237,7 @@
             "asserted_by": "significance-editor",
             "asserted_at": "2026-09-08T14:30:26Z",
             "locator": {
-              "url": "https://www.erdosproblems.com/dm/",
-              "quote": "For a first afternoon-sized task, I would suggest checking statement correspondence: read Section 1 of the paper, then compare the graph and path conditions in Problem 1212 with Target.lean and the literal endpoint in AlgebraicCorridorKernelAudit.lean. The README links both files. In particular, check the composite-coordinate restriction, unit adjacency, and why the injective infinite path answers the original question. For someone comfortable reading Lean statements, I would budget roughly 1–2 hours for this bounded check, rather than a review of the whole proof. Any specific discrepancy or question would be welcome."
+              "section": "Private correspondence; message text withheld."
             }
           },
           "system": {
@@ -272,16 +261,14 @@
             "asserted_by": "significance-editor",
             "asserted_at": "2026-09-08T14:30:26Z",
             "locator": {
-              "url": "https://www.erdosproblems.com/dm/",
-              "quote": "For a first afternoon-sized task, I would suggest checking statement correspondence: read Section 1 of the paper, then compare the graph and path conditions in Problem 1212 with Target.lean and the literal endpoint in AlgebraicCorridorKernelAudit.lean. The README links both files. In particular, check the composite-coordinate restriction, unit adjacency, and why the injective infinite path answers the original question. For someone comfortable reading Lean statements, I would budget roughly 1–2 hours for this bounded check, rather than a review of the whole proof. Any specific discrepancy or question would be welcome."
+              "section": "Private correspondence; message text withheld."
             }
           },
           "basis": "author_attestation",
           "asserted_by": "alexchengyuli",
           "asserted_at": "2026-09-08T06:14:00Z",
           "locator": {
-            "url": "https://www.erdosproblems.com/dm/",
-            "quote": "The paper lays out the construction, and the public repository contains the manuscript, formalization and audit instructions."
+            "section": "Private correspondence; message text withheld."
           }
         },
         "open_invitations": [
@@ -296,8 +283,8 @@
               "the repository README and the two named Lean files"
             ],
             "entry_points": "Target.lean; AlgebraicCorridorKernelAudit.lean (literal endpoint)",
-            "target": "For a first afternoon-sized task, I would suggest checking statement correspondence: read Section 1 of the paper, then compare the graph and path conditions in Problem 1212 with Target.lean and the literal endpoint in AlgebraicCorridorKernelAudit.lean. The README links both files.",
-            "how": "In particular, check the composite-coordinate restriction, unit adjacency, and why the injective infinite path answers the original question. For someone comfortable reading Lean statements, I would budget roughly 1–2 hours for this bounded check, rather than a review of the whole proof. Any specific discrepancy or question would be welcome.",
+            "target": "Compare the graph and path conditions in Section 1, Problem 1212, Target.lean, and AlgebraicCorridorKernelAudit.lean.",
+            "how": "Check composite-coordinate restrictions, unit adjacency, and the implication from an injective infinite path to a path going to infinity. Record discrepancies and unresolved questions. Allow approximately 1–2 hours for this statement comparison.",
             "respond": {
               "url": "https://github.com/hjyuh/significance/issues/new?template=attestation.yml"
             },
