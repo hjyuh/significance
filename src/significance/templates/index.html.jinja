@@ -1,14 +1,14 @@
 {% extends "base.html.jinja" %}
-{% block title %}Significance — records{% endblock %}
-{% block topline_meta %}{{ records|length }} record{{ '' if records|length == 1 else 's' }} · clear records for AI-assisted mathematics{% endblock %}
+{% block title %}Significance | Records{% endblock %}
+{% block topline_meta %}{{ records|length }} record{{ '' if records|length == 1 else 's' }} · clear records for mathematical scrutiny{% endblock %}
 
 {% block content %}
 <section class="band index-start" aria-labelledby="start-heading">
   <p class="lbl">Start here</p>
-  <h1 id="start-heading">Help with one claim?</h1>
-  <p class="prose">Pick one focused check, read only the linked passage, and report what you found. Or send us one link and we will prepare the record.</p>
+  <h1 id="start-heading">Find a claim. Help check one part.</h1>
+  <p class="prose">Explore papers, see what has been checked, and contribute to a specific open question.</p>
   <div class="index-actions">
-    {% if links.get('tasks') %}<a class="index-action-primary" href="{{ links.tasks }}">Take one focused check →</a>{% endif %}
+    {% if links.get('tasks') %}<a class="index-action-primary" href="{{ links.tasks }}">Browse checks →</a>{% endif %}
     <a class="index-action-secondary" href="{{ links.request }}">Submit or correct a claim</a>
   </div>
   <p class="meta">No Significance account is needed to read or begin. GitHub sign-in is only required for the GitHub reporting route; a request can also be sent by email when configured.</p>
@@ -30,7 +30,7 @@
         <span>{% if r.get('draft') %}Editorial draft{% elif r.record_state == 'active' %}Active{% else %}{{ r.record_state|replace('_', ' ')|capitalize }}{% endif %}</span>
         {% set freshness = r.get('freshness', {}).get('result', 'unknown') %}
         <span>{% if freshness == 'current' %}Source current{% elif freshness == 'stale' %}Source changed{% else %}Source not rechecked{% endif %}</span>
-        <span>{{ r.get('evidence', [])|length }} evidence · {{ r.get('open_invitations', [])|length }} open</span>
+        <span>{{ r.get('evidence', [])|length }} evidence · {{ r.get('open_invitations', [])|selectattr('status', 'undefined')|list|length + r.get('open_invitations', [])|selectattr('status', 'equalto', 'open')|list|length }} open checks</span>
       </p>
     </li>
     {% endfor %}

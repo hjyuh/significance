@@ -34,6 +34,7 @@ PUBLIC_RECORD_IDS = [
     "2026-alexchengyuli-erdos-1212",
     "2026-alexchengyuli-erdos-848",
     "2026-anthropic-zeta-two-thirds",
+    "2026-dottedcalculator-erdos-4",
     "2026-evanbeller-erdos-132",
     PUBLIC_RECORD_ID,
     "2026-rafikzeraoulia-erdos-653",
@@ -68,7 +69,18 @@ def test_build_produces_index_and_record_page(tmp_path):
     assert (out / "static" / "style.css").exists()
 
     summaries = json.loads((out / "index.json").read_text(encoding="utf-8"))
-    assert sorted(summaries) == ["boards", "records"]
+    assert sorted(summaries) == ["boards", "records", "site"]
+
+    # The shell's /about/ page may only present what this builder generated,
+    # so the site block travels here. The shipped maintainer_name and
+    # contact_email carry [FILL] markers and must arrive as null: the page then
+    # says the channel is not set, instead of printing bracket text or a
+    # mailto link that goes nowhere.
+    assert summaries["site"] == {
+        "maintainer_name": None,
+        "repository_url": "https://github.com/hjyuh/significance",
+        "contact_email": None,
+    }
     sources = [load_record(RECORDS_DIR / f"{record_id}.yaml") for record_id in PUBLIC_RECORD_IDS]
     assert summaries["records"] == [
         {
@@ -94,12 +106,12 @@ def test_build_produces_index_and_record_page(tmp_path):
     assert "Content-Security-Policy" in record_html
     assert "Limits" in record_html
     assert "Author involvement" in record_html
-    assert "Review activity" in record_html
+    assert "What has been checked?" in record_html
     assert "Formalization handoff" in record_html
     assert "Paper/code correspondence" in record_html
     assert "OpenAI did not participate in or confirm this Significance record" in record_html
     assert "Math assessments</dt><dd>0" in record_html
-    assert "Summary" in record_html and "Significance" in record_html
+    assert "Reader summary" in record_html and "Significance" in record_html
     assert "Record note" in record_html and "Significance" in record_html
     assert "Confirming a description would not confirm the mathematics" not in record_html
     lower = record_html.lower()
@@ -326,7 +338,7 @@ def test_nav_omits_a_page_this_build_did_not_write(tmp_path):
     )
     index = (out / "index.html").read_text(encoding="utf-8")
 
-    assert "Request or correct a record" in index  # built, so linked
+    assert "Submit or correct" in index  # built, so linked
     assert "glossary" not in index.lower()  # not built, so not linked
     assert "boards/" not in index
 
@@ -663,7 +675,7 @@ def test_derived_exposition_tasks_appear_only_where_they_are_missing(tmp_path):
     # The record without an exposition gets one, marked as derived.
     assert 'id="derived-exposition-2026-example-palomar-row"' in tasks
     assert "Derived by the build" in tasks
-    assert "[FILL by editor: intended reader level]" in tasks
+    assert "An editor fills in details before inviting contributors." in tasks
 
     # The record that has one does not.
     assert "derived-exposition-2026-example-exposition-row" not in tasks

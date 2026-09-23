@@ -1,7 +1,7 @@
 {% extends "base.html.jinja" %}
 {% import "macros.jinja" as m %}
 
-{% block title %}{{ record.record_id }} — Significance{% endblock %}
+{% block title %}{{ record.record_id }} | Significance{% endblock %}
 {% block shell_class %} with-rail{% endblock %}
 
 {% set fr = record.get('freshness', {}) %}
@@ -31,9 +31,23 @@
       Last checked {{ fr.get('checked_at', '?')[:10] }}.
     </div>
     {% endif %}
+    {# Distinguish the mathematical author (who wrote the paper/proof) from
+       the record author (who documented it in Significance). The mathematical
+       author appears in author_relationship; the record author is just
+       provenance metadata. #}
+    {% set math_author_id = ar.get('asserted_by') if ar and ar.get('basis') == 'author_attestation' else none %}
+    {% set math_author = record.get('parties', {}).get(math_author_id, {}) if math_author_id else {} %}
+    {% set math_author_name = math_author.get('name', math_author.get('pseudonym', m.party_label(math_author_id) if math_author_id else none)) %}
+    {% set problem = record.get('problem_reference') %}
+    {% if math_author_name %}
+    <p class="eyebrow">{{ math_author_name }}{% if problem %} · {{ problem.venue }} #{{ problem.problem_id }}{% endif %}</p>
+    {% else %}
+    {# Fallback to the claim asserter when no author relationship is recorded #}
     {% set claimant_id = record.claim.text.get('asserted_by', '?') %}
     {% set claimant = record.get('parties', {}).get(claimant_id, {}) %}
-    <p class="eyebrow">Claim from {{ claimant.get('name', claimant.get('pseudonym', m.party_label(claimant_id))) }}</p>
+    <p class="eyebrow">Claim recorded by {{ claimant.get('name', claimant.get('pseudonym', m.party_label(claimant_id))) }}</p>
+    {% endif %}
+    <p class="lbl">What is claimed?</p>
     {% if record.claim.get('display_math') %}
     <h1 class="claim-text claim-math" aria-label="{{ record.claim.text.value }}">{{ record.claim.display_math|mathml }}</h1>
     {% else %}
@@ -48,12 +62,14 @@
        standing to settle. A component nobody recorded shows a dash — never the
        retrieval date standing in for a publication date. #}
     {% set dv = date_vector or {} %}
+<details class="secondary-content"><summary>Component dates</summary>
     <dl class="date-vector">
       <div><dt>Preprint</dt><dd>{{ dv.get('preprint') or 'Not recorded' }}</dd></div>
       <div><dt>Exposition</dt><dd>{{ dv.get('exposition') or 'Not recorded' }}</dd></div>
       <div><dt>Formalization</dt><dd>{{ dv.get('formalization') or 'Not recorded' }}</dd></div>
     </dl>
     <p class="meta date-vector-caption">Component dates (preprint / exposition / formalization).{% if dv.get('formalization_source') %} Formalization date from the {{ dv.formalization_source }}.{% endif %}{% if dv.get('exposition_source') %} Exposition date from the {{ dv.exposition_source }}.{% endif %} “Not recorded” means no dated source is recorded for that component. Preprint dates refer to the pinned manuscript version.</p>
+</details>
   </header>
   <nav class="record-nav" aria-label="On this record">
     {% if record.get('plain_summary') %}<a href="#plain-summary-heading">Summary</a>{% endif %}
@@ -63,43 +79,73 @@
     {% if record.get('open_invitations') %}<a href="#open-checks">Open checks</a>{% endif %}
   </nav>
 
-  {% set problem = record.get('problem_reference') %}
-  {% if problem %}
-  <section class="band problem-reference" aria-labelledby="problem-reference-heading">
-    <p class="lbl" id="problem-reference-heading">Problem link</p>
-    <p class="problem-reference-value">{{ problem.venue }} #{{ problem.problem_id }} · {{ m.external_link(problem.url, 'open the original problem page') }}</p>
-    <p class="meta">{{ m.attribution(problem) }}</p>
-  </section>
-  {% endif %}
-
-  <section class="band record-relationship" aria-labelledby="relationship-heading">
-    <p class="lbl" id="relationship-heading">Author involvement</p>
-    {% if ar %}
-    <p class="relationship-value">{{ ar.note }}</p>
-    <p class="meta">{{ m.credit(ar, 'Record note') }}</p>
-    {% else %}
-    <p class="relationship-value">Compiled from public sources. No author participation in this Significance record is recorded.</p>
-    <p class="meta">This describes the record-making relationship, not the mathematics.</p>
-    {% endif %}
-  </section>
-
   {% set ps = record.get('plain_summary') %}
   {% if ps %}
-  {# First content block on the page, above the formal dossier, because the
-     reader this is for stops reading before they reach the ledger. It is
-     styled calm on purpose: no banner, no colour, nothing that could be read
-     as a status light. The label names the writer, because an unsigned plain
-     summary would read as the site speaking. #}
   <section class="band plain-summary" aria-labelledby="plain-summary-heading">
-    <p class="lbl" id="plain-summary-heading">Summary · for readers</p>
+    <p class="lbl" id="plain-summary-heading">Reader summary</p>
     <dl class="plain-summary-list">
       <div>
-        <dt>In one sentence</dt>
+        <dt>Claimed</dt>
         <dd>{{ ps.claimed }}</dd>
       </div>
     </dl>
     <p class="meta">{{ m.credit(ps, 'Reader summary') }}</p>
+  </section>
+  {% endif %}
 
+  {# Keep the three reader questions together. The prose comes from the
+     attributed plain summary; the counts are derived from evidence entries
+     and deliberately do not turn into a correctness verdict. #}
+  <section class="band review-coverage" aria-labelledby="coverage-heading">
+    <p class="lbl" id="coverage-heading">What has been checked?</p>
+    {% if ps %}<p class="prose">{{ ps.checked }}</p><p class="meta">{{ m.credit(ps, 'Reader summary') }}</p>{% endif %}
+    <dl class="coverage-list">
+      <div><dt>Independent reruns</dt><dd>{{ formal_runs|length + computational_runs|length }}</dd></div>
+      <div><dt>Math assessments</dt><dd>{{ assessments|length }}</dd></div>
+      <div><dt>Written reviews</dt><dd>{{ informal_reviews|length }}</dd></div>
+    </dl>
+  </section>
+
+  {# Questions proposed by the author and open invitations share this one
+     help-needed block, so the opening has one place for unfinished work. #}
+  {% set author_open_questions = [] %}
+  {% set fh = record.get('formalization_handoff') %}
+  {% if fh and math_author_id %}
+  {% for oq in fh.open_questions if oq.get('asserted_by') == math_author_id %}
+  {% set _ = author_open_questions.append(oq) %}
+  {% endfor %}
+  {% endif %}
+  {% set author_invitations = [] %}
+  {% if math_author_id %}
+  {% for oi in record.get('open_invitations', []) if oi.get('created_by') == math_author_id and oi.get('status', 'open') == 'open' %}{% set _ = author_invitations.append(oi) %}{% endfor %}
+  {% endif %}
+  {% set open_count = record.get('open_invitations', [])|selectattr('status', 'undefined')|list|length + record.get('open_invitations', [])|selectattr('status', 'equalto', 'open')|list|length %}
+  {% if ps or author_open_questions or author_invitations or open_count > 0 %}
+  <section class="band author-priority" aria-labelledby="help-needed-heading">
+    <p class="lbl" id="help-needed-heading">Where is help needed?</p>
+    {% if ps %}<p class="prose">{{ ps.not_checked }}</p><p class="meta">{{ m.credit(ps, 'Reader summary') }}</p>{% endif %}
+    {% if author_open_questions or author_invitations %}
+    <p class="author-priority-intro">Open questions contributed by {{ math_author_name or 'the author' }}.</p>
+    {% if author_open_questions %}
+    <ul class="author-priority-list">
+      {% for oq in author_open_questions %}
+      <li><p class="prose">{{ oq.value }}</p><p class="meta">{{ m.attribution(oq) }}</p></li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% if author_invitations %}
+    <ul class="author-priority-list">
+      {% for oi in author_invitations %}
+      <li><p class="prose"><strong>{{ oi.kind|replace('_', ' ')|capitalize }}:</strong> {{ oi.target }}</p>{% if oi.get('how') %}<p class="meta">{{ oi.how|readable_text|truncate(200) }}</p>{% endif %}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% endif %}
+    {% if open_count > 0 %}<p><a href="#open-checks" class="button">See {{ open_count }} open {{ 'check' if open_count == 1 else 'checks' }} &rarr;</a></p>{% endif %}
+  </section>
+  {% endif %}
+
+  {% if ps %}
     {% for tr in ps.get('translations', []) %}
     {# A translation is a second summary with its own asserter, so it renders
        as its own block with its own attribution rather than as a toggle on the
@@ -120,8 +166,28 @@
       <p class="meta" lang="en" dir="ltr">{{ m.attribution(tr) }} Translation into {{ tr.lang }}, attributed to its translator.</p>
     </div>
     {% endfor %}
+  {% endif %}
+
+  {# Problem reference and author involvement: secondary context, placed after the main flow #}
+  {% set problem = record.get('problem_reference') %}
+  {% if problem %}
+  <section class="band problem-reference" aria-labelledby="problem-reference-heading">
+    <p class="lbl" id="problem-reference-heading">Problem link</p>
+    <p class="problem-reference-value">{{ problem.venue }} #{{ problem.problem_id }} · {{ m.external_link(problem.url, 'open the original problem page') }}</p>
+    <p class="meta">{{ m.attribution(problem) }}</p>
   </section>
   {% endif %}
+
+  <section class="band record-relationship" aria-labelledby="relationship-heading">
+    <p class="lbl" id="relationship-heading">Author involvement</p>
+    {% if ar %}
+    <p class="relationship-value">{{ ar.note }}</p>
+    <p class="meta">{{ m.credit(ar, 'Record note') }}</p>
+    {% else %}
+    <p class="relationship-value">Compiled from public sources. No author participation in this Significance record is recorded.</p>
+    <p class="meta">This describes the record-making relationship, not the mathematics.</p>
+    {% endif %}
+  </section>
 
   {% set review_map = record.get('review_map') %}
   {% if review_map %}
@@ -168,22 +234,6 @@
     <p class="meta">{{ m.attribution(handoff) }}</p>
   </section>
   {% endif %}
-
-  <section class="band review-coverage" aria-labelledby="coverage-heading">
-    <p class="lbl" id="coverage-heading">Review activity</p>
-    <dl class="coverage-list">
-      <div><dt>Independent reruns</dt><dd>{{ formal_runs|length + computational_runs|length }}</dd></div>
-      <div><dt>Math assessments</dt><dd>{{ assessments|length }}</dd></div>
-      <div><dt>Written reviews</dt><dd>{{ informal_reviews|length }}</dd></div>
-      <div><dt>Open checks</dt><dd>{{ record.get('open_invitations', [])|selectattr('status', 'undefined')|list|length + record.get('open_invitations', [])|selectattr('status', 'equalto', 'open')|list|length }}</dd></div>
-    </dl>
-    {% if ps %}
-    <div class="coverage-notes">
-      <p class="coverage-boundary"><strong>What Significance checked:</strong> {{ ps.checked }}</p>
-      <p class="coverage-boundary"><strong>Still open:</strong> {{ ps.not_checked }}</p>
-    </div>
-    {% endif %}
-  </section>
 
   {% set aw = record.get('accurate_wording') %}
   {% if aw %}
@@ -235,7 +285,7 @@
   </div>
 
   <section class="band" id="expositions">
-    <p class="lbl">Evidence — {{ evidence|length }} {{ 'entry' if evidence|length == 1 else 'entries' }}</p>
+    <p class="lbl">Evidence: {{ evidence|length }} {{ 'entry' if evidence|length == 1 else 'entries' }}</p>
     {% if evidence %}
     <ol class="ledger">
       {% for ev in evidence %}
@@ -314,7 +364,7 @@
           <div class="author-response">
             <h4>Author response</h4>
             {% for r in ev.author_response %}
-            <p>{{ r.text }} <span class="attribution">— {{ r.asserted_by }}, {{ r.asserted_at }}</span></p>
+            <p>{{ r.text }} <span class="attribution">({{ r.asserted_by }}, {{ r.asserted_at }})</span></p>
             {% endfor %}
           </div>
           {% endif %}
@@ -357,8 +407,8 @@
   </section>
   {% endif %}
 
-  <section class="band what-this-does-not-establish">
-    <p class="lbl">Limits</p>
+  <details class="secondary-content band what-this-does-not-establish">
+    <summary>Limits of this record</summary>
     <ul>
       <li>This record does not issue a whole-paper correctness judgement.</li>
       {% if formal_runs %}
@@ -372,7 +422,7 @@
       {% if record.get('open_invitations') %}<li>Open invitations identify work not yet represented by a completed evidence entry.</li>{% endif %}
       {% if not formal_runs and not computational_runs and not assessments and not informal_reviews %}<li>No independent reproduction or mathematical assessment is represented unless an evidence entry above says otherwise.</li>{% endif %}
     </ul>
-  </section>
+  </details>
 
 </article>
 {% endblock %}
@@ -395,7 +445,7 @@
 
   {% if record.get('open_invitations') %}
   <div class="band" id="open-checks">
-    <p class="lbl">Open checks — {{ record.open_invitations|selectattr('status', 'undefined')|list|length + record.open_invitations|selectattr('status', 'equalto', 'open')|list|length }}</p>
+    <p class="lbl">Open checks: {{ record.open_invitations|selectattr('status', 'undefined')|list|length + record.open_invitations|selectattr('status', 'equalto', 'open')|list|length }}</p>
     <p class="lbl-sub">Each is a focused task.</p>
     <ul class="invitations">
       {% for oi in record.open_invitations %}
@@ -454,15 +504,15 @@
     {% if ai.get('roles') %}
     <ul class="roles">
       {% for r in ai.roles %}
-      <li><span class="role">{{ m.role_label(r.role) }}</span><span class="role-meta"> — {{ r.model }} · {{ m.basis_label(r.basis) }} · {{ m.party_label(r.asserted_by) }}</span></li>
+      <li><span class="role">{{ m.role_label(r.role) }}</span><span class="role-meta"> ({{ r.model }} · {{ m.basis_label(r.basis) }} · {{ m.party_label(r.asserted_by) }})</span></li>
       {% endfor %}
     </ul>
     {% endif %}
   </div>
   {% endif %}
 
-  <div class="band">
-    <p class="lbl">History</p>
+  <details class="secondary-content band">
+    <summary>History</summary>
     <ul class="history">
       {% for h in record.get('history', [])|reverse %}
       <li>
@@ -471,7 +521,7 @@
       </li>
       {% endfor %}
     </ul>
-  </div>
+  </details>
 
 </aside>
 {% endblock %}

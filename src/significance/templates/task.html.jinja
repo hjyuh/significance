@@ -1,22 +1,96 @@
 {% extends "base.html.jinja" %}
-{% block title %}Take this check — Significance{% endblock %}
+{% block title %}Take this check | Significance{% endblock %}
 {% block content %}
 {% set task = row.invitation %}
+{% set problem = row.record.get('problem_reference') or {} %}
+{% set relationship = row.record.get('author_relationship') or {} %}
+{% set author_id = relationship.get('asserted_by') %}
+{% set author = row.record.get('parties', {}).get(author_id, {}) if author_id else {} %}
+{% set author_name = author.get('name', author.get('pseudonym')) %}
+{% set record_label = (problem.get('venue') ~ ' #' ~ problem.get('problem_id')) if problem.get('venue') and problem.get('problem_id') else (author_name or row.record.claim.text.value) %}
+{% set task_type = task.get('task_kind', task.get('kind', 'bounded check'))|replace('_', ' ')|capitalize %}
+{% set prerequisites = task.get('prerequisites') or [] %}
 <section class="band">
   <p class="lbl">Take this check</p>
   <h1 class="claim-text">{{ task.target }}</h1>
-  <p class="meta"><a href="{{ row.record_href }}">{{ row.record.record_id }}</a> · task {{ row.task_id }}</p>
+  <p class="meta"><a href="{{ row.record_href }}">{{ record_label }}</a> · task {{ row.task_id }}</p>
   <dl class="facts">
-    <dt>Task type</dt><dd>{{ task.get('task_kind', task.get('kind', 'bounded check'))|replace('_', ' ') }}</dd>
+    <dt>Task type</dt><dd>{{ task_type }}</dd>
     {% if task.get('entry_points') %}<dt>Entry points</dt><dd>{{ task.entry_points }}</dd>{% endif %}
     <dt>Source PDF</dt><dd><a class="button" href="{{ row.record.manuscript.url }}">Download the exact manuscript</a><br><span class="meta">{{ row.record.manuscript.label }} · version <code>{{ row.record.manuscript.sha256|short_hash }}</code></span></dd>
     {% set handoff = row.record.get('formalization_handoff', {}) %}
     {% if handoff.get('repository') %}<dt>Code</dt><dd><a href="{{ handoff.repository.url }}">Open the formalization repository</a>{% if handoff.repository.get('commit') %} · pinned commit <code>{{ handoff.repository.commit|short_hash }}</code>{% endif %}</dd>{% endif %}
-    {% if task.get('effort_estimate') %}<dt>Effort</dt><dd>{{ task.effort_estimate }} <span class="meta">(estimated by {{ task.created_by }})</span></dd>{% endif %}
-    {% if task.get('prerequisites') %}<dt>Prerequisites</dt><dd>{{ task.prerequisites|join('; ') }}</dd>{% endif %}
+    <dt>Effort</dt><dd>{{ task.get('effort_estimate') or 'Not estimated' }}{% if task.get('effort_estimate') and task.get('created_by') %} <span class="meta">(estimated by {{ task.created_by }})</span>{% endif %}</dd>
+    <dt>Prerequisites</dt><dd>{{ prerequisites|join('; ') if prerequisites else 'None listed' }}</dd>
   </dl>
 </section>
+
+<section class="band">
+  <p class="lbl">Why this matters</p>
+  <p class="prose">{% if row.record.claim %}The question above defines what this investigation can establish. Its findings help the author and future readers understand that specific part of the argument.{% else %}This check addresses part of the claim in {{ record_label }}.{% endif %}</p>
+  <p class="prose">After editorial review and your confirmation of the wording, an accepted check is published as a dated, scoped, citable entry that future readers, referees, and the author can point to. Even a partial attempt or a negative result is useful. It tells everyone what has been tried and where the open questions remain.</p>
+</section>
+
+<section class="band">
+  <p class="lbl">What a good response looks like</p>
+  <p class="prose">You do not need to write a referee report or certify the whole paper. A useful response describes <em>what you actually did</em> and <em>what you found</em>, scoped to this task.</p>
+  <div class="sample-deliverable">
+    <p class="task-detail-1 meta">Illustrative partial attempt — fictional paper and references:</p>
+    <blockquote class="task-detail-2 prose">
+      "I read pages 4-6 of the PDF (version 1 of a fictional paper) and traced the argument from the hypothesis through Lemma 2.3. The deduction on page 5, line 12 appears to use the bound from Lemma 2.1 without verifying that the hypotheses of 2.1 hold in this case. I spent about 20 minutes and did not resolve this step."
+    </blockquote>
+    <p class="meta">This is a useful starting point for a question or partial attempt. It names the scope, the source version, and the specific location. It does not claim the proof is wrong. It identifies an unresolved step.</p>
+  </div>
+</section>
+
+<section class="band">
+  <p class="lbl">Ways to contribute</p>
+  <p class="prose">Choose the level that fits what you have. All three are useful.</p>
+  <dl class="task-detail-3 contribution-ladder">
+    <div class="task-detail-4">
+      <dt class="task-detail-5">Ask about this step</dt>
+      <dd class="task-detail-6">
+        <p class="task-detail-7 prose">Something is unclear or you want to confirm scope before starting. This helps sharpen the task for everyone.</p>
+        {% if row.issue_url %}<p class="meta"><a href="{{ row.question_url }}">Ask about this task</a></p>{% else %}<p class="meta">Send your question to the maintainer with the record and task ID.</p>{% endif %}
+      </dd>
+    </div>
+    <div class="task-detail-8">
+      <dt class="task-detail-9">Report what you tried</dt>
+      <dd class="task-detail-10">
+        <p class="task-detail-11 prose">You worked on it but reached a stopping point: ran out of time, hit a sub-question you could not resolve, or found the task harder than expected. Recording your attempt can help the next reader choose where to continue.</p>
+        {% if row.issue_url %}<p class="meta"><a href="{{ row.attempt_url }}">Submit a partial attempt</a></p>{% else %}<p class="meta">Use the attestation template below; mark the outcome as "incomplete."</p>{% endif %}
+      </dd>
+    </div>
+    <div class="task-detail-12">
+      <dt class="task-detail-13">Submit a scoped check</dt>
+      <dd class="task-detail-14">
+        <p class="task-detail-15 prose">You completed the stated scope and can report what you found: whether the passage held up, where it did not, or what remains open. An accepted check is published after editorial review and your confirmation.</p>
+        {% if row.issue_url %}<p class="meta"><a href="{{ row.issue_url }}">Submit your attestation</a></p>{% else %}<p class="meta">Use the attestation template below.</p>{% endif %}
+      </dd>
+    </div>
+  </dl>
+</section>
+
+<section class="band">
+  <p class="lbl">Your contribution is credited</p>
+  <p class="task-detail-16 prose">Published checks retain your name (or handle), the exact scope you checked, the date, and a citable link. Your work appears on the public record alongside the claim. It does not disappear into an anonymous review process. You can correct the wording before it is merged.</p>
+</section>
+
 <section class="band"><p class="lbl">Status</p><p class="prose">{{ task.get('status', 'open')|capitalize }}{% if task.get('status') == 'taken' %} by {{ task.taken_by }} since {{ task.taken_at[:10] }}{% endif %}.</p></section>
-<section class="band"><p class="lbl">How to do this</p><ol><li>Download the exact manuscript above and start with the stated entry points. The version hash identifies the file for the eventual record; you do not need to calculate it before reading.</li><li>Read or reproduce only the stated scope and note the method you actually used.</li>{% if row.issue_url %}<li>Submit what you found through the linked attestation form below, using the record, task, scope, and manuscript hash shown here. No Significance account is required; GitHub may ask you to sign in.</li>{% else %}<li>Copy the short template below into a pull request, or send it to the maintainer. No Significance account is required.</li>{% endif %}</ol>{% if row.issue_url %}<p><a class="button" href="{{ row.issue_url }}">Open attestation form</a></p>{% endif %}</section>
-<section class="band"><p class="lbl">Attestation template</p><p class="prose">Fill only what you did. State what you checked and found—not whether the whole proof is correct.</p><pre class="copy-block">{{ row.attestation_yaml }}</pre></section>
+
+<details class="secondary-content band" open>
+  <summary>How to do this</summary>
+  <ol>
+    <li>Download the exact manuscript above and start with the stated entry points. The version hash identifies the file for the eventual record; you do not need to calculate it before reading.</li>
+    <li>Read or reproduce only the stated scope and note the method you actually used.</li>
+    {% if row.issue_url %}<li>Submit what you found through the linked attestation form below, using the record, task, scope, and manuscript hash shown here. No Significance account is required; GitHub may ask you to sign in.</li>{% else %}<li>Copy the short template below into a pull request, or send it to the maintainer. No Significance account is required.</li>{% endif %}
+  </ol>
+  {% if row.issue_url %}<p><a class="button" href="{{ row.issue_url }}">Open attestation form</a></p>{% endif %}
+</details>
+
+<details class="secondary-content band">
+  <summary>Attestation template (for advanced users)</summary>
+  <p class="prose">Fill only what you did. State what you checked and found, not whether the whole proof is correct.</p>
+  <pre class="copy-block">{{ row.attestation_yaml }}</pre>
+</details>
 {% endblock %}

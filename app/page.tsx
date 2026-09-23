@@ -23,14 +23,25 @@ type BoardSummary = {
   recorded_row_count: number;
 };
 
+type SiteConfig = {
+  maintainer_name: string | null;
+  repository_url: string | null;
+  contact_email: string | null;
+};
+
 // The Python builder is the only source of record and board facts. This shell
 // presents what it generated and computes nothing of its own -- including the
 // "recorded" counts below, which come from the file rather than from
 // counting anything here, so the page cannot arrive at a different number from
 // the board it links to.
-const generated = generatedIndex as { records: RecordSummary[]; boards: BoardSummary[] };
+const generated = generatedIndex as {
+  records: RecordSummary[];
+  boards: BoardSummary[];
+  site: SiteConfig;
+};
 const records = generated.records;
 const boards = generated.boards;
+const site = generated.site;
 
 function countLabel(count: number, singular: string, plural = `${singular}s`) {
   return `${count} ${count === 1 ? singular : plural}`;
@@ -73,29 +84,25 @@ export default function Home() {
         </Link>
         <p>Clear records for AI-assisted mathematics</p>
         <nav className="masthead-nav" aria-label="Site">
-          <a href="/request/index.html">Request or correct a record →</a>
-          {/* Rendered by the Python renderer, not by this shell. The shell
-              links to it; it never restates what the page says. */}
-          <a href="/orientation/index.html">What is going on →</a>
-          <a href="/glossary/index.html">Glossary →</a>
+          <a href="/records/index.html">Records</a>
+          <a href="/tasks/index.html">Open checks</a>
+          <Link href="/about">About</Link>
+          <a href="/request/index.html">Submit</a>
+          <a className="masthead-help" href="/orientation/index.html">Help</a>
         </nav>
       </header>
 
       <section className="hero">
         <p className="lbl">Public record</p>
-        <h1>See what was claimed, what was checked, and what remains open.</h1>
+        <h1>Track what was claimed, checked, and left open.</h1>
         <p className="lede">
-          Significance shows the exact mathematical claim, the source version,
-          what has been checked, who said what, and what still needs review. It
-          records evidence without pretending to settle the mathematics. The
-          format is portable, so an existing problem tracker can link to or
-          consume the same record.
+          Exact claims, source versions, evidence, and open review tasks in one
+          public record.
         </p>
         <div className="hero-actions" aria-label="Start here">
-          <a className="hero-action-primary" href="/tasks/index.html">Take one focused check →</a>
-          <a className="hero-action-secondary" href="/request/index.html">Submit or correct a claim</a>
+          <a className="hero-action-primary" href="/tasks/index.html">Open checks →</a>
+          <a className="hero-action-secondary" href="/request/index.html">Submit a claim</a>
         </div>
-        <p className="hero-account-note">No Significance account is needed to read or start. A GitHub account is used only if you choose to report through GitHub.</p>
       </section>
 
       <section className="records" aria-labelledby="records-heading">
@@ -110,11 +117,26 @@ export default function Home() {
 
               return (
                 <a className="record-card" href={recordPath} key={record.record_id}>
-                  <div className="record-topline">
+                  {record.claim_mathml ? (
+                    <div className="record-card-math" aria-label={record.claim} dangerouslySetInnerHTML={{ __html: record.claim_mathml }} />
+                  ) : <h3>{record.claim}</h3>}
+                  <p>
+                    {formatBasis(record.claim_basis)} · {formatParty(record.claim_asserted_by)}
+                    {" · "}
+                    {countLabel(record.evidence_count, "evidence entry", "evidence entries")}
+                    {" · "}
+                    {countLabel(record.open_invitation_count, "open invitation")}
+                  </p>
+                  {/* Version, state and freshness stay on the card and stop
+                      leading it. They are what a reader checks second, after
+                      deciding the claim is worth reading at all; freshness in
+                      particular has to remain visible, because a record whose
+                      source moved says so here or nowhere. */}
+                  <div className="record-cardmeta">
                     <span>
                       Record version {record.record_version} · {formatRecordState(record.record_state)}
                     </span>
-                    <span>
+                    <span className={record.freshness === "current" ? "record-freshness" : "record-freshness record-freshness-warning"}>
                       {formatFreshness(record.freshness)}
                       {checkedDate ? (
                         <>
@@ -126,16 +148,6 @@ export default function Home() {
                       ) : null}
                     </span>
                   </div>
-                  {record.claim_mathml ? (
-                    <div className="record-card-math" aria-label={record.claim} dangerouslySetInnerHTML={{ __html: record.claim_mathml }} />
-                  ) : <h3>{record.claim}</h3>}
-                  <p>
-                    {formatBasis(record.claim_basis)} · {formatParty(record.claim_asserted_by)}
-                    {" · "}
-                    {countLabel(record.evidence_count, "evidence entry", "evidence entries")}
-                    {" · "}
-                    {countLabel(record.open_invitation_count, "open invitation")}
-                  </p>
                   <span className="open-record">Open the record →</span>
                 </a>
               );
@@ -158,6 +170,14 @@ export default function Home() {
                 {board.recorded_row_count} of {board.row_count} rows recorded
                 {" · as of "}
                 <time dateTime={board.as_of}>{board.as_of.slice(0, 10)}</time>
+              </p>
+              {/* The board page says this too. It has to be said here as well,
+                  because the card is what gets seen alone, and "1 of 10 rows"
+                  on its own reads as an unfinished page rather than as the
+                  result it is. */}
+              <p className="board-note">
+                An empty row means nobody here has looked at that result yet,
+                and nothing more than that.
               </p>
               <span className="open-record">Open the board →</span>
             </a>
@@ -190,7 +210,16 @@ export default function Home() {
 
       <footer>
         <p>Significance organizes evidence and explanation. It does not issue mathematical verdicts.</p>
+        <p className="footer-who">
+          {site.maintainer_name
+            ? `Run by ${site.maintainer_name}.`
+            : "An independent project maintained through the public repository."}{" "}
+          <Link href="/about">About the project and contact →</Link>
+        </p>
         <a href="/records/index.html">Browse the record index →</a>
+        {site.repository_url ? (
+          <a href={site.repository_url}>Source and issue tracker →</a>
+        ) : null}
         <Link href="/submit">Advanced contributor builder →</Link>
       </footer>
     </main>

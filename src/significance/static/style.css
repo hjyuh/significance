@@ -127,6 +127,14 @@ dl.facts dd,
   border-bottom: 1px solid var(--rule);
 }
 
+/* Compact band for metadata and less important sections */
+.band-compact {
+  padding: 24px var(--pad) 26px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.band-compact:last-child { border-bottom: 0; }
+
 .band:last-child { border-bottom: 0; }
 
 .index-start { background: var(--bg-rail); }
@@ -134,7 +142,19 @@ dl.facts dd,
 .index-start .prose { max-width: 62ch; margin: 18px 0 0; }
 .index-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
 .index-actions a { display: inline-block; padding: 10px 15px; border: 1px solid var(--edge); font-family: var(--mono); font-size: 12px; text-decoration: none; }
-.index-action-primary { background: var(--note); border-color: var(--note) !important; color: var(--bg); }
+.index-action-primary {
+  background: var(--note);
+  border-color: var(--note) !important;
+  color: var(--bg);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 12px 20px;
+  letter-spacing: 0.02em;
+}
+.index-action-primary:hover {
+  filter: brightness(1.1);
+  color: var(--bg);
+}
 .index-action-secondary { color: var(--note); }
 .index-start > .meta { max-width: 72ch; margin: 14px 0 0; }
 
@@ -147,11 +167,41 @@ dl.facts dd,
   color: var(--muted);
 }
 
+/* Minor label for less important sections — smaller, dimmer */
+.lbl-minor {
+  margin: 0 0 14px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--muted) 75%, transparent);
+}
+
 .lbl-sub {
   margin: -8px 0 14px;
   font-family: var(--sans);
   font-size: 12px;
   color: var(--muted);
+}
+
+/* ---------- typography hierarchy ---------- */
+
+.text-primary {
+  font-size: 16px;
+  color: var(--fg-body);
+  line-height: 1.65;
+}
+
+.text-secondary {
+  font-size: 14px;
+  color: var(--dim);
+  line-height: 1.6;
+}
+
+.text-tertiary {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
 }
 
 .prose {
@@ -209,6 +259,205 @@ h1.claim-math {
 
 .credit { color: var(--dim); }
 
+/* ---------- author priority ---------- */
+/* Prominent display for author information — stands out as primary content */
+.author-priority {
+  padding: 20px 22px;
+  margin: 18px 0 0;
+  background: color-mix(in srgb, var(--note) 8%, var(--bg));
+  border-left: 3px solid var(--note);
+  border-radius: 0 4px 4px 0;
+}
+
+.author-priority .author-name {
+  margin: 0 0 4px;
+  font-family: var(--sans);
+  font-size: 18px;
+  font-weight: 560;
+  color: var(--fg-strong);
+}
+
+.author-priority .author-affiliation {
+  margin: 0;
+  font-size: 14px;
+  color: var(--dim);
+}
+
+/* ---------- contribution ladder ---------- */
+/* Three-tier visual hierarchy for contribution levels */
+.contribution-ladder {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--hair);
+  border: 1px solid var(--hair);
+  margin: 14px 0;
+}
+
+.contribution-tier {
+  padding: 16px 18px;
+  background: var(--bg);
+}
+
+/* Tier 1: Primary contribution — highest visual weight */
+.contribution-tier-primary {
+  background: color-mix(in srgb, var(--note) 6%, var(--bg));
+  border-left: 3px solid var(--note);
+}
+
+.contribution-tier-primary .tier-label {
+  color: var(--note);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 0 0 6px;
+}
+
+.contribution-tier-primary .tier-content {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--fg-strong);
+}
+
+/* Tier 2: Secondary contribution — medium weight */
+.contribution-tier-secondary .tier-label {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 0 0 5px;
+}
+
+.contribution-tier-secondary .tier-content {
+  font-size: 14px;
+  color: var(--fg-body);
+}
+
+/* Tier 3: Tertiary contribution — lowest weight */
+.contribution-tier-tertiary .tier-label {
+  color: color-mix(in srgb, var(--muted) 80%, transparent);
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0 0 4px;
+}
+
+.contribution-tier-tertiary .tier-content {
+  font-size: 13px;
+  color: var(--dim);
+}
+
+/* ---------- collapsible sections ---------- */
+/* Muted collapsible for secondary/tertiary content */
+details.secondary-content {
+  margin: 14px 0;
+}
+
+details.secondary-content > summary {
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 8px 0;
+  list-style: none;
+}
+
+details.secondary-content > summary::-webkit-details-marker {
+  display: none;
+}
+
+details.secondary-content > summary::before {
+  content: "+";
+  display: inline-block;
+  width: 1.2em;
+  color: var(--edge);
+  font-weight: 400;
+}
+
+details.secondary-content[open] > summary::before {
+  content: "-";
+}
+
+details.secondary-content > summary:hover {
+  color: var(--dim);
+}
+
+details.secondary-content > .collapsible-body {
+  padding: 12px 0 8px 1.2em;
+  color: var(--dim);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* Tertiary collapsible — even more muted */
+details.tertiary-content {
+  margin: 10px 0;
+}
+
+details.tertiary-content > summary {
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--muted) 80%, transparent);
+  padding: 6px 0;
+  list-style: none;
+}
+
+details.tertiary-content > summary::-webkit-details-marker {
+  display: none;
+}
+
+details.tertiary-content > summary::before {
+  content: "+";
+  display: inline-block;
+  width: 1.2em;
+  color: var(--hair);
+  font-weight: 400;
+}
+
+details.tertiary-content[open] > summary::before {
+  content: "-";
+}
+
+details.tertiary-content > summary:hover {
+  color: var(--muted);
+}
+
+details.tertiary-content > .collapsible-body {
+  padding: 10px 0 6px 1.2em;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+/* ---------- visual grouping ---------- */
+/* Primary block: hero + author-priority + main CTA — highest prominence */
+.visual-group-primary {
+  background: linear-gradient(180deg, var(--bg-rail), var(--bg));
+}
+
+/* Secondary block: provenance, evidence list — normal weight */
+.visual-group-secondary {
+  background: var(--bg);
+}
+
+/* Tertiary block: caveats, limits, technical details — muted */
+.visual-group-tertiary {
+  background: color-mix(in srgb, var(--bg) 98%, var(--bg-rail));
+}
+
+.visual-group-tertiary .lbl {
+  font-size: 10px;
+  color: color-mix(in srgb, var(--muted) 75%, transparent);
+}
+
 .problem-reference { background: var(--bg-rail); }
 .problem-reference-value { margin: 0 0 6px; color: var(--fg-body); font-size: 15px; }
 
@@ -258,11 +507,12 @@ dl.facts dt {
 
 dl.facts dd { margin: 0; }
 
+/* Secondary metadata — reduced visual weight */
 .attribution, .locator, .meta {
-  color: var(--muted);
+  color: color-mix(in srgb, var(--muted) 90%, transparent);
   font-family: var(--mono);
-  font-size: 12px;
-  line-height: 1.55;
+  font-size: 11px;
+  line-height: 1.5;
 }
 
 /* ---------- evidence ---------- */
@@ -408,17 +658,28 @@ ol.ledger > li::before {
 
 /* ---------- closing disclaimer ---------- */
 
+/* Tertiary content — disclaimers and caveats, deliberately muted */
+.what-this-does-not-establish {
+  background: transparent;
+}
+
+.what-this-does-not-establish .lbl {
+  font-size: 10px;
+  color: color-mix(in srgb, var(--muted) 75%, transparent);
+}
+
 .what-this-does-not-establish ul {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-  gap: 20px;
+  gap: 16px;
   margin: 0;
   padding: 0;
   list-style: none;
   font-family: var(--sans);
-  font-size: 13px;
-  color: var(--muted);
+  font-size: 11px;
+  color: color-mix(in srgb, var(--muted) 85%, transparent);
   text-wrap: pretty;
+  line-height: 1.5;
 }
 
 /* ---------- rail ---------- */
@@ -552,6 +813,17 @@ ul.history .event-meta { display: block; color: var(--muted); }
   dl.facts dt { margin-top: 8px; }
   .row .k { width: auto; }
   .records-index > li { grid-template-columns: minmax(0, 1fr); }
+
+  /* Compact bands on narrow screens */
+  .band-compact { padding: 18px var(--pad) 20px; }
+
+  /* Author priority adjustments */
+  .author-priority { padding: 16px 18px; }
+  .author-priority .author-name { font-size: 16px; }
+
+  /* Contribution ladder stacks naturally */
+  .contribution-tier { padding: 14px 16px; }
+  .contribution-tier-primary .tier-content { font-size: 15px; }
 }
 
 /* --- plain-language summary -------------------------------------------------
@@ -913,23 +1185,24 @@ ul.orientation-next {
    is a dash — flat, unstyled, the same weight as a present one, because an
    absent date is not a worse state, only an unrecorded one. */
 
+/* Date vector — reduced visual weight as metadata */
 dl.date-vector {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px 28px;
-  margin: 14px 0 4px;
+  gap: 3px 22px;
+  margin: 12px 0 4px;
 }
 
 dl.date-vector > div {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
 }
 
 dl.date-vector dt {
-  color: var(--muted);
+  color: color-mix(in srgb, var(--muted) 80%, transparent);
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 9px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
@@ -937,10 +1210,16 @@ dl.date-vector dt {
 dl.date-vector dd {
   margin: 0;
   font-family: var(--mono);
-  font-size: 13px;
+  font-size: 11px;
+  color: var(--dim);
 }
 
-.date-vector-caption { max-width: 68ch; }
+.date-vector-caption {
+  max-width: 68ch;
+  font-size: 11px;
+  color: color-mix(in srgb, var(--muted) 85%, transparent);
+  line-height: 1.5;
+}
 
 /* The Palomar caveat. Rendered from the code for every registry entry and
    never from the record, so it cannot be shortened or dropped by an editor;
@@ -1042,4 +1321,214 @@ h1.claim-math { max-width: 100%; }
   .side-by-side { grid-template-columns: minmax(0, 1fr); }
   .side-by-side > div + div { border-left: 0; padding-left: 0; }
   .record-nav { gap: 12px 20px; }
+}
+/* --- task cards -------------------------------------------------------------
+   Card-based layout for the tasks list. More scannable than a table. */
+
+.task-cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.task-card {
+  background: var(--bg-rail);
+  border: 1px solid var(--hair);
+  border-radius: 8px;
+  transition: all 0.15s ease;
+}
+
+.task-card:hover {
+  border-color: var(--edge);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.task-card-link {
+  display: block;
+  padding: 20px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.task-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.task-icon {
+  font-size: 20px;
+}
+
+.task-status {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: var(--hair);
+  color: var(--dim);
+}
+
+.task-status-open {
+  background: color-mix(in srgb, var(--note) 15%, transparent);
+  color: var(--note);
+}
+
+.task-status-taken {
+  background: color-mix(in srgb, var(--muted) 20%, transparent);
+  color: var(--muted);
+}
+
+.task-card-title {
+  margin: 0 0 8px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--fg-body);
+}
+
+.task-card-record {
+  margin: 0 0 12px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.task-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--dim);
+}
+
+.task-effort, .task-prereq {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.task-cards-derived {
+  margin-top: 16px;
+}
+
+.task-card-derived {
+  opacity: 0.7;
+}
+
+.task-card-derived:hover {
+  opacity: 1;
+}
+
+/* --- global hover effects and breathing ------------------------------------*/
+
+/* Links with subtle underline animation */
+a {
+  transition: color 0.15s ease;
+}
+
+/* Cards and interactive elements */
+.records-index > li {
+  transition: background 0.15s ease;
+}
+
+.records-index > li:hover {
+  background: var(--bg-rail);
+}
+
+/* Buttons with hover lift */
+.button, .index-action-primary, .index-action-secondary {
+  transition: all 0.15s ease;
+}
+
+.button:hover, .index-action-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.index-action-secondary:hover {
+  background: color-mix(in srgb, var(--note) 10%, transparent);
+}
+
+/* More breathing room */
+.band {
+  padding: 44px var(--pad) 48px;
+}
+
+.band-compact {
+  padding: 28px var(--pad) 32px;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus states for accessibility */
+a:focus-visible, button:focus-visible, summary:focus-visible {
+  outline: 2px solid var(--note);
+  outline-offset: 2px;
+}
+
+/* Nav icons */
+.topline-nav a::before {
+  margin-right: 6px;
+  opacity: 0.6;
+}
+
+
+
+
+
+/* Responsive adjustments */
+@media (max-width: 720px) {
+  .task-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Task contribution guidance */
+.task-detail-1 {margin-bottom: 8px;}
+.task-detail-2 {border-left: 2px solid var(--edge); padding-left: 14px; margin: 0 0 12px;}
+.task-detail-3 {margin-top: 18px;}
+.task-detail-4 {padding: 14px 0; border-top: 1px solid var(--hair);}
+.task-detail-5 {color: var(--note); font-family: var(--mono); font-size: 12px; margin-bottom: 6px;}
+.task-detail-6 {margin: 0; max-width: 60ch;}
+.task-detail-7 {margin: 0 0 8px;}
+.task-detail-8 {padding: 14px 0; border-top: 1px solid var(--hair);}
+.task-detail-9 {color: var(--note); font-family: var(--mono); font-size: 12px; margin-bottom: 6px;}
+.task-detail-10 {margin: 0; max-width: 60ch;}
+.task-detail-11 {margin: 0 0 8px;}
+.task-detail-12 {padding: 14px 0; border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair);}
+.task-detail-13 {color: var(--note); font-family: var(--mono); font-size: 12px; margin-bottom: 6px;}
+.task-detail-14 {margin: 0; max-width: 60ch;}
+.task-detail-15 {margin: 0 0 8px;}
+.task-detail-16 {max-width: 60ch;}
+
+/* Readable task metadata, consistent with the quiet record layout. */
+.task-card-record { font-family: var(--sans); font-size: 13px; overflow-wrap: anywhere; }
+.task-card-meta { font-size: 13px; gap: 8px 16px; }
+.task-status { font-size: 12px; }
+.task-card-header { gap: 12px; }
+.task-kind { font-size: 13px; color: var(--dim); }
+.task-card:hover { transform: none; box-shadow: none; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; }
+}
+
+/* Long source strings and equations stay within narrow reading columns. */
+.shell main, .shell aside { min-width: 0; }
+.record { overflow-wrap: anywhere; }
+.record pre, .record math[display="block"] { max-width: 100%; overflow-x: auto; }
+@media (max-width: 720px) {
+  .record { overflow-x: auto; }
+  .record .band { padding-top: 28px; padding-bottom: 30px; }
 }

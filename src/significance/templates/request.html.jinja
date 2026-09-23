@@ -1,7 +1,7 @@
 {% extends "base.html.jinja" %}
 {% import "macros.jinja" as m %}
 
-{% block title %}Request or correct a record — Significance{% endblock %}
+{% block title %}Request or correct a record | Significance{% endblock %}
 {% block topline_meta %}One link is enough to begin{% endblock %}
 
 {#
@@ -35,14 +35,31 @@ Optional — what should change or receive attention:
 
 <section class="band">
   <p class="lbl">Request or correct a record</p>
-  <h1 class="claim-text">Send one link. We do the record work.</h1>
+  <h1 class="claim-text">Get focused attention on a question in your paper.</h1>
+  <p class="prose">
+    Send your preprint and tell us where an independent reader could help.
+    We will prepare a record that says what was claimed, who asserted it, and
+    what evidence exists. We will help define the request. You do not need
+    to know any of this project's vocabulary to file one. Reviewer availability
+    varies; not every request leads to a record.
+  </p>
+</section>
+
+<section class="band">
+  <p class="lbl">Who this is for</p>
+  <p class="prose">
+    Our initial focus is AI-assisted mathematical claims, where the volume of new claims makes focused scrutiny especially useful. But the records and checks work for any
+    preprint where an independent reader could help. You do not need to be
+    working with AI tools to request attention on your paper.
+  </p>
+</section>
+
+<section class="band">
+  <p class="lbl">What a record tracks</p>
   <p class="prose">
     A record says what was claimed, who asserted it, what evidence exists, and
-    what nobody has checked yet. It does not say whether the mathematics is
-    right, and nothing in it ever will. If that is the thing you need, this is
-    how to ask for it — you do not need to know any of this project's
-    vocabulary to file the request. You may leave the final question blank.
-    Extracting fields, provenance, hashes, and locators is our job.
+    what nobody has checked yet. Findings stay attributed to their contributors and limited to the scope examined. Extracting fields, provenance, hashes,
+    and locators is our job. You may leave the final question blank.
   </p>
 </section>
 
@@ -59,7 +76,7 @@ Optional — what should change or receive attention:
 {% endif %}
 
 <section class="band">
-  <p class="lbl">Two routes — public-interest records and author requests</p>
+  <p class="lbl">Two routes</p>
   <p class="prose">
     Widely circulating public claims from organisations or major announcements
     may receive editorial records compiled entirely from public sources. The
@@ -76,21 +93,21 @@ Optional — what should change or receive attention:
 <section class="band">
   <p class="lbl">One required field, two short context fields</p>
   <dl class="facts">
-    <dt>Required — link</dt>
-    <dd>A link to where it actually lives — paper, preprint, repository, announcement, post. The most stable one, if it is in several places.</dd>
-    <dt>Short — your role</dt>
+    <dt>Required: link</dt>
+    <dd>A link to where it actually lives (paper, preprint, repository, announcement, post). The most stable one, if it is in several places.</dd>
+    <dt>Short: your role</dt>
     <dd>Author, reader, or something else. This changes what happens next rather than how the request is ranked: an author can attest to their own work, and a reader asking about someone else's claim starts the contact step above.</dd>
-    <dt>Optional — attention</dt>
+    <dt>Optional: attention</dt>
     <dd>A correction, a theorem that matters, or a step you want examined. “Not sure” and a blank answer are both valid.</dd>
   </dl>
 </section>
 
 <section class="band">
-  <p class="lbl">Action — open an issue</p>
+  <p class="lbl">Open an issue</p>
   {% if issue_url %}
   <p class="prose">
-    {{ m.external_link(issue_url, 'Open a prefilled request or correction on GitHub') }} —
-    the fields above are already labelled. Needs a GitHub account.
+    {{ m.external_link(issue_url, 'Open a prefilled request or correction on GitHub') }}.
+    The fields above are already labelled. Needs a GitHub account.
   </p>
   {% else %}
   <p class="prose">
@@ -112,7 +129,7 @@ Optional — what should change or receive attention:
 
 {% if contact %}
 <section class="band">
-  <p class="lbl">Action — send it by email</p>
+  <p class="lbl">Send by email</p>
   <p class="prose">
     <a href="mailto:{{ contact }}?subject={{ mail_subject|urlencode }}&amp;body={{ mail_body|urlencode }}">Email the same three fields</a>,
     already templated in the message body. No account needed.

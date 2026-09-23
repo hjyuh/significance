@@ -213,6 +213,22 @@ def _attestation_yaml(record: dict, invitation: dict, task: str) -> str:
     return output.getvalue()
 
 
+def _task_response_url(config, record, invitation, task, kind):
+    repo = safe_href(config.get("repository_url"))
+    if not repo:
+        return None
+    body = (f"Record: {record['record_id']}\nTask: {task}\n"
+            f"Source SHA-256: {record['manuscript']['sha256']}\n"
+            f"Scope: {invitation['target']}\n\n"
+            "Paper location / code declaration:\n\n"
+            "My question or what I tried:\n\n"
+            "What remains unresolved:\n\n"
+            "Name or handle for attribution:\n")
+    return repo.rstrip("/") + "/issues/new?" + urlencode({
+        "title": f"{kind}: {record['record_id']} / {task}", "body": body,
+    })
+
+
 def _attestation_issue_url(invitation: dict, record: dict, task: str) -> str | None:
     response = (invitation.get("respond") or {}).get("url")
     if not safe_href(response):
@@ -251,6 +267,22 @@ def safe_email(address) -> str | None:
     if isinstance(address, str) and _SAFE_EMAIL_RE.match(address.strip()):
         return address.strip()
     return None
+
+
+def _configured(value: object) -> str | None:
+    """A site.yaml string somebody has actually filled in, or None.
+
+    The shipped values carry [FILL] markers. Treating a marker as a real value
+    would put the bracket text on the page, which reads as a bug to a visitor
+    and as an answer to a crawler; treating it as absent lets the page say
+    plainly that nobody has set this yet.
+    """
+    if not isinstance(value, str):
+        return None
+    text = value.strip()
+    if not text or text.lower().startswith(FILL_MARKER):
+        return None
+    return text
 
 
 def short_hash(value: object) -> object:
@@ -1140,6 +1172,10 @@ def build_site(
                         else f"../../tasks/{record['record_id']}/{tid}/index.html"
                     ),
                     "issue_url": _attestation_issue_url(invitation, record, tid),
+                    "question_url": _task_response_url(config, record, invitation, tid, "Question"),
+                    "attempt_url": _task_response_url(
+                        config, record, invitation, tid, "Partial attempt"
+                    ),
                     "attestation_yaml": _attestation_yaml(record, invitation, tid),
                 }
             )
@@ -1306,6 +1342,18 @@ def build_site(
     index_data = {
         "records": record_summaries,
         "boards": [board_summary(board) for board in boards],
+        # The shell's /about/ page has to name who answers for this site, and
+        # it may only present what this builder generated. Every value runs
+        # through the same guard the Python pages use: anything still carrying
+        # a [FILL] marker, or an address a mailto: link may not hold, arrives
+        # as null. The shell then says the channel is not configured yet,
+        # which is the one thing worse than no contact line -- a contact line
+        # that goes nowhere -- avoided in the same way in both renderers.
+        "site": {
+            "maintainer_name": _configured(config.get("maintainer_name")),
+            "repository_url": safe_href(config.get("repository_url")),
+            "contact_email": safe_email(config.get("contact_email")),
+        },
     }
     (out_dir / "index.json").write_text(
         json.dumps(index_data, ensure_ascii=False, indent=2) + "\n",

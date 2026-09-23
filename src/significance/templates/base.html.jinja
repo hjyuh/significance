@@ -16,19 +16,10 @@
    for a template rendered directly in a test. #}
 {% if links %}
 <nav class="topline-nav" aria-label="Site">
-{% if links.get('orientation') %}<a href="{{ links.orientation }}">What is going on</a>{% endif %}
-<a href="{{ links.request }}">Request or correct a record</a>
-{% if links.get('intake') %}<a href="{{ links.intake }}">How to file a claim</a>{% endif %}
-{% if links.get('reviewers') %}<a href="{{ links.reviewers }}">Reviewers</a>{% endif %}
-{% if links.get('backlog') %}<a href="{{ links.backlog }}">Backlog</a>{% endif %}
-{% if links.get('frontier') %}<a href="{{ links.frontier }}">Open work</a>{% endif %}
-{% if links.get('problems') %}<a href="{{ links.problems }}">Problems</a>{% endif %}
-{% if links.get('glossary') %}<a href="{{ links.glossary }}">Glossary</a>{% endif %}
-{% if links.get('feed') %}<a href="{{ links.feed }}">Atom feed</a>{% endif %}
-{% if links.get('tasks') %}<a href="{{ links.tasks }}">Take a check</a>{% endif %}
-{% for board_id, board_url in links.boards.items() %}
-<a href="{{ board_url }}">{{ board_id|replace('-', ' ') }}</a>
-{% endfor %}
+<a href="{{ links.records_index }}">Records</a>
+{% if links.get('tasks') %}<a href="{{ links.tasks }}">Open checks</a>{% endif %}
+{% if links.get('orientation') %}<a href="{{ links.orientation }}">How it works</a>{% endif %}
+<a href="{{ links.request }}">Submit or correct</a>
 </nav>
 {% endif %}
 </header>
@@ -39,6 +30,12 @@
 {% block rail %}{% endblock %}
 </div>
 <footer class="site-footer">
+{% if links %}<nav aria-label="Resources">
+{% if links.get('reviewers') %}<a href="{{ links.reviewers }}">Contributors</a>{% endif %}
+{% if links.get('feed') %}<a href="{{ links.feed }}">Follow updates</a>{% endif %}
+{% if links.get('glossary') %}<a href="{{ links.glossary }}">Glossary</a>{% endif %}
+{% for board_id, board_url in links.boards.items() %}<a href="{{ board_url }}">{{ board_id|replace('-', ' ') }}</a>{% endfor %}
+</nav>{% endif %}
 <p>Significance mechanically validates provenance and a narrow set of evidence predicates. It does not mechanically determine mathematical truth.</p>
 </footer>
 </body>

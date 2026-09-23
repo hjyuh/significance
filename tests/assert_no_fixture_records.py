@@ -30,7 +30,13 @@ def declared_ids(root: Path) -> set[str]:
 
 
 production_ids = declared_ids(ROOT / "records") | declared_ids(ROOT / "boards")
-fixture_ids = declared_ids(ROOT / "tests" / "fixtures") - production_ids
+fixture_ids = (declared_ids(ROOT / "tests" / "fixtures") - production_ids) | {
+    "2026-erichou-erdos-906"
+}
+for record_path in (ROOT / "records").glob("*.yaml"):
+    record = _YAML.load(record_path.read_text(encoding="utf-8"))
+    if record.get("draft"):
+        raise SystemExit(f"Private draft in public records: {record_path.name}")
 
 hits: list[tuple[Path, str]] = []
 for path in SITE.rglob("*"):

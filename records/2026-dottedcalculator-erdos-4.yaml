@@ -1,0 +1,451 @@
+schema_version: 1
+record_id: 2026-dottedcalculator-erdos-4
+record_version: 1
+record_state: active
+
+freshness:
+  result: current
+  observed_source_version: "github-dottedcalculator-ai-math-9ed1cea5"
+  confirmed_source_version: "github-dottedcalculator-ai-math-9ed1cea5"
+  checked_at: "2026-08-31T01:02:46Z"
+
+parties:
+  dottedcalculator:
+    pseudonym: "DottedCalculator"
+    verification_method:
+      kind: pseudonymous
+      identifier: "https://www.erdosproblems.com/forum/user/DottedCalculator"
+  boris-alexeev:
+    name: "Boris Alexeev"
+    verification_method:
+      kind: github_identity
+      identifier: "https://github.com/balexeev-oai"
+  ben-green:
+    name: "Ben Green"
+    verification_method:
+      kind: pseudonymous
+      identifier: "https://www.erdosproblems.com/forum/user/bengreen"
+  xiao-hu:
+    name: "Xiao Hu"
+    verification_method:
+      kind: pseudonymous
+      identifier: "https://www.erdosproblems.com/forum/user/Xiao_Hu"
+  thomas-bloom:
+    name: "Thomas Bloom"
+    verification_method:
+      kind: pseudonymous
+      identifier: "https://www.erdosproblems.com/forum/user/TFBloom"
+  significance-editor:
+    pseudonym: "Significance editor"
+    verification_method:
+      kind: pseudonymous
+      identifier: "significance-project"
+
+author_relationship:
+  status: public_sources_only
+  note: >-
+    Compiled from the public proof claim, pinned manuscript, public discussion,
+    and public Lean repository. DottedCalculator and the named commenters have
+    not reviewed or confirmed this Significance record.
+  basis: editorial_inference
+  asserted_by: significance-editor
+  asserted_at: "2026-08-31T01:02:46Z"
+
+problem_reference:
+  venue: "ErdősProblems.com"
+  problem_id: "4"
+  url: "https://www.erdosproblems.com/4"
+  basis: source_quote
+  asserted_by: significance-editor
+  asserted_at: "2026-08-31T01:02:46Z"
+  locator:
+    url: "https://www.erdosproblems.com/forum/thread/4/proof-claims#proof-claim-224"
+
+claim:
+  id: claim-main
+  text:
+    value: >-
+      A Tilted Residue-Class Construction for Long Prime-Free Intervals claims
+      Y(X) ≫ X log X / log₃ X and G(T) ≫ log T log₂ T / log₄ T.
+    basis: source_quote
+    asserted_by: dottedcalculator
+    asserted_at: "2026-08-26T01:55:32Z"
+    locator:
+      url: "https://github.com/DottedCalculator/ai-math/blob/9ed1cea5651ee0b32cd6083aea42d75da6b30084/Erdos_4_GPT_5.6_Sol.pdf"
+      quote: "The resulting bounds are Y(X) ≫ X log X / log₃ X, G(T) ≫ log T log₂ T / log₄ T."
+  scope:
+    value: >-
+      ErdősProblems.com classifies this as a partial proof claim: it proposes a
+      stronger lower bound beyond the established solution of the original
+      problem, not a new resolution of the page's already-proved statement.
+    basis: source_quote
+    asserted_by: dottedcalculator
+    asserted_at: "2026-08-26T01:55:32Z"
+    locator:
+      url: "https://www.erdosproblems.com/forum/thread/4/proof-claims#proof-claim-224"
+      quote: "A partial proof claimed by GPT 5.6 Pro."
+
+plain_summary:
+  claimed: >-
+    The 48-page manuscript reports a new tilted preliminary sieve and claims
+    lower bounds Y(X) ≫ X log X / log₃ X and G(T) ≫ log T log₂ T / log₄ T.
+  checked: >-
+    Significance pinned and hashed the submitted PDF, inspected the public
+    discussion, and located a commit-pinned external Lean proof and kernel-axiom
+    audit. Ben Green's public comments are recorded as an attributed informal
+    review, not as a Significance conclusion.
+  not_checked: >-
+    Significance has not independently rebuilt the Lean project, audited
+    paper-to-Lean correspondence, or checked the manuscript's sieve argument.
+    The forum's formalization link and the repository's completed proof also
+    point to different files, as recorded below.
+  basis: digest
+  asserted_by: significance-editor
+  asserted_at: "2026-08-31T01:02:46Z"
+
+accurate_wording:
+  value: >-
+    A public manuscript claims a stronger lower bound for long prime gaps; a
+    separate Lean repository reports a completed formalization, and Ben Green
+    has published a favorable but informal assessment after discussions with
+    Terry Tao and James Maynard.
+  basis: digest
+  asserted_by: significance-editor
+  asserted_at: "2026-08-31T01:02:46Z"
+
+manuscript:
+  url: "https://raw.githubusercontent.com/DottedCalculator/ai-math/9ed1cea5651ee0b32cd6083aea42d75da6b30084/Erdos_4_GPT_5.6_Sol.pdf"
+  label: "A Tilted Residue-Class Construction for Long Prime-Free Intervals"
+  published_at: "2026-08-25"
+  immutable_version_id: "github-dottedcalculator-ai-math-9ed1cea5"
+  sha256: "c124e109dba9cbd777a81785870b83b1dee5cc75556c6c765c427a2ae8969b1d"
+  retrieved_at: "2026-08-31T01:02:46Z"
+
+evidence:
+  - id: ev-source-inspection
+    kind: source_inspection
+    description: >-
+      Significance fetched the proof-claim page, its 48-page PDF, the sixteen
+      public discussion comments, and the referenced Lean repository. The PDF
+      was pinned to commit 9ed1cea5 and hashed. This records sources and versions,
+      not a mathematical review.
+    basis: machine_result
+    asserted_by: significance-editor
+    asserted_at: "2026-08-31T01:02:46Z"
+    locator:
+      url: "https://www.erdosproblems.com/forum/thread/4/proof-claims#proof-claim-224"
+
+  - id: ev-lean-artifact-reported
+    kind: external_formal_artifact
+    repo: "https://github.com/plby/lean-proofs"
+    commit: "554ac598b2876141931002e013a6157a2c71341c"
+    description: >-
+      Boris Alexeev publicly reported an unconditional Lean formalization. At
+      the pinned commit, the completed covering and prime-gap theorems are in
+      src/latest/ErdosProblems/Erdos4Tilted.lean, with guarded axiom output in
+      src/latest/ErdosProblems/Erdos4/TiltedVerification.lean. Significance has
+      inspected those files but has not independently built the project.
+    basis: source_quote
+    asserted_by: boris-alexeev
+    asserted_at: "2026-08-27T17:19:00Z"
+    locator:
+      url: "https://www.erdosproblems.com/forum/thread/proof-claim:a86e01428bc943c4a8fca864cfb22bfe#post-8611"
+      quote: "This result has been formalized unconditionally in Lean."
+
+  - id: ev-ben-green-informal-review
+    kind: informal_review
+    reviewer: ben-green
+    text: >-
+      After several hours of thought and conversations with Terry Tao and James
+      Maynard, Ben Green wrote that he was more or less convinced by the claim;
+      he also distinguished the existence of the Lean formalization from the
+      remaining work of producing a readable human exposition.
+    basis: source_quote
+    asserted_by: ben-green
+    asserted_at: "2026-08-27T18:55:00Z"
+    locator:
+      url: "https://www.erdosproblems.com/forum/thread/proof-claim:a86e01428bc943c4a8fca864cfb22bfe#post-8615"
+      quote: "Following a few hours thought and some conversations with Terry Tao and James Maynard I became more or less convinced this is correct."
+
+ai_provenance:
+  disclosure:
+    value: >-
+      The manuscript title page names GPT 5.6 Sol as its author, while the
+      ErdősProblems.com proof-claim card labels both claimant and model as GPT
+      5.6 Pro. This record preserves that public discrepancy rather than choosing
+      one label for both sources.
+    basis: editorial_inference
+    asserted_by: significance-editor
+    asserted_at: "2026-08-31T01:02:46Z"
+    locator:
+      url: "https://www.erdosproblems.com/forum/thread/4/proof-claims#proof-claim-224"
+  roles:
+    - role: proof_generation
+      model: "GPT 5.6 Sol (manuscript); GPT 5.6 Pro (proof-claim card)"
+      basis: source_quote
+      asserted_by: significance-editor
+      locator:
+        url: "https://github.com/DottedCalculator/ai-math/blob/9ed1cea5651ee0b32cd6083aea42d75da6b30084/Erdos_4_GPT_5.6_Sol.pdf"
+
+review_map:
+  main_deduction:
+    text: >-
+      Begin with Section 3 and then the correlation work in Sections 4–5. The
+      proposed new mechanism replaces the hard cutoff in the second sieve with
+      a tilted probability law; later FGKMT gains are intended to remain
+      independent and therefore multiply with it.
+    location: "Sections 3–5"
+    pointer: "Xiao Hu's description of the modified second sieve; Ben Green's reply on where the new work sits."
+    basis: source_quote
+    asserted_by: xiao-hu
+    asserted_at: "2026-08-28T15:07:00Z"
+    locator:
+      url: "https://www.erdosproblems.com/forum/thread/proof-claim:a86e01428bc943c4a8fca864cfb22bfe#post-8636"
+
+  risks:
+    - text: >-
+        The manuscript itself says its conclusion depends on the cited deep
+        inputs being available with exactly the uniformity stated; the assembly
+        and transfer steps cannot repair a missing input.
+      location: "Introduction, page 3; Section 6.2"
+      basis: source_quote
+      asserted_by: dottedcalculator
+      asserted_at: "2026-08-25T20:05:04Z"
+      locator:
+        url: "https://github.com/DottedCalculator/ai-math/blob/9ed1cea5651ee0b32cd6083aea42d75da6b30084/Erdos_4_GPT_5.6_Sol.pdf"
+    - text: >-
+        Sections 6.6–6.8 track FGKMT Sections 6 and 8, Section 7 expands a short
+        FGKMT assembly argument, and Section 8 is the elementary CRT transfer.
+        Readers already fluent in FGKMT can separate these passages from the
+        claimed new sieve.
+      location: "Sections 6.6–8"
+      basis: source_quote
+      asserted_by: xiao-hu
+      asserted_at: "2026-08-28T13:07:00Z"
+      locator:
+        url: "https://www.erdosproblems.com/forum/thread/proof-claim:a86e01428bc943c4a8fca864cfb22bfe#post-8634"
+
+  prerequisites:
+    - text: >-
+        The Ford–Green–Konyagin–Maynard–Tao 2018 construction, especially the
+        multidimensional sieve estimate and quantitative hypergraph covering
+        theorem used in Section 6.
+      pointer: "FGKMT 2018; manuscript Section 6.2"
+      basis: editorial_inference
+      asserted_by: significance-editor
+      asserted_at: "2026-08-31T01:02:46Z"
+
+  needs_checking:
+    - text: >-
+        Compare the two manuscript inequalities with
+        Erdos4.Tilted.covering_theorem and
+        Erdos4.Tilted.prime_gap_corollary at commit 554ac598, including all
+        definitions of Y, G, and endpoint conventions.
+      location: "PDF equations (1.2)–(1.3); Erdos4Tilted.lean"
+      reason: >-
+        A successful Lean build and exact statement correspondence are separate
+        questions, and neither has been independently recorded here.
+      basis: editorial_inference
+      asserted_by: significance-editor
+      asserted_at: "2026-08-31T01:02:46Z"
+    - text: >-
+        Resolve the public link mismatch: Boris Alexeev's forum hyperlink lands
+        on ComparatorChallenges/ErdosProblems/Erdos4.lean, whose declarations
+        use sorry at the pinned commit, while the completed proof and guarded
+        axiom audit live under src/latest/ErdosProblems.
+      location: "Forum post 8611; comparator file; Erdos4Tilted.lean; TiltedVerification.lean"
+      reason: >-
+        The artifact is present, but a reader following only the posted link is
+        taken to the wrong file.
+      basis: machine_result
+      asserted_by: significance-editor
+      asserted_at: "2026-08-31T01:02:46Z"
+
+formalization_handoff:
+  target:
+    value: >-
+      The covering theorem Y(X) ≫ X log X / log₃ X and the endpoint prime-gap
+      corollary G(T) ≫ log T log₂ T / log₄ T.
+    basis: source_quote
+    asserted_by: boris-alexeev
+    asserted_at: "2026-08-27T17:43:03Z"
+    locator:
+      url: "https://github.com/plby/lean-proofs/blob/554ac598b2876141931002e013a6157a2c71341c/src/latest/ErdosProblems/Erdos4Tilted.lean"
+  system:
+    value: "Lean 4.33.0 with Mathlib 4.33.0, as recorded by the pinned repository."
+    basis: source_quote
+    asserted_by: boris-alexeev
+    asserted_at: "2026-08-27T17:43:03Z"
+    locator:
+      url: "https://github.com/plby/lean-proofs/blob/554ac598b2876141931002e013a6157a2c71341c/src/latest/ErdosProblems/Erdos4.lean"
+  status: artifact_reported
+  definitions:
+    - value: >-
+        Compare maximumCoverLength and maximumPrimeGap with the manuscript's
+        Y and G, including the use of real frontiers and right-endpoint bounds.
+      basis: editorial_inference
+      asserted_by: significance-editor
+      asserted_at: "2026-08-31T01:02:46Z"
+  prerequisites:
+    - value: >-
+        The pinned src/latest project, the Erdos4Tilted import tree, and the
+        repository's TiltedVerification.lean axiom audit.
+      basis: editorial_inference
+      asserted_by: significance-editor
+      asserted_at: "2026-08-31T01:02:46Z"
+  open_questions:
+    - value: >-
+        Can an independent build reproduce the reported final theorems and
+        guarded axiom output at commit 554ac598?
+      basis: editorial_inference
+      asserted_by: significance-editor
+      asserted_at: "2026-08-31T01:02:46Z"
+    - value: >-
+        Does the full import closure correspond to every non-classical input
+        and uniformity condition used by the pinned manuscript?
+      basis: editorial_inference
+      asserted_by: significance-editor
+      asserted_at: "2026-08-31T01:02:46Z"
+  repository:
+    url: "https://github.com/plby/lean-proofs"
+    commit: "554ac598b2876141931002e013a6157a2c71341c"
+    toolchain: "Lean 4.33.0; Mathlib 4.33.0"
+  correspondence:
+    value: >-
+      The pinned Lean source names the manuscript and states matching displayed
+      asymptotic bounds, but Significance has not independently audited every
+      definition or dependency across the paper and code.
+    basis: editorial_inference
+    asserted_by: significance-editor
+    asserted_at: "2026-08-31T01:02:46Z"
+  basis: editorial_inference
+  asserted_by: significance-editor
+  asserted_at: "2026-08-31T01:02:46Z"
+
+digestions:
+  - audience: general_mathematician
+    kind: plain_language
+    stratum: editor
+    text: >-
+      The original Erdős question on this page was already solved. This record
+      concerns a stronger claimed lower bound: a different preliminary sieve
+      is proposed before the established FGKMT machinery is applied. The most
+      useful first reading is therefore Sections 3–5, not the full 48 pages in
+      order.
+    basis: editorial_inference
+    asserted_by: significance-editor
+    source_claims: [claim-main]
+
+importance_claims:
+  - text: >-
+      Before this submission, ErdősProblems.com listed the FGKMT 2018 bound as
+      the best available lower bound for the problem.
+    basis: source_quote
+    asserted_by: significance-editor
+    source:
+      url: "https://www.erdosproblems.com/4"
+  - text: >-
+      Ben Green described the tilted sieve and the FGKMT gain as essentially
+      independent improvements over the older Erdős–Rankin procedure.
+    basis: source_quote
+    asserted_by: ben-green
+    source:
+      url: "https://www.erdosproblems.com/forum/thread/proof-claim:a86e01428bc943c4a8fca864cfb22bfe#post-8624"
+  - text: >-
+      The ErdősProblems.com page says the likely scale is comparable to
+      (log n)^2 and that the later $10,000 target asks for a lower bound above
+      (log n)^(1+c); the submitted claim does not reach that target.
+    basis: source_quote
+    asserted_by: significance-editor
+    source:
+      url: "https://www.erdosproblems.com/4"
+  - text: >-
+      The same page records the best known upper bound for consecutive prime
+      gaps as p_(n+1) − p_n ≪ n^(0.525+o(1)), due to Baker, Harman, and Pintz.
+    basis: source_quote
+    asserted_by: significance-editor
+    source:
+      url: "https://www.erdosproblems.com/4"
+
+open_invitations:
+  - kind: formal_reproduction
+    task_id: erdos-4-lean-reproduction
+    task_kind: reproduce_build
+    effort_estimate: "[FILL: independent builder estimate]"
+    prerequisites:
+      - "Lean 4.33.0, Mathlib 4.33.0, and the pinned src/latest project"
+    entry_points: >-
+      Erdos4Tilted.lean and Erdos4/TiltedVerification.lean at commit 554ac598
+    target: >-
+      Reproduce the completed tilted-sieve theorems and guarded axiom output at
+      the pinned commit.
+    how: >-
+      Check out commit 554ac598b2876141931002e013a6157a2c71341c. Follow the
+      src/latest build instructions without updating dependencies. Build
+      ErdosProblems.Erdos4Tilted and run
+      ErdosProblems/Erdos4/TiltedVerification.lean. Record commands, toolchain,
+      result, resource limits, and log hash. This tests reproducibility, not
+      paper-to-code correspondence or mathematical novelty.
+    respond:
+      url: "https://github.com/hjyuh/significance/issues/new?template=attestation.yml"
+    created_by: significance-editor
+    created_at: "2026-08-31T01:02:46Z"
+
+  - kind: correspondence
+    task_id: erdos-4-statement-correspondence
+    task_kind: statement_audit
+    effort_estimate: "about 60–90 minutes for the two final statements"
+    prerequisites:
+      - "The manuscript definitions of Y(X) and G(T)"
+      - "Lean definitions maximumCoverLength and maximumPrimeGap"
+    entry_points: >-
+      PDF equations (1.1)–(1.3); Erdos4Tilted.lean final theorems
+    target: >-
+      Compare the manuscript's two asymptotic statements with the pinned Lean
+      declarations, recording endpoint, quantifier, and normalization choices.
+    how: >-
+      Compare equations (1.1)–(1.3) in the pinned PDF with covering_theorem,
+      prime_gap_corollary, and their definitions. Record exact declarations and
+      any remaining mismatch. Do not infer correspondence from a successful
+      build alone.
+    respond:
+      url: "https://github.com/hjyuh/significance/issues/new?template=attestation.yml"
+    created_by: significance-editor
+    created_at: "2026-08-31T01:02:46Z"
+
+  - kind: exposition
+    task_id: erdos-4-human-exposition
+    task_kind: exposition
+    effort_estimate: "O(1) months, as publicly anticipated by Ben Green"
+    prerequisites:
+      - "FGKMT 2018 and the tilted-sieve argument in Sections 3–5"
+    entry_points: "Sections 3–5; imported FGKMT material in Sections 6–8"
+    target: >-
+      Produce a shorter human-readable exposition separating the new tilted
+      sieve from the imported FGKMT machinery.
+    how: >-
+      Center the account on the modified preliminary law and its correlation
+      estimates. Cite rather than re-expand the FGKMT inputs and elementary CRT
+      transfer where appropriate, while stating all dependencies and scope.
+    respond:
+      url: "https://www.erdosproblems.com/forum/thread/proof-claim:a86e01428bc943c4a8fca864cfb22bfe#post-8627"
+    status: taken
+    taken_by: ben-green
+    taken_at: "2026-08-28T09:42:00Z"
+    taken_note: >-
+      Ben Green said that a subset of the FGKMT authors, including him, would
+      write it and publicly anticipated an O(1)-month timescale.
+    created_by: thomas-bloom
+    created_at: "2026-08-28T09:04:00Z"
+
+suppress_derived_tasks: [exposition]
+
+history:
+  - id: evt-created
+    type: created
+    at: "2026-08-31T01:02:46Z"
+    by: significance-editor
+    note: >-
+      Created from the pinned public manuscript, ErdősProblems.com proof claim
+      and discussion, and the public Lean repository. No independent build or
+      mathematical verdict is represented.

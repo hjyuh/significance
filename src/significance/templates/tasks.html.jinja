@@ -1,44 +1,79 @@
 {% extends "base.html.jinja" %}
-{% block title %}Take a check — Significance{% endblock %}
-{% block topline_meta %}{{ rows|length }} bounded task{{ '' if rows|length == 1 else 's' }}{% if derived_rows %} · {{ derived_rows|length }} derived{% endif %}{% endblock %}
+{% block title %}Help check | Significance{% endblock %}
+{% block topline_meta %}{{ rows|length }} bounded task{{ '' if rows|length == 1 else 's' }}{% endblock %}
 {% block content %}
 <section class="band">
-  <p class="lbl">Take a check</p>
-  <h1 class="claim-text">One bounded task at a time.</h1>
-  <p class="prose">Choose a passage, use the pinned source, and report what you checked and found. This list is not a ranking.</p>
-  <p class="meta">No Significance account is required. Open a task, read only its stated scope, and use the report link if you want to contribute.</p>
+  <p class="lbl">Help check a claim</p>
+  <h1 class="claim-text">Pick one. Read the passage. Report what you find.</h1>
+  <p class="prose">Each task is scoped to a single passage or artifact. Reading needs no account; submitting through GitHub requires one.</p>
 </section>
+
 {% if rows %}
+<section class="band tasks-list">
+  <ul class="task-cards">
+{% for row in rows %}
+{% set task = row.invitation %}
+{% set problem = row.record.get('problem_reference') or {} %}
+{% set relationship = row.record.get('author_relationship') or {} %}
+{% set author_id = relationship.get('asserted_by') %}
+{% set author = row.record.get('parties', {}).get(author_id, {}) if author_id else {} %}
+{% set author_name = author.get('name', author.get('pseudonym')) %}
+{% set record_label = (problem.get('venue') ~ ' #' ~ problem.get('problem_id')) if problem.get('venue') and problem.get('problem_id') else (author_name or row.record.claim.text.value) %}
+{% set task_type = task.get('task_kind', task.get('kind', 'bounded check'))|replace('_', ' ')|capitalize %}
+{% set prerequisites = task.get('prerequisites') or [] %}
+<li class="task-card">
+  <a href="{{ row.task_href }}" class="task-card-link">
+    <div class="task-card-header">
+      <span class="task-status task-status-{{ task.get('status', 'open') }}">{{ task.get('status', 'open') }}</span>
+    </div>
+    <h3 class="task-card-title">{{ task.target|truncate(80) }}</h3>
+    <p class="task-card-record">{{ record_label }}</p>
+    <div class="task-card-meta">
+      <span class="task-type">Type: {{ task_type }}</span>
+      <span class="task-prereq">Prerequisites: {{ prerequisites|join('; ') if prerequisites else 'None listed' }}</span>
+      <span class="task-effort">Effort: {{ task.get('effort_estimate') or 'Not estimated' }}</span>
+    </div>
+  </a>
+</li>
+{% endfor %}
+  </ul>
+</section>
+{% else %}
 <section class="band">
-  <table><thead><tr><th>Task</th><th>Record</th><th>Effort</th><th>Prerequisites</th><th>Status</th></tr></thead><tbody>
-  {% for row in rows %}{% set task = row.invitation %}<tr>
-    <td><a href="{{ row.task_href }}">{{ task.target }}</a></td>
-    <td><a href="{{ row.record_href }}">{{ row.record.record_id }}</a></td>
-    <td>{{ task.get('effort_estimate', 'Not estimated') }}{% if task.get('effort_estimate') %}<span class="meta"> · estimated by {{ task.created_by }}</span>{% endif %}</td>
-    <td>{% if task.get('prerequisites') %}{{ task.prerequisites|join('; ') }}{% else %}None recorded{% endif %}</td>
-    <td>{{ task.get('status', 'open') }}</td>
-  </tr>{% endfor %}
-  </tbody></table>
+  <p class="prose">No tasks available right now.</p>
 </section>
 {% endif %}
+
 {% if derived_rows %}
-{# Derived tasks are marked as derived and kept in their own table, because
-   nobody wrote them. They are what a published record with no exposition
-   implies, computed at build time from the absence itself: no YAML entry
-   exists for them, so one real exposition row makes the corresponding line
-   here disappear without anyone deleting anything. The two editor-supplied
-   halves are left as [FILL] markers rather than guessed. #}
 <section class="band">
-  <p class="lbl">Derived — {{ derived_rows|length }} record{{ '' if derived_rows|length == 1 else 's' }} with no exposition recorded</p>
-  <p class="prose">Nobody proposed these. The build generates one for each published record that has no exposition evidence, and removes it again when an exposition is recorded. An editor fills in the reader level and effort before inviting anyone.</p>
-  <table><thead><tr><th>Task</th><th>Record</th><th>Effort</th><th>Origin</th></tr></thead><tbody>
-  {% for row in derived_rows %}{% set task = row.invitation %}<tr id="{{ row.anchor }}" class="task-derived">
-    <td>{{ task.target }}</td>
-    <td><a href="{{ row.record_href }}">{{ row.record.record_id }}</a></td>
-    <td>{{ task.effort_estimate }}</td>
-    <td><span class="task-origin-derived">Derived by the build</span></td>
-  </tr>{% endfor %}
-  </tbody></table>
+  <details class="secondary-content">
+    <summary>{{ derived_rows|length }} derived task{{ '' if derived_rows|length == 1 else 's' }} (records needing exposition)</summary>
+    <p class="prose" >Derived by the build for records without exposition. An editor fills in details before inviting contributors.</p>
+    <ul class="task-cards task-cards-derived">
+    {% for row in derived_rows %}
+    {% set task = row.invitation %}
+    {% set problem = row.record.get('problem_reference') or {} %}
+    {% set relationship = row.record.get('author_relationship') or {} %}
+    {% set author_id = relationship.get('asserted_by') %}
+    {% set author = row.record.get('parties', {}).get(author_id, {}) if author_id else {} %}
+    {% set author_name = author.get('name', author.get('pseudonym')) %}
+    {% set record_label = (problem.get('venue') ~ ' #' ~ problem.get('problem_id')) if problem.get('venue') and problem.get('problem_id') else (author_name or row.record.claim.text.value) %}
+    {% set prerequisites = task.get('prerequisites') or [] %}
+    <li class="task-card task-card-derived" id="{{ row.anchor }}">
+      <div class="task-card-header">
+        <span class="task-origin-derived">derived</span>
+      </div>
+      <h3 class="task-card-title">{{ row.record.claim.text.value|truncate(80) }}</h3>
+      <p class="task-card-record"><a href="{{ row.record_href }}">{{ record_label }}</a></p>
+      <div class="task-card-meta">
+        <span class="task-type">Type: {{ task.get('task_kind', task.get('kind', 'bounded check'))|replace('_', ' ')|capitalize }}</span>
+        <span class="task-prereq">Prerequisites: {{ prerequisites|join('; ') if prerequisites else 'None listed' }}</span>
+        <span class="task-effort">Effort: {{ task.get('effort_estimate') or 'Not estimated' }}</span>
+      </div>
+    </li>
+    {% endfor %}
+    </ul>
+  </details>
 </section>
 {% endif %}
 {% endblock %}

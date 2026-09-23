@@ -37,7 +37,7 @@ test("the zeta record separates pinned sources from independent execution", () =
   const record = readFileSync(zetaRecordPath, "utf8");
   assert.match(record, /<math xmlns="http:\/\/www\.w3\.org\/1998\/Math\/MathML"/);
   assert.match(record, /<mfrac>/);
-  assert.match(record, /Summary · for readers/);
+  assert.match(record, /Reader summary/);
   assert.match(record, /Reader summary · Significance/);
   assert.match(record, /Record note · Significance/);
   assert.doesNotMatch(record, /Confirming a description would not confirm the mathematics/);
@@ -57,11 +57,19 @@ test("the homepage derives its record facts from the generated index", () => {
   assert.match(homepage, /records\.length/);
   assert.match(homepage, /records\.map/);
 
-  // The index carries records and boards. It was a bare array until the board
-  // needed somewhere to be linked from, and the rule that the shell may only
-  // present generated data left exactly one place to put it.
-  assert.deepEqual(Object.keys(summaries).sort(), ["boards", "records"]);
-  assert.equal(summaries.records.length, 8);
+  // The index carries records, boards and the site block. It was a bare array
+  // until the board needed somewhere to be linked from, and the rule that the
+  // shell may only present generated data left exactly one place to put it —
+  // and then /about/ needed a maintainer contact for the same reason.
+  assert.deepEqual(Object.keys(summaries).sort(), ["boards", "records", "site"]);
+
+  // The shipped maintainer_name and contact_email are [FILL] markers, and the
+  // builder must hand the shell null rather than the bracket text. /about/
+  // then says the channel is unset instead of rendering a dead mailto.
+  assert.equal(summaries.site.maintainer_name, null);
+  assert.equal(summaries.site.contact_email, null);
+  assert.equal(summaries.site.repository_url, "https://github.com/hjyuh/significance");
+  assert.equal(summaries.records.length, 9);
   const byId = Object.fromEntries(summaries.records.map((record) => [record.record_id, record]));
   assert.equal(byId["2026-openai-nonsofic-groups"].freshness, "current");
   assert.equal(byId["2026-openai-nonsofic-groups"].evidence_count, 2);
@@ -72,6 +80,9 @@ test("the homepage derives its record facts from the generated index", () => {
   assert.equal(byId["2026-rafikzeraoulia-erdos-653"].freshness, "current");
   assert.equal(byId["2026-rafikzeraoulia-erdos-726"].freshness, "current");
   assert.equal(byId["2026-evanbeller-erdos-132"].freshness, "current");
+  assert.equal(byId["2026-dottedcalculator-erdos-4"].freshness, "current");
+  assert.equal(byId["2026-dottedcalculator-erdos-4"].evidence_count, 3);
+  assert.equal(byId["2026-dottedcalculator-erdos-4"].open_invitation_count, 3);
 
   // Board counts are generated, not counted in JSX: the homepage must not be
   // able to disagree with the board about how much of it is filled in.

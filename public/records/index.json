@@ -40,6 +40,19 @@
       "open_invitation_count": 3
     },
     {
+      "record_id": "2026-dottedcalculator-erdos-4",
+      "record_version": 1,
+      "record_state": "active",
+      "claim": "A Tilted Residue-Class Construction for Long Prime-Free Intervals claims Y(X) ≫ X log X / log₃ X and G(T) ≫ log T log₂ T / log₄ T.",
+      "claim_mathml": null,
+      "claim_basis": "source_quote",
+      "claim_asserted_by": "dottedcalculator",
+      "freshness": "current",
+      "freshness_checked_at": "2026-08-31T01:02:46Z",
+      "evidence_count": 3,
+      "open_invitation_count": 3
+    },
+    {
       "record_id": "2026-evanbeller-erdos-132",
       "record_version": 1,
       "record_state": "active",
@@ -113,5 +126,10 @@
       "row_count": 10,
       "recorded_row_count": 1
     }
-  ]
+  ],
+  "site": {
+    "maintainer_name": null,
+    "repository_url": "https://github.com/hjyuh/significance",
+    "contact_email": null
+  }
 }
