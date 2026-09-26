@@ -205,6 +205,7 @@ importance_claims:
 
 open_invitations:
   - kind: correspondence
+    check_category: statement
     target: "Trace Theorem 1.1 to declaration X."
     created_by: editor-id
     created_at: "..."
@@ -212,6 +213,15 @@ open_invitations:
 
 An invitation may be created by an author, reviewer, or editor. It should be a
 bounded task that another person can actually take.
+
+`check_category` is optional and classifies the mathematical work as
+`statement`, `proof`, `computation`, `formalization`, `literature`,
+`exposition`, or `other`. It is separate from `task_kind`, which describes the
+method used. Task pages show any task-linked attestations as a scoped
+verification record; the task's open/taken/done status describes participation,
+not mathematical correctness. A task may link to a public GitHub discussion
+with `discussion_url`; discussion is not evidence and does not enter the record
+unless a named contributor submits it through the normal evidence process.
 
 **Derived tasks.** One task kind is generated rather than written: a published
 record with no `exposition` evidence produces an exposition task on `/tasks/`,

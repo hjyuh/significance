@@ -1519,6 +1519,15 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 .task-card-header { gap: 12px; }
 .task-kind { font-size: 13px; color: var(--dim); }
 .task-card:hover { transform: none; box-shadow: none; }
+
+/* A task's category describes what it checks; its kind describes the method. */
+.task-category { color: var(--note); }
+.task-check-records { list-style: none; margin: 18px 0 0; padding: 0; }
+.task-check-record { border-top: 1px solid var(--hair); padding: 18px 0 8px; }
+.task-check-record p { max-width: 72ch; }
+.task-check-record p:first-child { margin-top: 0; }
+.task-check-record p:last-child { margin-bottom: 0; }
+.task-discussion .button { display: inline-block; margin-top: 4px; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; }

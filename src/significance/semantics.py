@@ -648,6 +648,28 @@ def check_invitation_task_kinds(record: dict) -> list[Violation]:
     return violations
 
 
+def check_invitation_categories(record: dict) -> list[Violation]:
+    """Use a small, explicit taxonomy for the part of a claim a task checks."""
+    allowed = {
+        "statement", "proof", "computation", "formalization",
+        "literature", "exposition", "other",
+    }
+    violations = []
+    for i, invitation in enumerate(record.get("open_invitations") or []):
+        if not isinstance(invitation, dict) or "check_category" not in invitation:
+            continue
+        if invitation.get("check_category") not in allowed:
+            violations.append(
+                Violation(
+                    "check-category-unknown",
+                    f"check_category must be one of {sorted(allowed)}, "
+                    f"got {invitation.get('check_category')!r}",
+                    f"open_invitations[{i}].check_category",
+                )
+            )
+    return violations
+
+
 def check_review_notes(record: dict) -> list[Violation]:
     violations = []
     for i, attestation in enumerate(record.get("attestations") or []):
@@ -838,6 +860,7 @@ def semantic_violations(record: dict, known_ids: set[str] | None = None) -> list
         *check_invitation_instructions(record),
         *check_invitation_state(record),
         *check_invitation_task_kinds(record),
+        *check_invitation_categories(record),
         *check_review_notes(record),
         *(check_dependencies(record, known_ids) if known_ids is not None else []),
         *check_freshness_recomputation(record),

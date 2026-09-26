@@ -15,6 +15,7 @@
   <h1 class="claim-text">{{ task.target }}</h1>
   <p class="meta"><a href="{{ row.record_href }}">{{ record_label }}</a> · task {{ row.task_id }}</p>
   <dl class="facts">
+    <dt>Check category</dt><dd>{{ row.check_category_label }}</dd>
     <dt>Task type</dt><dd>{{ task_type }}</dd>
     {% if task.get('entry_points') %}<dt>Entry points</dt><dd>{{ task.entry_points }}</dd>{% endif %}
     <dt>Source PDF</dt><dd><a class="button" href="{{ row.record.manuscript.url }}">Download the exact manuscript</a><br><span class="meta">{{ row.record.manuscript.label }} · version <code>{{ row.record.manuscript.sha256|short_hash }}</code></span></dd>
@@ -77,6 +78,38 @@
 </section>
 
 <section class="band"><p class="lbl">Status</p><p class="prose">{{ task.get('status', 'open')|capitalize }}{% if task.get('status') == 'taken' %} by {{ task.taken_by }} since {{ task.taken_at[:10] }}{% endif %}.</p></section>
+
+<section class="band task-verification" aria-labelledby="task-verification-heading">
+  <p class="lbl" id="task-verification-heading">Verification record</p>
+  <p class="meta">Task status tracks participation, not whether the claim is true. Each report below is limited to the scope its author describes.</p>
+  {% if row.task_attestations %}
+  <ul class="task-check-records">
+    {% for report in row.task_attestations %}
+    <li class="task-check-record">
+      <p class="meta">{{ m.party_label(report.reviewer) }} · {{ report.asserted_at[:10] }} · {{ report.depth or 'scoped report' }}</p>
+      <p><strong>Scope:</strong> {{ report.scope }}</p>
+      {% if report.method %}<p><strong>Method:</strong> {{ report.method }}</p>{% endif %}
+      {% if report.finding %}<p><strong>Finding reported:</strong> {{ report.finding }}</p>{% endif %}
+      {% if report.limits %}<p><strong>Limits:</strong> {{ report.limits }}</p>{% endif %}
+      {% if report.link|safe_href %}<p><a href="{{ report.link|safe_href }}">Supporting material</a></p>{% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="prose">No scoped check has been recorded for this task yet.</p>
+  {% endif %}
+</section>
+
+<section class="band task-discussion" aria-labelledby="task-discussion-heading">
+  <p class="lbl" id="task-discussion-heading">Comments and questions</p>
+  <p class="prose">Use the public GitHub thread to ask about this task, share a partial attempt, or discuss how to approach it. Discussion is informal and does not become evidence in the claim record.</p>
+  {% if row.discussion_url %}
+  <p><a class="button" href="{{ row.discussion_url }}">{% if task.get('discussion_url') %}Open task discussion{% else %}Start a public comment thread{% endif %}</a></p>
+  <p class="meta">GitHub may require an account to post. To add a scoped check to the record, use the attestation form above.</p>
+  {% else %}
+  <p class="meta">No discussion link is configured for this task. Use the question or partial-attempt links above.</p>
+  {% endif %}
+</section>
 
 <details class="secondary-content band" open>
   <summary>How to do this</summary>

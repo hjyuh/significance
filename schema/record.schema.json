@@ -864,6 +864,16 @@
         "effort_estimate": { "type": "string", "maxLength": 120 },
         "prerequisites": { "type": "array", "items": { "type": "string", "maxLength": 200 } },
         "task_kind": { "type": "string", "maxLength": 40 },
+        "check_category": {
+          "type": "string",
+          "enum": ["statement", "proof", "computation", "formalization", "literature", "exposition", "other"],
+          "description": "What part of the claim this task checks. Separate from task_kind, which describes the method. A category does not imply a mathematical verdict."
+        },
+        "discussion_url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Optional public discussion thread for this task. Discussion is not evidence and must not be treated as a Significance assessment."
+        },
         "entry_points": { "type": "string", "maxLength": 240 }
       }
     },

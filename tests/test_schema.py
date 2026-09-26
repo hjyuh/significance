@@ -33,6 +33,17 @@ def test_schema_forbids_additional_top_level_properties():
     assert schema.get("additionalProperties") is False
 
 
+def test_check_category_is_optional_but_uses_the_closed_taxonomy():
+    record = load_record(EXAMPLE_RECORD)
+    assert validator().is_valid(record)
+    record["open_invitations"][0]["check_category"] = "unreviewed"
+    errors = list(validator().iter_errors(record))
+    assert any(
+        list(error.path)[-1:] == ["check_category"] and error.validator == "enum"
+        for error in errors
+    )
+
+
 @pytest.mark.parametrize(
     "record_path",
     sorted(RECORDS_DIR.glob("*.yaml"))

@@ -30,6 +30,7 @@
     <p class="task-card-record">{{ record_label }}</p>
     <div class="task-card-meta">
       <span class="task-type">Type: {{ task_type }}</span>
+      <span class="task-category">Check: {{ row.check_category_label }}</span>
       <span class="task-prereq">Prerequisites: {{ prerequisites|join('; ') if prerequisites else 'None listed' }}</span>
       <span class="task-effort">Effort: {{ task.get('effort_estimate') or 'Not estimated' }}</span>
     </div>
@@ -67,6 +68,7 @@
       <p class="task-card-record"><a href="{{ row.record_href }}">{{ record_label }}</a></p>
       <div class="task-card-meta">
         <span class="task-type">Type: {{ task.get('task_kind', task.get('kind', 'bounded check'))|replace('_', ' ')|capitalize }}</span>
+        <span class="task-category">Check: {{ row.check_category_label }}</span>
         <span class="task-prereq">Prerequisites: {{ prerequisites|join('; ') if prerequisites else 'None listed' }}</span>
         <span class="task-effort">Effort: {{ task.get('effort_estimate') or 'Not estimated' }}</span>
       </div>

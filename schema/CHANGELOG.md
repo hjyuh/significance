@@ -1,5 +1,19 @@
 # Schema changelog
 
+## 1 — 2026-09-26
+
+Added optional `open_invitations[].check_category` to classify the part of a
+claim a task examines (`statement`, `proof`, `computation`, `formalization`,
+`literature`, `exposition`, or `other`). This is distinct from `task_kind`,
+which describes the method. Task pages now show a scoped verification record
+from task-linked attestations and state explicitly that task status is not a
+mathematical verdict. Added optional `open_invitations[].discussion_url` for a
+public task discussion; discussion remains separate from evidence. If no
+thread is recorded, task pages provide a prefilled GitHub issue link.
+
+Older schema copies reject records using either optional field; pull the current
+schema before validating records that use them.
+
 ## 1 — 2026-08-29
 
 Added two evidence kinds for work published elsewhere, plus the fields the

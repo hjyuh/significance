@@ -129,9 +129,12 @@ Two optional blocks in a record's YAML:
   record without surrendering its own presentation or editorial control.
 
 Open invitations may also carry `how` (what somebody would actually do, pinned
-to an exact revision) and `respond` (where the answer goes). Status is
-`open`, `taken`, `done`, or `withdrawn`; taking is attributed and a completed
-task points to its evidence. `depends_on` records attributed links to earlier
+to an exact revision), `respond` (where the answer goes), and `check_category`
+(the part of the claim examined, separate from the method in `task_kind`).
+Status is `open`, `taken`, `done`, or `withdrawn`; taking is attributed and a completed
+task points to its evidence. Task pages show task-linked attestations as a
+scoped verification record and link to a public discussion thread. Discussion
+remains separate from evidence. `depends_on` records attributed links to earlier
 records or external work. Reviewer attestations carry scope and manuscript
 hash, with an optional short review note; strata are displayed separately.
 

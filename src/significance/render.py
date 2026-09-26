@@ -192,6 +192,56 @@ def task_id(invitation: dict, index: int) -> str:
     return invitation.get("task_id") or f"task-{index + 1}"
 
 
+def check_category(invitation: dict) -> str:
+    """Return the explicit check category, or a conservative legacy mapping."""
+    category = invitation.get("check_category")
+    if category:
+        return category
+    invitation_kind = invitation.get("kind")
+    if invitation_kind == "formal_reproduction":
+        return "formalization"
+    if invitation_kind == "reproduction":
+        return "computation"
+    task_kind = invitation.get("task_kind")
+    legacy = {
+        "statement_audit": "statement",
+        "read_check": "proof",
+        "rederive": "proof",
+        "exposition": "exposition",
+    }
+    if task_kind in legacy:
+        return legacy[task_kind]
+    legacy_kinds = {
+        "correspondence": "statement",
+        "formal_correspondence": "statement",
+        "first_pass_statement_comparison": "statement",
+        "mathematical_review": "proof",
+        "certificate_reading": "proof",
+        "geometric_check": "proof",
+        "proof_bookkeeping": "proof",
+        "incidence_hypotheses": "proof",
+        "bounded_structural_check": "proof",
+        "weighted_reduction": "proof",
+        "main_cancellation": "proof",
+        "alternate_hypothesis": "proof",
+    }
+    if invitation_kind in legacy_kinds:
+        return legacy_kinds[invitation_kind]
+    return "other"
+
+
+def check_category_label(category: str) -> str:
+    return {
+        "statement": "Statement",
+        "proof": "Proof step",
+        "computation": "Computation",
+        "formalization": "Formalization",
+        "literature": "Literature",
+        "exposition": "Exposition",
+        "other": "Other",
+    }.get(category, "Other")
+
+
 def _attestation_yaml(record: dict, invitation: dict, task: str) -> str:
     """Build the reviewer-facing YAML skeleton from record data only."""
     payload = {
@@ -1161,6 +1211,13 @@ def build_site(
                     "record": record,
                     "invitation": invitation,
                     "task_id": tid,
+                    "check_category": check_category(invitation),
+                    "check_category_label": check_category_label(check_category(invitation)),
+                    "task_attestations": [
+                        attestation
+                        for attestation in record.get("attestations", [])
+                        if attestation.get("task_id") == tid
+                    ],
                     "record_href": (
                         f"/records/{record['record_id']}/index.html"
                         if deployed
@@ -1173,6 +1230,8 @@ def build_site(
                     ),
                     "issue_url": _attestation_issue_url(invitation, record, tid),
                     "question_url": _task_response_url(config, record, invitation, tid, "Question"),
+                    "discussion_url": safe_href(invitation.get("discussion_url"))
+                    or _task_response_url(config, record, invitation, tid, "Discussion"),
                     "attempt_url": _task_response_url(
                         config, record, invitation, tid, "Partial attempt"
                     ),
@@ -1195,6 +1254,7 @@ def build_site(
                 "invitation": derived,
                 "task_id": derived["task_id"],
                 "derived": True,
+                "check_category_label": "Exposition",
                 "anchor": f"derived-exposition-{record['record_id']}",
                 "record_href": (
                     f"/records/{record['record_id']}/index.html"

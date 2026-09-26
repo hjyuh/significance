@@ -208,6 +208,18 @@ def test_scoped_task_pages_and_index_are_generated(tmp_path):
     assert task_href is not None
     assert task_href.group(1).startswith("./")
     assert (out / "tasks" / task_href.group(1)[2:]).is_file()
+
+    detail_page = (
+        out / "tasks" / "2026-alexchengyuli-erdos-848"
+        / "erdos-848-lean-reproduction" / "index.html"
+    ).read_text(encoding="utf-8")
+    assert "Check category" in detail_page and "Formalization" in detail_page
+    assert "Verification record" in detail_page
+    assert "Task status tracks participation, not whether the claim is true." in detail_page
+    assert "No scoped check has been recorded for this task yet." in detail_page
+    assert "Comments and questions" in detail_page
+    assert "Start a public comment thread" in detail_page
+    assert "github.com/hjyuh/significance/issues/new" in detail_page
     assert "a87ca77b143fd6382ce3882fbef2320c3d037ed92d4128fe078689784bfc4147" in task_page
     assert "Open attestation form" in task_page
     assert "State what you checked and found" in task_page
