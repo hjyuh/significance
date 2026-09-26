@@ -1169,7 +1169,7 @@ def build_site(
                     "task_href": (
                         f"/tasks/{record['record_id']}/{tid}/index.html"
                         if deployed
-                        else f"../../tasks/{record['record_id']}/{tid}/index.html"
+                        else f"./{record['record_id']}/{tid}/index.html"
                     ),
                     "issue_url": _attestation_issue_url(invitation, record, tid),
                     "question_url": _task_response_url(config, record, invitation, tid, "Question"),
