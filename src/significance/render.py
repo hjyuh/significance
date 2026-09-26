@@ -25,7 +25,7 @@ from copy import deepcopy
 from dataclasses import dataclass, field
 from datetime import date, datetime
 from pathlib import Path
-from urllib.parse import urlencode
+from urllib.parse import urlencode, urlsplit
 
 from jinja2 import Environment, FileSystemLoader
 from latex2mathml.converter import convert as latex_to_mathml
@@ -562,6 +562,7 @@ def site_links(
     root_prefix: str,
     *,
     deployed: bool,
+    deployment_prefix: str = "",
     board_ids: list[str] | None = None,
     has_glossary: bool = False,
     has_orientation: bool = False,
@@ -585,9 +586,10 @@ def site_links(
     under /records/ while the auxiliary pages sit at the site root, so no
     relative path spans both reliably and the links are absolute.
 
-    Absolute paths are used only in the layout that requires them, and they
-    are site-root paths written here — never derived from a request, which is
-    the rule db/config.ts states for the other half of this project.
+    Absolute paths are used only in the layout that requires them. Their
+    configured site path prefix comes from the canonical site_url, never from
+    a request, which is the rule db/config.ts states for the other half of
+    this project.
     """
     boards = board_ids or []
     # Only pages this build actually writes appear here. A nav entry pointing
@@ -595,29 +597,30 @@ def site_links(
     # and it is the failure mode of adding links to pages that "will exist
     # soon" — so the link and the page arrive together or not at all.
     if deployed:
+        base = deployment_prefix.rstrip("/")
         links = {
-            "records_index": "/records/index.html",
-            "request": "/request/index.html",
-            "boards": {b: f"/boards/{b}/index.html" for b in boards},
+            "records_index": f"{base}/records/index.html",
+            "request": f"{base}/request/index.html",
+            "boards": {b: f"{base}/boards/{b}/index.html" for b in boards},
         }
         if has_glossary:
-            links["glossary"] = "/glossary/index.html"
+            links["glossary"] = f"{base}/glossary/index.html"
         if has_orientation:
-            links["orientation"] = "/orientation/index.html"
+            links["orientation"] = f"{base}/orientation/index.html"
         if has_reviewers:
-            links["reviewers"] = "/reviewers/index.html"
+            links["reviewers"] = f"{base}/reviewers/index.html"
         if has_backlog:
-            links["backlog"] = "/backlog/index.html"
+            links["backlog"] = f"{base}/backlog/index.html"
         if has_problems:
-            links["problems"] = "/problems/index.html"
+            links["problems"] = f"{base}/problems/index.html"
         if has_frontier:
-            links["frontier"] = "/frontier/index.html"
+            links["frontier"] = f"{base}/frontier/index.html"
         if has_intake:
-            links["intake"] = "/how-to-file-a-claim/index.html"
+            links["intake"] = f"{base}/how-to-file-a-claim/index.html"
         if has_feed:
-            links["feed"] = "/feed.xml"
+            links["feed"] = f"{base}/feed.xml"
         if has_tasks:
-            links["tasks"] = "/tasks/index.html"
+            links["tasks"] = f"{base}/tasks/index.html"
         return links
 
     links = {
@@ -692,6 +695,7 @@ def build_site(
     # intended behaviour: the paragraph renders without a link rather than with
     # a guessed one.
     public_url = safe_href(config.get("site_url"))
+    deployment_prefix = urlsplit(public_url).path.rstrip("/") if public_url else ""
 
     # Boards are resolved before anything renders, because every page's nav
     # needs to know which ones exist. A board that does not validate is skipped
@@ -743,6 +747,7 @@ def build_site(
         return site_links(
             prefix,
             deployed=deployed,
+            deployment_prefix=deployment_prefix,
             board_ids=board_ids,
             has_glossary=bool(glossary),
             has_orientation=bool(orientation),
@@ -830,7 +835,9 @@ def build_site(
         # configured URL so a trailing slash never becomes `//`.
         if public_url:
             site_base = public_url.rstrip("/")
-            record_path = f"/records/{record_id}/" if deployed else f"/{record_id}/"
+            record_path = (
+                f"{deployment_prefix}/records/{record_id}/" if deployed else f"/{record_id}/"
+            )
             record_url = f"{site_base}{record_path}"
         else:
             record_url = None
@@ -845,7 +852,9 @@ def build_site(
             root_prefix="../",
             links=links_for("../"),
             task_root=(
-                f"/tasks/{record_id}/" if deployed else f"../tasks/{record_id}/"
+                f"{deployment_prefix}/tasks/{record_id}/"
+                if deployed
+                else f"../tasks/{record_id}/"
             ),
         )
         _write_page(out_dir / record_id, html)
@@ -865,13 +874,13 @@ def build_site(
     # is "../static/…" in the self-contained layout. In the deployed layout the
     # stylesheet lives under the records root, which no relative path reaches
     # from the site root, so it is addressed absolutely.
-    pages_prefix = "/records/" if deployed else "../"
+    pages_prefix = f"{deployment_prefix}/records/" if deployed else "../"
     pages_links = links_for("../")
     # Reviewer and problem detail pages are two levels below the site root in
     # the self-contained layout. They need their own navigation prefix; using
     # the auxiliary-page prefix here makes links such as
     # `reviewers/orientation/` and `problems/glossary/` dead on arrival.
-    detail_prefix = "/records/" if deployed else "../../"
+    detail_prefix = f"{deployment_prefix}/records/" if deployed else "../../"
     detail_links = links_for(detail_prefix)
 
     linked_problems = [
@@ -888,7 +897,7 @@ def build_site(
                 if invitation.get("status", "open") == "open"
             ),
             "record_href": (
-                f"/records/{record['record_id']}/index.html"
+                f"{deployment_prefix}/records/{record['record_id']}/index.html"
                 if deployed
                 else f"../../{record['record_id']}/index.html"
             ),
@@ -1166,12 +1175,13 @@ def build_site(
                     "invitation": invitation,
                     "index": index,
                     "record_href": (
-                        f"/records/{record['record_id']}/index.html"
+                        f"{deployment_prefix}/records/{record['record_id']}/index.html"
                         if deployed
                         else f"../{record['record_id']}/index.html"
                     ),
                     "task_href": (
-                        f"/tasks/{record['record_id']}/{task_id(invitation, index)}/index.html"
+                        f"{deployment_prefix}/tasks/{record['record_id']}/"
+                        f"{task_id(invitation, index)}/index.html"
                         if deployed
                         else (
                             f"../tasks/{record['record_id']}/"
@@ -1219,12 +1229,12 @@ def build_site(
                         if attestation.get("task_id") == tid
                     ],
                     "record_href": (
-                        f"/records/{record['record_id']}/index.html"
+                        f"{deployment_prefix}/records/{record['record_id']}/index.html"
                         if deployed
                         else f"../{record['record_id']}/index.html"
                     ),
                     "task_href": (
-                        f"/tasks/{record['record_id']}/{tid}/index.html"
+                        f"{deployment_prefix}/tasks/{record['record_id']}/{tid}/index.html"
                         if deployed
                         else f"./{record['record_id']}/{tid}/index.html"
                     ),
@@ -1257,7 +1267,7 @@ def build_site(
                 "check_category_label": "Exposition",
                 "anchor": f"derived-exposition-{record['record_id']}",
                 "record_href": (
-                    f"/records/{record['record_id']}/index.html"
+                    f"{deployment_prefix}/records/{record['record_id']}/index.html"
                     if deployed
                     else f"../{record['record_id']}/index.html"
                 ),
@@ -1283,15 +1293,19 @@ def build_site(
                 pages_dir / "tasks" / row["record"]["record_id"] / row["task_id"],
                 env.get_template("task.html.jinja").render(
                     row=row,
-                    root_prefix=("/" if deployed else "../../../"),
-                    links=links_for("/" if deployed else "../../../"),
+                    root_prefix=(
+                        f"{deployment_prefix}/records/" if deployed else "../../../"
+                    ),
+                    links=links_for(
+                        f"{deployment_prefix}/records/" if deployed else "../../../"
+                    ),
                 ),
             )
             result.pages.append(f"task:{row['record']['record_id']}:{row['task_id']}")
 
     # A board page sits two directories below its root (boards/<id>/), so its
     # relative prefix is one level deeper than the other auxiliary pages.
-    board_prefix = "/records/" if deployed else "../../"
+    board_prefix = f"{deployment_prefix}/records/" if deployed else "../../"
     board_template = env.get_template("board.html.jinja")
     records_by_id = {record["record_id"]: record for record in built_records}
     for board in boards:
@@ -1301,7 +1315,9 @@ def build_site(
         # produce a valid link.
         record_links = {
             row["id"]: (
-                f"/records/{row['record']}/" if deployed else f"../../{row['record']}/index.html"
+                f"{deployment_prefix}/records/{row['record']}/"
+                if deployed
+                else f"../../{row['record']}/index.html"
             )
             for row in board["rows"]
             if row.get("record")
@@ -1323,7 +1339,7 @@ def build_site(
                     "count": len(found),
                     "label": f"{len(found)} exposition{'' if len(found) == 1 else 's'}",
                     "href": (
-                        f"/records/{rid}/#expositions"
+                        f"{deployment_prefix}/records/{rid}/#expositions"
                         if deployed
                         else f"../../{rid}/index.html#expositions"
                     ),
@@ -1335,7 +1351,7 @@ def build_site(
                     "label": "none yet",
                     "href": (
                         (
-                            f"/tasks/index.html#derived-exposition-{rid}"
+                            f"{deployment_prefix}/tasks/index.html#derived-exposition-{rid}"
                             if deployed
                             else f"../../tasks/index.html#derived-exposition-{rid}"
                         )

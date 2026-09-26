@@ -5,15 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none';">
 <title>Open work — Significance</title>
-<link rel="stylesheet" href="/records/static/style.css?v=b41fc929dda5">
+<link rel="stylesheet" href="/significance/records/static/style.css?v=b41fc929dda5">
 </head>
 <body>
 <header class="topline">
-<a class="wordmark" href="/records/index.html">SIGNIFICANCE</a>
+<a class="wordmark" href="/significance/records/index.html">SIGNIFICANCE</a>
 <p class="topline-meta">22 open tasks</p>
 <nav class="topline-nav" aria-label="Site">
-<a href="/records/index.html">Records</a>
-<a href="/tasks/index.html">Open checks</a><a href="/orientation/index.html">How it works</a><a href="/request/index.html">Submit or correct</a>
+<a href="/significance/records/index.html">Records</a>
+<a href="/significance/tasks/index.html">Open checks</a><a href="/significance/orientation/index.html">How it works</a><a href="/significance/request/index.html">Submit or correct</a>
 </nav>
 </header>
 <div class="shell">
@@ -26,92 +26,92 @@
 <section class="band">
   <ul class="frontier-list">
     <li class="frontier-item">
-      <p class="meta">Open · correspondence · <a href="/records/2026-alexchengyuli-erdos-1212/index.html">2026-alexchengyuli-erdos-1212</a></p>
-      <h2><a href="/tasks/2026-alexchengyuli-erdos-1212/erdos-1212-statement-correspondence/index.html">Compare the graph and path conditions in Section 1, Problem 1212, Target.lean, and AlgebraicCorridorKernelAudit.lean.</a></h2>
+      <p class="meta">Open · correspondence · <a href="/significance/records/2026-alexchengyuli-erdos-1212/index.html">2026-alexchengyuli-erdos-1212</a></p>
+      <h2><a href="/significance/tasks/2026-alexchengyuli-erdos-1212/erdos-1212-statement-correspondence/index.html">Compare the graph and path conditions in Section 1, Problem 1212, Target.lean, and AlgebraicCorridorKernelAudit.lean.</a></h2>
 <p class="prose">Check composite-coordinate restrictions, unit adjacency, and the implication from an injective infinite path to a path going to infinity. Record discrepancies and unresolved questions. Allow approximately 1–2 hours for this statement comparison.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=attestation.yml">Report what you found</a></p>    </li>
     <li class="frontier-item">
-      <p class="meta">Open · formal reproduction · <a href="/records/2026-alexchengyuli-erdos-848/index.html">2026-alexchengyuli-erdos-848</a></p>
-      <h2><a href="/tasks/2026-alexchengyuli-erdos-848/erdos-848-lean-reproduction/index.html">Reproduce the pinned Lean release and report the build and certificate result within the published-cache replay trust boundary.</a></h2>
+      <p class="meta">Open · formal reproduction · <a href="/significance/records/2026-alexchengyuli-erdos-848/index.html">2026-alexchengyuli-erdos-848</a></p>
+      <h2><a href="/significance/tasks/2026-alexchengyuli-erdos-848/erdos-848-lean-reproduction/index.html">Reproduce the pinned Lean release and report the build and certificate result within the published-cache replay trust boundary.</a></h2>
 <p class="prose">Check out tag v1.0.5-kernel at commit bb8e1b10b006…. Download all 75 cache-shard ZIP files together with the manifest and checksum assets, place them in one directory, and run python -B scripts/install_release_cache.py --asset-dir &lt;download-directory&gt; --prepare-dependencies --kernel --memory-mib 32768. Do not run lake update. Record the toolchain, commands, result, resource limits, and log hash. This checks reproducibility, not the truth of the mathematical claim.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=attestation.yml">Report what you found</a></p>    </li>
     <li class="frontier-item">
-      <p class="meta">Open · certificate reading · <a href="/records/2026-alexchengyuli-erdos-848/index.html">2026-alexchengyuli-erdos-848</a></p>
-      <h2><a href="/tasks/2026-alexchengyuli-erdos-848/erdos-848-certificate-audit/index.html">Read one certificate-generation path and record the exact passages followed.</a></h2>
+      <p class="meta">Open · certificate reading · <a href="/significance/records/2026-alexchengyuli-erdos-848/index.html">2026-alexchengyuli-erdos-848</a></p>
+      <h2><a href="/significance/tasks/2026-alexchengyuli-erdos-848/erdos-848-certificate-audit/index.html">Read one certificate-generation path and record the exact passages followed.</a></h2>
 <p class="prose">Follow this concrete declaration path from paper/theorem-map.json: Erdos848.PaperGeneratedCertificateProvider.all_N -&gt; numericalCertificates.fiveSharp -&gt; GeneratedTailR263EvenOneFinite23.sharpCertificate -&gt; E1Finite23SharpCertificate -&gt; e1FiniteSharpFourLeafPasses_sound -&gt; erdos848FiveToTenMillionClose -&gt; PaperCertificateProvider.fiveToTenMillion. Record the exact declarations and commands checked, without rating the whole proof.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=attestation.yml">Report what you found</a></p>    </li>
     <li class="frontier-item">
-      <p class="meta">Open · correspondence · <a href="/records/2026-alexchengyuli-erdos-848/index.html">2026-alexchengyuli-erdos-848</a></p>
-      <h2><a href="/tasks/2026-alexchengyuli-erdos-848/erdos-848-statement-correspondence/index.html">Compare the paper&#39;s exact all-N statement with the pinned Lean declaration, recording both the paper version and the pinned machine-proof version.</a></h2>
+      <p class="meta">Open · correspondence · <a href="/significance/records/2026-alexchengyuli-erdos-848/index.html">2026-alexchengyuli-erdos-848</a></p>
+      <h2><a href="/significance/tasks/2026-alexchengyuli-erdos-848/erdos-848-statement-correspondence/index.html">Compare the paper&#39;s exact all-N statement with the pinned Lean declaration, recording both the paper version and the pinned machine-proof version.</a></h2>
 <p class="prose">Record the paper version and the pinned machine-proof version, list the definitions and declarations compared, and record any remaining correspondence question; do not characterize the whole proof. The author reports that editorial revisions after v1.0.5-kernel did not change the theorem, Lean source tree, theorem map, or mathematical conclusion; that report is not an independent finding.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=attestation.yml">Report what you found</a></p>    </li>
     <li class="frontier-item">
-      <p class="meta">Open · reproduction · <a href="/records/2026-anthropic-zeta-two-thirds/index.html">2026-anthropic-zeta-two-thirds</a></p>
-      <h2><a href="/tasks/2026-anthropic-zeta-two-thirds/task-1/index.html">Independently build the Theorem D Lean targets and run their axiom audit at commit 3635e74826a4c1fcece7d1cd2b6fa75e43a00510.</a></h2>
+      <p class="meta">Open · reproduction · <a href="/significance/records/2026-anthropic-zeta-two-thirds/index.html">2026-anthropic-zeta-two-thirds</a></p>
+      <h2><a href="/significance/tasks/2026-anthropic-zeta-two-thirds/task-1/index.html">Independently build the Theorem D Lean targets and run their axiom audit at commit 3635e74826a4c1fcece7d1cd2b6fa75e43a00510.</a></h2>
 <p class="prose">Clone github.com/… check out 3635e74826a4…, and retain the pinned lean-toolchain and lake-manifest.json. Run lake exe cache get, lake build Solution Solution.Multiplicity, then lake env lean comparator/PrintAxioms.lean and lake env lean comparator/PrintAxioms/Multiplicity.lean. Report commands, platform, exit codes, and the SHA-256 of the complete log.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=invitation-response.yml">Report what you found</a></p>    </li>
     <li class="frontier-item">
-      <p class="meta">Open · correspondence · <a href="/records/2026-anthropic-zeta-two-thirds/index.html">2026-anthropic-zeta-two-thirds</a></p>
-      <h2><a href="/tasks/2026-anthropic-zeta-two-thirds/task-2/index.html">Compare paper Theorem D with the trusted comparator statement montgomery_taylor_on_critical_line and its counting definitions.</a></h2>
+      <p class="meta">Open · correspondence · <a href="/significance/records/2026-anthropic-zeta-two-thirds/index.html">2026-anthropic-zeta-two-thirds</a></p>
+      <h2><a href="/significance/tasks/2026-anthropic-zeta-two-thirds/task-2/index.html">Compare paper Theorem D with the trusted comparator statement montgomery_taylor_on_critical_line and its counting definitions.</a></h2>
 <p class="prose">Use page 21 of the paper with SHA-256 6792988e6cd0…. At the pinned repository commit, inspect comparator/ChallengeDeps.lean, comparator/Challenge.lean, comparator/Solution.lean, and config.json. State whether the interval conventions, multiplicity, critical-line count, limit formulation, and constant match; identify every mismatch or unresolved definition explicitly.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=invitation-response.yml">Report what you found</a></p>    </li>
     <li class="frontier-item">
-      <p class="meta">Open · mathematical review · <a href="/records/2026-anthropic-zeta-two-thirds/index.html">2026-anthropic-zeta-two-thirds</a></p>
-      <h2><a href="/tasks/2026-anthropic-zeta-two-thirds/task-3/index.html">Assess the passage from Weil-form signature data to the lower bound in Proposition 4.4 and Theorem D, against the pinned paper.</a></h2>
+      <p class="meta">Open · mathematical review · <a href="/significance/records/2026-anthropic-zeta-two-thirds/index.html">2026-anthropic-zeta-two-thirds</a></p>
+      <h2><a href="/significance/tasks/2026-anthropic-zeta-two-thirds/task-3/index.html">Assess the passage from Weil-form signature data to the lower bound in Proposition 4.4 and Theorem D, against the pinned paper.</a></h2>
 <p class="prose">Work from the paper hash recorded here and name that hash in the report. Focus on the off-critical-line block decomposition, tail control, and use of the unconditional prime-side second moment. Name the first step you cannot justify, or state the bounded portion you checked; do not give a paper-wide score.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=invitation-response.yml">Report what you found</a></p>    </li>
     <li class="frontier-item">
-      <p class="meta">Open · formal reproduction · <a href="/records/2026-dottedcalculator-erdos-4/index.html">2026-dottedcalculator-erdos-4</a></p>
-      <h2><a href="/tasks/2026-dottedcalculator-erdos-4/erdos-4-lean-reproduction/index.html">Reproduce the completed tilted-sieve theorems and guarded axiom output at the pinned commit.</a></h2>
+      <p class="meta">Open · formal reproduction · <a href="/significance/records/2026-dottedcalculator-erdos-4/index.html">2026-dottedcalculator-erdos-4</a></p>
+      <h2><a href="/significance/tasks/2026-dottedcalculator-erdos-4/erdos-4-lean-reproduction/index.html">Reproduce the completed tilted-sieve theorems and guarded axiom output at the pinned commit.</a></h2>
 <p class="prose">Check out commit 554ac598b287…. Follow the src/latest build instructions without updating dependencies. Build ErdosProblems.Erdos4Tilted and run ErdosProblems/Erdos4/TiltedVerification.lean. Record commands, toolchain, result, resource limits, and log hash. This tests reproducibility, not paper-to-code correspondence or mathematical novelty.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=attestation.yml">Report what you found</a></p>    </li>
     <li class="frontier-item">
-      <p class="meta">Open · correspondence · <a href="/records/2026-dottedcalculator-erdos-4/index.html">2026-dottedcalculator-erdos-4</a></p>
-      <h2><a href="/tasks/2026-dottedcalculator-erdos-4/erdos-4-statement-correspondence/index.html">Compare the manuscript&#39;s two asymptotic statements with the pinned Lean declarations, recording endpoint, quantifier, and normalization choices.</a></h2>
+      <p class="meta">Open · correspondence · <a href="/significance/records/2026-dottedcalculator-erdos-4/index.html">2026-dottedcalculator-erdos-4</a></p>
+      <h2><a href="/significance/tasks/2026-dottedcalculator-erdos-4/erdos-4-statement-correspondence/index.html">Compare the manuscript&#39;s two asymptotic statements with the pinned Lean declarations, recording endpoint, quantifier, and normalization choices.</a></h2>
 <p class="prose">Compare equations (1.1)–(1.3) in the pinned PDF with covering_theorem, prime_gap_corollary, and their definitions. Record exact declarations and any remaining mismatch. Do not infer correspondence from a successful build alone.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=attestation.yml">Report what you found</a></p>    </li>
     <li class="frontier-item">
-      <p class="meta">Open · geometric check · <a href="/records/2026-evanbeller-erdos-132/index.html">2026-evanbeller-erdos-132</a></p>
-      <h2><a href="/tasks/2026-evanbeller-erdos-132/erdos-132-n8-geometry/index.html">Check the n = 8 geometric deduction only; report the exact passages followed and any first unresolved step.</a></h2>
+      <p class="meta">Open · geometric check · <a href="/significance/records/2026-evanbeller-erdos-132/index.html">2026-evanbeller-erdos-132</a></p>
+      <h2><a href="/significance/tasks/2026-evanbeller-erdos-132/erdos-132-n8-geometry/index.html">Check the n = 8 geometric deduction only; report the exact passages followed and any first unresolved step.</a></h2>
 <p class="prose">Use the pinned PDF. Check the profile reduction, both seven-point deletions, the overlap lemma, and the final contradiction. Do not rate the whole paper.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=attestation.yml">Report what you found</a></p>    </li>
     <li class="frontier-item">
-      <p class="meta">Open · formal correspondence · <a href="/records/2026-evanbeller-erdos-132/index.html">2026-evanbeller-erdos-132</a></p>
-      <h2><a href="/tasks/2026-evanbeller-erdos-132/erdos-132-lean-correspondence/index.html">Compare the formal theorem and definitions with the informal n = 8 claim.</a></h2>
+      <p class="meta">Open · formal correspondence · <a href="/significance/records/2026-evanbeller-erdos-132/index.html">2026-evanbeller-erdos-132</a></p>
+      <h2><a href="/significance/tasks/2026-evanbeller-erdos-132/erdos-132-lean-correspondence/index.html">Compare the formal theorem and definitions with the informal n = 8 claim.</a></h2>
 <p class="prose">List the declarations compared and record where correspondence is clear or remains open; do not infer proof correctness from compilation.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=attestation.yml">Report what you found</a></p>    </li>
     <li class="frontier-item">
-      <p class="meta">Open · correspondence · <a href="/records/2026-openai-nonsofic-groups/index.html">2026-openai-nonsofic-groups</a></p>
-      <h2><a href="/tasks/2026-openai-nonsofic-groups/task-2/index.html">Trace the declaration chain between manuscript Theorem 1.1 and the Comparator target exists_finitelyPresented_nonsofic_group.</a></h2>
+      <p class="meta">Open · correspondence · <a href="/significance/records/2026-openai-nonsofic-groups/index.html">2026-openai-nonsofic-groups</a></p>
+      <h2><a href="/significance/tasks/2026-openai-nonsofic-groups/task-2/index.html">Trace the declaration chain between manuscript Theorem 1.1 and the Comparator target exists_finitelyPresented_nonsofic_group.</a></h2>
 <p class="prose">Read Theorem 1.1 on page 78 of the manuscript hashed in this record (sha256 f318c6508c9d…), then read SoficGroups.SourceTopLevelCompressionFinal.exists_finitelyPresented_nonsofic_group, the declaration ComparatorChallenges/D_NonSoficGroup.json names at the pinned commit. Walk the declarations between them and write down each one. The specific thing to look for: the manuscript states a property of one concrete group, the formal target states that some finitely presented group exists. Say where those two part company, and whether anything in between closes the gap.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=invitation-response.yml">Report what you found</a></p>    </li>
     <li class="frontier-item">
-      <p class="meta">Open · mathematical review · <a href="/records/2026-openai-nonsofic-groups/index.html">2026-openai-nonsofic-groups</a></p>
-      <h2><a href="/tasks/2026-openai-nonsofic-groups/task-3/index.html">Assess the expander-matching criterion in Proposition 2.3 or the Thompson-group step in Proposition 3.2, naming the exact artifact revision reviewed.</a></h2>
+      <p class="meta">Open · mathematical review · <a href="/significance/records/2026-openai-nonsofic-groups/index.html">2026-openai-nonsofic-groups</a></p>
+      <h2><a href="/significance/tasks/2026-openai-nonsofic-groups/task-3/index.html">Assess the expander-matching criterion in Proposition 2.3 or the Thompson-group step in Proposition 3.2, naming the exact artifact revision reviewed.</a></h2>
 <p class="prose">Pick one: the expander-matching criterion in Proposition 2.3, or the Thompson-group step in Proposition 3.2. Work from the manuscript hashed here (sha256 f318c6508c9d…) and name that hash in what you write, so the assessment stays attached to the revision you actually read. &#34;I could not follow step 4&#34; is a useful report and will be recorded as what it is: your reading, signed by you.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=invitation-response.yml">Report what you found</a></p>    </li>
     <li class="frontier-item">
-      <p class="meta">Open · proof bookkeeping · <a href="/records/2026-rafikzeraoulia-erdos-653/index.html">2026-rafikzeraoulia-erdos-653</a></p>
-      <h2><a href="/tasks/2026-rafikzeraoulia-erdos-653/restricted-center-incidence/index.html">Check Theorem 1.1 and the Section 3 deduction from the incidence bound to the exponent.</a></h2>
+      <p class="meta">Open · proof bookkeeping · <a href="/significance/records/2026-rafikzeraoulia-erdos-653/index.html">2026-rafikzeraoulia-erdos-653</a></p>
+      <h2><a href="/significance/tasks/2026-rafikzeraoulia-erdos-653/restricted-center-incidence/index.html">Check Theorem 1.1 and the Section 3 deduction from the incidence bound to the exponent.</a></h2>
 <p class="prose">Use the exact PDF in manuscript.url. Check the low-R center selection, the bounds M &lt;= T and L &lt;= T^2, the terms used from Theorem 2.2, and the optimization that gives beta(alpha) and theta. Report the first step you cannot justify, or say which bounded steps you followed; this is not a review of the whole paper.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=invitation-response.yml">Report what you found</a></p>    </li>
     <li class="frontier-item">
-      <p class="meta">Open · incidence hypotheses · <a href="/records/2026-rafikzeraoulia-erdos-653/index.html">2026-rafikzeraoulia-erdos-653</a></p>
-      <h2><a href="/tasks/2026-rafikzeraoulia-erdos-653/distance-count-conversion/index.html">Check the hypotheses of Theorem 2.2 where it is applied to the constructed circles.</a></h2>
+      <p class="meta">Open · incidence hypotheses · <a href="/significance/records/2026-rafikzeraoulia-erdos-653/index.html">2026-rafikzeraoulia-erdos-653</a></p>
+      <h2><a href="/significance/tasks/2026-rafikzeraoulia-erdos-653/distance-count-conversion/index.html">Check the hypotheses of Theorem 2.2 where it is applied to the constructed circles.</a></h2>
 <p class="prose">Check that the circle family and selected centers satisfy the exact distinctness, multiplicity, and range assumptions of the cited Pach--Tardos incidence theorem. Record the numbered passage examined; do not infer that the main theorem follows from this check alone.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=invitation-response.yml">Report what you found</a></p>    </li>
     <li class="frontier-item">
-      <p class="meta">Open · bounded structural check · <a href="/records/2026-rafikzeraoulia-erdos-653/index.html">2026-rafikzeraoulia-erdos-653</a></p>
-      <h2><a href="/tasks/2026-rafikzeraoulia-erdos-653/task-3/index.html">Check one short structural result: Proposition 2.1 or Theorem 6.2.</a></h2>
+      <p class="meta">Open · bounded structural check · <a href="/significance/records/2026-rafikzeraoulia-erdos-653/index.html">2026-rafikzeraoulia-erdos-653</a></p>
+      <h2><a href="/significance/tasks/2026-rafikzeraoulia-erdos-653/task-3/index.html">Check one short structural result: Proposition 2.1 or Theorem 6.2.</a></h2>
 <p class="prose">Choose one result, state the exact statement and pages read, and record the definitions and inequalities you checked. A bounded report records only that passage; it is not a verdict on the paper.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=invitation-response.yml">Report what you found</a></p>    </li>
     <li class="frontier-item">
-      <p class="meta">Open · first pass statement comparison · <a href="/records/2026-rafikzeraoulia-erdos-719/index.html">2026-rafikzeraoulia-erdos-719</a></p>
-      <h2><a href="/tasks/2026-rafikzeraoulia-erdos-719/erdos-719-full-statement-first-pass/index.html">Compare the note’s main result with Problem 719, explicitly recording the restriction to r = 3 and n ≤ 9 and any differences from the general problem.</a></h2>
+      <p class="meta">Open · first pass statement comparison · <a href="/significance/records/2026-rafikzeraoulia-erdos-719/index.html">2026-rafikzeraoulia-erdos-719</a></p>
+      <h2><a href="/significance/tasks/2026-rafikzeraoulia-erdos-719/erdos-719-full-statement-first-pass/index.html">Compare the note’s main result with Problem 719, explicitly recording the restriction to r = 3 and n ≤ 9 and any differences from the general problem.</a></h2>
 <p class="prose">Check hypotheses, quantifiers, coverage of cases, and assumptions needed by cited results using the pinned Zenodo version 1.1. Record checked passages, gaps, and remaining dependencies. Allow an initial 2–3 hours; full verification may require more work.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=attestation.yml">Report what you found</a></p>    </li>
     <li class="frontier-item">
-      <p class="meta">Open · hypothesis scope · <a href="/records/2026-rafikzeraoulia-erdos-726/index.html">2026-rafikzeraoulia-erdos-726</a></p>
-      <h2><a href="/tasks/2026-rafikzeraoulia-erdos-726/hypothesis-3-1-scope/index.html">Check Hypothesis 3.1 and Remark 3.2 against the cited literature.</a></h2>
+      <p class="meta">Open · hypothesis scope · <a href="/significance/records/2026-rafikzeraoulia-erdos-726/index.html">2026-rafikzeraoulia-erdos-726</a></p>
+      <h2><a href="/significance/tasks/2026-rafikzeraoulia-erdos-726/hypothesis-3-1-scope/index.html">Check Hypothesis 3.1 and Remark 3.2 against the cited literature.</a></h2>
 <p class="prose">Use the exact PDF in manuscript.url. Compare the interval, exp(P^c) range, C^3 norm, and error term with the cited Matomaki--Radziwill-- Shao--Tao--Teravainen result. Record whether the paper labels its hypothesis as conjectural and does not present the citation as a proof of it; this is a source-and-scope check, not a proof verdict.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=invitation-response.yml">Report what you found</a></p>    </li>
     <li class="frontier-item">
-      <p class="meta">Open · weighted reduction · <a href="/records/2026-rafikzeraoulia-erdos-726/index.html">2026-rafikzeraoulia-erdos-726</a></p>
-      <h2><a href="/tasks/2026-rafikzeraoulia-erdos-726/theorem-1-1-error-accumulation/index.html">Check Lemma 3.3, Proposition 5.1, and Corollary 5.2.</a></h2>
+      <p class="meta">Open · weighted reduction · <a href="/significance/records/2026-rafikzeraoulia-erdos-726/index.html">2026-rafikzeraoulia-erdos-726</a></p>
+      <h2><a href="/significance/tasks/2026-rafikzeraoulia-erdos-726/theorem-1-1-error-accumulation/index.html">Check Lemma 3.3, Proposition 5.1, and Corollary 5.2.</a></h2>
 <p class="prose">Check the partial-summation step, the smooth approximation and boundary error, and the parameter ranges used to pass from dyadic blocks to the intermediate scales. Record the first gap or the bounded steps followed; do not rate the rest of the manuscript.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=invitation-response.yml">Report what you found</a></p>    </li>
     <li class="frontier-item">
-      <p class="meta">Open · main cancellation · <a href="/records/2026-rafikzeraoulia-erdos-726/index.html">2026-rafikzeraoulia-erdos-726</a></p>
-      <h2><a href="/tasks/2026-rafikzeraoulia-erdos-726/task-3/index.html">Check Lemma 6.1 and the decomposition used in the proof of Theorem 1.1.</a></h2>
+      <p class="meta">Open · main cancellation · <a href="/significance/records/2026-rafikzeraoulia-erdos-726/index.html">2026-rafikzeraoulia-erdos-726</a></p>
+      <h2><a href="/significance/tasks/2026-rafikzeraoulia-erdos-726/task-3/index.html">Check Lemma 6.1 and the decomposition used in the proof of Theorem 1.1.</a></h2>
 <p class="prose">Follow the split at the polylogarithmic cutoff Y for small, intermediate, and large primes. Check how Lemma 6.1 supplies the cancellation and whether the three errors combine to O(log log log n). Report only the passages read, not a whole-paper conclusion.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=invitation-response.yml">Report what you found</a></p>    </li>
     <li class="frontier-item">
-      <p class="meta">Open · alternate hypothesis · <a href="/records/2026-rafikzeraoulia-erdos-726/index.html">2026-rafikzeraoulia-erdos-726</a></p>
-      <h2><a href="/tasks/2026-rafikzeraoulia-erdos-726/task-4/index.html">Optionally check Hypothesis 8.1 and Proposition 8.2.</a></h2>
+      <p class="meta">Open · alternate hypothesis · <a href="/significance/records/2026-rafikzeraoulia-erdos-726/index.html">2026-rafikzeraoulia-erdos-726</a></p>
+      <h2><a href="/significance/tasks/2026-rafikzeraoulia-erdos-726/task-4/index.html">Optionally check Hypothesis 8.1 and Proposition 8.2.</a></h2>
 <p class="prose">Verify that the exponential-sum hypothesis has the stated frequency range and norms, and that the argument really implies Hypothesis 3.1. Treat the result as a separate bounded implication; it does not make the hypothesis known.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=invitation-response.yml">Report what you found</a></p>    </li>
     <li class="frontier-item">
-      <p class="meta">Taken · exposition · <a href="/records/2026-dottedcalculator-erdos-4/index.html">2026-dottedcalculator-erdos-4</a></p>
-      <h2><a href="/tasks/2026-dottedcalculator-erdos-4/erdos-4-human-exposition/index.html">Produce a shorter human-readable exposition separating the new tilted sieve from the imported FGKMT machinery.</a></h2>
+      <p class="meta">Taken · exposition · <a href="/significance/records/2026-dottedcalculator-erdos-4/index.html">2026-dottedcalculator-erdos-4</a></p>
+      <h2><a href="/significance/tasks/2026-dottedcalculator-erdos-4/erdos-4-human-exposition/index.html">Produce a shorter human-readable exposition separating the new tilted sieve from the imported FGKMT machinery.</a></h2>
 <p class="prose">Center the account on the modified preliminary law and its correlation estimates. Cite rather than re-expand the FGKMT inputs and elementary CRT transfer where appropriate, while stating all dependencies and scope.</p><p class="meta">Taken by ben-green · 2026-08-28 · Ben Green said that a subset of the FGKMT authors, including him, would write it and publicly anticipated an O(1)-month timescale.</p>    </li>
   </ul>
 </section>
@@ -119,7 +119,7 @@
 </div>
 <footer class="site-footer">
 <nav aria-label="Resources">
-<a href="/reviewers/index.html">Contributors</a><a href="/feed.xml">Follow updates</a><a href="/glossary/index.html">Glossary</a><a href="/boards/ten-results/index.html">ten results</a></nav><p>Significance mechanically validates provenance and a narrow set of evidence predicates. It does not mechanically determine mathematical truth.</p>
+<a href="/significance/reviewers/index.html">Contributors</a><a href="/significance/feed.xml">Follow updates</a><a href="/significance/glossary/index.html">Glossary</a><a href="/significance/boards/ten-results/index.html">ten results</a></nav><p>Significance mechanically validates provenance and a narrow set of evidence predicates. It does not mechanically determine mathematical truth.</p>
 </footer>
 </body>
 </html>

@@ -145,8 +145,8 @@ def test_deployed_problem_and_frontier_links_target_records_root(tmp_path):
         pages_out / "problems" / "erdosproblems-com-653" / "index.html"
     ).read_text(encoding="utf-8")
     frontier = (pages_out / "frontier" / "index.html").read_text(encoding="utf-8")
-    assert "/records/2026-rafikzeraoulia-erdos-653/index.html" in problem_page
-    assert "/records/2026-rafikzeraoulia-erdos-653/index.html" in frontier
+    assert "/significance/records/2026-rafikzeraoulia-erdos-653/index.html" in problem_page
+    assert "/significance/records/2026-rafikzeraoulia-erdos-653/index.html" in frontier
 
 
 def test_problem_slug_is_stable_and_ascii():
@@ -333,13 +333,20 @@ def test_pages_out_moves_auxiliary_pages_to_the_site_root(tmp_path):
     build_site(RECORDS_DIR, records_out, pages_out=pages_out)
 
     page = (pages_out / "request" / "index.html").read_text(encoding="utf-8")
-    # Deployed: record pages live under /records/ and these do not, so no
-    # relative path spans both and the links are absolute.
-    assert 'href="/records/index.html"' in page
-    assert 'href="/records/static/style.css?v=' in page
+    # The GitHub Pages project prefix comes from site_url, so absolute paths
+    # point below /significance rather than the host's domain root.
+    assert 'href="/significance/records/index.html"' in page
+    assert 'href="/significance/records/static/style.css?v=' in page
 
     record_page = (records_out / PUBLIC_RECORD_ID / "index.html").read_text(encoding="utf-8")
-    assert 'href="/request/index.html"' in record_page
+    assert 'href="/significance/request/index.html"' in record_page
+
+    task_page = (
+        pages_out / "tasks" / "2026-alexchengyuli-erdos-848"
+        / "erdos-848-lean-reproduction" / "index.html"
+    ).read_text(encoding="utf-8")
+    assert 'href="/significance/records/static/style.css?v=' in task_page
+    assert 'href="/significance/records/2026-alexchengyuli-erdos-848/index.html"' in task_page
 
 
 def test_nav_omits_a_page_this_build_did_not_write(tmp_path):
