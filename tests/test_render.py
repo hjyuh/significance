@@ -204,6 +204,10 @@ def test_scoped_task_pages_and_index_are_generated(tmp_path):
         / "index.html"
     ).read_text(encoding="utf-8")
     assert "5 bounded tasks" in task_index or "bounded tasks" in task_index
+    task_href = re.search(r'<a href="([^"]+)" class="task-card-link"', task_index)
+    assert task_href is not None
+    assert task_href.group(1).startswith("./")
+    assert (out / "tasks" / task_href.group(1)[2:]).is_file()
     assert "a87ca77b143fd6382ce3882fbef2320c3d037ed92d4128fe078689784bfc4147" in task_page
     assert "Open attestation form" in task_page
     assert "State what you checked and found" in task_page
