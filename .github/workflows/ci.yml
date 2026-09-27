@@ -79,6 +79,12 @@ jobs:
       - name: Assert production build contains no fixture records
         run: uv run python tests/assert_no_fixture_records.py site/
 
+      - name: Add unlisted reading maps (not linked from the site)
+        run: |
+          mkdir -p site/unlisted/recent-proof-claims
+          cp -a unlisted/recent-proof-claims/. site/unlisted/recent-proof-claims/
+          uv run python tests/assert_unlisted_pages_unlinked.py site/
+
       - name: Upload Pages artifact
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
