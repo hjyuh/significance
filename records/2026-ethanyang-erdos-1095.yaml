@@ -1,0 +1,342 @@
+# Public record promoted from the author-approved reading map.
+# Approval timestamp below is when the approval was recorded, not a claimed
+# exact time for the private reply. Private correspondence is not reproduced.
+schema_version: 1
+record_id: 2026-ethanyang-erdos-1095
+record_version: 1
+record_state: active
+draft: false
+freshness:
+  result: current
+  observed_source_version: e06b3e658c486b4aa16d0dcf738370fcd84fcd5c
+  confirmed_source_version: e06b3e658c486b4aa16d0dcf738370fcd84fcd5c
+  checked_at: '2026-10-01T13:17:58Z'
+parties:
+  ethan-yang:
+    name: Ethan Yang
+    verification_method:
+      kind: pseudonymous
+      identifier: https://www.erdosproblems.com/forum/user/EthanYang
+  significance-editor:
+    pseudonym: Significance editor
+    verification_method:
+      kind: pseudonymous
+      identifier: significance-project
+author_relationship:
+  status: author_confirmed_description
+  note: >-
+    Ethan Yang approved the reading map's presentation in a reply supplied to
+    the maintainer. This public record carries that map's scope and review
+    questions into the normal Significance record format. Approval concerns
+    the description and publication of the map; no mathematical review or
+    proof-correctness attestation is inferred. The timestamp records the
+    approval entry, not the exact time of the reply. Private message text is
+    withheld.
+  basis: author_attestation
+  asserted_by: ethan-yang
+  asserted_at: '2026-10-01T13:17:58Z'
+  locator:
+    section: Author reply supplied by the maintainer; private correspondence withheld.
+problem_reference:
+  venue: ErdősProblems.com
+  problem_id: '1095'
+  url: https://www.erdosproblems.com/1095
+  basis: source_quote
+  asserted_by: significance-editor
+  asserted_at: '2026-10-01T13:17:58Z'
+  locator:
+    url: https://www.erdosproblems.com/forum/thread/1095/proof-claims#proof-claim-355
+claim:
+  id: claim-main
+  text:
+    value: >-
+      The paper claims that for every sufficiently large integer k there is
+      an integer n with k + 1 < n < L_k = lcm(1,...,k) such that no prime
+      p <= k divides binom(n,k). Consequently g(k) < L_k eventually.
+    basis: source_quote
+    asserted_by: significance-editor
+    asserted_at: '2026-10-01T13:17:58Z'
+    locator:
+      url: https://github.com/ethn-y/erdos-1095-lean/blob/e06b3e658c486b4aa16d0dcf738370fcd84fcd5c/paper/main.tex
+      section: Theorem 1.1 (thm:main)
+  display_math: '\exists K\ge 2\;\forall k\ge K,\quad g(k)<L_k=\operatorname{lcm}(1,\ldots,k)'
+  scope:
+    value: >-
+      Partial relative to Erdős #1095: the eventual strict lcm bound only.
+      The sharp growth estimate for log g(k), successive-ratio conjectures,
+      and a numerical eventual threshold are outside the submitted scope.
+    basis: editorial_inference
+    asserted_by: significance-editor
+    asserted_at: '2026-10-01T13:17:58Z'
+    locator:
+      url: https://github.com/ethn-y/erdos-1095-lean/blob/e06b3e658c486b4aa16d0dcf738370fcd84fcd5c/README.md
+      section: Scope
+plain_summary:
+  claimed: >-
+    Ethan Yang's paper and Lean repository claim the eventual strict bound
+    g(k) < lcm(1,...,k). This is one sub-conjecture of Erdős #1095; the sharp
+    growth and successive-ratio questions remain outside its scope.
+  checked: >-
+    Significance inspected the public claim, pinned the repository and PDF,
+    computed the manuscript hash, and checked the upstream CI status.
+    Ethan approved the reading map's presentation.
+  not_checked: >-
+    No fresh independent Lean build, specialist mathematical review, complete
+    source-chain audit, or paper-to-Lean correspondence audit is recorded.
+    The upstream CI result and author approval do not supply those checks.
+  basis: digest
+  asserted_by: significance-editor
+  asserted_at: '2026-10-01T13:17:58Z'
+manuscript:
+  url: https://raw.githubusercontent.com/ethn-y/erdos-1095-lean/e06b3e658c486b4aa16d0dcf738370fcd84fcd5c/paper/main.pdf
+  label: A least-common-multiple bound for the Erdős–Selfridge function (pinned PDF)
+  immutable_version_id: github-ethn-y-erdos-1095-e06b3e658c486b4aa16d0dcf738370fcd84fcd5c
+  sha256: 7621e3c47277464e64a09bf78515f7a9be621457b4f2d7e6851a18c1564d3d55
+  retrieved_at: '2026-10-01T13:17:58Z'
+  published_at: '2026-09-26'
+evidence:
+- id: ev-source-inspection
+  kind: source_inspection
+  description: >-
+    The public proof-claim thread, repository README, manuscript source,
+    pinned PDF, and upstream Actions status were inspected. The PDF SHA-256
+    identifies the exact retrieved bytes. This is source inspection, not
+    a specialist review of the proof.
+  basis: editorial_inference
+  asserted_by: significance-editor
+  asserted_at: '2026-10-01T13:17:58Z'
+  locator:
+    url: https://www.erdosproblems.com/forum/thread/1095/proof-claims#proof-claim-355
+- id: ev-lean-reported
+  kind: external_formal_artifact
+  repo: https://github.com/ethn-y/erdos-1095-lean
+  commit: e06b3e658c486b4aa16d0dcf738370fcd84fcd5c
+  description: >-
+    Upstream GitHub Actions reports a successful Verify Lean proof run for
+    this commit. The README describes Lean/Mathlib 4.27.0, the pinned PNT
+    dependency, and an expected axiom surface of propext, Classical.choice,
+    and Quot.sound. No fresh independent replay is recorded here.
+  basis: source_quote
+  asserted_by: significance-editor
+  asserted_at: '2026-10-01T13:17:58Z'
+  locator:
+    url: https://github.com/ethn-y/erdos-1095-lean/actions/runs/36217478377
+- id: ev-paper-ci-reported
+  kind: source_inspection
+  description: >-
+    Upstream GitHub Actions reports a successful Build paper run for the
+    pinned commit. This concerns manuscript compilation and packaging.
+  basis: source_quote
+  asserted_by: significance-editor
+  asserted_at: '2026-10-01T13:17:58Z'
+  locator:
+    url: https://github.com/ethn-y/erdos-1095-lean/actions/runs/36217478363
+ai_provenance:
+  disclosure:
+    value: >-
+      The manuscript reports GPT-6 Astra generated the mathematical proof,
+      with separate sessions for review and statement reconstruction;
+      GPT-5.6 Sol implemented the Lean proof. GPT-6 Astra also prepared the
+      manuscript and literature review. The author reports selecting the
+      problem, directing workflows, providing literature, and making editorial
+      decisions, without supplying the argument or independently checking it
+      by hand. These are source disclosures; AI review is not human review.
+    basis: source_quote
+    asserted_by: significance-editor
+    asserted_at: '2026-10-01T13:17:58Z'
+    locator:
+      url: https://github.com/ethn-y/erdos-1095-lean/blob/e06b3e658c486b4aa16d0dcf738370fcd84fcd5c/paper/main.tex
+      section: Tool and computational resource disclosure
+  roles:
+  - role: proof_generation
+    model: GPT-6 Astra
+    basis: source_quote
+    asserted_by: significance-editor
+    locator:
+      url: https://github.com/ethn-y/erdos-1095-lean/blob/e06b3e658c486b4aa16d0dcf738370fcd84fcd5c/paper/main.tex
+      section: Tool and computational resource disclosure
+  - role: formalization
+    model: GPT-5.6 Sol
+    basis: source_quote
+    asserted_by: significance-editor
+    locator:
+      url: https://github.com/ethn-y/erdos-1095-lean/blob/e06b3e658c486b4aa16d0dcf738370fcd84fcd5c/paper/main.tex
+      section: Tool and computational resource disclosure
+review_map:
+  main_deduction:
+    text: >-
+      Modify L_k by adding small-prime factors and removing the top prime
+      band, producing a modulus M with room for multipliers t. Lucas's
+      criterion becomes forbidden residue conditions in three prime ranges.
+      PNT bounds their density; truncated inclusion–exclusion with explicit
+      CRT discrepancy produces a surviving t. Set n = Mt - 1 and use the
+      least-witness definition to conclude the strict eventual lcm bound.
+    location: Paper §§2–5; Erdos1095/Main.lean
+    pointer: Check both witness inequalities and a single threshold for all sufficiently large k.
+    basis: editorial_inference
+    asserted_by: significance-editor
+    asserted_at: '2026-10-01T13:17:58Z'
+  risks:
+  - text: >-
+      The finite interval count must control the sum of CRT discrepancies
+      over truncated intersections and the Bonferroni/factorial tail. Check
+      that the chosen constants make the surviving main term exceed the error.
+    location: Paper §4 finite sieve lemma and §5 surviving multiplier
+    reason: The residue density alone does not place a witness in the required finite interval.
+    basis: editorial_inference
+    asserted_by: significance-editor
+    asserted_at: '2026-10-01T13:17:58Z'
+  - text: >-
+      Check Lucas's digit conditions, the middle-prime lift from p to p²,
+      the top-band residue count, and every PNT estimate at the fixed
+      proportional endpoints used in the construction.
+    location: Paper §§2–3; Arithmetic/ and Analytic/PNT.lean
+    basis: editorial_inference
+    asserted_by: significance-editor
+    asserted_at: '2026-10-01T13:17:58Z'
+  - text: >-
+      The README reports two upstream Wiener sorry warnings outside the
+      used dependency closure. An independent replay must inspect the actual
+      final-theorem axiom report and confirm that dependency boundary.
+    location: verify.sh; AxiomAudit.lean; pinned PrimeNumberTheoremAnd dependency
+    basis: editorial_inference
+    asserted_by: significance-editor
+    asserted_at: '2026-10-01T13:17:58Z'
+  prerequisites:
+  - text: >-
+      Elementary number theory, Lucas's theorem, the prime number theorem at
+      fixed rescalings, inclusion–exclusion, the Chinese remainder theorem,
+      and Lean dependency/axiom auditing for the formal checks.
+    basis: editorial_inference
+    asserted_by: significance-editor
+    asserted_at: '2026-10-01T13:17:58Z'
+  needs_checking:
+  - text: >-
+      Compare the paper's Theorem 1.1 and the exact Lean SourceTarget,
+      explicit-witness target, and least-element definition. Record strict
+      inequalities, all primes p <= k, and the common eventual threshold.
+    location: STATEMENT-CORRESPONDENCE.md; StatementAudit.lean; Erdos1095/Statement.lean
+    basis: editorial_inference
+    asserted_by: significance-editor
+    asserted_at: '2026-10-01T13:17:58Z'
+formalization_handoff:
+  target:
+    value: >-
+      Erdos1095.erdos1095_main : Erdos1095.SourceTarget, preceded by the
+      explicit-witness theorem erdos1095_target.
+    basis: source_quote
+    asserted_by: significance-editor
+    asserted_at: '2026-10-01T13:17:58Z'
+    locator:
+      url: https://github.com/ethn-y/erdos-1095-lean/blob/e06b3e658c486b4aa16d0dcf738370fcd84fcd5c/Erdos1095/Main.lean
+  system:
+    value: Lean 4.27.0 and Mathlib 4.27.0 with pinned PrimeNumberTheoremAnd dependency.
+    basis: source_quote
+    asserted_by: significance-editor
+    asserted_at: '2026-10-01T13:17:58Z'
+    locator:
+      url: https://github.com/ethn-y/erdos-1095-lean/blob/e06b3e658c486b4aa16d0dcf738370fcd84fcd5c/README.md
+  status: artifact_reported
+  repository:
+    url: https://github.com/ethn-y/erdos-1095-lean/tree/e06b3e658c486b4aa16d0dcf738370fcd84fcd5c
+    commit: e06b3e658c486b4aa16d0dcf738370fcd84fcd5c
+    toolchain: Lean/Mathlib 4.27.0
+  correspondence:
+    value: The repository documents a statement audit; an independent comparison of the paper theorem and Lean target remains open.
+    basis: editorial_inference
+    asserted_by: significance-editor
+    asserted_at: '2026-10-01T13:17:58Z'
+  basis: editorial_inference
+  asserted_by: significance-editor
+  asserted_at: '2026-10-01T13:17:58Z'
+digestions:
+- audience: general_mathematician
+  kind: plain_language
+  stratum: editor
+  text: >-
+    Seek a binomial coefficient with no prime factor at most k. The paper
+    creates room below the lcm by changing its prime factors, then sieves a
+    finite interval of multipliers to find a candidate. This record keeps the
+    partial scope visible and gives separate paper, correspondence, and build
+    checks. Its editorial map was prepared with GPT-6.1 Sol assistance.
+  basis: editorial_inference
+  asserted_by: significance-editor
+  source_claims: [claim-main]
+open_invitations:
+- kind: finite_interval_sieve
+  task_id: erdos-1095-finite-sieve
+  task_kind: read_check
+  check_category: proof
+  target: Re-derive the finite interval sieve and eventual main-term/error comparison at the pinned manuscript version.
+  how: >-
+    Read paper §§4–5 at commit e06b3e658c486b4aa16d0dcf738370fcd84fcd5c.
+    Re-derive the CRT intersection error, odd Bonferroni truncation,
+    factorial tail, J bound, and the inequality 150 epsilon² < epsilon/2.
+    Record exact passages and any remaining question about the uniform threshold.
+  prerequisites: [Number theory, Chinese remainder theorem, Inclusion–exclusion and asymptotic estimates]
+  entry_points: Paper §§4–5; Sieve/ and Growth/ modules
+  effort_estimate: about 1–2 hours for a first scoped reading
+  respond:
+    url: https://github.com/hjyuh/significance/issues/new?template=attestation.yml
+  discussion_url: https://www.erdosproblems.com/forum/thread/1095/proof-claims#proof-claim-355
+  created_by: significance-editor
+  created_at: '2026-10-01T13:17:58Z'
+- kind: correspondence
+  task_id: erdos-1095-statement-correspondence
+  task_kind: statement_audit
+  check_category: statement
+  target: Compare the paper's eventual lcm theorem with both final Lean declarations and the source definition of g.
+  how: >-
+    At commit e06b3e658c486b4aa16d0dcf738370fcd84fcd5c, compare paper
+    Theorem 1.1 with STATEMENT-CORRESPONDENCE.md, StatementAudit.lean,
+    Erdos1095/Statement.lean, and Erdos1095/Main.lean. Record both strict
+    witness bounds, the prime quantifier, eventual nonemptiness, and the
+    single threshold; name the declarations actually inspected.
+  prerequisites: [Paper definition of g, Basic Lean statement reading]
+  entry_points: Theorem 1.1; SourceTarget; erdos1095_target; erdos1095_main
+  effort_estimate: about 45–60 minutes
+  respond:
+    url: https://github.com/hjyuh/significance/issues/new?template=attestation.yml
+  discussion_url: https://www.erdosproblems.com/forum/thread/1095/proof-claims#proof-claim-355
+  created_by: significance-editor
+  created_at: '2026-10-01T13:17:58Z'
+- kind: formal_reproduction
+  task_id: erdos-1095-lean-reproduction
+  task_kind: reproduce_build
+  check_category: formalization
+  target: Independently replay the pinned Lean verifier and document the final theorem's actual axiom and dependency boundary.
+  how: >-
+    Check out commit e06b3e658c486b4aa16d0dcf738370fcd84fcd5c in an
+    isolated build environment. Preserve lean-toolchain and lake-manifest.json;
+    do not run lake update. Follow the README commands lake exe cache get and
+    ./verify.sh. Record toolchain, pinned dependency revisions, commands,
+    build result, axiom output, allowed upstream warnings, and log hash.
+    Audit whether prelim_decay_2 and prelim_decay_3 are outside the final
+    theorem's used dependency graph. Report reproducibility within that scope.
+  prerequisites: [Lean 4.27.0, Pinned Mathlib/PNT dependencies, Isolated build and axiom auditing]
+  entry_points: verify.sh; AxiomAudit.lean; lake-manifest.json
+  effort_estimate: several hours, dependent on cache availability and hardware
+  respond:
+    url: https://github.com/hjyuh/significance/issues/new?template=attestation.yml
+  discussion_url: https://www.erdosproblems.com/forum/thread/1095/proof-claims#proof-claim-355
+  created_by: significance-editor
+  created_at: '2026-10-01T13:17:58Z'
+depends_on:
+- external:
+    label: PrimeNumberTheoremAnd
+    url: https://github.com/AlexKontorovich/PrimeNumberTheoremAnd/tree/6757256b98b00b6afb0a7d3ef0313d2872801a70
+    version_hint: 6757256b98b00b6afb0a7d3ef0313d2872801a70
+  relation: uses_result
+  asserted_by: significance-editor
+  basis: editor_note
+  note: README reports use of chebyshev_asymptotic and pi_alt'; an independent source-chain audit remains open.
+history:
+- id: evt-publication
+  type: created
+  at: '2026-10-01T13:17:58Z'
+  by: significance-editor
+  note: >-
+    Promoted the author-approved #1095 reading map to a public record with
+    pinned manuscript and three bounded review tasks. Approval is limited to
+    the map's presentation; mathematical review remains open. The old direct
+    URL is retained as a compatibility link to this record.

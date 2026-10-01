@@ -69,8 +69,10 @@ test("the homepage derives its record facts from the generated index", () => {
   assert.equal(summaries.site.maintainer_name, null);
   assert.equal(summaries.site.contact_email, null);
   assert.equal(summaries.site.repository_url, "https://github.com/hjyuh/significance");
-  assert.equal(summaries.records.length, 9);
+  assert.equal(summaries.records.length, 10);
   const byId = Object.fromEntries(summaries.records.map((record) => [record.record_id, record]));
+  assert.equal(byId["2026-ethanyang-erdos-1095"].freshness, "current");
+  assert.equal(byId["2026-ethanyang-erdos-1095"].open_invitation_count, 3);
   assert.equal(byId["2026-openai-nonsofic-groups"].freshness, "current");
   assert.equal(byId["2026-openai-nonsofic-groups"].evidence_count, 2);
   assert.equal(byId["2026-openai-nonsofic-groups"].open_invitation_count, 3);

@@ -53,6 +53,19 @@
       "open_invitation_count": 3
     },
     {
+      "record_id": "2026-ethanyang-erdos-1095",
+      "record_version": 1,
+      "record_state": "active",
+      "claim": "The paper claims that for every sufficiently large integer k there is an integer n with k + 1 < n < L_k = lcm(1,...,k) such that no prime p <= k divides binom(n,k). Consequently g(k) < L_k eventually.",
+      "claim_mathml": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\"><mrow><mo>&#x02203;</mo><mi>K</mi><mo>&#x02265;</mo><mn>2</mn><mspace width=\"0.278em\" /><mo>&#x02200;</mo><mi>k</mi><mo>&#x02265;</mo><mi>K</mi><mo>&#x0002C;</mo><mspace width=\"1em\" /><mi>g</mi><mo stretchy=\"false\">&#x00028;</mo><mi>k</mi><mo stretchy=\"false\">&#x00029;</mo><mo>&#x0003C;</mo><msub><mi>L</mi><mi>k</mi></msub><mo>&#x0003D;</mo><mo>lcm</mo><mo stretchy=\"false\">&#x00028;</mo><mn>1</mn><mo>&#x0002C;</mo><mi>&#x02026;</mi><mo>&#x0002C;</mo><mi>k</mi><mo stretchy=\"false\">&#x00029;</mo></mrow></math>",
+      "claim_basis": "source_quote",
+      "claim_asserted_by": "significance-editor",
+      "freshness": "current",
+      "freshness_checked_at": "2026-10-01T13:17:58Z",
+      "evidence_count": 3,
+      "open_invitation_count": 3
+    },
+    {
       "record_id": "2026-evanbeller-erdos-132",
       "record_version": 1,
       "record_state": "active",

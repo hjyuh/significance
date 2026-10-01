@@ -10,7 +10,7 @@
 <body>
 <header class="topline">
 <a class="wordmark" href="/significance/records/index.html">SIGNIFICANCE</a>
-<p class="topline-meta">22 open tasks</p>
+<p class="topline-meta">25 open tasks</p>
 <nav class="topline-nav" aria-label="Site">
 <a href="/significance/records/index.html">Records</a>
 <a href="/significance/tasks/index.html">Open checks</a><a href="/significance/orientation/index.html">How it works</a><a href="/significance/request/index.html">Submit or correct</a>
@@ -61,6 +61,18 @@
       <p class="meta">Open · correspondence · <a href="/significance/records/2026-dottedcalculator-erdos-4/index.html">2026-dottedcalculator-erdos-4</a></p>
       <h2><a href="/significance/tasks/2026-dottedcalculator-erdos-4/erdos-4-statement-correspondence/index.html">Compare the manuscript&#39;s two asymptotic statements with the pinned Lean declarations, recording endpoint, quantifier, and normalization choices.</a></h2>
 <p class="prose">Compare equations (1.1)–(1.3) in the pinned PDF with covering_theorem, prime_gap_corollary, and their definitions. Record exact declarations and any remaining mismatch. Do not infer correspondence from a successful build alone.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=attestation.yml">Report what you found</a></p>    </li>
+    <li class="frontier-item">
+      <p class="meta">Open · finite interval sieve · <a href="/significance/records/2026-ethanyang-erdos-1095/index.html">2026-ethanyang-erdos-1095</a></p>
+      <h2><a href="/significance/tasks/2026-ethanyang-erdos-1095/erdos-1095-finite-sieve/index.html">Re-derive the finite interval sieve and eventual main-term/error comparison at the pinned manuscript version.</a></h2>
+<p class="prose">Read paper §§4–5 at commit e06b3e658c48…. Re-derive the CRT intersection error, odd Bonferroni truncation, factorial tail, J bound, and the inequality 150 epsilon² &lt; epsilon/2. Record exact passages and any remaining question about the uniform threshold.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=attestation.yml">Report what you found</a></p>    </li>
+    <li class="frontier-item">
+      <p class="meta">Open · correspondence · <a href="/significance/records/2026-ethanyang-erdos-1095/index.html">2026-ethanyang-erdos-1095</a></p>
+      <h2><a href="/significance/tasks/2026-ethanyang-erdos-1095/erdos-1095-statement-correspondence/index.html">Compare the paper&#39;s eventual lcm theorem with both final Lean declarations and the source definition of g.</a></h2>
+<p class="prose">At commit e06b3e658c48…, compare paper Theorem 1.1 with STATEMENT-CORRESPONDENCE.md, StatementAudit.lean, Erdos1095/Statement.lean, and Erdos1095/Main.lean. Record both strict witness bounds, the prime quantifier, eventual nonemptiness, and the single threshold; name the declarations actually inspected.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=attestation.yml">Report what you found</a></p>    </li>
+    <li class="frontier-item">
+      <p class="meta">Open · formal reproduction · <a href="/significance/records/2026-ethanyang-erdos-1095/index.html">2026-ethanyang-erdos-1095</a></p>
+      <h2><a href="/significance/tasks/2026-ethanyang-erdos-1095/erdos-1095-lean-reproduction/index.html">Independently replay the pinned Lean verifier and document the final theorem&#39;s actual axiom and dependency boundary.</a></h2>
+<p class="prose">Check out commit e06b3e658c48… in an isolated build environment. Preserve lean-toolchain and lake-manifest.json; do not run lake update. Follow the README commands lake exe cache get and ./verify.sh. Record toolchain, pinned dependency revisions, commands, build result, axiom output, allowed upstream warnings, and log hash. Audit whether prelim_decay_2 and prelim_decay_3 are outside the final theorem&#39;s used dependency graph. Report reproducibility within that scope.</p><p><a href="https://github.com/hjyuh/significance/issues/new?template=attestation.yml">Report what you found</a></p>    </li>
     <li class="frontier-item">
       <p class="meta">Open · geometric check · <a href="/significance/records/2026-evanbeller-erdos-132/index.html">2026-evanbeller-erdos-132</a></p>
       <h2><a href="/significance/tasks/2026-evanbeller-erdos-132/erdos-132-n8-geometry/index.html">Check the n = 8 geometric deduction only; report the exact passages followed and any first unresolved step.</a></h2>

@@ -35,6 +35,7 @@ PUBLIC_RECORD_IDS = [
     "2026-alexchengyuli-erdos-848",
     "2026-anthropic-zeta-two-thirds",
     "2026-dottedcalculator-erdos-4",
+    "2026-ethanyang-erdos-1095",
     "2026-evanbeller-erdos-132",
     PUBLIC_RECORD_ID,
     "2026-rafikzeraoulia-erdos-653",
@@ -214,6 +215,13 @@ def test_scoped_task_pages_and_index_are_generated(tmp_path):
         / "erdos-848-lean-reproduction" / "index.html"
     ).read_text(encoding="utf-8")
     assert "Check category" in detail_page and "Formalization" in detail_page
+    record_href = re.search(r'<p class="meta"><a href="([^"]+)"', detail_page)
+    assert record_href is not None
+    detail_dir = out / "tasks" / "2026-alexchengyuli-erdos-848" / "erdos-848-lean-reproduction"
+    assert (detail_dir / record_href.group(1)).resolve() == (
+        out / "2026-alexchengyuli-erdos-848" / "index.html"
+    ).resolve()
+    assert (detail_dir / record_href.group(1)).is_file()
     assert "Verification record" in detail_page
     assert "Task status tracks participation, not whether the claim is true." in detail_page
     assert "No scoped check has been recorded for this task yet." in detail_page

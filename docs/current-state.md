@@ -113,6 +113,23 @@ Two records were promoted from private drafts into the public corpus:
 
 ## Verification and test status
 
+### Author-approved #1095 publication — 1 October 2026
+
+`records/2026-ethanyang-erdos-1095.yaml` promotes Ethan Yang's reading map
+into the public corpus after his approval of its presentation. Approval is
+recorded as an author-confirmed description; it is not a mathematical review
+or correctness attestation. The private reply text is withheld. The approval
+entry timestamp identifies when it was recorded, not when the reply was sent.
+
+The public record pins repository commit
+`e06b3e658c486b4aa16d0dcf738370fcd84fcd5c` and the byte-hashed PDF. Its
+scope is the eventual strict lcm sub-conjecture, with paper, statement
+correspondence, and independent-build tasks kept open. The upstream Lean and
+paper Actions runs were inspected; no fresh independent Lean replay is
+claimed. The formerly shared `/unlisted/recent-proof-claims/1095/index.html`
+URL leads to the public record. The other four reading maps remain unlisted,
+and normal site output must not link to those routes.
+
 After the exposition/registry release: `uv run pytest` passes (`167 passed`),
 `uv run ruff check src tests adapters/lean` is clean, `npm run lint` is clean,
 and `npm test` (records build, `vinext build`, 5 rendered-HTML tests, 26

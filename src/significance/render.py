@@ -1292,7 +1292,14 @@ def build_site(
             _write_page(
                 pages_dir / "tasks" / row["record"]["record_id"] / row["task_id"],
                 env.get_template("task.html.jinja").render(
-                    row=row,
+                    row={
+                        **row,
+                        "record_href": (
+                            row["record_href"]
+                            if deployed
+                            else f"../../../{row['record']['record_id']}/index.html"
+                        ),
+                    },
                     root_prefix=(
                         f"{deployment_prefix}/records/" if deployed else "../../../"
                     ),
