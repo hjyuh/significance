@@ -1,8 +1,16 @@
 # Significance — current development state
 
-**As of 2026-08-22.** This is a handoff for maintainers and coding models. Read it
+**Historical baseline: 2026-08-22, with later updates below.** This is a handoff for maintainers and coding models. Read it
 before changing the repository. It describes the current state, not a promise of
 mathematical correctness or public deployment.
+
+**2 October 2026 reconciliation:** Start with
+[`reconciliation-2026-10-02.md`](reconciliation-2026-10-02.md) for the current
+checkout inventory and development continuation. Several corpus counts and queue
+items below are historical: the current public source corpus has ten records,
+including #848 and the author-approved #1095 reading map. About-page and
+submission-wizard work is already represented on `main`; the old feature branches
+must not be merged merely because their commit IDs differ.
 
 ## What Significance is
 

@@ -52,14 +52,14 @@
       <dt class="task-detail-5">Ask about this step</dt>
       <dd class="task-detail-6">
         <p class="task-detail-7 prose">Something is unclear or you want to confirm scope before starting. This helps sharpen the task for everyone.</p>
-        {% if row.issue_url %}<p class="meta"><a href="{{ row.question_url }}">Ask about this task</a></p>{% else %}<p class="meta">Send your question to the maintainer with the record and task ID.</p>{% endif %}
+        {% if row.question_url %}<p class="meta"><a href="{{ row.question_url }}">Ask about this task</a></p>{% else %}<p class="meta">Send your question to the maintainer with the record and task ID.</p>{% endif %}
       </dd>
     </div>
     <div class="task-detail-8">
       <dt class="task-detail-9">Report what you tried</dt>
       <dd class="task-detail-10">
         <p class="task-detail-11 prose">You worked on it but reached a stopping point: ran out of time, hit a sub-question you could not resolve, or found the task harder than expected. Recording your attempt can help the next reader choose where to continue.</p>
-        {% if row.issue_url %}<p class="meta"><a href="{{ row.attempt_url }}">Submit a partial attempt</a></p>{% else %}<p class="meta">Use the attestation template below; mark the outcome as "incomplete."</p>{% endif %}
+        {% if row.attempt_url %}<p class="meta"><a href="{{ row.attempt_url }}">Submit a partial attempt</a></p>{% else %}<p class="meta">Use the template below to describe your partial attempt and what remains unresolved.</p>{% endif %}
       </dd>
     </div>
     <div class="task-detail-12">
@@ -102,12 +102,13 @@
 
 <section class="band task-discussion" aria-labelledby="task-discussion-heading">
   <p class="lbl" id="task-discussion-heading">Comments and questions</p>
-  <p class="prose">Use the public GitHub thread to ask about this task, share a partial attempt, or discuss how to approach it. Discussion is informal and does not become evidence in the claim record.</p>
+  <p class="prose">Discussion is informal and does not become evidence in the claim record.</p>
   {% if row.discussion_url %}
+  <p class="prose">Use the linked public thread to ask about this task, share a partial attempt, or discuss how to approach it.</p>
   <p><a class="button" href="{{ row.discussion_url }}">{% if task.get('discussion_url') %}Open task discussion{% else %}Start a public comment thread{% endif %}</a></p>
-  <p class="meta">GitHub may require an account to post. To add a scoped check to the record, use the attestation form above.</p>
+  <p class="meta">The discussion host may require an account to post. To add a scoped check to the record, {% if row.issue_url %}use the attestation form above{% else %}use the template below{% endif %}.</p>
   {% else %}
-  <p class="meta">No discussion link is configured for this task. Use the question or partial-attempt links above.</p>
+  <p class="meta">No discussion link is configured for this task. {% if row.question_url or row.attempt_url %}Use the question or partial-attempt links above.{% else %}Send the maintainer your question or partial attempt with the record and task ID.{% endif %}</p>
   {% endif %}
 </section>
 

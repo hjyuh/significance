@@ -13,7 +13,12 @@ from __future__ import annotations
 import json
 import re
 import xml.etree.ElementTree as ET
+from html import unescape
 from pathlib import Path
+from urllib.parse import parse_qs, urlsplit
+
+import pytest
+from ruamel.yaml import YAML
 
 from significance.boards import load_board
 from significance.records import load_record
@@ -232,6 +237,69 @@ def test_scoped_task_pages_and_index_are_generated(tmp_path):
     assert "Open attestation form" in task_page
     assert "State what you checked and found" in task_page
     assert "restricted-center-incidence" in task_page
+
+
+@pytest.mark.parametrize("repository_configured", [False, True])
+@pytest.mark.parametrize("attestation_configured", [False, True])
+def test_task_contribution_routes_are_independent(
+    tmp_path, repository_configured, attestation_configured,
+):
+    record = load_record(RECORDS_DIR / "2026-ethanyang-erdos-1095.yaml")
+    task = record["open_invitations"][0]
+    for invitation in record["open_invitations"]:
+        invitation.pop("discussion_url", None)
+        if not attestation_configured:
+            invitation.pop("respond", None)
+    records = tmp_path / "records"
+    records.mkdir()
+    yaml = YAML()
+    with (records / "record.yaml").open("w", encoding="utf-8") as stream:
+        yaml.dump(record, stream)
+    config = tmp_path / "site.yaml"
+    config.write_text(
+        'repository_url: "https://example.org/repo"\n'
+        if repository_configured else "repository_url: null\n",
+        encoding="utf-8",
+    )
+    out = tmp_path / "site"
+    result = build_site(records, out, site_config=config)
+    assert result.skipped == {}
+    page = (out / "tasks" / record["record_id"] / task["task_id"] / "index.html").read_text(
+        encoding="utf-8",
+    )
+    links = {
+        label: unescape(href)
+        for href, label in re.findall(r'<a[^>]*href="([^"]+)"[^>]*>([^<]+)</a>', page)
+    }
+    assert ("Open attestation form" in links) == attestation_configured
+    for label, kind in (("Ask about this task", "Question"),
+                        ("Submit a partial attempt", "Partial attempt")):
+        assert (label in links) == repository_configured
+        if repository_configured:
+            url = urlsplit(links[label])
+            assert url.netloc == "example.org"
+            assert url.path == "/repo/issues/new"
+            query = parse_qs(url.query)
+            assert query["title"] == [f"{kind}: {record['record_id']} / {task['task_id']}"]
+            assert f"Source SHA-256: {record['manuscript']['sha256']}" in query["body"][0]
+            assert f"Scope: {task['target']}" in query["body"][0]
+    assert 'href="None"' not in page and 'href=""' not in page
+    if not repository_configured:
+        assert "Send the maintainer your question or partial attempt" in page
+        assert "Use the question or partial-attempt links above" not in page
+    elif not attestation_configured:
+        assert "use the template below" in page
+
+
+def test_external_task_discussion_does_not_claim_to_be_on_github(tmp_path):
+    out = tmp_path / "site"
+    build_site(RECORDS_DIR, out)
+    page = (out / "tasks" / "2026-ethanyang-erdos-1095"
+            / "erdos-1095-statement-correspondence" / "index.html").read_text(encoding="utf-8")
+    assert "https://www.erdosproblems.com/forum/" in page
+    assert "Open task discussion" in page
+    assert "Use the linked public thread" in page
+    assert "Use the public GitHub thread" not in page
 
 
 def test_source_inspection_does_not_count_as_written_review(tmp_path):
