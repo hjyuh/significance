@@ -25,6 +25,7 @@ from significance.records import load_record
 from significance.render import (
     build_site,
     derived_exposition_task,
+    group_tasks,
     load_glossary,
     mathml,
     problem_slug,
@@ -237,6 +238,56 @@ def test_scoped_task_pages_and_index_are_generated(tmp_path):
     assert "Open attestation form" in task_page
     assert "State what you checked and found" in task_page
     assert "restricted-center-incidence" in task_page
+
+
+def test_task_index_groups_claims_in_numeric_problem_order(tmp_path):
+    out = tmp_path / "site"
+    build_site(RECORDS_DIR, out)
+    page = (out / "tasks" / "index.html").read_text(encoding="utf-8")
+    ids = re.findall(r'<section class="task-group" id="claim-([^"]+)"', page)
+    assert ids == [
+        "2026-dottedcalculator-erdos-4", "2026-evanbeller-erdos-132",
+        "2026-rafikzeraoulia-erdos-653", "2026-rafikzeraoulia-erdos-719",
+        "2026-rafikzeraoulia-erdos-726", "2026-alexchengyuli-erdos-848",
+        "2026-ethanyang-erdos-1095", "2026-alexchengyuli-erdos-1212",
+        "2026-anthropic-zeta-two-thirds", PUBLIC_RECORD_ID,
+    ]
+    expected = []
+    for rid in ids:
+        record = load_record(RECORDS_DIR / f"{rid}.yaml")
+        for i, task in enumerate(record.get("open_invitations", [])):
+            if task.get("status", "open") in {"open", "taken"}:
+                tid = task.get("task_id") or f"task-{i + 1}"
+                expected.append(f"./{rid}/{tid}/index.html")
+    hrefs = re.findall(r'<a href="([^"]+)" class="task-card-link"', page)
+    assert sorted(hrefs) == sorted(expected)
+    for rid in ids:
+        assert f'href="#claim-{rid}"' in page
+        assert f'aria-labelledby="claim-{rid}-heading"' in page
+    assert "Significance editor</h2>" not in page
+    assert "25 checks across 10 claims" in page
+    assert "[FILL" not in page
+
+
+def test_grouped_tasks_order_open_categories_before_taken():
+    record = load_record(RECORDS_DIR / "2026-dottedcalculator-erdos-4.yaml")
+    rows = [
+        {"record": record, "record_href": "record.html", "task_id": tid,
+         "check_category": category, "invitation": {"status": status}}
+        for tid, category, status in [
+            ("taken-statement", "statement", "taken"),
+            ("formalization", "formalization", "open"),
+            ("proof-one", "proof", "open"),
+            ("statement", "statement", "open"),
+            ("proof-two", "proof", "open"),
+        ]
+    ]
+    group, = group_tasks(rows)
+    assert [row["task_id"] for row in group["rows"]] == [
+        "statement", "proof-one", "proof-two", "formalization", "taken-statement",
+    ]
+    assert group["open_count"] == 4 and group["taken_count"] == 1
+    assert group_tasks([]) == []
 
 
 @pytest.mark.parametrize("repository_configured", [False, True])

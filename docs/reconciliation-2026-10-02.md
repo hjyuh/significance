@@ -45,6 +45,22 @@ rebuilt from the changed template; record sources are unchanged.
 
 ## Remaining work
 
+### Task-list organization follow-up
+
+The maintainer requested clearer organization of `/tasks/index.html`. The local
+continuation groups all 25 actionable tasks under ten claim headings, with a jump
+list and per-claim open/taken counts. Numbered venue problems sort numerically;
+other claims sort by manuscript label. Within a claim, open tasks sort by check
+category (statement, proof, computation, formalization, literature, exposition,
+other), preserving source order within a category; taken tasks follow. Full task
+targets remain visible. Unfilled effort estimates display as “Not estimated.”
+Derived exposition gaps remain a separate disclosure.
+
+Desktop and 390-pixel mobile previews were checked. All task destinations and
+claim anchors are covered by regression checks. Validation passes: 171 Python
+tests, 31 web tests, both linters, production build, record validation and both
+publication guards. This layout has not been deployed.
+
 1. Review this local change before any release, retaining the private-fixture and
    unlisted-page guards.
 2. Reconcile remaining dirty-root source changes one feature at a time. Keep all

@@ -1325,6 +1325,59 @@ h1.claim-math { max-width: 100%; }
 /* --- task cards -------------------------------------------------------------
    Card-based layout for the tasks list. More scannable than a table. */
 
+.task-jump-nav { margin-bottom: 40px; scroll-margin-top: 24px; }
+.task-jump-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+}
+.task-jump-nav a {
+  display: block;
+  padding: 8px 12px;
+  border: 1px solid var(--hair);
+  border-radius: 4px;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+.task-jump-nav span { color: var(--muted); }
+.task-group { scroll-margin-top: 24px; }
+.task-group + .task-group {
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid var(--rule);
+}
+.task-group-header { margin-bottom: 18px; }
+.task-group-header h2 {
+  margin: 0 0 8px;
+  font-size: 22px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.task-group-header .meta { margin: 0 0 12px; }
+.task-group-claim {
+  max-width: 80ch;
+  margin: 0;
+  color: var(--dim);
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.task-group .task-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.task-group .task-card-meta { display: grid; gap: 8px; }
+.task-group .task-card-link { height: 100%; box-sizing: border-box; }
+.task-group .task-card-title { font-size: 16px; line-height: 1.5; }
+.task-jump-nav a:focus-visible, .task-card-link:focus-visible {
+  outline: 2px solid var(--note);
+  outline-offset: 4px;
+}
+@media (max-width: 720px) {
+  .task-group .task-cards { grid-template-columns: minmax(0, 1fr); }
+  .task-group-header h2 { font-size: 19px; }
+}
+
 .task-cards {
   list-style: none;
   margin: 0;
