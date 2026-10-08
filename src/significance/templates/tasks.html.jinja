@@ -9,6 +9,19 @@
   {% if rows %}<p class="meta">{{ rows|length }} checks across {{ task_groups|length }} claims. Grouped by claim, with numbered problems in numerical order. Within each claim, open checks are arranged by category; checks already taken follow.</p>{% endif %}
 </section>
 
+{% set rewrite_rows = rows|selectattr('check_category', 'equalto', 'deslopping')|list %}
+{% if rewrite_rows %}
+<section class="band" id="deslopping">
+  <p class="lbl">De-slopping / explanation rewrite</p>
+  <p class="prose">Make a generated argument easier to read, with source references and explicit unresolved steps. These tasks follow the workflow described in <a href="https://github.com/GeorgeCoote/openai_372_deslop">George Coote’s repository</a>: distinguish an AI-assisted readable draft from a human-written rewrite. A rewrite does not establish mathematical correctness.</p>
+  <ul>
+  {% for row in rewrite_rows %}
+    <li><a href="{{ row.task_href }}">{{ row.record.manuscript.label }} — {{ row.invitation.target }}</a></li>
+  {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
 {% if rows %}
 <section class="band tasks-list">
   <nav class="task-jump-nav" id="task-top" aria-label="Jump to a claim">

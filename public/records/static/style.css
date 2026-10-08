@@ -1565,6 +1565,22 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 .task-detail-15 {margin: 0 0 8px;}
 .task-detail-16 {max-width: 60ch;}
 
+/* On-site discussion remains separate from the evidence record. */
+[data-native-discussion] form { display: grid; gap: 12px; max-width: 60ch; margin: 20px 0; }
+[data-native-discussion] label { display: grid; gap: 4px; }
+[data-native-discussion] input,
+[data-native-discussion] textarea {
+  width: 100%; padding: 10px; background: var(--bg); color: var(--fg);
+  border: 1px solid var(--edge); font: inherit;
+}
+[data-native-discussion] button {
+  padding: 8px 12px; margin: 4px 8px 4px 0; background: var(--bg);
+  color: var(--fg); border: 1px solid var(--edge); font: inherit; cursor: pointer;
+}
+[data-native-discussion] :focus-visible { outline: 2px solid var(--note); outline-offset: 3px; }
+.native-comment { border-top: 1px solid var(--hair); padding: 14px 0; }
+.native-comment-body { white-space: pre-wrap; overflow-wrap: anywhere; }
+
 /* Readable task metadata, consistent with the quiet record layout. */
 .task-card-record { font-family: var(--sans); font-size: 13px; overflow-wrap: anywhere; }
 .task-card-meta { font-size: 13px; gap: 8px 16px; }

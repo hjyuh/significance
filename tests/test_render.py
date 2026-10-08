@@ -269,6 +269,34 @@ def test_task_index_groups_claims_in_numeric_problem_order(tmp_path):
     assert "[FILL" not in page
 
 
+def test_deslopping_task_renders_workflow_and_deliverable(tmp_path):
+    from ruamel.yaml import YAML
+
+    record = load_record(RECORDS_DIR / "2026-ethanyang-erdos-1095.yaml")
+    task = record["open_invitations"][0]
+    task["check_category"] = "deslopping"
+    task["task_kind"] = "exposition"
+    task["how"] = "Rewrite one named section and preserve its hypotheses."
+    record["open_invitations"] = [task]
+    source = tmp_path / "records"
+    source.mkdir()
+    with (source / "rewrite.yaml").open("w", encoding="utf-8") as stream:
+        YAML().dump(record, stream)
+    out = tmp_path / "site"
+    result = build_site(source, out)
+    assert result.built == [record["record_id"]]
+    assert not result.skipped
+    index = (out / "tasks/index.html").read_text(encoding="utf-8")
+    assert 'id="deslopping"' in index
+    assert "De-slopping / explanation rewrite" in index
+    assert "https://github.com/GeorgeCoote/openai_372_deslop" in index
+    detail = (
+        out / "tasks" / record["record_id"] / task["task_id"] / "index.html"
+    ).read_text(encoding="utf-8")
+    assert task["how"] in detail
+    assert "Repository inclusion requires its maintainer’s review." in detail
+
+
 def test_grouped_tasks_order_open_categories_before_taken():
     record = load_record(RECORDS_DIR / "2026-dottedcalculator-erdos-4.yaml")
     rows = [

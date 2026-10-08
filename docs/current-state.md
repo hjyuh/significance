@@ -1,5 +1,16 @@
 # Significance — current development state
 
+The latest branch snapshot is [PROJECT-STATE-2026-10-08.md](../PROJECT-STATE-2026-10-08.md).
+It separates the confirmed public deployment, this branch's work, the unconfigured
+Firebase prototype and local private drafts.
+
+**8 October 2026 local prototype:** A strictly $0 account/comment route is
+prepared in `backend/firebase`, using Firebase Spark Authentication and
+Firestore alongside GitHub Pages. See [`free-backend.md`](free-backend.md).
+It is not deployed or connected to a production project. The older custom
+password branch remains separate. Comments stay outside record YAML and
+evidence; private drafts remain excluded from public task seeding.
+
 **Historical baseline: 2026-08-22, with later updates below.** This is a handoff for maintainers and coding models. Read it
 before changing the repository. It describes the current state, not a promise of
 mathematical correctness or public deployment.

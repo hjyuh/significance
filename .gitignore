@@ -19,3 +19,5 @@ drafts/
 
 .private-preview/
 public/author-review/
+backend/firebase/*-debug.log
+backend/firebase/.firebase/

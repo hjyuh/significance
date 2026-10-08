@@ -652,7 +652,7 @@ def check_invitation_categories(record: dict) -> list[Violation]:
     """Use a small, explicit taxonomy for the part of a claim a task checks."""
     allowed = {
         "statement", "proof", "computation", "formalization",
-        "literature", "exposition", "other",
+        "literature", "exposition", "deslopping", "other",
     }
     violations = []
     for i, invitation in enumerate(record.get("open_invitations") or []):

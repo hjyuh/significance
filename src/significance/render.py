@@ -238,6 +238,7 @@ def check_category_label(category: str) -> str:
         "formalization": "Formalization",
         "literature": "Literature",
         "exposition": "Exposition",
+        "deslopping": "De-slopping / explanation rewrite",
         "other": "Other",
     }.get(category, "Other")
 
@@ -266,7 +267,7 @@ def _attestation_yaml(record: dict, invitation: dict, task: str) -> str:
 def group_tasks(rows: list[dict]) -> list[dict]:
     """Group by record, using reader-facing problem order and check categories."""
     categories = ["statement", "proof", "computation", "formalization",
-                  "literature", "exposition", "other"]
+                  "literature", "exposition", "deslopping", "other"]
     groups = {}
     for row in rows:
         record = row["record"]
