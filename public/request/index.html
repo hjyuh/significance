@@ -10,7 +10,7 @@
 <body>
 <header class="topline">
 <a class="wordmark" href="/significance/records/index.html">SIGNIFICANCE</a>
-<p class="topline-meta">One link is enough to begin</p>
+<p class="topline-meta">Suggest a claim or correct an existing record</p>
 <nav class="topline-nav" aria-label="Site">
 <a href="/significance/records/index.html">Records</a>
 <a href="/significance/tasks/index.html">Open checks</a><a href="/significance/orientation/index.html">How it works</a><a href="/significance/request/index.html">Submit or correct</a>
@@ -21,36 +21,42 @@
 
 <section class="band">
   <p class="lbl">Request or correct a record</p>
-  <h1 class="claim-text">Get focused attention on a question in your paper.</h1>
+  <h1 class="claim-text">Request a record or suggest a correction.</h1>
   <p class="prose">
-    Send your preprint and tell us where an independent reader could help.
-    We will prepare a record that says what was claimed, who asserted it, and
-    what evidence exists. We will help define the request. You do not need
-    to know any of this project's vocabulary to file one. Reviewer availability
-    varies; not every request leads to a record.
+    Use a GitHub issue to suggest a mathematical claim for Significance or
+    correct a page that is already here. Authors and readers can both submit.
+    Start with a link and your role; add a short explanation if you can.
+    You do not need to prepare a record or edit YAML.
   </p>
+<p><a class="button" href="https://github.com/hjyuh/significance/issues/new?template=record-request.yml">Open the request or correction form on GitHub</a></p>  <p class="meta">GitHub issues are public. Keep private correspondence and personal information out of the form.</p>
 </section>
 
 <section class="band">
-  <p class="lbl">Who this is for</p>
-  <p class="prose">
-    Our initial focus is AI-assisted mathematical claims, where the volume of new claims makes focused scrutiny especially useful. But the records and checks work for any
-    preprint where an independent reader could help. You do not need to be
-    working with AI tools to request attention on your paper.
-  </p>
+  <p class="lbl">How to submit on GitHub</p>
+  <ol>
+    <li>Open the form above. Sign in to GitHub or create an account if prompted.</li>
+    <li>Give the issue a short title, such as “Record request: Erdős problem 3” or “Correction: source link on [record name].”</li>
+    <li>Paste the link to the paper, repository, announcement, or existing Significance record.</li>
+    <li>Select your role: author, reader, or other.</li>
+    <li>Optionally explain what you want added or corrected. For a correction, identify the section or sentence, suggest the change, and link supporting sources.</li>
+    <li>Choose <strong>Submit new issue</strong>. Return to the issue to answer questions or add sources in the comments.</li>
+  </ol>
+  <p class="prose">One issue should cover one claim or one focused correction. If you do not know what needs attention, leave the final field blank.</p>
 </section>
 
 <section class="band">
-  <p class="lbl">What a record tracks</p>
-  <p class="prose">
-    A record says what was claimed, who asserted it, what evidence exists, and
-    what nobody has checked yet. Findings stay attributed to their contributors and limited to the scope examined. Extracting fields, provenance, hashes,
-    and locators is our job. You may leave the final question blank.
-  </p>
+  <p class="lbl">What happens next</p>
+  <ol>
+    <li>A maintainer reads the issue, checks the sources, and asks for missing context when needed.</li>
+    <li>For a new record, the maintainer applies the publication rules below and prepares a draft of the claim, source version, existing evidence, and open questions. For a correction, they compare the suggested change with the existing record and its sources.</li>
+    <li>The proposed record or update goes through a pull request, validation, and human review. Attributed findings stay limited to the source version and scope examined.</li>
+    <li>An accepted change is merged and published in the next successful site deployment. The issue can link to the change; the record keeps a history of updates.</li>
+  </ol>
+  <p class="prose">Opening an issue does not automatically publish a record, assign a reviewer, or turn a comment into evidence. A maintainer may close a request without making a record change.</p>
 </section>
 
 <section class="band">
-  <p class="lbl">What happens after you ask</p>
+  <p class="lbl">Reply timing</p>
   <p class="prose">
     Requests are answered within a few days. That is a
     promise about the reply, not about the record: the answer may well be that
@@ -60,7 +66,7 @@
 </section>
 
 <section class="band">
-  <p class="lbl">Two routes</p>
+  <p class="lbl">Publication and author participation</p>
   <p class="prose">
     Widely circulating public claims from organisations or major announcements
     may receive editorial records compiled entirely from public sources. The
@@ -75,23 +81,21 @@
 </section>
 
 <section class="band">
-  <p class="lbl">One required field, two short context fields</p>
+  <p class="lbl">What to include</p>
   <dl class="facts">
     <dt>Required: link</dt>
     <dd>A link to where it actually lives (paper, preprint, repository, announcement, post). The most stable one, if it is in several places.</dd>
-    <dt>Short: your role</dt>
+    <dt>Required: your role</dt>
     <dd>Author, reader, or something else. This changes what happens next rather than how the request is ranked: an author can attest to their own work, and a reader asking about someone else's claim starts the contact step above.</dd>
-    <dt>Optional: attention</dt>
+    <dt>Optional: request or correction</dt>
     <dd>A correction, a theorem that matters, or a step you want examined. “Not sure” and a blank answer are both valid.</dd>
   </dl>
 </section>
 
+
 <section class="band">
-  <p class="lbl">Open an issue</p>
-  <p class="prose">
-    <a href="https://github.com/hjyuh/significance/issues/new?template=record-request.yml">Open a prefilled request or correction on GitHub</a>.
-    The fields above are already labelled. Needs a GitHub account.
-  </p>
+  <p class="lbl">Want to check a specific step instead?</p>
+  <p class="prose">Go to <a href="/significance/tasks/index.html">Open checks</a>, choose a task, and use its question, partial-attempt, or attestation link. A response should describe the exact source, what you checked, and what you found. Use this request form when a record is missing or an existing page needs correcting.</p>
 </section>
 
 <section class="band">
