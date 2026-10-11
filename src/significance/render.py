@@ -531,6 +531,9 @@ def _environment() -> Environment:
     # Windows (where the checkout may use CRLF) and Linux CI.
     style_bytes = _STATIC_DIR.joinpath("style.css").read_bytes().replace(b"\r\n", b"\n")
     env.globals["style_version"] = hashlib.sha256(style_bytes).hexdigest()[:12]
+    env.globals["full_record_template"] = _STATIC_DIR.joinpath(
+        "full-record-template.md"
+    ).read_text(encoding="utf-8")
     return env
 
 

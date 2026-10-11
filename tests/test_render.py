@@ -469,6 +469,24 @@ def test_hostile_content_is_fully_escaped(tmp_path):
 # /request/, and the two output layouts every auxiliary page has to work in.
 
 
+def test_full_record_template_matches_github_and_download(tmp_path):
+    canonical = (REPO_ROOT / "src/significance/static/full-record-template.md").read_text(
+        encoding="utf-8"
+    )
+    issue = (REPO_ROOT / ".github/ISSUE_TEMPLATE/full-record.md").read_text(encoding="utf-8")
+    assert issue.split("---", 2)[2].strip() == canonical.strip()
+    out = tmp_path / "site"
+    pages = tmp_path / "pages"
+    build_site(RECORDS_DIR, out, pages_out=pages)
+    page = (pages / "request/index.html").read_text(encoding="utf-8")
+    assert "issues/new?template=full-record.md" in page
+    assert 'href="/significance/records/static/full-record-template.md" download' in page
+    assert (out / "static/full-record-template.md").read_text(encoding="utf-8") == canonical
+    assert canonical.strip() in unescape(page)
+    assert "unknown" in canonical and "not checked" in canonical
+    assert "Do not invent a successful rerun or execution receipt" in canonical
+
+
 def test_request_page_is_built_beside_the_records_by_default(tmp_path):
     out = tmp_path / "site"
     result = build_site(RECORDS_DIR, out)

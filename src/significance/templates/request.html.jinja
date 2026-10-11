@@ -5,21 +5,13 @@
 {% block topline_meta %}Suggest a claim or correct an existing record{% endblock %}
 
 {#
-  Two actions, no backend. The site is static and stays static: a form posting
-  somewhere would need a server, a store, and a policy about what happens to
-  what people type into it, none of which this project has. A GitHub issue and
-  an email are both places where the request is visible to the person making it
-  and can be withdrawn by them.
-
-  The GitHub link carries `?template=`, which opens the form at
-  .github/ISSUE_TEMPLATE/record-request.yml with its three fields already
-  labelled. The mailto carries the same three fields as a body, so somebody who
-  will not open a GitHub account is not asked to answer a different set of
-  questions.
+  Record intake uses GitHub issues or email. The full-record Markdown template
+  also ships as a static download; no account backend handles record intake.
 #}
 {% set repo = site.get('repository_url') %}
 {% set template_name = site.get('record_request_template', 'record-request.yml') %}
 {% set issue_url = (repo ~ '/issues/new?template=' ~ template_name) if repo else None %}
+{% set full_issue_url = (repo ~ '/issues/new?template=full-record.md') if repo else None %}
 {% set contact = site.get('contact_email')|safe_email %}
 {% set mail_subject = 'Record request' %}
 {% set mail_body -%}
@@ -44,6 +36,19 @@ Optional — what should change or receive attention:
   </p>
   {% if issue_url|safe_href %}<p><a class="button" href="{{ issue_url|safe_href }}">Open the request or correction form on GitHub</a></p>{% endif %}
   <p class="meta">GitHub issues are public. Keep private correspondence and personal information out of the form.</p>
+</section>
+
+<section class="band" id="full-record-template">
+  <p class="lbl">Template for a full record page</p>
+  <h2>Ready to supply the whole draft?</h2>
+  <p class="prose">Use this template to supply the claim, sources, evidence, AI disclosure, explanation, reviewer map, and focused tasks for a complete page. Fill in what you know; mark missing information as “unknown” or “not checked.” Maintainers prepare the record metadata, file hashes, history, and validated YAML.</p>
+  {% if full_issue_url|safe_href %}<p><a class="button" href="{{ full_issue_url|safe_href }}">Draft a full record on GitHub</a></p>{% endif %}
+  <p><a href="{{ root_prefix }}static/full-record-template.md" download>Download the Markdown template</a>. You can also copy the template below into an issue.</p>
+  <details>
+    <summary>Show the complete page template</summary>
+    <pre class="full-record-template">{{ full_record_template }}</pre>
+  </details>
+  <p class="meta">A draft is reviewed before publication. Author participation and each finding must be attributed; unknown evidence is not a completed check.</p>
 </section>
 
 <section class="band">
