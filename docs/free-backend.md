@@ -1,6 +1,24 @@
 # Accounts and comments on a $0 plan
 
-Prepared 8 October 2026. This is a local prototype, not a live service.
+Prepared 8 October 2026; cloud setup updated 11 October 2026. The account/comment
+route is configured for a production Firebase project, but is not deployed on
+the public site and has not completed the live account test.
+
+## Cloud setup status — 11 October 2026
+
+Project `significance-5565c` remains on Spark. The Significance GitHub Pages web
+app is registered, Email/Password is enabled, and `hjyuh.github.io` and
+`localhost` are authorized. Email enumeration protection is enabled. The
+default Standard Firestore database is in `nam5`; the repository's scoped
+`firestore.rules` are published. Its 25 public task documents were checked
+against `tasks_manifest.py` through an unauthenticated production read.
+
+The public SDK configuration is included in the static assets. A local browser
+preview connects to this project and can read the empty comment list. The eight
+emulator rules tests pass. Registration, email delivery, verified posting,
+password reset, and deletion with two ordinary accounts remain required before
+calling this route ready for public use. Do not treat the emulator results as
+completion of that live test.
 
 Use the existing GitHub Pages site with Firebase Authentication and Cloud
 Firestore on the **Spark** plan. No Cloud Functions, Cloud Run, paid Blaze
@@ -86,7 +104,7 @@ they do not create cloud resources or contact a production database.
    sign out, reset a password, and delete an owned comment. Test moderation in
    the console and check that a second account cannot delete another's comment.
 
-The live project configuration and an owner-mediated cloud test are still
-required. Local emulator tests do not prove production delivery, browser
+An owner-mediated cloud account test is still required. Local emulator tests
+do not prove production delivery, browser
 compatibility or quota behavior. The older custom-password account branch stays
 separate; it is not merged into this route.
