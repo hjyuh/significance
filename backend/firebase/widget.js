@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, connectAuthEmulator, onAuthStateChanged, createUserWithEmailAndPassword,
+import { getAuth, setPersistence, browserLocalPersistence, connectAuthEmulator, onAuthStateChanged, createUserWithEmailAndPassword,
   signInWithEmailAndPassword, updateProfile, sendEmailVerification, sendPasswordResetEmail,
   signOut, reload } from 'firebase/auth';
 import { getFirestore, connectFirestoreEmulator, collection, doc, query, orderBy, limit,
@@ -79,6 +79,7 @@ async function start() {
     connectAuthEmulator(auth, 'http://127.0.0.1:9099', { disableWarnings: true });
     connectFirestoreEmulator(db, '127.0.0.1', 8088);
   }
+  await setPersistence(auth, browserLocalPersistence);
   root.replaceChildren();
   message = element('p', '');
   message.className = 'discussion-notice';
@@ -134,6 +135,8 @@ async function start() {
     }
   }
   function renderAccount(user) {
+    account.hidden = Boolean(user);
+    layout.classList.toggle('discussion-layout-signed-in', Boolean(user));
     account.replaceChildren();
     composer.replaceChildren();
     if (!user) {
@@ -207,10 +210,10 @@ async function start() {
       element('h3', 'Have a question?', composer);
       element('p', 'You can read the discussion without an account. Sign in to add your thoughts.', composer).className = 'discussion-help';
     } else {
-      element('p', 'YOUR ACCOUNT', account).className = 'discussion-eyebrow';
-      element('h3', user.displayName || 'Your account', account);
-      element('p', user.emailVerified ? 'Email confirmed. You can post comments.' : 'Email confirmation pending.', account).className = 'discussion-help';
-      button('Sign out', async () => { await signOut(auth); showMessage('You’re signed out.'); }, account).className = 'discussion-text-button';
+      const identity = element('div', null, composer);
+      identity.className = 'discussion-identity';
+      element('span', `Commenting as ${user.displayName || 'Contributor'}`, identity);
+      button('Sign out', async () => { await signOut(auth); showMessage('You’re signed out.'); }, identity).className = 'discussion-text-button';
       if (!user.emailVerified) {
         element('h3', 'Check your inbox', composer);
         element('p', 'Open the verification link in your email, then check your status here. Check your spam folder if it hasn’t arrived.', composer).className = 'discussion-help';

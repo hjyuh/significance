@@ -29,6 +29,13 @@ the ID token; it does not mark an email verified. Posting remains protected by
 the server-side rules. Display names are self-selected and are not identity
 verification or evidence about the mathematics.
 
+Authentication explicitly uses browser-local persistence: users stay signed in
+across reloads and browser restarts until sign-out, subject to the browser
+allowing storage (private sessions and cleared site data can end a session).
+Signed-in users see their public display name and a sign-out control above the
+composer; the sign-in/account panel is hidden and the discussion uses the full
+available width.
+
 Use the existing GitHub Pages site with Firebase Authentication and Cloud
 Firestore on the **Spark** plan. No Cloud Functions, Cloud Run, paid Blaze
 upgrade, SMS sign-in, purchased domain, Cloudflare or Resend is required.
