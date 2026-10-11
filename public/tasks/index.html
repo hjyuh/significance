@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none';">
 <title>Help check | Significance</title>
-<link rel="stylesheet" href="/significance/records/static/style.css?v=b41fc929dda5">
+<link rel="stylesheet" href="/significance/records/static/style.css?v=1ff92ec637ca">
 </head>
 <body>
 <header class="topline">
@@ -14,160 +14,46 @@
 <nav class="topline-nav" aria-label="Site">
 <a href="/significance/records/index.html">Records</a>
 <a href="/significance/tasks/index.html">Open checks</a><a href="/significance/orientation/index.html">How it works</a><a href="/significance/request/index.html">Submit or correct</a>
-</nav>
+<a href="/significance/profile/index.html">My profile</a></nav>
 </header>
 <div class="shell">
 <main>
 <section class="band">
   <p class="lbl">Help check a claim</p>
-  <h1 class="claim-text">Pick one. Read the passage. Report what you find.</h1>
+  <h1 class="claim-text">Find a claim. Choose one focused check.</h1>
   <p class="prose">Each task is scoped to a single passage or artifact. Reading needs no account; submitting through GitHub requires one.</p>
-</section>
+<p class="meta">25 checks across 10 claims. Grouped by claim, with numbered problems in numerical order. Within each claim, open checks are arranged by category; checks already taken follow.</p></section>
+
 
 <section class="band tasks-list">
+  <nav class="task-jump-nav" id="task-top" aria-label="Jump to a claim">
+    <p class="lbl">Jump to a claim</p>
+    <ul>
+      <li><a href="#claim-2026-dottedcalculator-erdos-4">ErdősProblems.com #4 <span>(3)</span></a></li>
+      <li><a href="#claim-2026-evanbeller-erdos-132">ErdősProblems.com #132 <span>(2)</span></a></li>
+      <li><a href="#claim-2026-rafikzeraoulia-erdos-653">ErdősProblems.com #653 <span>(3)</span></a></li>
+      <li><a href="#claim-2026-rafikzeraoulia-erdos-719">ErdősProblems.com #719 <span>(1)</span></a></li>
+      <li><a href="#claim-2026-rafikzeraoulia-erdos-726">ErdősProblems.com #726 <span>(4)</span></a></li>
+      <li><a href="#claim-2026-alexchengyuli-erdos-848">ErdősProblems.com #848 <span>(3)</span></a></li>
+      <li><a href="#claim-2026-ethanyang-erdos-1095">ErdősProblems.com #1095 <span>(3)</span></a></li>
+      <li><a href="#claim-2026-alexchengyuli-erdos-1212">ErdősProblems.com #1212 <span>(1)</span></a></li>
+      <li><a href="#claim-2026-anthropic-zeta-two-thirds">Claude, More Than Two Thirds of the Zeros of the... <span>(3)</span></a></li>
+      <li><a href="#claim-2026-openai-nonsofic-groups">OpenAI, Ten Advances in Mathematics and Theoretical... <span>(2)</span></a></li>
+    </ul>
+  </nav>
+  <section class="task-group" id="claim-2026-dottedcalculator-erdos-4" aria-labelledby="claim-2026-dottedcalculator-erdos-4-heading">
+    <header class="task-group-header">
+      <h2 id="claim-2026-dottedcalculator-erdos-4-heading"><a href="/significance/records/2026-dottedcalculator-erdos-4/index.html">ErdősProblems.com #4</a></h2>
+      <p class="meta">2 open · 1 taken · <a href="#task-top">Back to claims ↑</a></p>
+      <p class="task-group-claim">A Tilted Residue-Class Construction for Long Prime-Free Intervals claims Y(X) ≫ X log X / log₃ X and G(T) ≫ log T log₂ T / log₄ T.</p>
+    </header>
   <ul class="task-cards">
-<li class="task-card">
-  <a href="/significance/tasks/2026-alexchengyuli-erdos-1212/erdos-1212-statement-correspondence/index.html" class="task-card-link">
-    <div class="task-card-header">
-      <span class="task-status task-status-open">open</span>
-    </div>
-    <h3 class="task-card-title">Compare the graph and path conditions in Section 1, Problem 1212,...</h3>
-    <p class="task-card-record">ErdősProblems.com #1212</p>
-    <div class="task-card-meta">
-      <span class="task-type">Type: Statement audit</span>
-      <span class="task-category">Check: Statement</span>
-      <span class="task-prereq">Prerequisites: Section 1 of the paper; the repository README and the two named Lean files</span>
-      <span class="task-effort">Effort: about 1–2 hours for someone comfortable reading Lean statements</span>
-    </div>
-  </a>
-</li>
-<li class="task-card">
-  <a href="/significance/tasks/2026-alexchengyuli-erdos-848/erdos-848-certificate-audit/index.html" class="task-card-link">
-    <div class="task-card-header">
-      <span class="task-status task-status-open">open</span>
-    </div>
-    <h3 class="task-card-title">Read one certificate-generation path and record the exact passages followed.</h3>
-    <p class="task-card-record">ErdősProblems.com #848</p>
-    <div class="task-card-meta">
-      <span class="task-type">Type: Read check</span>
-      <span class="task-category">Check: Proof step</span>
-      <span class="task-prereq">Prerequisites: Paper definitions and finite certificate format</span>
-      <span class="task-effort">Effort: about 60-90 minutes</span>
-    </div>
-  </a>
-</li>
-<li class="task-card">
-  <a href="/significance/tasks/2026-alexchengyuli-erdos-848/erdos-848-lean-reproduction/index.html" class="task-card-link">
-    <div class="task-card-header">
-      <span class="task-status task-status-open">open</span>
-    </div>
-    <h3 class="task-card-title">Reproduce the pinned Lean release and report the build and certificate...</h3>
-    <p class="task-card-record">ErdősProblems.com #848</p>
-    <div class="task-card-meta">
-      <span class="task-type">Type: Reproduce build</span>
-      <span class="task-category">Check: Formalization</span>
-      <span class="task-prereq">Prerequisites: Lean and the repository&#39;s pinned release instructions</span>
-      <span class="task-effort">Effort: about 2 hours for the published-cache replay; a fresh source build is separate and may take multiple days</span>
-    </div>
-  </a>
-</li>
-<li class="task-card">
-  <a href="/significance/tasks/2026-alexchengyuli-erdos-848/erdos-848-statement-correspondence/index.html" class="task-card-link">
-    <div class="task-card-header">
-      <span class="task-status task-status-open">open</span>
-    </div>
-    <h3 class="task-card-title">Compare the paper&#39;s exact all-N statement with the pinned Lean declaration,...</h3>
-    <p class="task-card-record">ErdősProblems.com #848</p>
-    <div class="task-card-meta">
-      <span class="task-type">Type: Statement audit</span>
-      <span class="task-category">Check: Statement</span>
-      <span class="task-prereq">Prerequisites: the paper theorem map and Lean declaration names</span>
-      <span class="task-effort">Effort: about 45 minutes</span>
-    </div>
-  </a>
-</li>
-<li class="task-card">
-  <a href="/significance/tasks/2026-anthropic-zeta-two-thirds/task-1/index.html" class="task-card-link">
-    <div class="task-card-header">
-      <span class="task-status task-status-open">open</span>
-    </div>
-    <h3 class="task-card-title">Independently build the Theorem D Lean targets and run their axiom audit at...</h3>
-    <p class="task-card-record">Significance editor</p>
-    <div class="task-card-meta">
-      <span class="task-type">Type: Reproduction</span>
-      <span class="task-category">Check: Computation</span>
-      <span class="task-prereq">Prerequisites: Lean command-line use and the pinned repository toolchain</span>
-      <span class="task-effort">Effort: about 60–90 minutes with the repository cache; longer if dependencies must build from source</span>
-    </div>
-  </a>
-</li>
-<li class="task-card">
-  <a href="/significance/tasks/2026-anthropic-zeta-two-thirds/task-2/index.html" class="task-card-link">
-    <div class="task-card-header">
-      <span class="task-status task-status-open">open</span>
-    </div>
-    <h3 class="task-card-title">Compare paper Theorem D with the trusted comparator statement...</h3>
-    <p class="task-card-record">Significance editor</p>
-    <div class="task-card-meta">
-      <span class="task-type">Type: Correspondence</span>
-      <span class="task-category">Check: Statement</span>
-      <span class="task-prereq">Prerequisites: Lean source reading and the paper&#39;s counting notation</span>
-      <span class="task-effort">Effort: about 60–90 minutes</span>
-    </div>
-  </a>
-</li>
-<li class="task-card">
-  <a href="/significance/tasks/2026-anthropic-zeta-two-thirds/task-3/index.html" class="task-card-link">
-    <div class="task-card-header">
-      <span class="task-status task-status-open">open</span>
-    </div>
-    <h3 class="task-card-title">Assess the passage from Weil-form signature data to the lower bound in...</h3>
-    <p class="task-card-record">Significance editor</p>
-    <div class="task-card-meta">
-      <span class="task-type">Type: Mathematical review</span>
-      <span class="task-category">Check: Proof step</span>
-      <span class="task-prereq">Prerequisites: Analytic number theory and the paper&#39;s Weil-form notation</span>
-      <span class="task-effort">Effort: about 3–5 hours</span>
-    </div>
-  </a>
-</li>
-<li class="task-card">
-  <a href="/significance/tasks/2026-dottedcalculator-erdos-4/erdos-4-human-exposition/index.html" class="task-card-link">
-    <div class="task-card-header">
-      <span class="task-status task-status-taken">taken</span>
-    </div>
-    <h3 class="task-card-title">Produce a shorter human-readable exposition separating the new tilted sieve...</h3>
-    <p class="task-card-record">ErdősProblems.com #4</p>
-    <div class="task-card-meta">
-      <span class="task-type">Type: Exposition</span>
-      <span class="task-category">Check: Exposition</span>
-      <span class="task-prereq">Prerequisites: FGKMT 2018 and the tilted-sieve argument in Sections 3–5</span>
-      <span class="task-effort">Effort: O(1) months, as publicly anticipated by Ben Green</span>
-    </div>
-  </a>
-</li>
-<li class="task-card">
-  <a href="/significance/tasks/2026-dottedcalculator-erdos-4/erdos-4-lean-reproduction/index.html" class="task-card-link">
-    <div class="task-card-header">
-      <span class="task-status task-status-open">open</span>
-    </div>
-    <h3 class="task-card-title">Reproduce the completed tilted-sieve theorems and guarded axiom output at...</h3>
-    <p class="task-card-record">ErdősProblems.com #4</p>
-    <div class="task-card-meta">
-      <span class="task-type">Type: Reproduce build</span>
-      <span class="task-category">Check: Formalization</span>
-      <span class="task-prereq">Prerequisites: Lean 4.33.0, Mathlib 4.33.0, and the pinned src/latest project</span>
-      <span class="task-effort">Effort: [FILL: independent builder estimate]</span>
-    </div>
-  </a>
-</li>
 <li class="task-card">
   <a href="/significance/tasks/2026-dottedcalculator-erdos-4/erdos-4-statement-correspondence/index.html" class="task-card-link">
     <div class="task-card-header">
       <span class="task-status task-status-open">open</span>
     </div>
-    <h3 class="task-card-title">Compare the manuscript&#39;s two asymptotic statements with the pinned Lean...</h3>
-    <p class="task-card-record">ErdősProblems.com #4</p>
+    <h3 class="task-card-title">Compare the manuscript&#39;s two asymptotic statements with the pinned Lean declarations, recording endpoint, quantifier, and normalization choices.</h3>
     <div class="task-card-meta">
       <span class="task-type">Type: Statement audit</span>
       <span class="task-category">Check: Statement</span>
@@ -177,57 +63,48 @@
   </a>
 </li>
 <li class="task-card">
-  <a href="/significance/tasks/2026-ethanyang-erdos-1095/erdos-1095-finite-sieve/index.html" class="task-card-link">
+  <a href="/significance/tasks/2026-dottedcalculator-erdos-4/erdos-4-lean-reproduction/index.html" class="task-card-link">
     <div class="task-card-header">
       <span class="task-status task-status-open">open</span>
     </div>
-    <h3 class="task-card-title">Re-derive the finite interval sieve and eventual main-term/error comparison...</h3>
-    <p class="task-card-record">ErdősProblems.com #1095</p>
-    <div class="task-card-meta">
-      <span class="task-type">Type: Read check</span>
-      <span class="task-category">Check: Proof step</span>
-      <span class="task-prereq">Prerequisites: Number theory; Chinese remainder theorem; Inclusion–exclusion and asymptotic estimates</span>
-      <span class="task-effort">Effort: about 1–2 hours for a first scoped reading</span>
-    </div>
-  </a>
-</li>
-<li class="task-card">
-  <a href="/significance/tasks/2026-ethanyang-erdos-1095/erdos-1095-lean-reproduction/index.html" class="task-card-link">
-    <div class="task-card-header">
-      <span class="task-status task-status-open">open</span>
-    </div>
-    <h3 class="task-card-title">Independently replay the pinned Lean verifier and document the final...</h3>
-    <p class="task-card-record">ErdősProblems.com #1095</p>
+    <h3 class="task-card-title">Reproduce the completed tilted-sieve theorems and guarded axiom output at the pinned commit.</h3>
     <div class="task-card-meta">
       <span class="task-type">Type: Reproduce build</span>
       <span class="task-category">Check: Formalization</span>
-      <span class="task-prereq">Prerequisites: Lean 4.27.0; Pinned Mathlib/PNT dependencies; Isolated build and axiom auditing</span>
-      <span class="task-effort">Effort: several hours, dependent on cache availability and hardware</span>
+      <span class="task-prereq">Prerequisites: Lean 4.33.0, Mathlib 4.33.0, and the pinned src/latest project</span>
+      <span class="task-effort">Effort: Not estimated</span>
     </div>
   </a>
 </li>
 <li class="task-card">
-  <a href="/significance/tasks/2026-ethanyang-erdos-1095/erdos-1095-statement-correspondence/index.html" class="task-card-link">
+  <a href="/significance/tasks/2026-dottedcalculator-erdos-4/erdos-4-human-exposition/index.html" class="task-card-link">
     <div class="task-card-header">
-      <span class="task-status task-status-open">open</span>
+      <span class="task-status task-status-taken">taken</span>
     </div>
-    <h3 class="task-card-title">Compare the paper&#39;s eventual lcm theorem with both final Lean declarations...</h3>
-    <p class="task-card-record">ErdősProblems.com #1095</p>
+    <h3 class="task-card-title">Produce a shorter human-readable exposition separating the new tilted sieve from the imported FGKMT machinery.</h3>
     <div class="task-card-meta">
-      <span class="task-type">Type: Statement audit</span>
-      <span class="task-category">Check: Statement</span>
-      <span class="task-prereq">Prerequisites: Paper definition of g; Basic Lean statement reading</span>
-      <span class="task-effort">Effort: about 45–60 minutes</span>
+      <span class="task-type">Type: Exposition</span>
+      <span class="task-category">Check: Exposition</span>
+      <span class="task-prereq">Prerequisites: FGKMT 2018 and the tilted-sieve argument in Sections 3–5</span>
+      <span class="task-effort">Effort: O(1) months, as publicly anticipated by Ben Green</span>
     </div>
   </a>
 </li>
+  </ul>
+  </section>
+  <section class="task-group" id="claim-2026-evanbeller-erdos-132" aria-labelledby="claim-2026-evanbeller-erdos-132-heading">
+    <header class="task-group-header">
+      <h2 id="claim-2026-evanbeller-erdos-132-heading"><a href="/significance/records/2026-evanbeller-erdos-132/index.html">ErdősProblems.com #132</a></h2>
+      <p class="meta">2 open · <a href="#task-top">Back to claims ↑</a></p>
+      <p class="task-group-claim">The submission claims a proof of the first assertion of Erdős Problem #132 for n = 8: every eight-point planar set has two distinct distances occurring at most eight times.</p>
+    </header>
+  <ul class="task-cards">
 <li class="task-card">
   <a href="/significance/tasks/2026-evanbeller-erdos-132/erdos-132-lean-correspondence/index.html" class="task-card-link">
     <div class="task-card-header">
       <span class="task-status task-status-open">open</span>
     </div>
     <h3 class="task-card-title">Compare the formal theorem and definitions with the informal n = 8 claim.</h3>
-    <p class="task-card-record">ErdősProblems.com #132</p>
     <div class="task-card-meta">
       <span class="task-type">Type: Statement audit</span>
       <span class="task-category">Check: Statement</span>
@@ -241,8 +118,7 @@
     <div class="task-card-header">
       <span class="task-status task-status-open">open</span>
     </div>
-    <h3 class="task-card-title">Check the n = 8 geometric deduction only; report the exact passages followed...</h3>
-    <p class="task-card-record">ErdősProblems.com #132</p>
+    <h3 class="task-card-title">Check the n = 8 geometric deduction only; report the exact passages followed and any first unresolved step.</h3>
     <div class="task-card-meta">
       <span class="task-type">Type: Read check</span>
       <span class="task-category">Check: Proof step</span>
@@ -251,48 +127,26 @@
     </div>
   </a>
 </li>
-<li class="task-card">
-  <a href="/significance/tasks/2026-openai-nonsofic-groups/task-2/index.html" class="task-card-link">
-    <div class="task-card-header">
-      <span class="task-status task-status-open">open</span>
-    </div>
-    <h3 class="task-card-title">Trace the declaration chain between manuscript Theorem 1.1 and the...</h3>
-    <p class="task-card-record">Significance editor</p>
-    <div class="task-card-meta">
-      <span class="task-type">Type: Correspondence</span>
-      <span class="task-category">Check: Statement</span>
-      <span class="task-prereq">Prerequisites: None listed</span>
-      <span class="task-effort">Effort: Not estimated</span>
-    </div>
-  </a>
-</li>
-<li class="task-card">
-  <a href="/significance/tasks/2026-openai-nonsofic-groups/task-3/index.html" class="task-card-link">
-    <div class="task-card-header">
-      <span class="task-status task-status-open">open</span>
-    </div>
-    <h3 class="task-card-title">Assess the expander-matching criterion in Proposition 2.3 or the...</h3>
-    <p class="task-card-record">Significance editor</p>
-    <div class="task-card-meta">
-      <span class="task-type">Type: Mathematical review</span>
-      <span class="task-category">Check: Proof step</span>
-      <span class="task-prereq">Prerequisites: None listed</span>
-      <span class="task-effort">Effort: Not estimated</span>
-    </div>
-  </a>
-</li>
+  </ul>
+  </section>
+  <section class="task-group" id="claim-2026-rafikzeraoulia-erdos-653" aria-labelledby="claim-2026-rafikzeraoulia-erdos-653-heading">
+    <header class="task-group-header">
+      <h2 id="claim-2026-rafikzeraoulia-erdos-653-heading"><a href="/significance/records/2026-rafikzeraoulia-erdos-653/index.html">ErdősProblems.com #653</a></h2>
+      <p class="meta">3 open · <a href="#task-top">Back to claims ↑</a></p>
+      <p class="task-group-claim">The manuscript gives a partial result toward Erdős Problem #653, proving an improved upper bound g(n) ≤ n − 1 − cε n^(0.81668−ε).</p>
+    </header>
+  <ul class="task-cards">
 <li class="task-card">
   <a href="/significance/tasks/2026-rafikzeraoulia-erdos-653/distance-count-conversion/index.html" class="task-card-link">
     <div class="task-card-header">
       <span class="task-status task-status-open">open</span>
     </div>
     <h3 class="task-card-title">Check the hypotheses of Theorem 2.2 where it is applied to the constructed circles.</h3>
-    <p class="task-card-record">ErdősProblems.com #653</p>
     <div class="task-card-meta">
       <span class="task-type">Type: Read check</span>
       <span class="task-category">Check: Proof step</span>
       <span class="task-prereq">Prerequisites: Theorem 2.2 as cited in the manuscript</span>
-      <span class="task-effort">Effort: [FILL: editor estimate]</span>
+      <span class="task-effort">Effort: Not estimated</span>
     </div>
   </a>
 </li>
@@ -301,13 +155,12 @@
     <div class="task-card-header">
       <span class="task-status task-status-open">open</span>
     </div>
-    <h3 class="task-card-title">Check Theorem 1.1 and the Section 3 deduction from the incidence bound to...</h3>
-    <p class="task-card-record">ErdősProblems.com #653</p>
+    <h3 class="task-card-title">Check Theorem 1.1 and the Section 3 deduction from the incidence bound to the exponent.</h3>
     <div class="task-card-meta">
       <span class="task-type">Type: Rederive</span>
       <span class="task-category">Check: Proof step</span>
       <span class="task-prereq">Prerequisites: incidence geometry basics</span>
-      <span class="task-effort">Effort: [FILL: editor estimate]</span>
+      <span class="task-effort">Effort: Not estimated</span>
     </div>
   </a>
 </li>
@@ -317,7 +170,6 @@
       <span class="task-status task-status-open">open</span>
     </div>
     <h3 class="task-card-title">Check one short structural result: Proposition 2.1 or Theorem 6.2.</h3>
-    <p class="task-card-record">ErdősProblems.com #653</p>
     <div class="task-card-meta">
       <span class="task-type">Type: Bounded structural check</span>
       <span class="task-category">Check: Proof step</span>
@@ -326,13 +178,21 @@
     </div>
   </a>
 </li>
+  </ul>
+  </section>
+  <section class="task-group" id="claim-2026-rafikzeraoulia-erdos-719" aria-labelledby="claim-2026-rafikzeraoulia-erdos-719-heading">
+    <header class="task-group-header">
+      <h2 id="claim-2026-rafikzeraoulia-erdos-719-heading"><a href="/significance/records/2026-rafikzeraoulia-erdos-719/index.html">ErdősProblems.com #719</a></h2>
+      <p class="meta">1 open · <a href="#task-top">Back to claims ↑</a></p>
+      <p class="task-group-claim">For every 3-graph G on n ≤ 9 vertices, |E(G)| − 3ν(G) ≤ ex₃(n, K₄³). Equivalently, every such G admits an edge-disjoint decomposition into at most ex₃(n, K₄³) single triples and tetrahedra.</p>
+    </header>
+  <ul class="task-cards">
 <li class="task-card">
   <a href="/significance/tasks/2026-rafikzeraoulia-erdos-719/erdos-719-full-statement-first-pass/index.html" class="task-card-link">
     <div class="task-card-header">
       <span class="task-status task-status-open">open</span>
     </div>
-    <h3 class="task-card-title">Compare the note’s main result with Problem 719, explicitly recording the...</h3>
-    <p class="task-card-record">ErdősProblems.com #719</p>
+    <h3 class="task-card-title">Compare the note’s main result with Problem 719, explicitly recording the restriction to r = 3 and n ≤ 9 and any differences from the general problem.</h3>
     <div class="task-card-meta">
       <span class="task-type">Type: Read check</span>
       <span class="task-category">Check: Proof step</span>
@@ -341,18 +201,26 @@
     </div>
   </a>
 </li>
+  </ul>
+  </section>
+  <section class="task-group" id="claim-2026-rafikzeraoulia-erdos-726" aria-labelledby="claim-2026-rafikzeraoulia-erdos-726-heading">
+    <header class="task-group-header">
+      <h2 id="claim-2026-rafikzeraoulia-erdos-726-heading"><a href="/significance/records/2026-rafikzeraoulia-erdos-726/index.html">ErdősProblems.com #726</a></h2>
+      <p class="meta">4 open · <a href="#task-top">Back to claims ↑</a></p>
+      <p class="task-group-claim">The paper proves Problem #726 conditionally on an explicitly stated reciprocal-prime equidistribution hypothesis.</p>
+    </header>
+  <ul class="task-cards">
 <li class="task-card">
   <a href="/significance/tasks/2026-rafikzeraoulia-erdos-726/hypothesis-3-1-scope/index.html" class="task-card-link">
     <div class="task-card-header">
       <span class="task-status task-status-open">open</span>
     </div>
     <h3 class="task-card-title">Check Hypothesis 3.1 and Remark 3.2 against the cited literature.</h3>
-    <p class="task-card-record">ErdősProblems.com #726</p>
     <div class="task-card-meta">
       <span class="task-type">Type: Statement audit</span>
       <span class="task-category">Check: Statement</span>
       <span class="task-prereq">Prerequisites: Hypothesis 3.1 and the cited literature</span>
-      <span class="task-effort">Effort: [FILL: editor estimate]</span>
+      <span class="task-effort">Effort: Not estimated</span>
     </div>
   </a>
 </li>
@@ -362,7 +230,6 @@
       <span class="task-status task-status-open">open</span>
     </div>
     <h3 class="task-card-title">Check Lemma 6.1 and the decomposition used in the proof of Theorem 1.1.</h3>
-    <p class="task-card-record">ErdősProblems.com #726</p>
     <div class="task-card-meta">
       <span class="task-type">Type: Main cancellation</span>
       <span class="task-category">Check: Proof step</span>
@@ -377,7 +244,6 @@
       <span class="task-status task-status-open">open</span>
     </div>
     <h3 class="task-card-title">Optionally check Hypothesis 8.1 and Proposition 8.2.</h3>
-    <p class="task-card-record">ErdősProblems.com #726</p>
     <div class="task-card-meta">
       <span class="task-type">Type: Alternate hypothesis</span>
       <span class="task-category">Check: Proof step</span>
@@ -392,16 +258,229 @@
       <span class="task-status task-status-open">open</span>
     </div>
     <h3 class="task-card-title">Check Lemma 3.3, Proposition 5.1, and Corollary 5.2.</h3>
-    <p class="task-card-record">ErdősProblems.com #726</p>
     <div class="task-card-meta">
       <span class="task-type">Type: Rederive</span>
       <span class="task-category">Check: Proof step</span>
       <span class="task-prereq">Prerequisites: partial summation and smooth approximation</span>
-      <span class="task-effort">Effort: [FILL: editor estimate]</span>
+      <span class="task-effort">Effort: Not estimated</span>
     </div>
   </a>
 </li>
   </ul>
+  </section>
+  <section class="task-group" id="claim-2026-alexchengyuli-erdos-848" aria-labelledby="claim-2026-alexchengyuli-erdos-848-heading">
+    <header class="task-group-header">
+      <h2 id="claim-2026-alexchengyuli-erdos-848-heading"><a href="/significance/records/2026-alexchengyuli-erdos-848/index.html">ErdősProblems.com #848</a></h2>
+      <p class="meta">3 open · <a href="#task-top">Back to claims ↑</a></p>
+      <p class="task-group-claim">The submission claims a full proof that, for every N &gt;= 1, the maximum size of a set A subset of {1, ..., N} such that ab + 1 is nonsquarefree for every a, b in A is floor((N + 18)/25).</p>
+    </header>
+  <ul class="task-cards">
+<li class="task-card">
+  <a href="/significance/tasks/2026-alexchengyuli-erdos-848/erdos-848-statement-correspondence/index.html" class="task-card-link">
+    <div class="task-card-header">
+      <span class="task-status task-status-open">open</span>
+    </div>
+    <h3 class="task-card-title">Compare the paper&#39;s exact all-N statement with the pinned Lean declaration, recording both the paper version and the pinned machine-proof version.</h3>
+    <div class="task-card-meta">
+      <span class="task-type">Type: Statement audit</span>
+      <span class="task-category">Check: Statement</span>
+      <span class="task-prereq">Prerequisites: the paper theorem map and Lean declaration names</span>
+      <span class="task-effort">Effort: about 45 minutes</span>
+    </div>
+  </a>
+</li>
+<li class="task-card">
+  <a href="/significance/tasks/2026-alexchengyuli-erdos-848/erdos-848-certificate-audit/index.html" class="task-card-link">
+    <div class="task-card-header">
+      <span class="task-status task-status-open">open</span>
+    </div>
+    <h3 class="task-card-title">Read one certificate-generation path and record the exact passages followed.</h3>
+    <div class="task-card-meta">
+      <span class="task-type">Type: Read check</span>
+      <span class="task-category">Check: Proof step</span>
+      <span class="task-prereq">Prerequisites: Paper definitions and finite certificate format</span>
+      <span class="task-effort">Effort: about 60-90 minutes</span>
+    </div>
+  </a>
+</li>
+<li class="task-card">
+  <a href="/significance/tasks/2026-alexchengyuli-erdos-848/erdos-848-lean-reproduction/index.html" class="task-card-link">
+    <div class="task-card-header">
+      <span class="task-status task-status-open">open</span>
+    </div>
+    <h3 class="task-card-title">Reproduce the pinned Lean release and report the build and certificate result within the published-cache replay trust boundary.</h3>
+    <div class="task-card-meta">
+      <span class="task-type">Type: Reproduce build</span>
+      <span class="task-category">Check: Formalization</span>
+      <span class="task-prereq">Prerequisites: Lean and the repository&#39;s pinned release instructions</span>
+      <span class="task-effort">Effort: about 2 hours for the published-cache replay; a fresh source build is separate and may take multiple days</span>
+    </div>
+  </a>
+</li>
+  </ul>
+  </section>
+  <section class="task-group" id="claim-2026-ethanyang-erdos-1095" aria-labelledby="claim-2026-ethanyang-erdos-1095-heading">
+    <header class="task-group-header">
+      <h2 id="claim-2026-ethanyang-erdos-1095-heading"><a href="/significance/records/2026-ethanyang-erdos-1095/index.html">ErdősProblems.com #1095</a></h2>
+      <p class="meta">3 open · <a href="#task-top">Back to claims ↑</a></p>
+      <p class="task-group-claim">The paper claims that for every sufficiently large integer k there is an integer n with k + 1 &lt; n &lt; L_k = lcm(1,...,k) such that no prime p &lt;= k divides binom(n,k). Consequently g(k) &lt; L_k eventually.</p>
+    </header>
+  <ul class="task-cards">
+<li class="task-card">
+  <a href="/significance/tasks/2026-ethanyang-erdos-1095/erdos-1095-statement-correspondence/index.html" class="task-card-link">
+    <div class="task-card-header">
+      <span class="task-status task-status-open">open</span>
+    </div>
+    <h3 class="task-card-title">Compare the paper&#39;s eventual lcm theorem with both final Lean declarations and the source definition of g.</h3>
+    <div class="task-card-meta">
+      <span class="task-type">Type: Statement audit</span>
+      <span class="task-category">Check: Statement</span>
+      <span class="task-prereq">Prerequisites: Paper definition of g; Basic Lean statement reading</span>
+      <span class="task-effort">Effort: about 45–60 minutes</span>
+    </div>
+  </a>
+</li>
+<li class="task-card">
+  <a href="/significance/tasks/2026-ethanyang-erdos-1095/erdos-1095-finite-sieve/index.html" class="task-card-link">
+    <div class="task-card-header">
+      <span class="task-status task-status-open">open</span>
+    </div>
+    <h3 class="task-card-title">Re-derive the finite interval sieve and eventual main-term/error comparison at the pinned manuscript version.</h3>
+    <div class="task-card-meta">
+      <span class="task-type">Type: Read check</span>
+      <span class="task-category">Check: Proof step</span>
+      <span class="task-prereq">Prerequisites: Number theory; Chinese remainder theorem; Inclusion–exclusion and asymptotic estimates</span>
+      <span class="task-effort">Effort: about 1–2 hours for a first scoped reading</span>
+    </div>
+  </a>
+</li>
+<li class="task-card">
+  <a href="/significance/tasks/2026-ethanyang-erdos-1095/erdos-1095-lean-reproduction/index.html" class="task-card-link">
+    <div class="task-card-header">
+      <span class="task-status task-status-open">open</span>
+    </div>
+    <h3 class="task-card-title">Independently replay the pinned Lean verifier and document the final theorem&#39;s actual axiom and dependency boundary.</h3>
+    <div class="task-card-meta">
+      <span class="task-type">Type: Reproduce build</span>
+      <span class="task-category">Check: Formalization</span>
+      <span class="task-prereq">Prerequisites: Lean 4.27.0; Pinned Mathlib/PNT dependencies; Isolated build and axiom auditing</span>
+      <span class="task-effort">Effort: several hours, dependent on cache availability and hardware</span>
+    </div>
+  </a>
+</li>
+  </ul>
+  </section>
+  <section class="task-group" id="claim-2026-alexchengyuli-erdos-1212" aria-labelledby="claim-2026-alexchengyuli-erdos-1212-heading">
+    <header class="task-group-header">
+      <h2 id="claim-2026-alexchengyuli-erdos-1212-heading"><a href="/significance/records/2026-alexchengyuli-erdos-1212/index.html">ErdősProblems.com #1212</a></h2>
+      <p class="meta">1 open · <a href="#task-top">Back to claims ↑</a></p>
+      <p class="task-group-claim">We prove that this graph contains an infinite simple path, answering Erdős Problem 1212 affirmatively. More precisely, for almost every slope in a fixed interval away from the diagonal, there is a ray with that limiting coordinate ratio.</p>
+    </header>
+  <ul class="task-cards">
+<li class="task-card">
+  <a href="/significance/tasks/2026-alexchengyuli-erdos-1212/erdos-1212-statement-correspondence/index.html" class="task-card-link">
+    <div class="task-card-header">
+      <span class="task-status task-status-open">open</span>
+    </div>
+    <h3 class="task-card-title">Compare the graph and path conditions in Section 1, Problem 1212, Target.lean, and AlgebraicCorridorKernelAudit.lean.</h3>
+    <div class="task-card-meta">
+      <span class="task-type">Type: Statement audit</span>
+      <span class="task-category">Check: Statement</span>
+      <span class="task-prereq">Prerequisites: Section 1 of the paper; the repository README and the two named Lean files</span>
+      <span class="task-effort">Effort: about 1–2 hours for someone comfortable reading Lean statements</span>
+    </div>
+  </a>
+</li>
+  </ul>
+  </section>
+  <section class="task-group" id="claim-2026-anthropic-zeta-two-thirds" aria-labelledby="claim-2026-anthropic-zeta-two-thirds-heading">
+    <header class="task-group-header">
+      <h2 id="claim-2026-anthropic-zeta-two-thirds-heading"><a href="/significance/records/2026-anthropic-zeta-two-thirds/index.html">Claude, More Than Two Thirds of the Zeros of the Riemann Zeta Function Lie on the Critical Line</a></h2>
+      <p class="meta">3 open · <a href="#task-top">Back to claims ↑</a></p>
+      <p class="task-group-claim">lim inf as T → ∞ of N₀*(T, 2T) / N(T, 2T) ≥ 3/2 − (1/√2) cot(1/√2) = 0.67250… .</p>
+    </header>
+  <ul class="task-cards">
+<li class="task-card">
+  <a href="/significance/tasks/2026-anthropic-zeta-two-thirds/task-2/index.html" class="task-card-link">
+    <div class="task-card-header">
+      <span class="task-status task-status-open">open</span>
+    </div>
+    <h3 class="task-card-title">Compare paper Theorem D with the trusted comparator statement montgomery_taylor_on_critical_line and its counting definitions.</h3>
+    <div class="task-card-meta">
+      <span class="task-type">Type: Correspondence</span>
+      <span class="task-category">Check: Statement</span>
+      <span class="task-prereq">Prerequisites: Lean source reading and the paper&#39;s counting notation</span>
+      <span class="task-effort">Effort: about 60–90 minutes</span>
+    </div>
+  </a>
+</li>
+<li class="task-card">
+  <a href="/significance/tasks/2026-anthropic-zeta-two-thirds/task-3/index.html" class="task-card-link">
+    <div class="task-card-header">
+      <span class="task-status task-status-open">open</span>
+    </div>
+    <h3 class="task-card-title">Assess the passage from Weil-form signature data to the lower bound in Proposition 4.4 and Theorem D, against the pinned paper.</h3>
+    <div class="task-card-meta">
+      <span class="task-type">Type: Mathematical review</span>
+      <span class="task-category">Check: Proof step</span>
+      <span class="task-prereq">Prerequisites: Analytic number theory and the paper&#39;s Weil-form notation</span>
+      <span class="task-effort">Effort: about 3–5 hours</span>
+    </div>
+  </a>
+</li>
+<li class="task-card">
+  <a href="/significance/tasks/2026-anthropic-zeta-two-thirds/task-1/index.html" class="task-card-link">
+    <div class="task-card-header">
+      <span class="task-status task-status-open">open</span>
+    </div>
+    <h3 class="task-card-title">Independently build the Theorem D Lean targets and run their axiom audit at commit 3635e74826a4c1fcece7d1cd2b6fa75e43a00510.</h3>
+    <div class="task-card-meta">
+      <span class="task-type">Type: Reproduction</span>
+      <span class="task-category">Check: Computation</span>
+      <span class="task-prereq">Prerequisites: Lean command-line use and the pinned repository toolchain</span>
+      <span class="task-effort">Effort: about 60–90 minutes with the repository cache; longer if dependencies must build from source</span>
+    </div>
+  </a>
+</li>
+  </ul>
+  </section>
+  <section class="task-group" id="claim-2026-openai-nonsofic-groups" aria-labelledby="claim-2026-openai-nonsofic-groups-heading">
+    <header class="task-group-header">
+      <h2 id="claim-2026-openai-nonsofic-groups-heading"><a href="/significance/records/2026-openai-nonsofic-groups/index.html">OpenAI, Ten Advances in Mathematics and Theoretical Computer Science</a></h2>
+      <p class="meta">2 open · <a href="#task-top">Back to claims ↑</a></p>
+      <p class="task-group-claim">The unit group L_F2(1,2)× of the binary Leavitt algebra is not sofic.</p>
+    </header>
+  <ul class="task-cards">
+<li class="task-card">
+  <a href="/significance/tasks/2026-openai-nonsofic-groups/task-2/index.html" class="task-card-link">
+    <div class="task-card-header">
+      <span class="task-status task-status-open">open</span>
+    </div>
+    <h3 class="task-card-title">Trace the declaration chain between manuscript Theorem 1.1 and the Comparator target exists_finitelyPresented_nonsofic_group.</h3>
+    <div class="task-card-meta">
+      <span class="task-type">Type: Correspondence</span>
+      <span class="task-category">Check: Statement</span>
+      <span class="task-prereq">Prerequisites: None listed</span>
+      <span class="task-effort">Effort: Not estimated</span>
+    </div>
+  </a>
+</li>
+<li class="task-card">
+  <a href="/significance/tasks/2026-openai-nonsofic-groups/task-3/index.html" class="task-card-link">
+    <div class="task-card-header">
+      <span class="task-status task-status-open">open</span>
+    </div>
+    <h3 class="task-card-title">Assess the expander-matching criterion in Proposition 2.3 or the Thompson-group step in Proposition 3.2, naming the exact artifact revision reviewed.</h3>
+    <div class="task-card-meta">
+      <span class="task-type">Type: Mathematical review</span>
+      <span class="task-category">Check: Proof step</span>
+      <span class="task-prereq">Prerequisites: None listed</span>
+      <span class="task-effort">Effort: Not estimated</span>
+    </div>
+  </a>
+</li>
+  </ul>
+  </section>
 </section>
 
 <section class="band">
@@ -419,7 +498,7 @@
         <span class="task-type">Type: Exposition</span>
         <span class="task-category">Check: Exposition</span>
         <span class="task-prereq">Prerequisites: None listed</span>
-        <span class="task-effort">Effort: [FILL]</span>
+        <span class="task-effort">Effort: Not estimated</span>
       </div>
     </li>
     <li class="task-card task-card-derived" id="derived-exposition-2026-alexchengyuli-erdos-848">
@@ -432,7 +511,7 @@
         <span class="task-type">Type: Exposition</span>
         <span class="task-category">Check: Exposition</span>
         <span class="task-prereq">Prerequisites: None listed</span>
-        <span class="task-effort">Effort: [FILL]</span>
+        <span class="task-effort">Effort: Not estimated</span>
       </div>
     </li>
     <li class="task-card task-card-derived" id="derived-exposition-2026-anthropic-zeta-two-thirds">
@@ -445,7 +524,7 @@
         <span class="task-type">Type: Exposition</span>
         <span class="task-category">Check: Exposition</span>
         <span class="task-prereq">Prerequisites: None listed</span>
-        <span class="task-effort">Effort: [FILL]</span>
+        <span class="task-effort">Effort: Not estimated</span>
       </div>
     </li>
     <li class="task-card task-card-derived" id="derived-exposition-2026-ethanyang-erdos-1095">
@@ -458,7 +537,7 @@
         <span class="task-type">Type: Exposition</span>
         <span class="task-category">Check: Exposition</span>
         <span class="task-prereq">Prerequisites: None listed</span>
-        <span class="task-effort">Effort: [FILL]</span>
+        <span class="task-effort">Effort: Not estimated</span>
       </div>
     </li>
     <li class="task-card task-card-derived" id="derived-exposition-2026-evanbeller-erdos-132">
@@ -471,7 +550,7 @@
         <span class="task-type">Type: Exposition</span>
         <span class="task-category">Check: Exposition</span>
         <span class="task-prereq">Prerequisites: None listed</span>
-        <span class="task-effort">Effort: [FILL]</span>
+        <span class="task-effort">Effort: Not estimated</span>
       </div>
     </li>
     <li class="task-card task-card-derived" id="derived-exposition-2026-openai-nonsofic-groups">
@@ -484,7 +563,7 @@
         <span class="task-type">Type: Exposition</span>
         <span class="task-category">Check: Exposition</span>
         <span class="task-prereq">Prerequisites: None listed</span>
-        <span class="task-effort">Effort: [FILL]</span>
+        <span class="task-effort">Effort: Not estimated</span>
       </div>
     </li>
     <li class="task-card task-card-derived" id="derived-exposition-2026-rafikzeraoulia-erdos-653">
@@ -497,7 +576,7 @@
         <span class="task-type">Type: Exposition</span>
         <span class="task-category">Check: Exposition</span>
         <span class="task-prereq">Prerequisites: None listed</span>
-        <span class="task-effort">Effort: [FILL]</span>
+        <span class="task-effort">Effort: Not estimated</span>
       </div>
     </li>
     <li class="task-card task-card-derived" id="derived-exposition-2026-rafikzeraoulia-erdos-719">
@@ -510,7 +589,7 @@
         <span class="task-type">Type: Exposition</span>
         <span class="task-category">Check: Exposition</span>
         <span class="task-prereq">Prerequisites: None listed</span>
-        <span class="task-effort">Effort: [FILL]</span>
+        <span class="task-effort">Effort: Not estimated</span>
       </div>
     </li>
     <li class="task-card task-card-derived" id="derived-exposition-2026-rafikzeraoulia-erdos-726">
@@ -523,7 +602,7 @@
         <span class="task-type">Type: Exposition</span>
         <span class="task-category">Check: Exposition</span>
         <span class="task-prereq">Prerequisites: None listed</span>
-        <span class="task-effort">Effort: [FILL]</span>
+        <span class="task-effort">Effort: Not estimated</span>
       </div>
     </li>
     </ul>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none';">
+<meta http-equiv="Content-Security-Policy" content="{% block csp %}default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none';{% endblock %}">
 <title>{% block title %}Significance{% endblock %}</title>
 <link rel="stylesheet" href="{{ root_prefix }}static/style.css?v={{ style_version }}">
 </head>
@@ -20,6 +20,7 @@
 {% if links.get('tasks') %}<a href="{{ links.tasks }}">Open checks</a>{% endif %}
 {% if links.get('orientation') %}<a href="{{ links.orientation }}">How it works</a>{% endif %}
 <a href="{{ links.request }}">Submit or correct</a>
+{% if links.get('profile') %}<a href="{{ links.profile }}">My profile</a>{% endif %}
 </nav>
 {% endif %}
 </header>

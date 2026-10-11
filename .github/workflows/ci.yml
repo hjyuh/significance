@@ -40,6 +40,23 @@ jobs:
       - name: Install web dependencies
         run: npm ci
 
+      - name: Install free discussion dependencies
+        run: npm ci --prefix backend/firebase
+
+      - name: Build discussion client
+        run: npm run build --prefix backend/firebase
+
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Test account flow and discussion authorization locally
+        run: npm test --prefix backend/firebase
+
+      - name: Discussion bundle is reproducible
+        run: git diff --exit-code --quiet -- src/significance/static/discussion.js
+
       - name: Lint web app
         run: npm run lint
 

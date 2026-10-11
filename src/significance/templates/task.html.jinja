@@ -1,4 +1,6 @@
 {% extends "base.html.jinja" %}
+{% import "macros.jinja" as m %}
+{% block csp %}default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self' https://*.googleapis.com https://*.firebaseapp.com; frame-src https://*.firebaseapp.com; base-uri 'none'; form-action 'none';{% endblock %}
 {% block title %}Take this check | Significance{% endblock %}
 {% block content %}
 {% set task = row.invitation %}
@@ -26,6 +28,14 @@
   </dl>
 </section>
 
+{% if row.check_category == 'deslopping' %}
+<section class="band">
+  <p class="lbl">Rewrite scope and deliverable</p>
+  <p class="prose">{{ task.how }}</p>
+  <p class="prose">Related workflow: <a href="https://github.com/GeorgeCoote/openai_372_deslop">George Coote’s explanation-rewrite project</a>. Keep AI-assisted readable drafts separate from human-written text, disclose tool use, and retain links to the original passages. Repository inclusion requires its maintainer’s review.</p>
+</section>
+{% endif %}
+
 <section class="band">
   <p class="lbl">Why this matters</p>
   <p class="prose">{% if row.record.claim %}The question above defines what this investigation can establish. Its findings help the author and future readers understand that specific part of the argument.{% else %}This check addresses part of the claim in {{ record_label }}.{% endif %}</p>
@@ -47,19 +57,19 @@
 <section class="band">
   <p class="lbl">Ways to contribute</p>
   <p class="prose">Choose the level that fits what you have. All three are useful.</p>
-  <dl class="task-detail-3 contribution-ladder">
+  <dl class="task-detail-3">
     <div class="task-detail-4">
       <dt class="task-detail-5">Ask about this step</dt>
       <dd class="task-detail-6">
         <p class="task-detail-7 prose">Something is unclear or you want to confirm scope before starting. This helps sharpen the task for everyone.</p>
-        {% if row.issue_url %}<p class="meta"><a href="{{ row.question_url }}">Ask about this task</a></p>{% else %}<p class="meta">Send your question to the maintainer with the record and task ID.</p>{% endif %}
+        {% if row.question_url %}<p class="meta"><a href="{{ row.question_url }}">Ask about this task</a></p>{% else %}<p class="meta">Send your question to the maintainer with the record and task ID.</p>{% endif %}
       </dd>
     </div>
     <div class="task-detail-8">
       <dt class="task-detail-9">Report what you tried</dt>
       <dd class="task-detail-10">
         <p class="task-detail-11 prose">You worked on it but reached a stopping point: ran out of time, hit a sub-question you could not resolve, or found the task harder than expected. Recording your attempt can help the next reader choose where to continue.</p>
-        {% if row.issue_url %}<p class="meta"><a href="{{ row.attempt_url }}">Submit a partial attempt</a></p>{% else %}<p class="meta">Use the attestation template below; mark the outcome as "incomplete."</p>{% endif %}
+        {% if row.attempt_url %}<p class="meta"><a href="{{ row.attempt_url }}">Submit a partial attempt</a></p>{% else %}<p class="meta">Use the template below to describe your partial attempt and what remains unresolved.</p>{% endif %}
       </dd>
     </div>
     <div class="task-detail-12">
@@ -102,12 +112,20 @@
 
 <section class="band task-discussion" aria-labelledby="task-discussion-heading">
   <p class="lbl" id="task-discussion-heading">Comments and questions</p>
-  <p class="prose">Use the public GitHub thread to ask about this task, share a partial attempt, or discuss how to approach it. Discussion is informal and does not become evidence in the claim record.</p>
+  <p class="prose">Discussion is informal and does not become evidence in the claim record.</p>
+  <div data-native-discussion data-record-id="{{ row.record.record_id }}" data-task-id="{{ row.task_id }}" data-profile-url="{{ links.profile }}" data-config-url="{{ root_prefix }}static/firebase-config.json">
+    <p class="meta">On-site comments aren’t available yet.</p>
+  </div>
+  <script type="module" src="{{ root_prefix }}static/discussion.js"></script>
   {% if row.discussion_url %}
-  <p><a class="button" href="{{ row.discussion_url }}">{% if task.get('discussion_url') %}Open task discussion{% else %}Start a public comment thread{% endif %}</a></p>
-  <p class="meta">GitHub may require an account to post. To add a scoped check to the record, use the attestation form above.</p>
+  <details class="discussion-alternative">
+  <summary>{% if task.get('discussion_url') %}Prefer the original public thread?{% else %}Prefer to discuss this on GitHub?{% endif %}</summary>
+  <p>Use the linked public thread to ask about this task or share a partial attempt.</p>
+  <p><a href="{{ row.discussion_url }}">{% if task.get('discussion_url') %}Open task discussion{% else %}Start a public comment thread{% endif %}</a></p>
+  <p class="meta">The discussion host may require an account to post. To add a scoped check to the record, {% if row.issue_url %}use the attestation form above{% else %}use the template below{% endif %}.</p>
+  </details>
   {% else %}
-  <p class="meta">No discussion link is configured for this task. Use the question or partial-attempt links above.</p>
+  <p class="meta">No discussion link is configured for this task. {% if row.question_url or row.attempt_url %}Use the question or partial-attempt links above.{% else %}Send the maintainer your question or partial attempt with the record and task ID.{% endif %}</p>
   {% endif %}
 </section>
 
@@ -126,4 +144,7 @@
   <p class="prose">Fill only what you did. State what you checked and found, not whether the whole proof is correct.</p>
   <pre class="copy-block">{{ row.attestation_yaml }}</pre>
 </details>
+{% if task.get('created_by') %}
+<p class="band meta">Wrote by {{ m.party_label(task.created_by) }}</p>
+{% endif %}
 {% endblock %}

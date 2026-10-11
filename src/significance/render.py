@@ -238,6 +238,7 @@ def check_category_label(category: str) -> str:
         "formalization": "Formalization",
         "literature": "Literature",
         "exposition": "Exposition",
+        "deslopping": "De-slopping / explanation rewrite",
         "other": "Other",
     }.get(category, "Other")
 
@@ -261,6 +262,53 @@ def _attestation_yaml(record: dict, invitation: dict, task: str) -> str:
     output = StringIO()
     yaml.dump(payload, output)
     return output.getvalue()
+
+
+def group_tasks(rows: list[dict]) -> list[dict]:
+    """Group by record, using reader-facing problem order and check categories."""
+    categories = ["statement", "proof", "computation", "formalization",
+                  "literature", "exposition", "deslopping", "other"]
+    groups = {}
+    for row in rows:
+        record = row["record"]
+        rid = record["record_id"]
+        if rid not in groups:
+            problem = record.get("problem_reference") or {}
+            label = (
+                f"{problem['venue']} #{problem['problem_id']}"
+                if problem.get("venue") and problem.get("problem_id")
+                else record["manuscript"]["label"]
+            )
+            groups[rid] = {
+                "record": record, "label": label,
+                "anchor": f"claim-{rid}", "record_href": row["record_href"], "rows": [],
+            }
+        groups[rid]["rows"].append(row)
+
+    def order(group):
+        problem = group["record"].get("problem_reference") or {}
+        pid = str(problem.get("problem_id", ""))
+        # Numeric venue identifiers are compared as numbers: #4 precedes #132.
+        return (
+            0 if problem else 1,
+            str(problem.get("venue", "")).casefold(),
+            0 if pid.isdecimal() else 1,
+            int(pid) if pid.isdecimal() else 0,
+            pid if not pid.isdecimal() else "",
+            group["label"].casefold(), group["record"]["record_id"],
+        )
+
+    for group in groups.values():
+        group["rows"].sort(key=lambda row: (
+            row["invitation"].get("status", "open") == "taken",
+            categories.index(row["check_category"])
+            if row["check_category"] in categories else len(categories),
+        ))
+        group["open_count"] = sum(
+            row["invitation"].get("status", "open") == "open" for row in group["rows"]
+        )
+        group["taken_count"] = len(group["rows"]) - group["open_count"]
+    return sorted(groups.values(), key=order)
 
 
 def _task_response_url(config, record, invitation, task, kind):
@@ -476,6 +524,7 @@ def _environment() -> Environment:
     env.filters["safe_href"] = safe_href
     env.filters["safe_email"] = safe_email
     env.filters["short_hash"] = short_hash
+    env.filters["configured"] = _configured
     env.filters["readable_text"] = readable_text
     env.filters["mathml"] = mathml
     # Hash canonical LF bytes so the cache-busting URL is identical on
@@ -601,6 +650,7 @@ def site_links(
         links = {
             "records_index": f"{base}/records/index.html",
             "request": f"{base}/request/index.html",
+            "profile": f"{base}/profile/index.html",
             "boards": {b: f"{base}/boards/{b}/index.html" for b in boards},
         }
         if has_glossary:
@@ -626,6 +676,7 @@ def site_links(
     links = {
         "records_index": f"{root_prefix}index.html",
         "request": f"{root_prefix}request/index.html",
+        "profile": f"{root_prefix}profile/index.html",
         "boards": {b: f"{root_prefix}boards/{b}/index.html" for b in boards},
     }
     if has_glossary:
@@ -992,6 +1043,14 @@ def build_site(
     )
     result.pages.append("request")
 
+    _write_page(
+        pages_dir / "profile",
+        env.get_template("profile.html.jinja").render(
+            root_prefix=pages_prefix, links=pages_links,
+        ),
+    )
+    result.pages.append("profile")
+
     # Intake standard: deliberately plain and copyable, generated with the same
     # static toolchain as records.
     _write_page(
@@ -1282,6 +1341,7 @@ def build_site(
             pages_dir / "tasks",
             env.get_template("tasks.html.jinja").render(
                 rows=task_rows,
+                task_groups=group_tasks(task_rows),
                 derived_rows=derived_rows,
                 root_prefix=pages_prefix,
                 links=pages_links,
