@@ -17,24 +17,31 @@ function element(tag, text, parent = root) {
 function button(label, action, parent) {
   const node = element('button', label, parent);
   node.type = 'button';
-  node.addEventListener('click', () => run(action));
+  node.addEventListener('click', () => run(action, label));
   return node;
 }
 let busy = false;
 let message;
-async function run(action) {
+function reportError(error, action) {
+  const code = error.code;
+  // Log only the operation and code, never credentials or the SDK error object.
+  console.warn(`Significance: ${action} failed (${code || 'unknown'}).`);
+  message.textContent = code === 'permission-denied'
+    ? 'Posting was refused. Confirm your email, then wait 30 seconds between comments.'
+    : code === 'auth/weak-password' ? 'Choose a stronger password.'
+    : code === 'auth/invalid-email' ? 'Enter a valid email address.'
+    : code === 'auth/too-many-requests'
+    ? 'Firebase temporarily blocked this request. Wait before trying again.'
+    : code === 'resource-exhausted' || code === 'auth/quota-exceeded'
+    ? 'The service quota was reached. Please try again later.'
+    : 'That action could not be completed. Check your details and try again.';
+}
+async function run(action, label = 'Request') {
   if (busy) return;
   busy = true;
   try { await action(); }
   catch (error) {
-    const code = error.code;
-    message.textContent = code === 'permission-denied'
-      ? 'Posting was refused. Confirm your email, then wait 30 seconds between comments.'
-      : code === 'auth/weak-password' ? 'Choose a stronger password.'
-      : code === 'auth/invalid-email' ? 'Enter a valid email address.'
-      : code === 'auth/too-many-requests' || code === 'resource-exhausted'
-      ? 'The service limit was reached. Please try again later.'
-      : 'That action could not be completed. Check your details and try again.';
+    reportError(error, label);
   } finally { busy = false; }
 }
 function input(label, type, autocomplete, parent) {
@@ -86,7 +93,7 @@ async function start() {
     }
   }
   button('Refresh comments', load);
-  onAuthStateChanged(auth, user => {
+  function renderAccount(user) {
     account.replaceChildren();
     composer.replaceChildren();
     if (!user) {
@@ -105,9 +112,21 @@ async function start() {
         const displayName = name.value.trim();
         if (!displayName || displayName.length > 60) { message.textContent = 'Choose a display name of 1–60 characters.'; return; }
         const credential = await createUserWithEmailAndPassword(auth, email.value.trim(), password.value);
-        await updateProfile(credential.user, { displayName });
-        await sendEmailVerification(credential.user);
-        message.textContent = 'Account created. Check your email for the verification link.';
+        try {
+          await updateProfile(credential.user, { displayName });
+        } catch (error) {
+          reportError(error, 'Save display name');
+          message.textContent = `Your account was created, but the display name was not saved. ${message.textContent}`;
+          return;
+        }
+        renderAccount(credential.user);
+        try {
+          await sendEmailVerification(credential.user);
+          message.textContent = 'Account created. Check your email for the verification link.';
+        } catch (error) {
+          reportError(error, 'Send verification email');
+          message.textContent = `Your account was created, but the verification email was not sent. ${message.textContent}`;
+        }
       }, form);
       button('Reset password', async () => {
         await sendPasswordResetEmail(auth, email.value.trim());
@@ -155,6 +174,7 @@ async function start() {
       }
     }
     run(load);
-  });
+  }
+  onAuthStateChanged(auth, renderAccount);
   await load();
 }
