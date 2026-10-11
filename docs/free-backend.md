@@ -36,6 +36,19 @@ Signed-in users see their public display name and a sign-out control above the
 composer; the sign-in/account panel is hidden and the discussion uses the full
 available width.
 
+The `/profile/index.html` page uses the same persistent account session. It
+shows the user's display name, private email, email-confirmation status and
+join date. Users can edit their public name (existing comments retain their
+stored names), resend verification, sign out, or change their password.
+Password changes require matching new-password fields and successful Firebase
+reauthentication with the current password before `updatePassword`; the form
+clears password fields after an attempted request. A reset-email fallback is
+available. Local emulator coverage confirms wrong-password reauthentication
+fails and the previous password no longer signs in after a successful change.
+The form-handler test checks mismatch rejection, no update on failed
+reauthentication, guest access and clearing password fields. A production
+password change still requires the account owner's manual test.
+
 Use the existing GitHub Pages site with Firebase Authentication and Cloud
 Firestore on the **Spark** plan. No Cloud Functions, Cloud Run, paid Blaze
 upgrade, SMS sign-in, purchased domain, Cloudflare or Resend is required.

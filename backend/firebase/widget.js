@@ -1,12 +1,13 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, setPersistence, browserLocalPersistence, connectAuthEmulator, onAuthStateChanged, createUserWithEmailAndPassword,
   signInWithEmailAndPassword, updateProfile, sendEmailVerification, sendPasswordResetEmail,
-  signOut, reload } from 'firebase/auth';
+  signOut, reload, EmailAuthProvider, reauthenticateWithCredential, updatePassword } from 'firebase/auth';
 import { getFirestore, connectFirestoreEmulator, collection, doc, query, orderBy, limit,
   getDocs, writeBatch, serverTimestamp, deleteDoc } from 'firebase/firestore';
 
-const root = document.querySelector('[data-native-discussion]');
-if (root) start().catch(() => { root.textContent = 'On-site comments are unavailable right now.'; });
+const root = document.querySelector('[data-native-discussion], [data-native-profile]');
+const isProfile = root?.hasAttribute('data-native-profile');
+if (root) start().catch(() => { root.textContent = 'Account services are unavailable right now. Please try again later.'; });
 
 function element(tag, text, parent = root) {
   const node = document.createElement(tag);
@@ -32,6 +33,8 @@ function reportError(error, action) {
   console.warn(`Significance: ${action} failed (${code || 'unknown'}).`);
   message.textContent = code === 'permission-denied'
     ? 'Posting was refused. Confirm your email, then wait 30 seconds between comments.'
+    : code === 'auth/requires-recent-login' ? 'Please sign in again before changing your password.'
+    : code === 'auth/invalid-credential' || code === 'auth/wrong-password' ? 'The email or password was not accepted. Please check your details.'
     : code === 'auth/weak-password' ? 'Choose a stronger password.'
     : code === 'auth/invalid-email' ? 'Enter a valid email address.'
     : code === 'auth/too-many-requests'
@@ -101,9 +104,10 @@ async function start() {
   let authMode = 'signin';
   let authEmail = '';
   const taskKey = `${root.dataset.recordId}__${root.dataset.taskId}`;
-  const commentsRef = collection(db, `tasks/${taskKey}/comments`);
+  const commentsRef = isProfile ? null : collection(db, `tasks/${taskKey}/comments`);
 
   async function load() {
+    if (isProfile) return;
     const snapshots = await getDocs(query(commentsRef, orderBy('createdAt', 'desc'), limit(50)));
     comments.replaceChildren();
     count.textContent = `Discussion · ${snapshots.size}${snapshots.size === 50 ? '+' : ''}`;
@@ -135,6 +139,16 @@ async function start() {
     }
   }
   function renderAccount(user) {
+    if (isProfile && user) {
+      account.hidden = true;
+      layout.classList.add('discussion-layout-signed-in');
+      account.replaceChildren();
+      composer.replaceChildren();
+      threadHeader.hidden = true;
+      renderProfile(user);
+      return;
+    }
+    threadHeader.hidden = Boolean(isProfile);
     account.hidden = Boolean(user);
     layout.classList.toggle('discussion-layout-signed-in', Boolean(user));
     account.replaceChildren();
@@ -153,7 +167,7 @@ async function start() {
         toggle.setAttribute('aria-pressed', String(authMode === mode));
       }
       element('h3', authMode === 'signup' ? 'Join the discussion' : authMode === 'reset' ? 'Reset your password' : 'Welcome back', account);
-      element('p', authMode === 'signup' ? 'Choose a public name. Confirm your email before posting.' : authMode === 'reset' ? 'We’ll email you a link to choose a new password.' : 'Sign in to ask a question or share a comment.', account).className = 'discussion-help';
+      element('p', authMode === 'signup' ? 'Choose a public name. Confirm your email before posting.' : authMode === 'reset' ? 'We’ll email you a link to choose a new password.' : isProfile ? 'Sign in to manage your profile and password.' : 'Sign in to ask a question or share a comment.', account).className = 'discussion-help';
       const form = element('form', null, account);
       const email = input('Email', 'email', 'email', form);
       email.value = authEmail;
@@ -207,12 +221,14 @@ async function start() {
         renderAccount(null);
       }, account).className = 'discussion-text-button';
       element('p', 'Your display name is public. Your email is not shown in comments.', account).className = 'discussion-privacy';
-      element('h3', 'Have a question?', composer);
-      element('p', 'You can read the discussion without an account. Sign in to add your thoughts.', composer).className = 'discussion-help';
+      element('h3', isProfile ? 'Your account, in one place' : 'Have a question?', composer);
+      element('p', isProfile ? 'Sign in to see your profile, edit your public name, and change your password.' : 'You can read the discussion without an account. Sign in to add your thoughts.', composer).className = 'discussion-help';
     } else {
       const identity = element('div', null, composer);
       identity.className = 'discussion-identity';
       element('span', `Commenting as ${user.displayName || 'Contributor'}`, identity);
+      const profileLink = element('a', 'My profile', identity);
+      profileLink.href = root.dataset.profileUrl;
       button('Sign out', async () => { await signOut(auth); showMessage('You’re signed out.'); }, identity).className = 'discussion-text-button';
       if (!user.emailVerified) {
         element('h3', 'Check your inbox', composer);
@@ -267,6 +283,73 @@ async function start() {
       }
     }
     if (!busy) run(load, 'Read comments');
+  }
+  function renderProfile(user) {
+    const header = element('div', null, composer);
+    header.className = 'profile-heading';
+    const avatar = element('span', (user.displayName || 'C').slice(0, 1).toUpperCase(), header);
+    avatar.className = 'discussion-avatar';
+    avatar.setAttribute('aria-hidden', 'true');
+    element('h2', user.displayName || 'Contributor', header);
+    button('Sign out', async () => { await signOut(auth); showMessage('You’re signed out.'); }, header).className = 'discussion-text-button';
+    const facts = element('dl', null, composer);
+    facts.className = 'profile-facts';
+    for (const [label, value] of [['Email (private)', user.email], ['Email status', user.emailVerified ? 'Confirmed' : 'Not confirmed'], ['Joined', user.metadata.creationTime ? new Date(user.metadata.creationTime).toLocaleDateString() : '—']]) {
+      element('dt', label, facts);
+      element('dd', value, facts);
+    }
+    if (!user.emailVerified) {
+      const actions = element('div', null, composer);
+      actions.className = 'discussion-actions';
+      button('Send verification email', async () => { await sendEmailVerification(user); showMessage('Verification email sent. Check your inbox and spam folder.'); }, actions);
+      button('Check verification status', async () => { await reload(user); await user.getIdToken(true); renderAccount(user); showMessage(user.emailVerified ? 'Email confirmed.' : 'Your email is not confirmed yet. Open the verification link first.'); }, actions);
+    }
+    const details = element('section', null, composer);
+    details.className = 'profile-section';
+    element('h3', 'Public display name', details);
+    element('p', 'Used on new comments. Existing comments keep the name they were posted with.', details).className = 'discussion-help';
+    const nameForm = element('form', null, details);
+    const name = input('Display name', 'text', 'nickname', nameForm);
+    name.maxLength = 60;
+    name.value = user.displayName || '';
+    const save = element('button', 'Save name', nameForm);
+    save.type = 'submit';
+    save.className = 'discussion-primary';
+    nameForm.addEventListener('submit', event => {
+      event.preventDefault();
+      run(async () => {
+        const displayName = name.value.trim();
+        if (!displayName || displayName.length > 60) { showMessage('Choose a display name of 1–60 characters.', 'error'); return; }
+        await updateProfile(user, { displayName });
+        renderAccount(user);
+        showMessage('Your display name was saved.');
+      }, 'Save display name');
+    });
+    const security = element('section', null, composer);
+    security.className = 'profile-section';
+    element('h3', 'Change password', security);
+    element('p', 'Enter your current password to confirm it’s you.', security).className = 'discussion-help';
+    const passwordForm = element('form', null, security);
+    const current = input('Current password', 'password', 'current-password', passwordForm);
+    const next = input('New password', 'password', 'new-password', passwordForm);
+    const confirm = input('Confirm new password', 'password', 'new-password', passwordForm);
+    next.minLength = 6;
+    confirm.minLength = 6;
+    const change = element('button', 'Change password', passwordForm);
+    change.type = 'submit';
+    change.className = 'discussion-primary';
+    passwordForm.addEventListener('submit', event => {
+      event.preventDefault();
+      if (next.value !== confirm.value) { showMessage('The new passwords don’t match.', 'error'); return; }
+      run(async () => {
+        try {
+          await reauthenticateWithCredential(user, EmailAuthProvider.credential(user.email, current.value));
+          await updatePassword(user, next.value);
+          showMessage('Your password was changed. Use the new password next time you sign in.');
+        } finally { passwordForm.reset(); }
+      }, 'Change password');
+    });
+    button('Forgot your current password? Send a reset link', async () => { await sendPasswordResetEmail(auth, user.email); showMessage('Password-reset email sent. Check your inbox and spam folder.'); }, security).className = 'discussion-text-button';
   }
   onAuthStateChanged(auth, renderAccount);
   await load();

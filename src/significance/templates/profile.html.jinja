@@ -1,0 +1,15 @@
+{% extends "base.html.jinja" %}
+{% block title %}My profile | Significance{% endblock %}
+{% block csp %}default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self' https://*.googleapis.com https://*.firebaseapp.com; frame-src https://*.firebaseapp.com; base-uri 'none'; form-action 'none';{% endblock %}
+{% block content %}
+<section class="band">
+  <p class="lbl">Your account</p>
+  <h1 class="claim-text">My profile</h1>
+  <p class="prose">Manage your public name and account security.</p>
+  <div data-native-profile data-config-url="{{ root_prefix }}static/firebase-config.json">
+    <p class="meta">Loading your account…</p>
+    <noscript>Enable JavaScript to manage your account.</noscript>
+  </div>
+  <script type="module" src="{{ root_prefix }}static/discussion.js"></script>
+</section>
+{% endblock %}

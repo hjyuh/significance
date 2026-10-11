@@ -3,7 +3,8 @@ import { test } from 'node:test';
 import { initializeApp, deleteApp } from 'firebase/app';
 import { getAuth, connectAuthEmulator, createUserWithEmailAndPassword, updateProfile,
   sendEmailVerification, applyActionCode, reload, signOut, signInWithEmailAndPassword,
-  sendPasswordResetEmail, confirmPasswordReset } from 'firebase/auth';
+  sendPasswordResetEmail, confirmPasswordReset, EmailAuthProvider,
+  reauthenticateWithCredential, updatePassword } from 'firebase/auth';
 
 test('email registration, verification, login, logout and password reset work locally', async () => {
   const app = initializeApp({ apiKey: 'demo-key', projectId: 'demo-significance' }, 'auth-test');
@@ -36,5 +37,13 @@ test('email registration, verification, login, logout and password reset work lo
     await signOut(auth);
     await assert.rejects(signInWithEmailAndPassword(auth, email, 'ExamplePassword-123!'));
     assert.equal((await signInWithEmailAndPassword(auth, email, 'ChangedPassword-456!')).user.uid, uid);
+    await assert.rejects(reauthenticateWithCredential(auth.currentUser,
+      EmailAuthProvider.credential(email, 'WrongPassword-000!')));
+    await reauthenticateWithCredential(auth.currentUser,
+      EmailAuthProvider.credential(email, 'ChangedPassword-456!'));
+    await updatePassword(auth.currentUser, 'ProfilePassword-789!');
+    await signOut(auth);
+    await assert.rejects(signInWithEmailAndPassword(auth, email, 'ChangedPassword-456!'));
+    assert.equal((await signInWithEmailAndPassword(auth, email, 'ProfilePassword-789!')).user.uid, uid);
   } finally { await deleteApp(app); }
 });

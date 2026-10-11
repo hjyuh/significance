@@ -650,6 +650,7 @@ def site_links(
         links = {
             "records_index": f"{base}/records/index.html",
             "request": f"{base}/request/index.html",
+            "profile": f"{base}/profile/index.html",
             "boards": {b: f"{base}/boards/{b}/index.html" for b in boards},
         }
         if has_glossary:
@@ -675,6 +676,7 @@ def site_links(
     links = {
         "records_index": f"{root_prefix}index.html",
         "request": f"{root_prefix}request/index.html",
+        "profile": f"{root_prefix}profile/index.html",
         "boards": {b: f"{root_prefix}boards/{b}/index.html" for b in boards},
     }
     if has_glossary:
@@ -1040,6 +1042,14 @@ def build_site(
         ),
     )
     result.pages.append("request")
+
+    _write_page(
+        pages_dir / "profile",
+        env.get_template("profile.html.jinja").render(
+            root_prefix=pages_prefix, links=pages_links,
+        ),
+    )
+    result.pages.append("profile")
 
     # Intake standard: deliberately plain and copyable, generated with the same
     # static toolchain as records.

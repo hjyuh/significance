@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "esbuild widget.js --bundle --format=esm --minify --outfile=../../src/significance/static/discussion.js",
-    "test": "firebase emulators:exec --project demo-significance --only auth,firestore \"node --test rules.test.js auth.test.js\"",
+    "test": "firebase emulators:exec --project demo-significance --only auth,firestore \"node --test rules.test.js auth.test.js widget.test.js\"",
     "emulators": "firebase emulators:start --project demo-significance --only auth,firestore"
   },
   "dependencies": { "firebase": "^12.0.0" },

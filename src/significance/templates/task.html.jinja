@@ -113,7 +113,7 @@
 <section class="band task-discussion" aria-labelledby="task-discussion-heading">
   <p class="lbl" id="task-discussion-heading">Comments and questions</p>
   <p class="prose">Discussion is informal and does not become evidence in the claim record.</p>
-  <div data-native-discussion data-record-id="{{ row.record.record_id }}" data-task-id="{{ row.task_id }}" data-config-url="{{ root_prefix }}static/firebase-config.json">
+  <div data-native-discussion data-record-id="{{ row.record.record_id }}" data-task-id="{{ row.task_id }}" data-profile-url="{{ links.profile }}" data-config-url="{{ root_prefix }}static/firebase-config.json">
     <p class="meta">On-site comments aren’t available yet.</p>
   </div>
   <script type="module" src="{{ root_prefix }}static/discussion.js"></script>
