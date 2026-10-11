@@ -14,11 +14,20 @@ default Standard Firestore database is in `nam5`; the repository's scoped
 against `tasks_manifest.py` through an unauthenticated production read.
 
 The public SDK configuration is included in the static assets. A local browser
-preview connects to this project and can read the empty comment list. The eight
-emulator rules tests pass. Registration, email delivery, verified posting,
-password reset, and deletion with two ordinary accounts remain required before
-calling this route ready for public use. Do not treat the emulator results as
-completion of that live test.
+preview connects to this project and reads production comments. The owner
+reported completing email verification and posted a test comment, which is
+visible in the production thread. The eight emulator rules tests pass, including
+rejection of unverified accounts and forged authors. Password-reset delivery,
+author deletion and the two-account production deletion check remain required
+before calling this route ready for public use. Do not treat the emulator
+results as completion of that live test.
+
+The discussion UI separates sign-in, registration and password-reset forms,
+adapts to narrow screens, and presents comments beside the account panel on
+wide screens. “Check verification status” reloads the Firebase user and refreshes
+the ID token; it does not mark an email verified. Posting remains protected by
+the server-side rules. Display names are self-selected and are not identity
+verification or evidence about the mathematics.
 
 Use the existing GitHub Pages site with Firebase Authentication and Cloud
 Firestore on the **Spark** plan. No Cloud Functions, Cloud Run, paid Blaze

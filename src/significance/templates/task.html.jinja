@@ -118,9 +118,12 @@
   </div>
   <script type="module" src="{{ root_prefix }}static/discussion.js"></script>
   {% if row.discussion_url %}
-  <p class="prose">Use the linked public thread to ask about this task, share a partial attempt, or discuss how to approach it.</p>
-  <p><a class="button" href="{{ row.discussion_url }}">{% if task.get('discussion_url') %}Open task discussion{% else %}Start a public comment thread{% endif %}</a></p>
+  <details class="discussion-alternative">
+  <summary>{% if task.get('discussion_url') %}Prefer the original public thread?{% else %}Prefer to discuss this on GitHub?{% endif %}</summary>
+  <p>Use the linked public thread to ask about this task or share a partial attempt.</p>
+  <p><a href="{{ row.discussion_url }}">{% if task.get('discussion_url') %}Open task discussion{% else %}Start a public comment thread{% endif %}</a></p>
   <p class="meta">The discussion host may require an account to post. To add a scoped check to the record, {% if row.issue_url %}use the attestation form above{% else %}use the template below{% endif %}.</p>
+  </details>
   {% else %}
   <p class="meta">No discussion link is configured for this task. {% if row.question_url or row.attempt_url %}Use the question or partial-attempt links above.{% else %}Send the maintainer your question or partial attempt with the record and task ID.{% endif %}</p>
   {% endif %}

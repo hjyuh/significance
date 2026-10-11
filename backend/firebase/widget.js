@@ -22,6 +22,10 @@ function button(label, action, parent) {
 }
 let busy = false;
 let message;
+function showMessage(text, kind = 'info') {
+  message.textContent = text;
+  message.dataset.kind = kind;
+}
 function reportError(error, action) {
   const code = error.code;
   // Log only the operation and code, never credentials or the SDK error object.
@@ -35,20 +39,29 @@ function reportError(error, action) {
     : code === 'resource-exhausted' || code === 'auth/quota-exceeded'
     ? 'The service quota was reached. Please try again later.'
     : 'That action could not be completed. Check your details and try again.';
+  message.dataset.kind = 'error';
 }
 async function run(action, label = 'Request') {
   if (busy) return;
   busy = true;
+  root.setAttribute('aria-busy', 'true');
+  root.querySelectorAll('button').forEach(node => { node.disabled = true; });
   try { await action(); }
   catch (error) {
     reportError(error, label);
-  } finally { busy = false; }
+  } finally {
+    busy = false;
+    root.removeAttribute('aria-busy');
+    root.querySelectorAll('button').forEach(node => { node.disabled = false; });
+  }
 }
 function input(label, type, autocomplete, parent) {
-  const wrapper = element('label', `${label} `, parent);
+  const wrapper = element('label', null, parent);
+  element('span', label, wrapper);
   const field = element('input', null, wrapper);
   field.type = type;
   field.autocomplete = autocomplete;
+  field.required = true;
   return field;
 }
 
@@ -67,50 +80,106 @@ async function start() {
     connectFirestoreEmulator(db, '127.0.0.1', 8088);
   }
   root.replaceChildren();
-  element('p', 'Read or comment here without GitHub. Display names are chosen by users; discussion is separate from record evidence.');
   message = element('p', '');
+  message.className = 'discussion-notice';
   message.setAttribute('role', 'status');
-  const account = element('div');
-  const composer = element('div');
-  const comments = element('div');
+  message.setAttribute('aria-live', 'polite');
+  const layout = element('div');
+  layout.className = 'discussion-layout';
+  const account = element('div', null, layout);
+  account.className = 'discussion-account';
+  const thread = element('div', null, layout);
+  thread.className = 'discussion-thread';
+  const composer = element('div', null, thread);
+  composer.className = 'discussion-composer';
+  const threadHeader = element('div', null, thread);
+  threadHeader.className = 'discussion-thread-header';
+  const count = element('h3', 'Discussion', threadHeader);
+  button('Refresh', load, threadHeader).className = 'discussion-text-button';
+  const comments = element('div', null, thread);
+  let authMode = 'signin';
+  let authEmail = '';
   const taskKey = `${root.dataset.recordId}__${root.dataset.taskId}`;
   const commentsRef = collection(db, `tasks/${taskKey}/comments`);
 
   async function load() {
     const snapshots = await getDocs(query(commentsRef, orderBy('createdAt', 'desc'), limit(50)));
     comments.replaceChildren();
-    if (snapshots.empty) element('p', 'No comments yet.', comments);
+    count.textContent = `Discussion · ${snapshots.size}${snapshots.size === 50 ? '+' : ''}`;
+    if (snapshots.empty) {
+      const empty = element('div', null, comments);
+      empty.className = 'discussion-empty';
+      element('p', 'Start the conversation', empty).className = 'discussion-empty-title';
+      element('p', 'Ask about a passage, share what you tried, or help someone find a starting point.', empty);
+    }
     for (const snapshot of snapshots.docs.reverse()) {
       const data = snapshot.data();
       const article = element('article', null, comments);
       article.className = 'native-comment';
-      const timestamp = data.createdAt?.toDate().toLocaleString() || '';
-      element('p', `${data.name} · ${timestamp}`, article).className = 'meta';
+      const header = element('div', null, article);
+      header.className = 'native-comment-header';
+      const avatar = element('span', (data.name || '?').slice(0, 1).toUpperCase(), header);
+      avatar.className = 'discussion-avatar';
+      avatar.setAttribute('aria-hidden', 'true');
+      element('strong', data.name, header);
+      const date = data.createdAt?.toDate();
+      if (date) {
+        const time = element('time', date.toLocaleString(), header);
+        time.dateTime = date.toISOString();
+      }
       element('p', data.body, article).className = 'native-comment-body';
       if (auth.currentUser?.uid === data.uid) {
-        button('Delete my comment', async () => { await deleteDoc(snapshot.ref); await load(); }, article);
+        button('Delete my comment', async () => { await deleteDoc(snapshot.ref); await load(); showMessage('Your comment was deleted.'); }, article).className = 'discussion-text-button';
       }
     }
   }
-  button('Refresh comments', load);
   function renderAccount(user) {
     account.replaceChildren();
     composer.replaceChildren();
     if (!user) {
+      const switcher = element('div', null, account);
+      switcher.className = 'discussion-auth-switch';
+      switcher.setAttribute('aria-label', 'Account options');
+      for (const [mode, label] of [['signin', 'Sign in'], ['signup', 'Create account']]) {
+        const toggle = button(label, () => {
+          authEmail = email.value;
+          authMode = mode;
+          showMessage('');
+          renderAccount(null);
+        }, switcher);
+        toggle.setAttribute('aria-pressed', String(authMode === mode));
+      }
+      element('h3', authMode === 'signup' ? 'Join the discussion' : authMode === 'reset' ? 'Reset your password' : 'Welcome back', account);
+      element('p', authMode === 'signup' ? 'Choose a public name. Confirm your email before posting.' : authMode === 'reset' ? 'We’ll email you a link to choose a new password.' : 'Sign in to ask a question or share a comment.', account).className = 'discussion-help';
       const form = element('form', null, account);
       const email = input('Email', 'email', 'email', form);
-      const password = input('Password', 'password', 'current-password', form);
-      const name = input('Display name (for registration)', 'text', 'nickname', form);
-      name.maxLength = 60;
-      const login = element('button', 'Sign in', form);
+      email.value = authEmail;
+      email.placeholder = 'you@example.com';
+      const password = authMode === 'reset' ? null : input('Password', 'password', authMode === 'signup' ? 'new-password' : 'current-password', form);
+      const name = authMode === 'signup' ? input('Public display name', 'text', 'nickname', form) : null;
+      if (name) name.maxLength = 60;
+      const login = element('button', authMode === 'signup' ? 'Create account' : authMode === 'reset' ? 'Send reset link' : 'Sign in', form);
+      login.className = 'discussion-primary';
       login.type = 'submit';
       form.addEventListener('submit', event => {
         event.preventDefault();
-        run(() => signInWithEmailAndPassword(auth, email.value.trim(), password.value));
+        run(async () => {
+          authEmail = email.value.trim();
+          if (authMode === 'reset') {
+            await sendPasswordResetEmail(auth, authEmail);
+            showMessage('If this address has an account, a reset email will arrive. Check your inbox and spam folder.');
+          } else if (authMode === 'signup') {
+            await register();
+          } else {
+            await signInWithEmailAndPassword(auth, authEmail, password.value);
+            await load();
+            showMessage('You’re signed in.');
+          }
+        }, login.textContent);
       });
-      button('Create account', async () => {
+      async function register() {
         const displayName = name.value.trim();
-        if (!displayName || displayName.length > 60) { message.textContent = 'Choose a display name of 1–60 characters.'; return; }
+        if (!displayName || displayName.length > 60) { showMessage('Choose a display name of 1–60 characters.', 'error'); return; }
         const credential = await createUserWithEmailAndPassword(auth, email.value.trim(), password.value);
         try {
           await updateProfile(credential.user, { displayName });
@@ -122,39 +191,59 @@ async function start() {
         renderAccount(credential.user);
         try {
           await sendEmailVerification(credential.user);
-          message.textContent = 'Account created. Check your email for the verification link.';
+          showMessage('Account created. Check your email for the verification link.');
         } catch (error) {
           reportError(error, 'Send verification email');
           message.textContent = `Your account was created, but the verification email was not sent. ${message.textContent}`;
         }
-      }, form);
-      button('Reset password', async () => {
-        await sendPasswordResetEmail(auth, email.value.trim());
-        message.textContent = 'If this address has an account, a reset email will arrive.';
-      }, form);
+      }
+      button(authMode === 'reset' ? 'Back to sign in' : 'Forgot password?', () => {
+        authEmail = email.value;
+        authMode = authMode === 'reset' ? 'signin' : 'reset';
+        showMessage('');
+        renderAccount(null);
+      }, account).className = 'discussion-text-button';
+      element('p', 'Your display name is public. Your email is not shown in comments.', account).className = 'discussion-privacy';
+      element('h3', 'Have a question?', composer);
+      element('p', 'You can read the discussion without an account. Sign in to add your thoughts.', composer).className = 'discussion-help';
     } else {
-      element('p', `Signed in as ${user.displayName || 'your account'}.`, account);
-      button('Sign out', () => signOut(auth), account);
+      element('p', 'YOUR ACCOUNT', account).className = 'discussion-eyebrow';
+      element('h3', user.displayName || 'Your account', account);
+      element('p', user.emailVerified ? 'Email confirmed. You can post comments.' : 'Email confirmation pending.', account).className = 'discussion-help';
+      button('Sign out', async () => { await signOut(auth); showMessage('You’re signed out.'); }, account).className = 'discussion-text-button';
       if (!user.emailVerified) {
-        element('p', 'Confirm your email before posting.', composer);
+        element('h3', 'Check your inbox', composer);
+        element('p', 'Open the verification link in your email, then check your status here. Check your spam folder if it hasn’t arrived.', composer).className = 'discussion-help';
+        const actions = element('div', null, composer);
+        actions.className = 'discussion-actions';
         button('Send verification email', async () => {
           await sendEmailVerification(user);
-          message.textContent = 'Check your email for the verification link.';
-        }, composer);
-        button('I verified my email', async () => {
+          showMessage('Verification email sent. Check your inbox and spam folder.');
+        }, actions);
+        button('Check verification status', async () => {
           await reload(user);
           await user.getIdToken(true);
-          // Re-render using the refreshed user without changing persistence.
-          location.reload();
-        }, composer);
+          renderAccount(user);
+          await load();
+          showMessage(user.emailVerified ? 'Email confirmed. You can now comment.' : 'Your email is not confirmed yet. Open the link in your verification email first.');
+        }, actions).className = 'discussion-primary';
       } else {
+        element('h3', 'Add to the discussion', composer);
         const form = element('form', null, composer);
-        const label = element('label', 'Your comment ', form);
+        const label = element('label', null, form);
+        element('span', 'Your comment or question', label);
         const body = element('textarea', null, label);
         body.maxLength = 4000;
         body.required = true;
-        body.rows = 5;
-        const submit = element('button', 'Post comment', form);
+        body.rows = 4;
+        body.placeholder = 'Point to a passage, explain what you tried, or ask a specific question…';
+        const footer = element('div', null, form);
+        footer.className = 'discussion-composer-footer';
+        const remaining = element('span', '0 / 4,000', footer);
+        remaining.className = 'discussion-help';
+        body.addEventListener('input', () => { remaining.textContent = `${body.value.length.toLocaleString()} / 4,000`; });
+        const submit = element('button', 'Post comment', footer);
+        submit.className = 'discussion-primary';
         submit.type = 'submit';
         form.addEventListener('submit', event => {
           event.preventDefault();
@@ -167,13 +256,14 @@ async function start() {
             batch.set(doc(db, `postLimits/${user.uid}`), { lastPosted: serverTimestamp(), lastComment: `${taskKey}/${reference.id}` });
             await batch.commit();
             body.value = '';
-            message.textContent = 'Comment posted.';
+            remaining.textContent = '0 / 4,000';
+            showMessage('Comment posted.');
             await load();
-          });
+          }, 'Post comment');
         });
       }
     }
-    run(load);
+    if (!busy) run(load, 'Read comments');
   }
   onAuthStateChanged(auth, renderAccount);
   await load();
