@@ -1,0 +1,431 @@
+import { initializeApp } from 'firebase/app';
+import { getAuth, setPersistence, browserLocalPersistence, connectAuthEmulator, onAuthStateChanged, createUserWithEmailAndPassword,
+  signInWithEmailAndPassword, updateProfile, sendEmailVerification, sendPasswordResetEmail,
+  signOut, reload, EmailAuthProvider, reauthenticateWithCredential, updatePassword } from 'firebase/auth';
+import { getFirestore, connectFirestoreEmulator, collection, doc, query, orderBy, limit,
+  getDocs, getDoc, setDoc, writeBatch, serverTimestamp, deleteDoc } from 'firebase/firestore';
+
+const root = document.querySelector('[data-native-discussion], [data-native-profile]');
+const isProfile = root?.hasAttribute('data-native-profile');
+if (root) start().catch(() => { root.textContent = 'Account services are unavailable right now. Please try again later.'; });
+
+function element(tag, text, parent = root) {
+  const node = document.createElement(tag);
+  if (text) node.textContent = text;
+  parent.append(node);
+  return node;
+}
+function button(label, action, parent) {
+  const node = element('button', label, parent);
+  node.type = 'button';
+  node.addEventListener('click', () => run(action, label));
+  return node;
+}
+let busy = false;
+let message;
+function showMessage(text, kind = 'info') {
+  message.textContent = text;
+  message.dataset.kind = kind;
+}
+function reportError(error, action) {
+  const code = error.code;
+  // Log only the operation and code, never credentials or the SDK error object.
+  console.warn(`Significance: ${action} failed (${code || 'unknown'}).`);
+  // A failed response cannot tell us whether an email from this or an earlier
+  // request reached the inbox. Avoid presenting that uncertainty as non-delivery.
+  if (/verification email|reset link/i.test(action) && code !== 'auth/invalid-email') {
+    showMessage(code === 'auth/too-many-requests' || code === 'auth/quota-exceeded'
+      ? 'Another email request could not be completed right now. Check your inbox and spam folder—an earlier request may already have sent a link. Wait before requesting another.'
+      : 'We couldn’t confirm the email request. Check your inbox and spam folder; the email may still arrive. If it doesn’t, wait a little before trying again.', 'error');
+    return;
+  }
+  message.textContent = code === 'permission-denied'
+    ? 'Posting was refused. Confirm your email, then wait 30 seconds between comments.'
+    : code === 'auth/requires-recent-login' ? 'Please sign in again before changing your password.'
+    : code === 'auth/invalid-credential' || code === 'auth/wrong-password' ? 'The email or password was not accepted. Please check your details.'
+    : code === 'auth/weak-password' ? 'Choose a stronger password.'
+    : code === 'auth/invalid-email' ? 'Enter a valid email address.'
+    : code === 'auth/too-many-requests'
+    ? 'Firebase temporarily blocked this request. Wait before trying again.'
+    : code === 'resource-exhausted' || code === 'auth/quota-exceeded'
+    ? 'The service quota was reached. Please try again later.'
+    : 'That action could not be completed. Check your details and try again.';
+  message.dataset.kind = 'error';
+}
+async function run(action, label = 'Request') {
+  if (busy) return;
+  busy = true;
+  root.setAttribute('aria-busy', 'true');
+  root.querySelectorAll('button').forEach(node => { node.disabled = true; });
+  try { await action(); }
+  catch (error) {
+    reportError(error, label);
+  } finally {
+    busy = false;
+    root.removeAttribute('aria-busy');
+    root.querySelectorAll('button').forEach(node => { node.disabled = false; });
+  }
+}
+function input(label, type, autocomplete, parent) {
+  const wrapper = element('label', null, parent);
+  element('span', label, wrapper);
+  const field = element('input', null, wrapper);
+  field.type = type;
+  field.autocomplete = autocomplete;
+  field.required = true;
+  return field;
+}
+
+async function start() {
+  const response = await fetch(root.dataset.configUrl, { cache: 'no-store' });
+  if (!response.ok) { root.textContent = 'On-site comments aren’t available yet.'; return; }
+  const config = await response.json();
+  const app = initializeApp(config);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  if (config.emulators) {
+    if (!['localhost', '127.0.0.1'].includes(location.hostname) || !config.projectId.startsWith('demo-')) {
+      throw new Error('Emulators are local only');
+    }
+    connectAuthEmulator(auth, 'http://127.0.0.1:9099', { disableWarnings: true });
+    connectFirestoreEmulator(db, '127.0.0.1', 8088);
+  }
+  await setPersistence(auth, browserLocalPersistence);
+  root.replaceChildren();
+  message = element('p', '');
+  message.className = 'discussion-notice';
+  message.setAttribute('role', 'status');
+  message.setAttribute('aria-live', 'polite');
+  const layout = element('div');
+  layout.className = 'discussion-layout';
+  const account = element('div', null, layout);
+  account.className = 'discussion-account';
+  const thread = element('div', null, layout);
+  thread.className = 'discussion-thread';
+  const composer = element('div', null, thread);
+  composer.className = 'discussion-composer';
+  const threadHeader = element('div', null, thread);
+  threadHeader.className = 'discussion-thread-header';
+  const count = element('h3', 'Discussion', threadHeader);
+  button('Refresh', load, threadHeader).className = 'discussion-text-button';
+  const comments = element('div', null, thread);
+  let authMode = 'signin';
+  let authEmail = '';
+  const taskKey = `${root.dataset.recordId}__${root.dataset.taskId}`;
+  const commentsRef = isProfile ? null : collection(db, `tasks/${taskKey}/comments`);
+
+  async function load() {
+    if (isProfile) return;
+    const snapshots = await getDocs(query(commentsRef, orderBy('createdAt', 'desc'), limit(50)));
+    comments.replaceChildren();
+    count.textContent = `Discussion · ${snapshots.size}${snapshots.size === 50 ? '+' : ''}`;
+    if (snapshots.empty) {
+      const empty = element('div', null, comments);
+      empty.className = 'discussion-empty';
+      element('p', 'Start the conversation', empty).className = 'discussion-empty-title';
+      element('p', 'Ask about a passage, share what you tried, or help someone find a starting point.', empty);
+    }
+    for (const snapshot of snapshots.docs.reverse()) {
+      const data = snapshot.data();
+      const article = element('article', null, comments);
+      article.className = 'native-comment';
+      const header = element('div', null, article);
+      header.className = 'native-comment-header';
+      const avatar = element('span', (data.name || '?').slice(0, 1).toUpperCase(), header);
+      avatar.className = 'discussion-avatar';
+      avatar.setAttribute('aria-hidden', 'true');
+      element('strong', data.name, header);
+      const date = data.createdAt?.toDate();
+      if (date) {
+        const time = element('time', date.toLocaleString(), header);
+        time.dateTime = date.toISOString();
+      }
+      element('p', data.body, article).className = 'native-comment-body';
+      if (auth.currentUser?.uid === data.uid) {
+        button('Delete my comment', async () => { await deleteDoc(snapshot.ref); await load(); showMessage('Your comment was deleted.'); }, article).className = 'discussion-text-button';
+      }
+    }
+  }
+  function renderAccount(user) {
+    if (isProfile && user) {
+      account.hidden = true;
+      layout.classList.add('discussion-layout-signed-in');
+      account.replaceChildren();
+      composer.replaceChildren();
+      threadHeader.hidden = true;
+      renderProfile(user);
+      return;
+    }
+    threadHeader.hidden = Boolean(isProfile);
+    account.hidden = Boolean(user);
+    layout.classList.toggle('discussion-layout-signed-in', Boolean(user));
+    account.replaceChildren();
+    composer.replaceChildren();
+    if (!user) {
+      const switcher = element('div', null, account);
+      switcher.className = 'discussion-auth-switch';
+      switcher.setAttribute('aria-label', 'Account options');
+      for (const [mode, label] of [['signin', 'Sign in'], ['signup', 'Create account']]) {
+        const toggle = button(label, () => {
+          authEmail = email.value;
+          authMode = mode;
+          showMessage('');
+          renderAccount(null);
+        }, switcher);
+        toggle.setAttribute('aria-pressed', String(authMode === mode));
+      }
+      element('h3', authMode === 'signup' ? 'Join the discussion' : authMode === 'reset' ? 'Reset your password' : 'Welcome back', account);
+      element('p', authMode === 'signup' ? 'Choose a public name. Confirm your email before posting.' : authMode === 'reset' ? 'We’ll email you a link to choose a new password.' : isProfile ? 'Sign in to manage your profile and password.' : 'Sign in to ask a question or share a comment.', account).className = 'discussion-help';
+      const form = element('form', null, account);
+      const email = input('Email', 'email', 'email', form);
+      email.value = authEmail;
+      email.placeholder = 'you@example.com';
+      const password = authMode === 'reset' ? null : input('Password', 'password', authMode === 'signup' ? 'new-password' : 'current-password', form);
+      const name = authMode === 'signup' ? input('Public display name', 'text', 'nickname', form) : null;
+      if (name) name.maxLength = 60;
+      const login = element('button', authMode === 'signup' ? 'Create account' : authMode === 'reset' ? 'Send reset link' : 'Sign in', form);
+      login.className = 'discussion-primary';
+      login.type = 'submit';
+      form.addEventListener('submit', event => {
+        event.preventDefault();
+        run(async () => {
+          authEmail = email.value.trim();
+          if (authMode === 'reset') {
+            await sendPasswordResetEmail(auth, authEmail);
+            showMessage('If this address has an account, a reset email will arrive. Check your inbox and spam folder.');
+          } else if (authMode === 'signup') {
+            await register();
+          } else {
+            await signInWithEmailAndPassword(auth, authEmail, password.value);
+            await load();
+            showMessage('You’re signed in.');
+          }
+        }, login.textContent);
+      });
+      async function register() {
+        const displayName = name.value.trim();
+        if (!displayName || displayName.length > 60) { showMessage('Choose a display name of 1–60 characters.', 'error'); return; }
+        const credential = await createUserWithEmailAndPassword(auth, email.value.trim(), password.value);
+        try {
+          await updateProfile(credential.user, { displayName });
+        } catch (error) {
+          reportError(error, 'Save display name');
+          message.textContent = `Your account was created, but the display name was not saved. ${message.textContent}`;
+          return;
+        }
+        renderAccount(credential.user);
+        try {
+          await sendEmailVerification(credential.user);
+          showMessage('Account created. Check your email for the verification link.');
+        } catch (error) {
+          reportError(error, 'Send verification email');
+          message.textContent = `Your account was created. ${message.textContent}`;
+        }
+      }
+      button(authMode === 'reset' ? 'Back to sign in' : 'Forgot password?', () => {
+        authEmail = email.value;
+        authMode = authMode === 'reset' ? 'signin' : 'reset';
+        showMessage('');
+        renderAccount(null);
+      }, account).className = 'discussion-text-button';
+      element('p', 'Your display name is public. Your email is not shown in comments.', account).className = 'discussion-privacy';
+      element('h3', isProfile ? 'Your account, in one place' : 'Have a question?', composer);
+      element('p', isProfile ? 'Sign in to edit your name, bio, current work, and LinkedIn link, or change your password.' : 'You can read the discussion without an account. Sign in to add your thoughts.', composer).className = 'discussion-help';
+    } else {
+      const identity = element('div', null, composer);
+      identity.className = 'discussion-identity';
+      element('span', `Commenting as ${user.displayName || 'Contributor'}`, identity);
+      const profileLink = element('a', 'My profile', identity);
+      profileLink.href = root.dataset.profileUrl;
+      button('Sign out', async () => { await signOut(auth); showMessage('You’re signed out.'); }, identity).className = 'discussion-text-button';
+      if (!user.emailVerified) {
+        element('h3', 'Check your inbox', composer);
+        element('p', 'Open the verification link in your email, then check your status here. Check your spam folder if it hasn’t arrived.', composer).className = 'discussion-help';
+        const actions = element('div', null, composer);
+        actions.className = 'discussion-actions';
+        button('Send verification email', async () => {
+          await sendEmailVerification(user);
+          showMessage('Verification email sent. Check your inbox and spam folder.');
+        }, actions);
+        button('Check verification status', async () => {
+          await reload(user);
+          await user.getIdToken(true);
+          renderAccount(user);
+          await load();
+          showMessage(user.emailVerified ? 'Email confirmed. You can now comment.' : 'Your email is not confirmed yet. Open the link in your verification email first.');
+        }, actions).className = 'discussion-primary';
+      } else {
+        element('h3', 'Add to the discussion', composer);
+        const form = element('form', null, composer);
+        const label = element('label', null, form);
+        element('span', 'Your comment or question', label);
+        const body = element('textarea', null, label);
+        body.maxLength = 4000;
+        body.required = true;
+        body.rows = 4;
+        body.placeholder = 'Point to a passage, explain what you tried, or ask a specific question…';
+        const footer = element('div', null, form);
+        footer.className = 'discussion-composer-footer';
+        const remaining = element('span', '0 / 4,000', footer);
+        remaining.className = 'discussion-help';
+        body.addEventListener('input', () => { remaining.textContent = `${body.value.length.toLocaleString()} / 4,000`; });
+        const submit = element('button', 'Post comment', footer);
+        submit.className = 'discussion-primary';
+        submit.type = 'submit';
+        form.addEventListener('submit', event => {
+          event.preventDefault();
+          run(async () => {
+            const text = body.value.trim();
+            if (!text) return;
+            const reference = doc(commentsRef);
+            const batch = writeBatch(db);
+            batch.set(reference, { uid: user.uid, name: (user.displayName || 'Contributor').slice(0, 60), body: text, createdAt: serverTimestamp() });
+            batch.set(doc(db, `postLimits/${user.uid}`), { lastPosted: serverTimestamp(), lastComment: `${taskKey}/${reference.id}` });
+            await batch.commit();
+            body.value = '';
+            remaining.textContent = '0 / 4,000';
+            showMessage('Comment posted.');
+            await load();
+          }, 'Post comment');
+        });
+      }
+    }
+    if (!busy) run(load, 'Read comments');
+  }
+  function renderProfile(user) {
+    const header = element('div', null, composer);
+    header.className = 'profile-heading';
+    const avatar = element('span', (user.displayName || 'C').slice(0, 1).toUpperCase(), header);
+    avatar.className = 'discussion-avatar';
+    avatar.setAttribute('aria-hidden', 'true');
+    element('h2', user.displayName || 'Contributor', header);
+    button('Sign out', async () => { await signOut(auth); showMessage('You’re signed out.'); }, header).className = 'discussion-text-button';
+    const facts = element('dl', null, composer);
+    facts.className = 'profile-facts';
+    for (const [label, value] of [['Email (private)', user.email], ['Email status', user.emailVerified ? 'Confirmed' : 'Not confirmed'], ['Joined', user.metadata.creationTime ? new Date(user.metadata.creationTime).toLocaleDateString() : '—']]) {
+      element('dt', label, facts);
+      element('dd', value, facts);
+    }
+    if (!user.emailVerified) {
+      const actions = element('div', null, composer);
+      actions.className = 'discussion-actions';
+      button('Send verification email', async () => { await sendEmailVerification(user); showMessage('Verification email sent. Check your inbox and spam folder.'); }, actions);
+      button('Check verification status', async () => { await reload(user); await user.getIdToken(true); renderAccount(user); showMessage(user.emailVerified ? 'Email confirmed.' : 'Your email is not confirmed yet. Open the verification link first.'); }, actions);
+    }
+    const details = element('section', null, composer);
+    details.className = 'profile-section';
+    element('h3', 'Public display name', details);
+    element('p', 'Used on new comments. Existing comments keep the name they were posted with.', details).className = 'discussion-help';
+    const nameForm = element('form', null, details);
+    const name = input('Display name', 'text', 'nickname', nameForm);
+    name.maxLength = 60;
+    name.value = user.displayName || '';
+    const save = element('button', 'Save name', nameForm);
+    save.type = 'submit';
+    save.className = 'discussion-primary';
+    nameForm.addEventListener('submit', event => {
+      event.preventDefault();
+      run(async () => {
+        const displayName = name.value.trim();
+        if (!displayName || displayName.length > 60) { showMessage('Choose a display name of 1–60 characters.', 'error'); return; }
+        await updateProfile(user, { displayName });
+        renderAccount(user);
+        showMessage('Your display name was saved.');
+      }, 'Save display name');
+    });
+    const security = element('section', null, composer);
+    security.className = 'profile-section';
+    element('h3', 'Change password', security);
+    element('p', 'Enter your current password to confirm it’s you.', security).className = 'discussion-help';
+    const passwordForm = element('form', null, security);
+    const current = input('Current password', 'password', 'current-password', passwordForm);
+    const next = input('New password', 'password', 'new-password', passwordForm);
+    const confirm = input('Confirm new password', 'password', 'new-password', passwordForm);
+    next.minLength = 6;
+    confirm.minLength = 6;
+    const change = element('button', 'Change password', passwordForm);
+    change.type = 'submit';
+    change.className = 'discussion-primary';
+    passwordForm.addEventListener('submit', event => {
+      event.preventDefault();
+      if (next.value !== confirm.value) { showMessage('The new passwords don’t match.', 'error'); return; }
+      run(async () => {
+        try {
+          await reauthenticateWithCredential(user, EmailAuthProvider.credential(user.email, current.value));
+          await updatePassword(user, next.value);
+          showMessage('Your password was changed. Use the new password next time you sign in.');
+        } finally { passwordForm.reset(); }
+      }, 'Change password');
+    });
+    button('Forgot your current password? Send a reset link', async () => { await sendPasswordResetEmail(auth, user.email); showMessage('Password-reset email sent. Check your inbox and spam folder.'); }, security).className = 'discussion-text-button';
+    const about = element('section', null, composer);
+    about.className = 'profile-section profile-about';
+    // Place personal details before account security in the reading order.
+    composer.insertBefore(about, details);
+    element('h3', 'About you', about);
+    element('p', 'Optional details for your profile. Only you can view them for now.', about).className = 'discussion-help';
+    const aboutForm = element('form', null, about);
+    const working = input('What I’m working on', 'text', 'off', aboutForm);
+    working.required = false;
+    working.maxLength = 200;
+    working.placeholder = 'A project, problem, or area you’re exploring';
+    const bioLabel = element('label', null, aboutForm);
+    element('span', 'Bio', bioLabel);
+    const bio = element('textarea', null, bioLabel);
+    bio.rows = 4;
+    bio.maxLength = 1000;
+    bio.placeholder = 'A little about your interests and background';
+    const linkedin = input('LinkedIn URL', 'url', 'url', aboutForm);
+    linkedin.required = false;
+    linkedin.maxLength = 300;
+    linkedin.placeholder = 'https://www.linkedin.com/in/your-name';
+    const aboutSave = element('button', 'Save profile', aboutForm);
+    aboutSave.type = 'submit';
+    aboutSave.className = 'discussion-primary';
+    aboutSave.disabled = true;
+    const loadStatus = element('p', 'Loading your profile…', about);
+    loadStatus.className = 'discussion-help';
+    const reference = doc(db, `profiles/${user.uid}`);
+    let ready = false;
+    async function loadAbout() {
+      aboutSave.disabled = true;
+      try {
+        const snapshot = await getDoc(reference);
+        if (auth.currentUser?.uid !== user.uid || !about.isConnected) return;
+        const data = snapshot.exists() ? snapshot.data() : {};
+        working.value = data.workingOn || '';
+        bio.value = data.bio || '';
+        linkedin.value = data.linkedin || '';
+        ready = true;
+        for (const field of [working, bio, linkedin]) field.disabled = false;
+        aboutSave.disabled = false;
+        retry.hidden = true;
+        loadStatus.textContent = '';
+      } catch (error) {
+        if (auth.currentUser?.uid !== user.uid || !about.isConnected) return;
+        loadStatus.textContent = 'Your profile details could not be loaded. Try again before editing.';
+        console.warn(`Significance: Read profile failed (${error.code || 'unknown'}).`);
+      }
+    }
+    const retry = button('Retry loading profile', loadAbout, about);
+    retry.className = 'discussion-text-button';
+    // Prevent typing into an unloaded form and losing unsaved text on arrival.
+    for (const field of [working, bio, linkedin]) field.disabled = true;
+    loadAbout();
+    aboutForm.addEventListener('submit', event => {
+      event.preventDefault();
+      if (!ready) return;
+      const url = linkedin.value.trim();
+      if (url && !/^https:\/\/(www\.)?linkedin\.com\/in\/[A-Za-z0-9_%\-]+\/?$/.test(url)) {
+        showMessage('Use a LinkedIn profile link like https://www.linkedin.com/in/your-name.', 'error');
+        return;
+      }
+      run(async () => {
+        await setDoc(reference, { workingOn: working.value.trim(), bio: bio.value.trim(), linkedin: url });
+        showMessage('Your profile was saved.');
+      }, 'Save profile');
+    });
+  }
+  onAuthStateChanged(auth, renderAccount);
+  await load();
+}

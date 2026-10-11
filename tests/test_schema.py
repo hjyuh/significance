@@ -36,6 +36,8 @@ def test_schema_forbids_additional_top_level_properties():
 def test_check_category_is_optional_but_uses_the_closed_taxonomy():
     record = load_record(EXAMPLE_RECORD)
     assert validator().is_valid(record)
+    record["open_invitations"][0]["check_category"] = "deslopping"
+    assert validator().is_valid(record)
     record["open_invitations"][0]["check_category"] = "unreviewed"
     errors = list(validator().iter_errors(record))
     assert any(

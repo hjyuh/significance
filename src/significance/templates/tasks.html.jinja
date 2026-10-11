@@ -4,21 +4,44 @@
 {% block content %}
 <section class="band">
   <p class="lbl">Help check a claim</p>
-  <h1 class="claim-text">Pick one. Read the passage. Report what you find.</h1>
+  <h1 class="claim-text">Find a claim. Choose one focused check.</h1>
   <p class="prose">Each task is scoped to a single passage or artifact. Reading needs no account; submitting through GitHub requires one.</p>
+  {% if rows %}<p class="meta">{{ rows|length }} checks across {{ task_groups|length }} claims. Grouped by claim, with numbered problems in numerical order. Within each claim, open checks are arranged by category; checks already taken follow.</p>{% endif %}
 </section>
+
+{% set rewrite_rows = rows|selectattr('check_category', 'equalto', 'deslopping')|list %}
+{% if rewrite_rows %}
+<section class="band" id="deslopping">
+  <p class="lbl">De-slopping / explanation rewrite</p>
+  <p class="prose">Make a generated argument easier to read, with source references and explicit unresolved steps. These tasks follow the workflow described in <a href="https://github.com/GeorgeCoote/openai_372_deslop">George Coote’s repository</a>: distinguish an AI-assisted readable draft from a human-written rewrite. A rewrite does not establish mathematical correctness.</p>
+  <ul>
+  {% for row in rewrite_rows %}
+    <li><a href="{{ row.task_href }}">{{ row.record.manuscript.label }} — {{ row.invitation.target }}</a></li>
+  {% endfor %}
+  </ul>
+</section>
+{% endif %}
 
 {% if rows %}
 <section class="band tasks-list">
+  <nav class="task-jump-nav" id="task-top" aria-label="Jump to a claim">
+    <p class="lbl">Jump to a claim</p>
+    <ul>
+    {% for group in task_groups %}
+      <li><a href="#{{ group.anchor }}">{{ group.label|truncate(58) }} <span>({{ group.rows|length }})</span></a></li>
+    {% endfor %}
+    </ul>
+  </nav>
+{% for group in task_groups %}
+  <section class="task-group" id="{{ group.anchor }}" aria-labelledby="{{ group.anchor }}-heading">
+    <header class="task-group-header">
+      <h2 id="{{ group.anchor }}-heading"><a href="{{ group.record_href }}">{{ group.label }}</a></h2>
+      <p class="meta">{{ group.open_count }} open{% if group.taken_count %} · {{ group.taken_count }} taken{% endif %} · <a href="#task-top">Back to claims ↑</a></p>
+      <p class="task-group-claim">{{ group.record.claim.text.value }}</p>
+    </header>
   <ul class="task-cards">
-{% for row in rows %}
+{% for row in group.rows %}
 {% set task = row.invitation %}
-{% set problem = row.record.get('problem_reference') or {} %}
-{% set relationship = row.record.get('author_relationship') or {} %}
-{% set author_id = relationship.get('asserted_by') %}
-{% set author = row.record.get('parties', {}).get(author_id, {}) if author_id else {} %}
-{% set author_name = author.get('name', author.get('pseudonym')) %}
-{% set record_label = (problem.get('venue') ~ ' #' ~ problem.get('problem_id')) if problem.get('venue') and problem.get('problem_id') else (author_name or row.record.claim.text.value) %}
 {% set task_type = task.get('task_kind', task.get('kind', 'bounded check'))|replace('_', ' ')|capitalize %}
 {% set prerequisites = task.get('prerequisites') or [] %}
 <li class="task-card">
@@ -26,18 +49,19 @@
     <div class="task-card-header">
       <span class="task-status task-status-{{ task.get('status', 'open') }}">{{ task.get('status', 'open') }}</span>
     </div>
-    <h3 class="task-card-title">{{ task.target|truncate(80) }}</h3>
-    <p class="task-card-record">{{ record_label }}</p>
+    <h3 class="task-card-title">{{ task.target }}</h3>
     <div class="task-card-meta">
       <span class="task-type">Type: {{ task_type }}</span>
       <span class="task-category">Check: {{ row.check_category_label }}</span>
       <span class="task-prereq">Prerequisites: {{ prerequisites|join('; ') if prerequisites else 'None listed' }}</span>
-      <span class="task-effort">Effort: {{ task.get('effort_estimate') or 'Not estimated' }}</span>
+      <span class="task-effort">Effort: {{ task.get('effort_estimate')|configured or 'Not estimated' }}</span>
     </div>
   </a>
 </li>
 {% endfor %}
   </ul>
+  </section>
+{% endfor %}
 </section>
 {% else %}
 <section class="band">
@@ -70,7 +94,7 @@
         <span class="task-type">Type: {{ task.get('task_kind', task.get('kind', 'bounded check'))|replace('_', ' ')|capitalize }}</span>
         <span class="task-category">Check: {{ row.check_category_label }}</span>
         <span class="task-prereq">Prerequisites: {{ prerequisites|join('; ') if prerequisites else 'None listed' }}</span>
-        <span class="task-effort">Effort: {{ task.get('effort_estimate') or 'Not estimated' }}</span>
+        <span class="task-effort">Effort: {{ task.get('effort_estimate')|configured or 'Not estimated' }}</span>
       </div>
     </li>
     {% endfor %}

@@ -1,0 +1,6047 @@
+{
+  "started_utc": "2026-10-06T12:55:29.207160+00:00",
+  "finished_utc": "2026-10-06T12:57:36.429395+00:00",
+  "stats": {
+    "index_claims": 291,
+    "indexed_problems": 213,
+    "inspected_claims": 291,
+    "zero_comments": 155,
+    "any_comments": 136,
+    "self_only": 14,
+    "outside_response": 122,
+    "total_comments": 420,
+    "no_outside_response": 169,
+    "multiple_claim_problems": 61,
+    "no_comments_before_september": 77,
+    "claims_since_october": 14,
+    "no_comments_since_october": 7
+  },
+  "missing_ids": [],
+  "errors": [],
+  "claims": [
+    {
+      "claim_id": "396",
+      "problem": "455",
+      "author": "satorunet",
+      "author_url": "/forum/user/satorunet",
+      "submitted": "2026-10-06 00:16:36",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/396/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/455/proof-claims#proof-claim-396",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "395",
+      "problem": "1186",
+      "author": "carlos_toledo",
+      "author_url": "/forum/user/carlos_toledo",
+      "submitted": "2026-10-05 22:27:07",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/395/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1186/proof-claims#proof-claim-395",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "392",
+      "problem": "883",
+      "author": "yichengpan",
+      "author_url": "/forum/user/yichengpan",
+      "submitted": "2026-10-05 12:36:25",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/392/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/883/proof-claims#proof-claim-392",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "391",
+      "problem": "1183",
+      "author": "creelie",
+      "author_url": "/forum/user/creelie",
+      "submitted": "2026-10-05 03:04:13",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/391/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1183/proof-claims#proof-claim-391",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "390",
+      "problem": "364",
+      "author": "Berkay_Yueksel_Sayim",
+      "author_url": "/forum/user/Berkay_Yueksel_Sayim",
+      "submitted": "2026-10-04 19:56:46",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/390/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/364/proof-claims#proof-claim-390",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "387",
+      "problem": "143",
+      "author": "mapice",
+      "author_url": "/forum/user/mapice",
+      "submitted": "2026-10-03 00:00:29",
+      "comments": 3,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/387/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/143/proof-claims#proof-claim-387",
+      "comment_authors": [
+        {
+          "post_id": "post-9283",
+          "author": "mapice",
+          "author_url": "/forum/user/mapice"
+        },
+        {
+          "post_id": "post-9289",
+          "author": "BorisAlexeev",
+          "author_url": "/forum/user/BorisAlexeev"
+        },
+        {
+          "post_id": "post-9292",
+          "author": "StijnC",
+          "author_url": "/forum/user/StijnC"
+        }
+      ],
+      "outside_comments": 2,
+      "self_comments": 1,
+      "deleted_comment_placeholders": 1
+    },
+    {
+      "claim_id": "386",
+      "problem": "30",
+      "author": "chenhaoyu",
+      "author_url": "/forum/user/chenhaoyu",
+      "submitted": "2026-10-02 19:06:21",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/386/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/30/proof-claims#proof-claim-386",
+      "comment_authors": [
+        {
+          "post_id": "post-9297",
+          "author": "johnakwei",
+          "author_url": "/forum/user/johnakwei"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "385",
+      "problem": "374",
+      "author": "jonhartley",
+      "author_url": "/forum/user/jonhartley",
+      "submitted": "2026-10-02 18:10:18",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/385/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/374/proof-claims#proof-claim-385",
+      "comment_authors": [
+        {
+          "post_id": "post-9296",
+          "author": "jonhartley",
+          "author_url": "/forum/user/jonhartley"
+        }
+      ],
+      "outside_comments": 0,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "384",
+      "problem": "374",
+      "author": "Fedir",
+      "author_url": "/forum/user/Fedir",
+      "submitted": "2026-10-02 13:40:51",
+      "comments": 3,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/384/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/374/proof-claims#proof-claim-384",
+      "comment_authors": [
+        {
+          "post_id": "post-9269",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-9270",
+          "author": "Fedir",
+          "author_url": "/forum/user/Fedir"
+        },
+        {
+          "post_id": "post-9278",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        }
+      ],
+      "outside_comments": 2,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "383",
+      "problem": "64",
+      "author": "murican",
+      "author_url": "/forum/user/murican",
+      "submitted": "2026-10-02 08:29:20",
+      "comments": 2,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/383/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/64/proof-claims#proof-claim-383",
+      "comment_authors": [
+        {
+          "post_id": "post-9265",
+          "author": "StijnC",
+          "author_url": "/forum/user/StijnC"
+        },
+        {
+          "post_id": "post-9276",
+          "author": "murican",
+          "author_url": "/forum/user/murican"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "382",
+      "problem": "338",
+      "author": "veljjanoski",
+      "author_url": "/forum/user/veljjanoski",
+      "submitted": "2026-10-01 14:39:17",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/382/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/338/proof-claims#proof-claim-382",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "381",
+      "problem": "1162",
+      "author": "aimir",
+      "author_url": "/forum/user/aimir",
+      "submitted": "2026-10-01 05:14:32",
+      "comments": 2,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/381/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1162/proof-claims#proof-claim-381",
+      "comment_authors": [
+        {
+          "post_id": "post-9242",
+          "author": "StijnC",
+          "author_url": "/forum/user/StijnC"
+        },
+        {
+          "post_id": "post-9254",
+          "author": "aimir",
+          "author_url": "/forum/user/aimir"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "380",
+      "problem": "602",
+      "author": "lezhe",
+      "author_url": "/forum/user/lezhe",
+      "submitted": "2026-10-01 05:00:49",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/380/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/602/proof-claims#proof-claim-380",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "379",
+      "problem": "184",
+      "author": "American-Pharaoh",
+      "author_url": "/forum/user/American-Pharaoh",
+      "submitted": "2026-10-01 03:29:21",
+      "comments": 2,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/379/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/184/proof-claims#proof-claim-379",
+      "comment_authors": [
+        {
+          "post_id": "post-9256",
+          "author": "ho boon suan",
+          "author_url": "/forum/user/ho_boon_suan"
+        },
+        {
+          "post_id": "post-9243",
+          "author": "StijnC",
+          "author_url": "/forum/user/StijnC"
+        }
+      ],
+      "outside_comments": 2,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "378",
+      "problem": "701",
+      "author": "BorisAlexeev",
+      "author_url": "/forum/user/BorisAlexeev",
+      "submitted": "2026-09-30 18:16:36",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/378/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/701/proof-claims#proof-claim-378",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "377",
+      "problem": "1182",
+      "author": "pravarkataria",
+      "author_url": "/forum/user/pravarkataria",
+      "submitted": "2026-09-29 17:27:38",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/377/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1182/proof-claims#proof-claim-377",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "376",
+      "problem": "1110",
+      "author": "jbecart",
+      "author_url": "/forum/user/jbecart",
+      "submitted": "2026-09-29 14:37:10",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/376/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1110/proof-claims#proof-claim-376",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "375",
+      "problem": "386",
+      "author": "PedroMartins",
+      "author_url": "/forum/user/PedroMartins",
+      "submitted": "2026-09-29 14:15:43",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/375/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/386/proof-claims#proof-claim-375",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "374",
+      "problem": "566",
+      "author": "gonzalobarria",
+      "author_url": "/forum/user/gonzalobarria",
+      "submitted": "2026-09-29 12:50:11",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/374/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/566/proof-claims#proof-claim-374",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "372",
+      "problem": "488",
+      "author": "Fevernop",
+      "author_url": "/forum/user/Fevernop",
+      "submitted": "2026-09-29 08:09:28",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/372/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/488/proof-claims#proof-claim-372",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "371",
+      "problem": "306",
+      "author": "Shisheng Li",
+      "author_url": "/forum/user/daizisheng",
+      "submitted": "2026-09-29 01:56:37",
+      "comments": 3,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/371/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/306/proof-claims#proof-claim-371",
+      "comment_authors": [
+        {
+          "post_id": "post-9226",
+          "author": "Yuren Tang",
+          "author_url": "/forum/user/Yuren_Tang"
+        },
+        {
+          "post_id": "post-9230",
+          "author": "Shisheng Li",
+          "author_url": "/forum/user/daizisheng"
+        },
+        {
+          "post_id": "post-9275",
+          "author": "Yuren Tang",
+          "author_url": "/forum/user/Yuren_Tang"
+        }
+      ],
+      "outside_comments": 2,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "370",
+      "problem": "786",
+      "author": "Shisheng Li",
+      "author_url": "/forum/user/daizisheng",
+      "submitted": "2026-09-28 08:26:34",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/370/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/786/proof-claims#proof-claim-370",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "369",
+      "problem": "151",
+      "author": "veljjanoski",
+      "author_url": "/forum/user/veljjanoski",
+      "submitted": "2026-09-28 05:35:30",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/369/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/151/proof-claims#proof-claim-369",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "368",
+      "problem": "993",
+      "author": "TongZhang",
+      "author_url": "/forum/user/TongZhang",
+      "submitted": "2026-09-27 18:59:55",
+      "comments": 3,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/368/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/993/proof-claims#proof-claim-368",
+      "comment_authors": [
+        {
+          "post_id": "post-9299",
+          "author": "TongZhang",
+          "author_url": "/forum/user/TongZhang"
+        },
+        {
+          "post_id": "post-9207",
+          "author": "StijnC",
+          "author_url": "/forum/user/StijnC"
+        },
+        {
+          "post_id": "post-9213",
+          "author": "TongZhang",
+          "author_url": "/forum/user/TongZhang"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 2
+    },
+    {
+      "claim_id": "367",
+      "problem": "809",
+      "author": "jacobparish",
+      "author_url": "/forum/user/jacobparish",
+      "submitted": "2026-09-27 18:34:26",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/367/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/809/proof-claims#proof-claim-367",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "366",
+      "problem": "14",
+      "author": "Thomas Bloom",
+      "author_url": "/forum/user/TFBloom",
+      "submitted": "2026-09-27 13:39:08",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/366/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/14/proof-claims#proof-claim-366",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "365",
+      "problem": "653",
+      "author": "Thomas Bloom",
+      "author_url": "/forum/user/TFBloom",
+      "submitted": "2026-09-27 13:35:11",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/365/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/653/proof-claims#proof-claim-365",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "364",
+      "problem": "108",
+      "author": "Thomas Bloom",
+      "author_url": "/forum/user/TFBloom",
+      "submitted": "2026-09-27 13:31:21",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/364/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/108/proof-claims#proof-claim-364",
+      "comment_authors": [
+        {
+          "post_id": "post-9271",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "363",
+      "problem": "18",
+      "author": "Thomas Bloom",
+      "author_url": "/forum/user/TFBloom",
+      "submitted": "2026-09-27 13:28:50",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/363/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/18/proof-claims#proof-claim-363",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "362",
+      "problem": "1062",
+      "author": "Thomas Bloom",
+      "author_url": "/forum/user/TFBloom",
+      "submitted": "2026-09-27 13:26:20",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/362/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1062/proof-claims#proof-claim-362",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "361",
+      "problem": "14",
+      "author": "Thomas Bloom",
+      "author_url": "/forum/user/TFBloom",
+      "submitted": "2026-09-27 13:24:53",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/361/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/14/proof-claims#proof-claim-361",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "360",
+      "problem": "416",
+      "author": "Thomas Bloom",
+      "author_url": "/forum/user/TFBloom",
+      "submitted": "2026-09-27 13:20:29",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/360/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/416/proof-claims#proof-claim-360",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "359",
+      "problem": "859",
+      "author": "Thomas Bloom",
+      "author_url": "/forum/user/TFBloom",
+      "submitted": "2026-09-27 13:09:28",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/359/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/859/proof-claims#proof-claim-359",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "358",
+      "problem": "809",
+      "author": "asadshahab",
+      "author_url": "/forum/user/asadshahab",
+      "submitted": "2026-09-27 04:15:54",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/358/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/809/proof-claims#proof-claim-358",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "357",
+      "problem": "996",
+      "author": "EthanYang",
+      "author_url": "/forum/user/EthanYang",
+      "submitted": "2026-09-26 21:06:59",
+      "comments": 2,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/357/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/996/proof-claims#proof-claim-357",
+      "comment_authors": [
+        {
+          "post_id": "post-9201",
+          "author": "EthanYang",
+          "author_url": "/forum/user/EthanYang"
+        },
+        {
+          "post_id": "post-9199",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "356",
+      "problem": "289",
+      "author": "PingYou",
+      "author_url": "/forum/user/PingYou",
+      "submitted": "2026-09-26 14:12:37",
+      "comments": 2,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/356/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/289/proof-claims#proof-claim-356",
+      "comment_authors": [
+        {
+          "post_id": "post-9192",
+          "author": "StijnC",
+          "author_url": "/forum/user/StijnC"
+        },
+        {
+          "post_id": "post-9206",
+          "author": "PingYou",
+          "author_url": "/forum/user/PingYou"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "355",
+      "problem": "1095",
+      "author": "EthanYang",
+      "author_url": "/forum/user/EthanYang",
+      "submitted": "2026-09-26 04:32:38",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/355/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1095/proof-claims#proof-claim-355",
+      "comment_authors": [
+        {
+          "post_id": "post-9267",
+          "author": "MalekZ",
+          "author_url": "/forum/user/MalekZ"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "354",
+      "problem": "1220",
+      "author": "jidodae",
+      "author_url": "/forum/user/jidodae",
+      "submitted": "2026-09-26 02:44:26",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/354/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1220/proof-claims#proof-claim-354",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "353",
+      "problem": "522",
+      "author": "Sebastien Kawada",
+      "author_url": "/forum/user/SebastienKawada",
+      "submitted": "2026-09-26 02:28:02",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/353/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/522/proof-claims#proof-claim-353",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "352",
+      "problem": "132",
+      "author": "wingator",
+      "author_url": "/forum/user/wingator",
+      "submitted": "2026-09-25 20:04:41",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/352/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/132/proof-claims#proof-claim-352",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "351",
+      "problem": "84",
+      "author": "eliasbotsford",
+      "author_url": "/forum/user/eliasbotsford",
+      "submitted": "2026-09-25 19:27:05",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/351/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/84/proof-claims#proof-claim-351",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "350",
+      "problem": "477",
+      "author": "Dongdong",
+      "author_url": "/forum/user/Dongdong",
+      "submitted": "2026-09-25 13:01:49",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/350/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/477/proof-claims#proof-claim-350",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "349",
+      "problem": "609",
+      "author": "jjeremycai",
+      "author_url": "/forum/user/jjeremycai",
+      "submitted": "2026-09-25 04:05:56",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/349/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/609/proof-claims#proof-claim-349",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "348",
+      "problem": "1016",
+      "author": "KNT",
+      "author_url": "/forum/user/KNT",
+      "submitted": "2026-09-24 17:20:42",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/348/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1016/proof-claims#proof-claim-348",
+      "comment_authors": [
+        {
+          "post_id": "post-9187",
+          "author": "KNT",
+          "author_url": "/forum/user/KNT"
+        }
+      ],
+      "outside_comments": 0,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "347",
+      "problem": "290",
+      "author": "Woett",
+      "author_url": "/forum/user/Woett",
+      "submitted": "2026-09-24 08:19:42",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/347/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/290/proof-claims#proof-claim-347",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "346",
+      "problem": "1045",
+      "author": "Rogerhu",
+      "author_url": "/forum/user/Rogerhu",
+      "submitted": "2026-09-23 16:15:24",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/346/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1045/proof-claims#proof-claim-346",
+      "comment_authors": [
+        {
+          "post_id": "post-9294",
+          "author": "abhimaan09",
+          "author_url": "/forum/user/abhimaan09"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "345",
+      "problem": "456",
+      "author": "DavidTurturean",
+      "author_url": "/forum/user/DavidTurturean",
+      "submitted": "2026-09-23 04:25:43",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/345/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/456/proof-claims#proof-claim-345",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "344",
+      "problem": "710",
+      "author": "DavidTurturean",
+      "author_url": "/forum/user/DavidTurturean",
+      "submitted": "2026-09-23 04:23:55",
+      "comments": 4,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/344/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/710/proof-claims#proof-claim-344",
+      "comment_authors": [
+        {
+          "post_id": "post-9173",
+          "author": "skominers",
+          "author_url": "/forum/user/skominers"
+        },
+        {
+          "post_id": "post-9175",
+          "author": "StijnC",
+          "author_url": "/forum/user/StijnC"
+        },
+        {
+          "post_id": "post-9178",
+          "author": "skominers",
+          "author_url": "/forum/user/skominers"
+        },
+        {
+          "post_id": "post-9163",
+          "author": "SamKorsky",
+          "author_url": "/forum/user/SamKorsky"
+        }
+      ],
+      "outside_comments": 4,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "343",
+      "problem": "876",
+      "author": "SamKorsky",
+      "author_url": "/forum/user/SamKorsky",
+      "submitted": "2026-09-22 18:30:05",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/343/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/876/proof-claims#proof-claim-343",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "337",
+      "problem": "81",
+      "author": "jpt",
+      "author_url": "/forum/user/jpt",
+      "submitted": "2026-09-22 02:49:50",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/337/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/81/proof-claims#proof-claim-337",
+      "comment_authors": [
+        {
+          "post_id": "post-9259",
+          "author": "jpt",
+          "author_url": "/forum/user/jpt"
+        }
+      ],
+      "outside_comments": 0,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "336",
+      "problem": "993",
+      "author": "yyao",
+      "author_url": "/forum/user/yyao",
+      "submitted": "2026-09-21 22:25:14",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/336/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/993/proof-claims#proof-claim-336",
+      "comment_authors": [
+        {
+          "post_id": "post-9182",
+          "author": "BrettRey2",
+          "author_url": "/forum/user/BrettRey2"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "334",
+      "problem": "36",
+      "author": "drynshock",
+      "author_url": "/forum/user/drynshock",
+      "submitted": "2026-09-19 18:21:44",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/334/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/36/proof-claims#proof-claim-334",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "333",
+      "problem": "178",
+      "author": "SamKorsky",
+      "author_url": "/forum/user/SamKorsky",
+      "submitted": "2026-09-19 05:33:02",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/333/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/178/proof-claims#proof-claim-333",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "322",
+      "problem": "1041",
+      "author": "AlxBorisov17",
+      "author_url": "/forum/user/AlxBorisov17",
+      "submitted": "2026-09-18 16:03:47",
+      "comments": 4,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/322/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1041/proof-claims#proof-claim-322",
+      "comment_authors": [
+        {
+          "post_id": "post-9098",
+          "author": "AlxBorisov17",
+          "author_url": "/forum/user/AlxBorisov17"
+        },
+        {
+          "post_id": "post-9169",
+          "author": "old-bielefelder",
+          "author_url": "/forum/user/old-bielefelder"
+        },
+        {
+          "post_id": "post-9190",
+          "author": "AlxBorisov17",
+          "author_url": "/forum/user/AlxBorisov17"
+        },
+        {
+          "post_id": "post-9096",
+          "author": "old-bielefelder",
+          "author_url": "/forum/user/old-bielefelder"
+        }
+      ],
+      "outside_comments": 2,
+      "self_comments": 2
+    },
+    {
+      "claim_id": "320",
+      "problem": "888",
+      "author": "Rogerhu",
+      "author_url": "/forum/user/Rogerhu",
+      "submitted": "2026-09-17 05:04:28",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/320/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/888/proof-claims#proof-claim-320",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "319",
+      "problem": "906",
+      "author": "FDmd-233",
+      "author_url": "/forum/user/FDmd-233",
+      "submitted": "2026-09-17 00:25:34",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/319/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/906/proof-claims#proof-claim-319",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "318",
+      "problem": "18",
+      "author": "Woett",
+      "author_url": "/forum/user/Woett",
+      "submitted": "2026-09-16 23:18:06",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/318/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/18/proof-claims#proof-claim-318",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "317",
+      "problem": "242",
+      "author": "brianakaka",
+      "author_url": "/forum/user/brianakaka",
+      "submitted": "2026-09-16 18:08:13",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/317/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/242/proof-claims#proof-claim-317",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "316",
+      "problem": "34",
+      "author": "SamKorsky",
+      "author_url": "/forum/user/SamKorsky",
+      "submitted": "2026-09-15 21:21:03",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/316/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/34/proof-claims#proof-claim-316",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "315",
+      "problem": "133",
+      "author": "SamKorsky",
+      "author_url": "/forum/user/SamKorsky",
+      "submitted": "2026-09-15 20:21:16",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/315/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/133/proof-claims#proof-claim-315",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "314",
+      "problem": "190",
+      "author": "jidodae",
+      "author_url": "/forum/user/jidodae",
+      "submitted": "2026-09-15 14:08:49",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/314/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/190/proof-claims#proof-claim-314",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "313",
+      "problem": "1",
+      "author": "BorisAlexeev",
+      "author_url": "/forum/user/BorisAlexeev",
+      "submitted": "2026-09-15 02:59:58",
+      "comments": 3,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/313/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1/proof-claims#proof-claim-313",
+      "comment_authors": [
+        {
+          "post_id": "post-9059",
+          "author": "BorisAlexeev",
+          "author_url": "/forum/user/BorisAlexeev"
+        },
+        {
+          "post_id": "post-9062",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-9077",
+          "author": "enomis_costa88",
+          "author_url": "/forum/user/enomis_costa88"
+        }
+      ],
+      "outside_comments": 2,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "312",
+      "problem": "157",
+      "author": "BorisAlexeev",
+      "author_url": "/forum/user/BorisAlexeev",
+      "submitted": "2026-09-15 02:42:18",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/312/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/157/proof-claims#proof-claim-312",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "311",
+      "problem": "196",
+      "author": "Liam Kruer",
+      "author_url": "/forum/user/lkruer",
+      "submitted": "2026-09-14 04:05:27",
+      "comments": 3,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/311/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/196/proof-claims#proof-claim-311",
+      "comment_authors": [
+        {
+          "post_id": "post-9095",
+          "author": "Adenwalla",
+          "author_url": "/forum/user/Adenwalla"
+        },
+        {
+          "post_id": "post-9058",
+          "author": "AlejandroZarzuelo",
+          "author_url": "/forum/user/AlejandroZarzuelo"
+        },
+        {
+          "post_id": "post-9029",
+          "author": "SamKorsky",
+          "author_url": "/forum/user/SamKorsky"
+        }
+      ],
+      "outside_comments": 3,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "310",
+      "problem": "302",
+      "author": "khanukov",
+      "author_url": "/forum/user/khanukov",
+      "submitted": "2026-09-13 23:45:02",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/310/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/302/proof-claims#proof-claim-310",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "309",
+      "problem": "1133",
+      "author": "Jia-Qi Yang",
+      "author_url": "/forum/user/Yjq1368708545",
+      "submitted": "2026-09-13 20:40:43",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/309/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1133/proof-claims#proof-claim-309",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "308",
+      "problem": "790",
+      "author": "SamKorsky",
+      "author_url": "/forum/user/SamKorsky",
+      "submitted": "2026-09-13 19:13:20",
+      "comments": 2,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/308/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/790/proof-claims#proof-claim-308",
+      "comment_authors": [
+        {
+          "post_id": "post-9293",
+          "author": "Liam Kruer",
+          "author_url": "/forum/user/lkruer"
+        },
+        {
+          "post_id": "post-9036",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        }
+      ],
+      "outside_comments": 2,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "307",
+      "problem": "251",
+      "author": "stefanringer",
+      "author_url": "/forum/user/stefanringer",
+      "submitted": "2026-09-13 16:24:50",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/307/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/251/proof-claims#proof-claim-307",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "306",
+      "problem": "354",
+      "author": "Andrewy",
+      "author_url": "/forum/user/Andrewy",
+      "submitted": "2026-09-13 15:48:40",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/306/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/354/proof-claims#proof-claim-306",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "305",
+      "problem": "97",
+      "author": "Liam Price",
+      "author_url": "/forum/user/Leeham",
+      "submitted": "2026-09-13 13:45:02",
+      "comments": 3,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/305/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/97/proof-claims#proof-claim-305",
+      "comment_authors": [
+        {
+          "post_id": "post-9210",
+          "author": "Liam Price",
+          "author_url": "/forum/user/Leeham"
+        },
+        {
+          "post_id": "post-9030",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-9025",
+          "author": "mysticflounder",
+          "author_url": "/forum/user/mysticflounder"
+        }
+      ],
+      "outside_comments": 2,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "304",
+      "problem": "1020",
+      "author": "consciousfractal",
+      "author_url": "/forum/user/consciousfractal",
+      "submitted": "2026-09-13 06:40:27",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/304/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1020/proof-claims#proof-claim-304",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "303",
+      "problem": "477",
+      "author": "diyiliu",
+      "author_url": "/forum/user/diyiliu",
+      "submitted": "2026-09-12 17:51:57",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/303/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/477/proof-claims#proof-claim-303",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "301",
+      "problem": "789",
+      "author": "SamKorsky",
+      "author_url": "/forum/user/SamKorsky",
+      "submitted": "2026-09-12 08:15:09",
+      "comments": 5,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/301/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/789/proof-claims#proof-claim-301",
+      "comment_authors": [
+        {
+          "post_id": "post-8981",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-8982",
+          "author": "SamKorsky",
+          "author_url": "/forum/user/SamKorsky"
+        },
+        {
+          "post_id": "post-8984",
+          "author": "StijnC",
+          "author_url": "/forum/user/StijnC"
+        },
+        {
+          "post_id": "post-8986",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-8987",
+          "author": "SamKorsky",
+          "author_url": "/forum/user/SamKorsky"
+        }
+      ],
+      "outside_comments": 3,
+      "self_comments": 2
+    },
+    {
+      "claim_id": "300",
+      "problem": "944",
+      "author": "Chanalex",
+      "author_url": "/forum/user/Chanalex",
+      "submitted": "2026-09-11 10:55:37",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/300/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/944/proof-claims#proof-claim-300",
+      "comment_authors": [
+        {
+          "post_id": "post-8967",
+          "author": "KentaKitamura",
+          "author_url": "/forum/user/KentaKitamura"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "299",
+      "problem": "278",
+      "author": "Yoshiharu Onishi",
+      "author_url": "/forum/user/Raki",
+      "submitted": "2026-09-10 23:52:06",
+      "comments": 2,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/299/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/278/proof-claims#proof-claim-299",
+      "comment_authors": [
+        {
+          "post_id": "post-8963",
+          "author": "StijnC",
+          "author_url": "/forum/user/StijnC"
+        },
+        {
+          "post_id": "post-8965",
+          "author": "Yoshiharu Onishi",
+          "author_url": "/forum/user/Raki"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "297",
+      "problem": "1182",
+      "author": "AlexErdosProblem",
+      "author_url": "/forum/user/fireflysentinel",
+      "submitted": "2026-09-10 20:07:26",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/297/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1182/proof-claims#proof-claim-297",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "294",
+      "problem": "348",
+      "author": "jtg",
+      "author_url": "/forum/user/jtg",
+      "submitted": "2026-09-09 19:20:00",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/294/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/348/proof-claims#proof-claim-294",
+      "comment_authors": [
+        {
+          "post_id": "post-8958",
+          "author": "Woett",
+          "author_url": "/forum/user/Woett"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "293",
+      "problem": "792",
+      "author": "bkbedert",
+      "author_url": "/forum/user/bkbedert",
+      "submitted": "2026-09-09 15:03:14",
+      "comments": 2,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/293/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/792/proof-claims#proof-claim-293",
+      "comment_authors": [
+        {
+          "post_id": "post-8957",
+          "author": "bengreen",
+          "author_url": "/forum/user/bengreen"
+        },
+        {
+          "post_id": "post-8950",
+          "author": "hxypqr",
+          "author_url": "/forum/user/hxypqr"
+        }
+      ],
+      "outside_comments": 2,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "292",
+      "problem": "1040",
+      "author": "Ioannis_Tzachristas",
+      "author_url": "/forum/user/Ioannis_Tzachristas",
+      "submitted": "2026-09-09 12:57:19",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/292/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1040/proof-claims#proof-claim-292",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "291",
+      "problem": "597",
+      "author": "alexchengyuli",
+      "author_url": "/forum/user/alexchengyuli",
+      "submitted": "2026-09-09 12:29:27",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/291/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/597/proof-claims#proof-claim-291",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "289",
+      "problem": "625",
+      "author": "Veno",
+      "author_url": "/forum/user/Veno",
+      "submitted": "2026-09-09 11:38:37",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/289/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/625/proof-claims#proof-claim-289",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "288",
+      "problem": "1039",
+      "author": "JPkkk",
+      "author_url": "/forum/user/JPkkk",
+      "submitted": "2026-09-09 05:03:32",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/288/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1039/proof-claims#proof-claim-288",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "287",
+      "problem": "411",
+      "author": "Tonycollatz",
+      "author_url": "/forum/user/Tonycollatz",
+      "submitted": "2026-09-08 15:27:15",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/287/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/411/proof-claims#proof-claim-287",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "285",
+      "problem": "81",
+      "author": "morluto",
+      "author_url": "/forum/user/morluto",
+      "submitted": "2026-09-08 12:32:11",
+      "comments": 4,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/285/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/81/proof-claims#proof-claim-285",
+      "comment_authors": [
+        {
+          "post_id": "post-9119",
+          "author": "obinna",
+          "author_url": "/forum/user/obinna"
+        },
+        {
+          "post_id": "post-9145",
+          "author": "morluto",
+          "author_url": "/forum/user/morluto"
+        },
+        {
+          "post_id": "post-9057",
+          "author": "morluto",
+          "author_url": "/forum/user/morluto"
+        },
+        {
+          "post_id": "post-9006",
+          "author": "jpt",
+          "author_url": "/forum/user/jpt"
+        }
+      ],
+      "outside_comments": 2,
+      "self_comments": 2
+    },
+    {
+      "claim_id": "283",
+      "problem": "252",
+      "author": "tokengrinder",
+      "author_url": "/forum/user/tokengrinder",
+      "submitted": "2026-09-08 03:25:18",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/283/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/252/proof-claims#proof-claim-283",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "282",
+      "problem": "1122",
+      "author": "AlexErdosProblem",
+      "author_url": "/forum/user/fireflysentinel",
+      "submitted": "2026-09-08 01:50:09",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/282/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1122/proof-claims#proof-claim-282",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "281",
+      "problem": "1221",
+      "author": "SamKorsky",
+      "author_url": "/forum/user/SamKorsky",
+      "submitted": "2026-09-08 01:48:53",
+      "comments": 2,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/281/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1221/proof-claims#proof-claim-281",
+      "comment_authors": [
+        {
+          "post_id": "post-8941",
+          "author": "jleng01",
+          "author_url": "/forum/user/jleng01"
+        },
+        {
+          "post_id": "post-8942",
+          "author": "SamKorsky",
+          "author_url": "/forum/user/SamKorsky"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "280",
+      "problem": "114",
+      "author": "bchatelet",
+      "author_url": "/forum/user/bchatelet",
+      "submitted": "2026-09-07 14:15:59",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/280/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/114/proof-claims#proof-claim-280",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "279",
+      "problem": "289",
+      "author": "Yuren Tang",
+      "author_url": "/forum/user/Yuren_Tang",
+      "submitted": "2026-09-07 07:07:39",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/279/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/289/proof-claims#proof-claim-279",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "278",
+      "problem": "1212",
+      "author": "alexchengyuli",
+      "author_url": "/forum/user/alexchengyuli",
+      "submitted": "2026-09-07 04:17:09",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/278/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1212/proof-claims#proof-claim-278",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "277",
+      "problem": "727",
+      "author": "Johan Land",
+      "author_url": "/forum/user/JohanLand",
+      "submitted": "2026-09-07 02:22:40",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/277/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/727/proof-claims#proof-claim-277",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "275",
+      "problem": "719",
+      "author": "Zeraoulia Rafik",
+      "author_url": "/forum/user/Rafikzeraoulia2025",
+      "submitted": "2026-09-07 01:24:01",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/275/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/719/proof-claims#proof-claim-275",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "274",
+      "problem": "349",
+      "author": "jtg",
+      "author_url": "/forum/user/jtg",
+      "submitted": "2026-09-06 19:40:48",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/274/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/349/proof-claims#proof-claim-274",
+      "comment_authors": [
+        {
+          "post_id": "post-9039",
+          "author": "Woett",
+          "author_url": "/forum/user/Woett"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "273",
+      "problem": "940",
+      "author": "Basile_Beyer_de_Ryke",
+      "author_url": "/forum/user/Basile_Beyer_de_Ryke",
+      "submitted": "2026-09-06 12:53:00",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/273/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/940/proof-claims#proof-claim-273",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "272",
+      "problem": "1144",
+      "author": "Sigurd Høystad",
+      "author_url": "/forum/user/Saasom",
+      "submitted": "2026-09-06 10:02:49",
+      "comments": 6,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/272/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1144/proof-claims#proof-claim-272",
+      "comment_authors": [
+        {
+          "post_id": "post-8840",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-8843",
+          "author": "Sigurd Høystad",
+          "author_url": "/forum/user/Saasom"
+        },
+        {
+          "post_id": "post-8833",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-8835",
+          "author": "Sigurd Høystad",
+          "author_url": "/forum/user/Saasom"
+        },
+        {
+          "post_id": "post-8836",
+          "author": "Sigurd Høystad",
+          "author_url": "/forum/user/Saasom"
+        },
+        {
+          "post_id": "post-8838",
+          "author": "Sigurd Høystad",
+          "author_url": "/forum/user/Saasom"
+        }
+      ],
+      "outside_comments": 2,
+      "self_comments": 4
+    },
+    {
+      "claim_id": "270",
+      "problem": "1040",
+      "author": "declangessel",
+      "author_url": "/forum/user/declangessel",
+      "submitted": "2026-09-06 03:10:55",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/270/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1040/proof-claims#proof-claim-270",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "269",
+      "problem": "1040",
+      "author": "shlummi",
+      "author_url": "/forum/user/shlummi",
+      "submitted": "2026-09-06 02:41:48",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/269/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1040/proof-claims#proof-claim-269",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "268",
+      "problem": "786",
+      "author": "declangessel",
+      "author_url": "/forum/user/declangessel",
+      "submitted": "2026-09-06 02:34:58",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/268/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/786/proof-claims#proof-claim-268",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "267",
+      "problem": "740",
+      "author": "Johan Land",
+      "author_url": "/forum/user/JohanLand",
+      "submitted": "2026-09-06 01:52:49",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/267/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/740/proof-claims#proof-claim-267",
+      "comment_authors": [
+        {
+          "post_id": "post-8822",
+          "author": "Johan Land",
+          "author_url": "/forum/user/JohanLand"
+        }
+      ],
+      "outside_comments": 0,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "266",
+      "problem": "488",
+      "author": "declangessel",
+      "author_url": "/forum/user/declangessel",
+      "submitted": "2026-09-05 23:44:58",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/266/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/488/proof-claims#proof-claim-266",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "265",
+      "problem": "1075",
+      "author": "AlexErdosProblem",
+      "author_url": "/forum/user/fireflysentinel",
+      "submitted": "2026-09-05 18:44:35",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/265/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1075/proof-claims#proof-claim-265",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "264",
+      "problem": "1059",
+      "author": "Johan Land",
+      "author_url": "/forum/user/JohanLand",
+      "submitted": "2026-09-05 17:47:08",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/264/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1059/proof-claims#proof-claim-264",
+      "comment_authors": [
+        {
+          "post_id": "post-8817",
+          "author": "Johan Land",
+          "author_url": "/forum/user/JohanLand"
+        }
+      ],
+      "outside_comments": 0,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "263",
+      "problem": "917",
+      "author": "AlexErdosProblem",
+      "author_url": "/forum/user/fireflysentinel",
+      "submitted": "2026-09-05 15:53:02",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/263/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/917/proof-claims#proof-claim-263",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "262",
+      "problem": "708",
+      "author": "chenhaoyu",
+      "author_url": "/forum/user/chenhaoyu",
+      "submitted": "2026-09-05 13:45:59",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/262/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/708/proof-claims#proof-claim-262",
+      "comment_authors": [
+        {
+          "post_id": "post-8868",
+          "author": "chenhaoyu",
+          "author_url": "/forum/user/chenhaoyu"
+        }
+      ],
+      "outside_comments": 0,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "260",
+      "problem": "1117",
+      "author": "AlexErdosProblem",
+      "author_url": "/forum/user/fireflysentinel",
+      "submitted": "2026-09-05 07:08:38",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/260/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1117/proof-claims#proof-claim-260",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "259",
+      "problem": "1132",
+      "author": "AlexErdosProblem",
+      "author_url": "/forum/user/fireflysentinel",
+      "submitted": "2026-09-05 05:32:00",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/259/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1132/proof-claims#proof-claim-259",
+      "comment_authors": [
+        {
+          "post_id": "post-8769",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "257",
+      "problem": "817",
+      "author": "enomis_costa88",
+      "author_url": "/forum/user/enomis_costa88",
+      "submitted": "2026-09-05 01:48:23",
+      "comments": 4,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/257/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/817/proof-claims#proof-claim-257",
+      "comment_authors": [
+        {
+          "post_id": "post-8872",
+          "author": "enomis_costa88",
+          "author_url": "/forum/user/enomis_costa88"
+        },
+        {
+          "post_id": "post-8839",
+          "author": "enomis_costa88",
+          "author_url": "/forum/user/enomis_costa88"
+        },
+        {
+          "post_id": "post-8821",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-8766",
+          "author": "SamKorsky",
+          "author_url": "/forum/user/SamKorsky"
+        }
+      ],
+      "outside_comments": 2,
+      "self_comments": 2
+    },
+    {
+      "claim_id": "256",
+      "problem": "1152",
+      "author": "AlexErdosProblem",
+      "author_url": "/forum/user/fireflysentinel",
+      "submitted": "2026-09-04 22:57:16",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/256/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1152/proof-claims#proof-claim-256",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "253",
+      "problem": "295",
+      "author": "tienxion",
+      "author_url": "/forum/user/tienxion",
+      "submitted": "2026-09-04 22:08:57",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/253/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/295/proof-claims#proof-claim-253",
+      "comment_authors": [
+        {
+          "post_id": "post-8750",
+          "author": "tienxion",
+          "author_url": "/forum/user/tienxion"
+        }
+      ],
+      "outside_comments": 0,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "252",
+      "problem": "1163",
+      "author": "tienxion",
+      "author_url": "/forum/user/tienxion",
+      "submitted": "2026-09-04 21:53:59",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/252/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1163/proof-claims#proof-claim-252",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "251",
+      "problem": "561",
+      "author": "tienxion",
+      "author_url": "/forum/user/tienxion",
+      "submitted": "2026-09-04 21:49:12",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/251/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/561/proof-claims#proof-claim-251",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "250",
+      "problem": "4",
+      "author": "BorisAlexeev",
+      "author_url": "/forum/user/BorisAlexeev",
+      "submitted": "2026-09-04 17:02:43",
+      "comments": 3,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/250/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/4/proof-claims#proof-claim-250",
+      "comment_authors": [
+        {
+          "post_id": "post-8738",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-8740",
+          "author": "BorisAlexeev",
+          "author_url": "/forum/user/BorisAlexeev"
+        },
+        {
+          "post_id": "post-8739",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        }
+      ],
+      "outside_comments": 2,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "249",
+      "problem": "126",
+      "author": "JohnVictor36",
+      "author_url": "/forum/user/JohnVictor36",
+      "submitted": "2026-09-04 13:57:08",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/249/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/126/proof-claims#proof-claim-249",
+      "comment_authors": [
+        {
+          "post_id": "post-8816",
+          "author": "Johan Land",
+          "author_url": "/forum/user/JohanLand"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "248",
+      "problem": "289",
+      "author": "Johan Land",
+      "author_url": "/forum/user/JohanLand",
+      "submitted": "2026-09-04 03:04:52",
+      "comments": 7,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/248/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/289/proof-claims#proof-claim-248",
+      "comment_authors": [
+        {
+          "post_id": "post-8736",
+          "author": "Yuren Tang",
+          "author_url": "/forum/user/Yuren_Tang"
+        },
+        {
+          "post_id": "post-8741",
+          "author": "StijnC",
+          "author_url": "/forum/user/StijnC"
+        },
+        {
+          "post_id": "post-8749",
+          "author": "Yuren Tang",
+          "author_url": "/forum/user/Yuren_Tang"
+        },
+        {
+          "post_id": "post-8782",
+          "author": "Johan Land",
+          "author_url": "/forum/user/JohanLand"
+        },
+        {
+          "post_id": "post-8870",
+          "author": "Yuren Tang",
+          "author_url": "/forum/user/Yuren_Tang"
+        },
+        {
+          "post_id": "post-8873",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-8728",
+          "author": "Johan Land",
+          "author_url": "/forum/user/JohanLand"
+        }
+      ],
+      "outside_comments": 5,
+      "self_comments": 2
+    },
+    {
+      "claim_id": "247",
+      "problem": "684",
+      "author": "jidodae",
+      "author_url": "/forum/user/jidodae",
+      "submitted": "2026-09-04 01:05:10",
+      "comments": 3,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/247/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/684/proof-claims#proof-claim-247",
+      "comment_authors": [
+        {
+          "post_id": "post-8733",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-8742",
+          "author": "Woett",
+          "author_url": "/forum/user/Woett"
+        },
+        {
+          "post_id": "post-8746",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        }
+      ],
+      "outside_comments": 3,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "246",
+      "problem": "246",
+      "author": "magiclinux",
+      "author_url": "/forum/user/magiclinux",
+      "submitted": "2026-09-04 00:04:57",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/246/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/246/proof-claims#proof-claim-246",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "245",
+      "problem": "548",
+      "author": "Thomas Bloom",
+      "author_url": "/forum/user/TFBloom",
+      "submitted": "2026-09-03 19:49:59",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/245/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/548/proof-claims#proof-claim-245",
+      "comment_authors": [
+        {
+          "post_id": "post-8863",
+          "author": "LouisD",
+          "author_url": "/forum/user/LouisD"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "244",
+      "problem": "126",
+      "author": "Thomas Bloom",
+      "author_url": "/forum/user/TFBloom",
+      "submitted": "2026-09-03 19:47:24",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/244/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/126/proof-claims#proof-claim-244",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "243",
+      "problem": "571",
+      "author": "Thomas Bloom",
+      "author_url": "/forum/user/TFBloom",
+      "submitted": "2026-09-03 19:42:00",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/243/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/571/proof-claims#proof-claim-243",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "242",
+      "problem": "1",
+      "author": "Thomas Bloom",
+      "author_url": "/forum/user/TFBloom",
+      "submitted": "2026-09-03 19:38:36",
+      "comments": 3,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/242/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1/proof-claims#proof-claim-242",
+      "comment_authors": [
+        {
+          "post_id": "post-8743",
+          "author": "WillSawin",
+          "author_url": "/forum/user/WillSawin"
+        },
+        {
+          "post_id": "post-8745",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-8773",
+          "author": "WillSawin",
+          "author_url": "/forum/user/WillSawin"
+        }
+      ],
+      "outside_comments": 2,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "241",
+      "problem": "74",
+      "author": "Thomas Bloom",
+      "author_url": "/forum/user/TFBloom",
+      "submitted": "2026-09-03 19:35:32",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/241/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/74/proof-claims#proof-claim-241",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "239",
+      "problem": "193",
+      "author": "ekalvi",
+      "author_url": "/forum/user/ekalvi",
+      "submitted": "2026-09-03 02:36:16",
+      "comments": 7,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/239/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/193/proof-claims#proof-claim-239",
+      "comment_authors": [
+        {
+          "post_id": "post-8846",
+          "author": "Adenwalla",
+          "author_url": "/forum/user/Adenwalla"
+        },
+        {
+          "post_id": "post-8697",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-8703",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-8704",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-8734",
+          "author": "ekalvi",
+          "author_url": "/forum/user/ekalvi"
+        },
+        {
+          "post_id": "post-8737",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-8693",
+          "author": "Dogmachine",
+          "author_url": "/forum/user/Dogmachine"
+        }
+      ],
+      "outside_comments": 6,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "238",
+      "problem": "1218",
+      "author": "yanyang_li",
+      "author_url": "/forum/user/yanyang_li",
+      "submitted": "2026-09-02 08:35:55",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/238/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1218/proof-claims#proof-claim-238",
+      "comment_authors": [
+        {
+          "post_id": "post-8890",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "237",
+      "problem": "290",
+      "author": "Woett",
+      "author_url": "/forum/user/Woett",
+      "submitted": "2026-09-02 01:32:46",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/237/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/290/proof-claims#proof-claim-237",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "236",
+      "problem": "1153",
+      "author": "EthanYang",
+      "author_url": "/forum/user/EthanYang",
+      "submitted": "2026-08-31 15:40:04",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/236/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1153/proof-claims#proof-claim-236",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "235",
+      "problem": "81",
+      "author": "jpt",
+      "author_url": "/forum/user/jpt",
+      "submitted": "2026-08-29 22:02:21",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/235/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/81/proof-claims#proof-claim-235",
+      "comment_authors": [
+        {
+          "post_id": "post-8647",
+          "author": "rickyc",
+          "author_url": "/forum/user/rickyc"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "234",
+      "problem": "119",
+      "author": "SamKorsky",
+      "author_url": "/forum/user/SamKorsky",
+      "submitted": "2026-08-29 21:53:27",
+      "comments": 2,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/234/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/119/proof-claims#proof-claim-234",
+      "comment_authors": [
+        {
+          "post_id": "post-8649",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-8650",
+          "author": "StijnC",
+          "author_url": "/forum/user/StijnC"
+        }
+      ],
+      "outside_comments": 2,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "233",
+      "problem": "265",
+      "author": "donteatllamas",
+      "author_url": "/forum/user/llamaboy",
+      "submitted": "2026-08-28 18:52:27",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/233/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/265/proof-claims#proof-claim-233",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "232",
+      "problem": "824",
+      "author": "donteatllamas",
+      "author_url": "/forum/user/llamaboy",
+      "submitted": "2026-08-28 16:01:40",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/232/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/824/proof-claims#proof-claim-232",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "228",
+      "problem": "1154",
+      "author": "yiwang",
+      "author_url": "/forum/user/yiwang",
+      "submitted": "2026-08-28 12:13:26",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/228/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1154/proof-claims#proof-claim-228",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "226",
+      "problem": "193",
+      "author": "ekalvi",
+      "author_url": "/forum/user/ekalvi",
+      "submitted": "2026-08-28 05:25:04",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/226/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/193/proof-claims#proof-claim-226",
+      "comment_authors": [
+        {
+          "post_id": "post-8686",
+          "author": "ekalvi",
+          "author_url": "/forum/user/ekalvi"
+        }
+      ],
+      "outside_comments": 0,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "225",
+      "problem": "488",
+      "author": "luew2",
+      "author_url": "/forum/user/luew2",
+      "submitted": "2026-08-28 01:00:00",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/225/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/488/proof-claims#proof-claim-225",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "224",
+      "problem": "4",
+      "author": "DottedCalculator",
+      "author_url": "/forum/user/DottedCalculator",
+      "submitted": "2026-08-26 01:55:32",
+      "comments": 31,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/224/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/4/proof-claims#proof-claim-224",
+      "comment_authors": [
+        {
+          "post_id": "post-8719",
+          "author": "StijnC",
+          "author_url": "/forum/user/StijnC"
+        },
+        {
+          "post_id": "post-8720",
+          "author": "onetwothreefour",
+          "author_url": "/forum/user/onetwothreefour"
+        },
+        {
+          "post_id": "post-8724",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-8729",
+          "author": "BorisAlexeev",
+          "author_url": "/forum/user/BorisAlexeev"
+        },
+        {
+          "post_id": "post-8730",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-8634",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-8635",
+          "author": "bengreen",
+          "author_url": "/forum/user/bengreen"
+        },
+        {
+          "post_id": "post-8636",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-8660",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-8661",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-8663",
+          "author": "bengreen",
+          "author_url": "/forum/user/bengreen"
+        },
+        {
+          "post_id": "post-8664",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-8665",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-8667",
+          "author": "bengreen",
+          "author_url": "/forum/user/bengreen"
+        },
+        {
+          "post_id": "post-8666",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-8670",
+          "author": "WillSawin",
+          "author_url": "/forum/user/WillSawin"
+        },
+        {
+          "post_id": "post-8672",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-8656",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-8623",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-8624",
+          "author": "bengreen",
+          "author_url": "/forum/user/bengreen"
+        },
+        {
+          "post_id": "post-8625",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-8627",
+          "author": "bengreen",
+          "author_url": "/forum/user/bengreen"
+        },
+        {
+          "post_id": "post-8631",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-8628",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-8632",
+          "author": "DottedCalculator",
+          "author_url": "/forum/user/DottedCalculator"
+        },
+        {
+          "post_id": "post-8615",
+          "author": "bengreen",
+          "author_url": "/forum/user/bengreen"
+        },
+        {
+          "post_id": "post-8616",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-8611",
+          "author": "BorisAlexeev",
+          "author_url": "/forum/user/BorisAlexeev"
+        },
+        {
+          "post_id": "post-8587",
+          "author": "StijnC",
+          "author_url": "/forum/user/StijnC"
+        },
+        {
+          "post_id": "post-8606",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-8591",
+          "author": "bengreen",
+          "author_url": "/forum/user/bengreen"
+        }
+      ],
+      "outside_comments": 30,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "222",
+      "problem": "1038",
+      "author": "cristianbudala",
+      "author_url": "/forum/user/cristianbudala",
+      "submitted": "2026-08-24 17:47:05",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/222/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1038/proof-claims#proof-claim-222",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "220",
+      "problem": "1110",
+      "author": "Honghu_Liu",
+      "author_url": "/forum/user/Honghu_Liu",
+      "submitted": "2026-08-24 10:18:38",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/220/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1110/proof-claims#proof-claim-220",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "219",
+      "problem": "182",
+      "author": "SamKorsky",
+      "author_url": "/forum/user/SamKorsky",
+      "submitted": "2026-08-24 08:01:10",
+      "comments": 2,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/219/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/182/proof-claims#proof-claim-219",
+      "comment_authors": [
+        {
+          "post_id": "post-8580",
+          "author": "SamKorsky",
+          "author_url": "/forum/user/SamKorsky"
+        },
+        {
+          "post_id": "post-8577",
+          "author": "old-bielefelder",
+          "author_url": "/forum/user/old-bielefelder"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "218",
+      "problem": "132",
+      "author": "b4ller",
+      "author_url": "/forum/user/b4ller",
+      "submitted": "2026-08-23 06:00:18",
+      "comments": 2,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/218/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/132/proof-claims#proof-claim-218",
+      "comment_authors": [
+        {
+          "post_id": "post-9184",
+          "author": "wingator",
+          "author_url": "/forum/user/wingator"
+        },
+        {
+          "post_id": "post-8564",
+          "author": "MalekZ",
+          "author_url": "/forum/user/MalekZ"
+        }
+      ],
+      "outside_comments": 2,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "217",
+      "problem": "153",
+      "author": "RajveerKapoor",
+      "author_url": "/forum/user/RajveerKapoor",
+      "submitted": "2026-08-21 12:34:55",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/217/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/153/proof-claims#proof-claim-217",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "216",
+      "problem": "623",
+      "author": "kauauicel",
+      "author_url": "/forum/user/kauauicel",
+      "submitted": "2026-08-21 06:20:39",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/216/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/623/proof-claims#proof-claim-216",
+      "comment_authors": [
+        {
+          "post_id": "post-8537",
+          "author": "kauauicel",
+          "author_url": "/forum/user/kauauicel"
+        }
+      ],
+      "outside_comments": 0,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "215",
+      "problem": "854",
+      "author": "DottedCalculator",
+      "author_url": "/forum/user/DottedCalculator",
+      "submitted": "2026-08-20 23:34:42",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/215/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/854/proof-claims#proof-claim-215",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "213",
+      "problem": "506",
+      "author": "rafalwrona",
+      "author_url": "/forum/user/rafalwrona",
+      "submitted": "2026-08-20 10:54:01",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/213/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/506/proof-claims#proof-claim-213",
+      "comment_authors": [
+        {
+          "post_id": "post-8527",
+          "author": "StijnC",
+          "author_url": "/forum/user/StijnC"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "212",
+      "problem": "64",
+      "author": "guillemdb",
+      "author_url": "/forum/user/guillemdb",
+      "submitted": "2026-08-19 23:22:20",
+      "comments": 6,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/212/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/64/proof-claims#proof-claim-212",
+      "comment_authors": [
+        {
+          "post_id": "post-8540",
+          "author": "mesa",
+          "author_url": "/forum/user/mesa"
+        },
+        {
+          "post_id": "post-8568",
+          "author": "guillemdb",
+          "author_url": "/forum/user/guillemdb"
+        },
+        {
+          "post_id": "post-8541",
+          "author": "mesa",
+          "author_url": "/forum/user/mesa"
+        },
+        {
+          "post_id": "post-8562",
+          "author": "guillemdb",
+          "author_url": "/forum/user/guillemdb"
+        },
+        {
+          "post_id": "post-8549",
+          "author": "StijnC",
+          "author_url": "/forum/user/StijnC"
+        },
+        {
+          "post_id": "post-8550",
+          "author": "guillemdb",
+          "author_url": "/forum/user/guillemdb"
+        }
+      ],
+      "outside_comments": 3,
+      "self_comments": 3
+    },
+    {
+      "claim_id": "211",
+      "problem": "117",
+      "author": "guillaumelecomte",
+      "author_url": "/forum/user/guillaumelecomte",
+      "submitted": "2026-08-18 19:21:28",
+      "comments": 3,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/211/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/117/proof-claims#proof-claim-211",
+      "comment_authors": [
+        {
+          "post_id": "post-8519",
+          "author": "old-bielefelder",
+          "author_url": "/forum/user/old-bielefelder"
+        },
+        {
+          "post_id": "post-8525",
+          "author": "StijnC",
+          "author_url": "/forum/user/StijnC"
+        },
+        {
+          "post_id": "post-8521",
+          "author": "guillaumelecomte",
+          "author_url": "/forum/user/guillaumelecomte"
+        }
+      ],
+      "outside_comments": 2,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "210",
+      "problem": "274",
+      "author": "Rio Itabe",
+      "author_url": "/forum/user/ritabe",
+      "submitted": "2026-08-17 22:52:12",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/210/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/274/proof-claims#proof-claim-210",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "209",
+      "problem": "278",
+      "author": "StijnC",
+      "author_url": "/forum/user/StijnC",
+      "submitted": "2026-08-17 14:17:17",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/209/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/278/proof-claims#proof-claim-209",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "207",
+      "problem": "501",
+      "author": "ElliotGlazer",
+      "author_url": "/forum/user/ElliotGlazer",
+      "submitted": "2026-08-17 10:28:27",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/207/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/501/proof-claims#proof-claim-207",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "206",
+      "problem": "64",
+      "author": "AndrewBisch",
+      "author_url": "/forum/user/AndrewBisch",
+      "submitted": "2026-08-17 01:17:22",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/206/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/64/proof-claims#proof-claim-206",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "205",
+      "problem": "740",
+      "author": "DottedCalculator",
+      "author_url": "/forum/user/DottedCalculator",
+      "submitted": "2026-08-16 18:02:31",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/205/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/740/proof-claims#proof-claim-205",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "204",
+      "problem": "848",
+      "author": "alexchengyuli",
+      "author_url": "/forum/user/alexchengyuli",
+      "submitted": "2026-08-16 03:37:45",
+      "comments": 2,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/204/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/848/proof-claims#proof-claim-204",
+      "comment_authors": [
+        {
+          "post_id": "post-8565",
+          "author": "MalekZ",
+          "author_url": "/forum/user/MalekZ"
+        },
+        {
+          "post_id": "post-8511",
+          "author": "ScottHughes",
+          "author_url": "/forum/user/ScottHughes"
+        }
+      ],
+      "outside_comments": 2,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "202",
+      "problem": "726",
+      "author": "Zeraoulia Rafik",
+      "author_url": "/forum/user/Rafikzeraoulia2025",
+      "submitted": "2026-08-11 05:16:05",
+      "comments": 2,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/202/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/726/proof-claims#proof-claim-202",
+      "comment_authors": [
+        {
+          "post_id": "post-8566",
+          "author": "MalekZ",
+          "author_url": "/forum/user/MalekZ"
+        },
+        {
+          "post_id": "post-8435",
+          "author": "RobSneiderman",
+          "author_url": "/forum/user/RobSneiderman"
+        }
+      ],
+      "outside_comments": 2,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "201",
+      "problem": "81",
+      "author": "rickyc",
+      "author_url": "/forum/user/rickyc",
+      "submitted": "2026-08-10 17:06:33",
+      "comments": 2,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/201/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/81/proof-claims#proof-claim-201",
+      "comment_authors": [
+        {
+          "post_id": "post-8642",
+          "author": "jpt",
+          "author_url": "/forum/user/jpt"
+        },
+        {
+          "post_id": "post-8648",
+          "author": "rickyc",
+          "author_url": "/forum/user/rickyc"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "200",
+      "problem": "341",
+      "author": "Z_Li",
+      "author_url": "/forum/user/Z_Li",
+      "submitted": "2026-08-09 15:32:18",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/200/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/341/proof-claims#proof-claim-200",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "198",
+      "problem": "653",
+      "author": "Zeraoulia Rafik",
+      "author_url": "/forum/user/Rafikzeraoulia2025",
+      "submitted": "2026-08-09 07:42:33",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/198/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/653/proof-claims#proof-claim-198",
+      "comment_authors": [
+        {
+          "post_id": "post-8567",
+          "author": "MalekZ",
+          "author_url": "/forum/user/MalekZ"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "197",
+      "problem": "128",
+      "author": "aimir",
+      "author_url": "/forum/user/aimir",
+      "submitted": "2026-08-07 15:23:50",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/197/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/128/proof-claims#proof-claim-197",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "196",
+      "problem": "561",
+      "author": "rickyc",
+      "author_url": "/forum/user/rickyc",
+      "submitted": "2026-08-07 13:43:23",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/196/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/561/proof-claims#proof-claim-196",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "195",
+      "problem": "10",
+      "author": "Daryxx",
+      "author_url": "/forum/user/Daryxx",
+      "submitted": "2026-08-07 10:33:54",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/195/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/10/proof-claims#proof-claim-195",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "194",
+      "problem": "769",
+      "author": "SamKorsky",
+      "author_url": "/forum/user/SamKorsky",
+      "submitted": "2026-08-05 22:46:47",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/194/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/769/proof-claims#proof-claim-194",
+      "comment_authors": [
+        {
+          "post_id": "post-9125",
+          "author": "SamKorsky",
+          "author_url": "/forum/user/SamKorsky"
+        }
+      ],
+      "outside_comments": 0,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "193",
+      "problem": "778",
+      "author": "maximdidin",
+      "author_url": "/forum/user/maximdidin",
+      "submitted": "2026-08-05 20:28:52",
+      "comments": 6,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/193/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/778/proof-claims#proof-claim-193",
+      "comment_authors": [
+        {
+          "post_id": "post-8457",
+          "author": "maximdidin",
+          "author_url": "/forum/user/maximdidin"
+        },
+        {
+          "post_id": "post-8405",
+          "author": "maximdidin",
+          "author_url": "/forum/user/maximdidin"
+        },
+        {
+          "post_id": "post-8386",
+          "author": "maximdidin",
+          "author_url": "/forum/user/maximdidin"
+        },
+        {
+          "post_id": "post-8390",
+          "author": "StijnC",
+          "author_url": "/forum/user/StijnC"
+        },
+        {
+          "post_id": "post-8389",
+          "author": "StijnC",
+          "author_url": "/forum/user/StijnC"
+        },
+        {
+          "post_id": "post-8383",
+          "author": "StijnC",
+          "author_url": "/forum/user/StijnC"
+        }
+      ],
+      "outside_comments": 3,
+      "self_comments": 3
+    },
+    {
+      "claim_id": "192",
+      "problem": "793",
+      "author": "Woett",
+      "author_url": "/forum/user/Woett",
+      "submitted": "2026-08-05 20:17:41",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/192/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/793/proof-claims#proof-claim-192",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "191",
+      "problem": "1059",
+      "author": "agrg",
+      "author_url": "/forum/user/agrg",
+      "submitted": "2026-08-05 17:57:55",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/191/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1059/proof-claims#proof-claim-191",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "190",
+      "problem": "1110",
+      "author": "apiros3",
+      "author_url": "/forum/user/apiros3",
+      "submitted": "2026-08-05 16:07:35",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/190/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1110/proof-claims#proof-claim-190",
+      "comment_authors": [
+        {
+          "post_id": "post-9263",
+          "author": "Adenwalla",
+          "author_url": "/forum/user/Adenwalla"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "188",
+      "problem": "1100",
+      "author": "michaelmross",
+      "author_url": "/forum/user/michaelmross",
+      "submitted": "2026-08-05 14:43:22",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/188/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1100/proof-claims#proof-claim-188",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "187",
+      "problem": "785",
+      "author": "Woett",
+      "author_url": "/forum/user/Woett",
+      "submitted": "2026-08-05 08:37:53",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/187/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/785/proof-claims#proof-claim-187",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "186",
+      "problem": "742",
+      "author": "jstar",
+      "author_url": "/forum/user/jstar",
+      "submitted": "2026-08-05 01:17:11",
+      "comments": 2,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/186/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/742/proof-claims#proof-claim-186",
+      "comment_authors": [
+        {
+          "post_id": "post-8409",
+          "author": "jstar",
+          "author_url": "/forum/user/jstar"
+        },
+        {
+          "post_id": "post-8371",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "184",
+      "problem": "1063",
+      "author": "rickyc",
+      "author_url": "/forum/user/rickyc",
+      "submitted": "2026-08-04 15:17:59",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/184/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1063/proof-claims#proof-claim-184",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "183",
+      "problem": "520",
+      "author": "Sigurd Høystad",
+      "author_url": "/forum/user/Saasom",
+      "submitted": "2026-08-04 10:47:56",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/183/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/520/proof-claims#proof-claim-183",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "182",
+      "problem": "725",
+      "author": "Eric Li",
+      "author_url": "/forum/user/EricLi",
+      "submitted": "2026-08-04 03:41:29",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/182/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/725/proof-claims#proof-claim-182",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "181",
+      "problem": "263",
+      "author": "alexander_lystad",
+      "author_url": "/forum/user/alexander_lystad",
+      "submitted": "2026-08-02 14:53:40",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/181/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/263/proof-claims#proof-claim-181",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "180",
+      "problem": "513",
+      "author": "alexander_lystad",
+      "author_url": "/forum/user/alexander_lystad",
+      "submitted": "2026-08-02 12:16:34",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/180/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/513/proof-claims#proof-claim-180",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "179",
+      "problem": "263",
+      "author": "alexander_lystad",
+      "author_url": "/forum/user/alexander_lystad",
+      "submitted": "2026-08-02 00:35:57",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/179/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/263/proof-claims#proof-claim-179",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "178",
+      "problem": "521",
+      "author": "nujan",
+      "author_url": "/forum/user/nujan",
+      "submitted": "2026-08-01 17:24:10",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/178/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/521/proof-claims#proof-claim-178",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "176",
+      "problem": "263",
+      "author": "alexander_lystad",
+      "author_url": "/forum/user/alexander_lystad",
+      "submitted": "2026-08-01 08:35:38",
+      "comments": 4,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/176/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/263/proof-claims#proof-claim-176",
+      "comment_authors": [
+        {
+          "post_id": "post-8339",
+          "author": "Vjeko_Kovac",
+          "author_url": "/forum/user/Vjeko_Kovac"
+        },
+        {
+          "post_id": "post-8344",
+          "author": "alexander_lystad",
+          "author_url": "/forum/user/alexander_lystad"
+        },
+        {
+          "post_id": "post-8354",
+          "author": "Vjeko_Kovac",
+          "author_url": "/forum/user/Vjeko_Kovac"
+        },
+        {
+          "post_id": "post-8251",
+          "author": "alexander_lystad",
+          "author_url": "/forum/user/alexander_lystad"
+        }
+      ],
+      "outside_comments": 2,
+      "self_comments": 2
+    },
+    {
+      "claim_id": "174",
+      "problem": "1100",
+      "author": "SamKorsky",
+      "author_url": "/forum/user/SamKorsky",
+      "submitted": "2026-07-31 07:39:09",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/174/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1100/proof-claims#proof-claim-174",
+      "comment_authors": [
+        {
+          "post_id": "post-8231",
+          "author": "Woett",
+          "author_url": "/forum/user/Woett"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "173",
+      "problem": "617",
+      "author": "nwinter",
+      "author_url": "/forum/user/nwinter",
+      "submitted": "2026-07-31 02:36:06",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/173/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/617/proof-claims#proof-claim-173",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "172",
+      "problem": "12",
+      "author": "philipndikum",
+      "author_url": "/forum/user/philipndikum",
+      "submitted": "2026-07-30 16:51:11",
+      "comments": 2,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/172/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/12/proof-claims#proof-claim-172",
+      "comment_authors": [
+        {
+          "post_id": "post-8218",
+          "author": "Don Della Pietra",
+          "author_url": "/forum/user/dondellapietra"
+        },
+        {
+          "post_id": "post-8215",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        }
+      ],
+      "outside_comments": 2,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "170",
+      "problem": "872",
+      "author": "Om_Buddhdev_sensho",
+      "author_url": "/forum/user/Om_Buddhdev_sensho",
+      "submitted": "2026-07-30 08:04:05",
+      "comments": 4,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/170/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/872/proof-claims#proof-claim-170",
+      "comment_authors": [
+        {
+          "post_id": "post-8217",
+          "author": "Om_Buddhdev_sensho",
+          "author_url": "/forum/user/Om_Buddhdev_sensho"
+        },
+        {
+          "post_id": "post-8235",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-8246",
+          "author": "Om_Buddhdev_sensho",
+          "author_url": "/forum/user/Om_Buddhdev_sensho"
+        },
+        {
+          "post_id": "post-8205",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        }
+      ],
+      "outside_comments": 2,
+      "self_comments": 2
+    },
+    {
+      "claim_id": "169",
+      "problem": "301",
+      "author": "Don Della Pietra",
+      "author_url": "/forum/user/dondellapietra",
+      "submitted": "2026-07-30 06:35:29",
+      "comments": 2,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/169/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/301/proof-claims#proof-claim-169",
+      "comment_authors": [
+        {
+          "post_id": "post-8212",
+          "author": "rickyc",
+          "author_url": "/forum/user/rickyc"
+        },
+        {
+          "post_id": "post-8214",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        }
+      ],
+      "outside_comments": 2,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "168",
+      "problem": "327",
+      "author": "Don Della Pietra",
+      "author_url": "/forum/user/dondellapietra",
+      "submitted": "2026-07-29 22:10:40",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/168/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/327/proof-claims#proof-claim-168",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "166",
+      "problem": "106",
+      "author": "Sprite144",
+      "author_url": "/forum/user/Sprite144",
+      "submitted": "2026-07-29 20:18:23",
+      "comments": 5,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/166/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/106/proof-claims#proof-claim-166",
+      "comment_authors": [
+        {
+          "post_id": "post-8417",
+          "author": "StijnC",
+          "author_url": "/forum/user/StijnC"
+        },
+        {
+          "post_id": "post-8207",
+          "author": "StijnC",
+          "author_url": "/forum/user/StijnC"
+        },
+        {
+          "post_id": "post-8201",
+          "author": "Sprite144",
+          "author_url": "/forum/user/Sprite144"
+        },
+        {
+          "post_id": "post-8204",
+          "author": "old-bielefelder",
+          "author_url": "/forum/user/old-bielefelder"
+        },
+        {
+          "post_id": "post-8200",
+          "author": "old-bielefelder",
+          "author_url": "/forum/user/old-bielefelder"
+        }
+      ],
+      "outside_comments": 4,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "165",
+      "problem": "518",
+      "author": "NicoV",
+      "author_url": "/forum/user/NicoV",
+      "submitted": "2026-07-29 20:02:31",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/165/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/518/proof-claims#proof-claim-165",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "164",
+      "problem": "520",
+      "author": "SamKorsky",
+      "author_url": "/forum/user/SamKorsky",
+      "submitted": "2026-07-29 18:14:10",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/164/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/520/proof-claims#proof-claim-164",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "163",
+      "problem": "1070",
+      "author": "danielvarga",
+      "author_url": "/forum/user/danielvarga",
+      "submitted": "2026-07-29 10:13:39",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/163/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1070/proof-claims#proof-claim-163",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "162",
+      "problem": "934",
+      "author": "SamKorsky",
+      "author_url": "/forum/user/SamKorsky",
+      "submitted": "2026-07-29 09:07:13",
+      "comments": 3,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/162/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/934/proof-claims#proof-claim-162",
+      "comment_authors": [
+        {
+          "post_id": "post-8206",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-8196",
+          "author": "SamKorsky",
+          "author_url": "/forum/user/SamKorsky"
+        },
+        {
+          "post_id": "post-8195",
+          "author": "Wouter CvB",
+          "author_url": "/forum/user/woutercvb"
+        }
+      ],
+      "outside_comments": 2,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "161",
+      "problem": "416",
+      "author": "Zeraoulia Rafik",
+      "author_url": "/forum/user/Rafikzeraoulia2025",
+      "submitted": "2026-07-29 06:41:24",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/161/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/416/proof-claims#proof-claim-161",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "160",
+      "problem": "860",
+      "author": "Kaizhe",
+      "author_url": "/forum/user/Kaizhe",
+      "submitted": "2026-07-29 04:22:59",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/160/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/860/proof-claims#proof-claim-160",
+      "comment_authors": [
+        {
+          "post_id": "post-8186",
+          "author": "SamKorsky",
+          "author_url": "/forum/user/SamKorsky"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "159",
+      "problem": "1189",
+      "author": "JPickhardt",
+      "author_url": "/forum/user/JPickhardt",
+      "submitted": "2026-07-28 18:20:57",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/159/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1189/proof-claims#proof-claim-159",
+      "comment_authors": [
+        {
+          "post_id": "post-8180",
+          "author": "onetwothreefour",
+          "author_url": "/forum/user/onetwothreefour"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "158",
+      "problem": "1005",
+      "author": "dct",
+      "author_url": "/forum/user/dct",
+      "submitted": "2026-07-28 06:12:41",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/158/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1005/proof-claims#proof-claim-158",
+      "comment_authors": [
+        {
+          "post_id": "post-8172",
+          "author": "rickyc",
+          "author_url": "/forum/user/rickyc"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "157",
+      "problem": "700",
+      "author": "Liam Price",
+      "author_url": "/forum/user/Leeham",
+      "submitted": "2026-07-27 19:48:22",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/157/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/700/proof-claims#proof-claim-157",
+      "comment_authors": [
+        {
+          "post_id": "post-8167",
+          "author": "StijnC",
+          "author_url": "/forum/user/StijnC"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "156",
+      "problem": "883",
+      "author": "Don Della Pietra",
+      "author_url": "/forum/user/dondellapietra",
+      "submitted": "2026-07-27 18:32:32",
+      "comments": 7,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/156/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/883/proof-claims#proof-claim-156",
+      "comment_authors": [
+        {
+          "post_id": "post-8164",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-8176",
+          "author": "Don Della Pietra",
+          "author_url": "/forum/user/dondellapietra"
+        },
+        {
+          "post_id": "post-8177",
+          "author": "Don Della Pietra",
+          "author_url": "/forum/user/dondellapietra"
+        },
+        {
+          "post_id": "post-8185",
+          "author": "Don Della Pietra",
+          "author_url": "/forum/user/dondellapietra"
+        },
+        {
+          "post_id": "post-8189",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-8193",
+          "author": "Don Della Pietra",
+          "author_url": "/forum/user/dondellapietra"
+        },
+        {
+          "post_id": "post-8194",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        }
+      ],
+      "outside_comments": 3,
+      "self_comments": 4
+    },
+    {
+      "claim_id": "155",
+      "problem": "675",
+      "author": "Liam Price",
+      "author_url": "/forum/user/Leeham",
+      "submitted": "2026-07-27 13:14:00",
+      "comments": 2,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/155/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/675/proof-claims#proof-claim-155",
+      "comment_authors": [
+        {
+          "post_id": "post-8169",
+          "author": "WillSawin",
+          "author_url": "/forum/user/WillSawin"
+        },
+        {
+          "post_id": "post-8170",
+          "author": "Liam Price",
+          "author_url": "/forum/user/Leeham"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "154",
+      "problem": "477",
+      "author": "Liam Price",
+      "author_url": "/forum/user/Leeham",
+      "submitted": "2026-07-27 12:53:26",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/154/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/477/proof-claims#proof-claim-154",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "153",
+      "problem": "1063",
+      "author": "rickyc",
+      "author_url": "/forum/user/rickyc",
+      "submitted": "2026-07-27 11:57:52",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/153/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1063/proof-claims#proof-claim-153",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "152",
+      "problem": "882",
+      "author": "SamKorsky",
+      "author_url": "/forum/user/SamKorsky",
+      "submitted": "2026-07-27 04:18:39",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/152/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/882/proof-claims#proof-claim-152",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "151",
+      "problem": "357",
+      "author": "tenacious",
+      "author_url": "/forum/user/tenacious",
+      "submitted": "2026-07-27 04:03:13",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/151/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/357/proof-claims#proof-claim-151",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "150",
+      "problem": "374",
+      "author": "Zeraoulia Rafik",
+      "author_url": "/forum/user/Rafikzeraoulia2025",
+      "submitted": "2026-07-27 03:24:16",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/150/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/374/proof-claims#proof-claim-150",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "147",
+      "problem": "273",
+      "author": "Zeraoulia Rafik",
+      "author_url": "/forum/user/Rafikzeraoulia2025",
+      "submitted": "2026-07-27 01:49:56",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/147/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/273/proof-claims#proof-claim-147",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "144",
+      "problem": "421",
+      "author": "AnimishSharma",
+      "author_url": "/forum/user/AnimishSharma",
+      "submitted": "2026-07-26 13:05:48",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/144/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/421/proof-claims#proof-claim-144",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "143",
+      "problem": "860",
+      "author": "SamKorsky",
+      "author_url": "/forum/user/SamKorsky",
+      "submitted": "2026-07-26 07:02:04",
+      "comments": 4,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/143/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/860/proof-claims#proof-claim-143",
+      "comment_authors": [
+        {
+          "post_id": "post-8127",
+          "author": "skominers",
+          "author_url": "/forum/user/skominers"
+        },
+        {
+          "post_id": "post-8134",
+          "author": "skominers",
+          "author_url": "/forum/user/skominers"
+        },
+        {
+          "post_id": "post-8138",
+          "author": "Woett",
+          "author_url": "/forum/user/Woett"
+        },
+        {
+          "post_id": "post-8121",
+          "author": "Woett",
+          "author_url": "/forum/user/Woett"
+        }
+      ],
+      "outside_comments": 4,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "142",
+      "problem": "1061",
+      "author": "Eric Li",
+      "author_url": "/forum/user/EricLi",
+      "submitted": "2026-07-26 02:49:42",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/142/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1061/proof-claims#proof-claim-142",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "141",
+      "problem": "699",
+      "author": "ster",
+      "author_url": "/forum/user/ster",
+      "submitted": "2026-07-25 20:51:29",
+      "comments": 2,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/141/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/699/proof-claims#proof-claim-141",
+      "comment_authors": [
+        {
+          "post_id": "post-8175",
+          "author": "Woett",
+          "author_url": "/forum/user/Woett"
+        },
+        {
+          "post_id": "post-8216",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        }
+      ],
+      "outside_comments": 2,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "140",
+      "problem": "982",
+      "author": "skominers",
+      "author_url": "/forum/user/skominers",
+      "submitted": "2026-07-25 19:46:58",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/140/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/982/proof-claims#proof-claim-140",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "139",
+      "problem": "569",
+      "author": "StijnC",
+      "author_url": "/forum/user/StijnC",
+      "submitted": "2026-07-25 16:36:40",
+      "comments": 2,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/139/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/569/proof-claims#proof-claim-139",
+      "comment_authors": [
+        {
+          "post_id": "post-8151",
+          "author": "rickyc",
+          "author_url": "/forum/user/rickyc"
+        },
+        {
+          "post_id": "post-8139",
+          "author": "StijnC",
+          "author_url": "/forum/user/StijnC"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "138",
+      "problem": "676",
+      "author": "Zeraoulia Rafik",
+      "author_url": "/forum/user/Rafikzeraoulia2025",
+      "submitted": "2026-07-25 15:21:18",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/138/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/676/proof-claims#proof-claim-138",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "137",
+      "problem": "617",
+      "author": "arose",
+      "author_url": "/forum/user/arose",
+      "submitted": "2026-07-25 15:20:57",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/137/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/617/proof-claims#proof-claim-137",
+      "comment_authors": [
+        {
+          "post_id": "post-8224",
+          "author": "nwinter",
+          "author_url": "/forum/user/nwinter"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "136",
+      "problem": "920",
+      "author": "Moses Lua",
+      "author_url": "/forum/user/mosesluajh",
+      "submitted": "2026-07-25 15:02:52",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/136/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/920/proof-claims#proof-claim-136",
+      "comment_authors": [
+        {
+          "post_id": "post-8098",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "135",
+      "problem": "971",
+      "author": "Dogcake",
+      "author_url": "/forum/user/Dogcake",
+      "submitted": "2026-07-25 09:31:10",
+      "comments": 2,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/135/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/971/proof-claims#proof-claim-135",
+      "comment_authors": [
+        {
+          "post_id": "post-8124",
+          "author": "Dogcake",
+          "author_url": "/forum/user/Dogcake"
+        },
+        {
+          "post_id": "post-9216",
+          "author": "Shisheng Li",
+          "author_url": "/forum/user/daizisheng"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "134",
+      "problem": "383",
+      "author": "Zeraoulia Rafik",
+      "author_url": "/forum/user/Rafikzeraoulia2025",
+      "submitted": "2026-07-25 05:23:52",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/134/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/383/proof-claims#proof-claim-134",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "133",
+      "problem": "770",
+      "author": "jeffzeng",
+      "author_url": "/forum/user/jeffzeng",
+      "submitted": "2026-07-24 17:13:29",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/133/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/770/proof-claims#proof-claim-133",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "132",
+      "problem": "769",
+      "author": "jeffzeng",
+      "author_url": "/forum/user/jeffzeng",
+      "submitted": "2026-07-24 17:04:43",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/132/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/769/proof-claims#proof-claim-132",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "131",
+      "problem": "18",
+      "author": "Liam Price",
+      "author_url": "/forum/user/Leeham",
+      "submitted": "2026-07-24 14:55:15",
+      "comments": 4,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/131/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/18/proof-claims#proof-claim-131",
+      "comment_authors": [
+        {
+          "post_id": "post-8385",
+          "author": "ScottHughes",
+          "author_url": "/forum/user/ScottHughes"
+        },
+        {
+          "post_id": "post-8064",
+          "author": "fefemath",
+          "author_url": "/forum/user/fefemath"
+        },
+        {
+          "post_id": "post-8078",
+          "author": "Woett",
+          "author_url": "/forum/user/Woett"
+        },
+        {
+          "post_id": "post-8084",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        }
+      ],
+      "outside_comments": 4,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "130",
+      "problem": "634",
+      "author": "jphme",
+      "author_url": "/forum/user/jphme",
+      "submitted": "2026-07-24 14:16:40",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/130/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/634/proof-claims#proof-claim-130",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "129",
+      "problem": "131",
+      "author": "fefemath",
+      "author_url": "/forum/user/fefemath",
+      "submitted": "2026-07-24 14:01:37",
+      "comments": 5,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/129/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/131/proof-claims#proof-claim-129",
+      "comment_authors": [
+        {
+          "post_id": "post-8050",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-8051",
+          "author": "fefemath",
+          "author_url": "/forum/user/fefemath"
+        },
+        {
+          "post_id": "post-8069",
+          "author": "jianga2718",
+          "author_url": "/forum/user/jianga2718"
+        },
+        {
+          "post_id": "post-8047",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-8049",
+          "author": "fefemath",
+          "author_url": "/forum/user/fefemath"
+        }
+      ],
+      "outside_comments": 3,
+      "self_comments": 2
+    },
+    {
+      "claim_id": "127",
+      "problem": "671",
+      "author": "quietmethod",
+      "author_url": "/forum/user/quietmethod",
+      "submitted": "2026-07-24 11:11:38",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/127/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/671/proof-claims#proof-claim-127",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "125",
+      "problem": "160",
+      "author": "ruizshi",
+      "author_url": "/forum/user/ruizshi",
+      "submitted": "2026-07-24 01:29:00",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/125/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/160/proof-claims#proof-claim-125",
+      "comment_authors": [
+        {
+          "post_id": "post-8058",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "124",
+      "problem": "361",
+      "author": "principia_math",
+      "author_url": "/forum/user/antonshakov",
+      "submitted": "2026-07-23 19:51:07",
+      "comments": 4,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/124/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/361/proof-claims#proof-claim-124",
+      "comment_authors": [
+        {
+          "post_id": "post-8031",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-8397",
+          "author": "principia_math",
+          "author_url": "/forum/user/antonshakov"
+        },
+        {
+          "post_id": "post-8090",
+          "author": "Basile_Beyer_de_Ryke",
+          "author_url": "/forum/user/Basile_Beyer_de_Ryke"
+        },
+        {
+          "post_id": "post-8396",
+          "author": "principia_math",
+          "author_url": "/forum/user/antonshakov"
+        }
+      ],
+      "outside_comments": 2,
+      "self_comments": 2
+    },
+    {
+      "claim_id": "123",
+      "problem": "394",
+      "author": "JPickhardt",
+      "author_url": "/forum/user/JPickhardt",
+      "submitted": "2026-07-23 19:15:51",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/123/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/394/proof-claims#proof-claim-123",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "121",
+      "problem": "1002",
+      "author": "Sangyoon Kwon",
+      "author_url": "/forum/user/ronut01",
+      "submitted": "2026-07-23 09:39:38",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/121/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1002/proof-claims#proof-claim-121",
+      "comment_authors": [
+        {
+          "post_id": "post-8681",
+          "author": "Sangyoon Kwon",
+          "author_url": "/forum/user/ronut01"
+        }
+      ],
+      "outside_comments": 0,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "120",
+      "problem": "1103",
+      "author": "hxypqr",
+      "author_url": "/forum/user/hxypqr",
+      "submitted": "2026-07-23 06:54:25",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/120/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1103/proof-claims#proof-claim-120",
+      "comment_authors": [
+        {
+          "post_id": "post-8305",
+          "author": "hxypqr",
+          "author_url": "/forum/user/hxypqr"
+        }
+      ],
+      "outside_comments": 0,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "118",
+      "problem": "478",
+      "author": "hxypqr",
+      "author_url": "/forum/user/hxypqr",
+      "submitted": "2026-07-23 06:48:33",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/118/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/478/proof-claims#proof-claim-118",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "117",
+      "problem": "920",
+      "author": "lzicar1",
+      "author_url": "/forum/user/lzicar1",
+      "submitted": "2026-07-23 05:17:36",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/117/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/920/proof-claims#proof-claim-117",
+      "comment_authors": [
+        {
+          "post_id": "post-8099",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "115",
+      "problem": "320",
+      "author": "skominers",
+      "author_url": "/forum/user/skominers",
+      "submitted": "2026-07-22 20:16:27",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/115/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/320/proof-claims#proof-claim-115",
+      "comment_authors": [
+        {
+          "post_id": "post-8008",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "107",
+      "problem": "366",
+      "author": "fefemath",
+      "author_url": "/forum/user/fefemath",
+      "submitted": "2026-07-22 08:23:38",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/107/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/366/proof-claims#proof-claim-107",
+      "comment_authors": [
+        {
+          "post_id": "post-7946",
+          "author": "Tomodovodoo",
+          "author_url": "/forum/user/Tomodovodoo"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "106",
+      "problem": "1002",
+      "author": "ShouqiaoWang",
+      "author_url": "/forum/user/ShouqiaoWang",
+      "submitted": "2026-07-21 23:13:56",
+      "comments": 6,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/106/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1002/proof-claims#proof-claim-106",
+      "comment_authors": [
+        {
+          "post_id": "post-7993",
+          "author": "Sangyoon Kwon",
+          "author_url": "/forum/user/ronut01"
+        },
+        {
+          "post_id": "post-7996",
+          "author": "Woett",
+          "author_url": "/forum/user/Woett"
+        },
+        {
+          "post_id": "post-8036",
+          "author": "ShouqiaoWang",
+          "author_url": "/forum/user/ShouqiaoWang"
+        },
+        {
+          "post_id": "post-8039",
+          "author": "Sangyoon Kwon",
+          "author_url": "/forum/user/ronut01"
+        },
+        {
+          "post_id": "post-8037",
+          "author": "ShouqiaoWang",
+          "author_url": "/forum/user/ShouqiaoWang"
+        },
+        {
+          "post_id": "post-7942",
+          "author": "RobSneiderman",
+          "author_url": "/forum/user/RobSneiderman"
+        }
+      ],
+      "outside_comments": 4,
+      "self_comments": 2
+    },
+    {
+      "claim_id": "105",
+      "problem": "617",
+      "author": "RobSneiderman",
+      "author_url": "/forum/user/RobSneiderman",
+      "submitted": "2026-07-21 21:27:16",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/105/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/617/proof-claims#proof-claim-105",
+      "comment_authors": [
+        {
+          "post_id": "post-8222",
+          "author": "nwinter",
+          "author_url": "/forum/user/nwinter"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "104",
+      "problem": "959",
+      "author": "fefemath",
+      "author_url": "/forum/user/fefemath",
+      "submitted": "2026-07-21 21:15:27",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/104/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/959/proof-claims#proof-claim-104",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "103",
+      "problem": "689",
+      "author": "MalekZ",
+      "author_url": "/forum/user/MalekZ",
+      "submitted": "2026-07-21 20:35:58",
+      "comments": 10,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/103/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/689/proof-claims#proof-claim-103",
+      "comment_authors": [
+        {
+          "post_id": "post-8808",
+          "author": "MalekZ",
+          "author_url": "/forum/user/MalekZ"
+        },
+        {
+          "post_id": "post-8812",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-8813",
+          "author": "MalekZ",
+          "author_url": "/forum/user/MalekZ"
+        },
+        {
+          "post_id": "post-8066",
+          "author": "jleng01",
+          "author_url": "/forum/user/jleng01"
+        },
+        {
+          "post_id": "post-8070",
+          "author": "MalekZ",
+          "author_url": "/forum/user/MalekZ"
+        },
+        {
+          "post_id": "post-8071",
+          "author": "jleng01",
+          "author_url": "/forum/user/jleng01"
+        },
+        {
+          "post_id": "post-8089",
+          "author": "MalekZ",
+          "author_url": "/forum/user/MalekZ"
+        },
+        {
+          "post_id": "post-8016",
+          "author": "Dogmachine",
+          "author_url": "/forum/user/Dogmachine"
+        },
+        {
+          "post_id": "post-8020",
+          "author": "MalekZ",
+          "author_url": "/forum/user/MalekZ"
+        },
+        {
+          "post_id": "post-8013",
+          "author": "MalekZ",
+          "author_url": "/forum/user/MalekZ"
+        }
+      ],
+      "outside_comments": 4,
+      "self_comments": 6,
+      "deleted_comment_placeholders": 1
+    },
+    {
+      "claim_id": "102",
+      "problem": "617",
+      "author": "Sprite144",
+      "author_url": "/forum/user/Sprite144",
+      "submitted": "2026-07-21 19:19:43",
+      "comments": 3,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/102/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/617/proof-claims#proof-claim-102",
+      "comment_authors": [
+        {
+          "post_id": "post-8223",
+          "author": "nwinter",
+          "author_url": "/forum/user/nwinter"
+        },
+        {
+          "post_id": "post-8192",
+          "author": "Sprite144",
+          "author_url": "/forum/user/Sprite144"
+        },
+        {
+          "post_id": "post-8022",
+          "author": "Marco Del Pin",
+          "author_url": "/forum/user/MarcoDelPin"
+        }
+      ],
+      "outside_comments": 2,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "101",
+      "problem": "776",
+      "author": "H_Murdock",
+      "author_url": "/forum/user/H_Murdock",
+      "submitted": "2026-07-21 14:07:34",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/101/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/776/proof-claims#proof-claim-101",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "100",
+      "problem": "421",
+      "author": "RobSneiderman",
+      "author_url": "/forum/user/RobSneiderman",
+      "submitted": "2026-07-21 03:23:42",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/100/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/421/proof-claims#proof-claim-100",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "99",
+      "problem": "906",
+      "author": "erichou",
+      "author_url": "/forum/user/erichou",
+      "submitted": "2026-07-21 03:05:15",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/99/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/906/proof-claims#proof-claim-99",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "98",
+      "problem": "521",
+      "author": "RobSneiderman",
+      "author_url": "/forum/user/RobSneiderman",
+      "submitted": "2026-07-21 03:04:40",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/98/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/521/proof-claims#proof-claim-98",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "97",
+      "problem": "123",
+      "author": "principia_math",
+      "author_url": "/forum/user/antonshakov",
+      "submitted": "2026-07-20 23:48:59",
+      "comments": 4,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/97/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/123/proof-claims#proof-claim-97",
+      "comment_authors": [
+        {
+          "post_id": "post-7977",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-7932",
+          "author": "BorisAlexeev",
+          "author_url": "/forum/user/BorisAlexeev"
+        },
+        {
+          "post_id": "post-7939",
+          "author": "principia_math",
+          "author_url": "/forum/user/antonshakov"
+        },
+        {
+          "post_id": "post-7944",
+          "author": "BorisAlexeev",
+          "author_url": "/forum/user/BorisAlexeev"
+        }
+      ],
+      "outside_comments": 3,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "96",
+      "problem": "36",
+      "author": "Liam Price",
+      "author_url": "/forum/user/Leeham",
+      "submitted": "2026-07-20 22:49:41",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/96/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/36/proof-claims#proof-claim-96",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "95",
+      "problem": "617",
+      "author": "RobSneiderman",
+      "author_url": "/forum/user/RobSneiderman",
+      "submitted": "2026-07-20 17:57:49",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/95/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/617/proof-claims#proof-claim-95",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "94",
+      "problem": "302",
+      "author": "15Redstones",
+      "author_url": "/forum/user/15Redstones",
+      "submitted": "2026-07-20 17:18:00",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/94/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/302/proof-claims#proof-claim-94",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "92",
+      "problem": "1154",
+      "author": "Yongxi Lin",
+      "author_url": "/forum/user/Yongxi_Lin",
+      "submitted": "2026-07-20 12:35:55",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/92/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1154/proof-claims#proof-claim-92",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "91",
+      "problem": "424",
+      "author": "SamKorsky",
+      "author_url": "/forum/user/SamKorsky",
+      "submitted": "2026-07-20 08:48:48",
+      "comments": 5,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/91/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/424/proof-claims#proof-claim-91",
+      "comment_authors": [
+        {
+          "post_id": "post-7963",
+          "author": "BorisAlexeev",
+          "author_url": "/forum/user/BorisAlexeev"
+        },
+        {
+          "post_id": "post-7964",
+          "author": "SamKorsky",
+          "author_url": "/forum/user/SamKorsky"
+        },
+        {
+          "post_id": "post-7945",
+          "author": "Tomodovodoo",
+          "author_url": "/forum/user/Tomodovodoo"
+        },
+        {
+          "post_id": "post-7962",
+          "author": "SamKorsky",
+          "author_url": "/forum/user/SamKorsky"
+        },
+        {
+          "post_id": "post-7948",
+          "author": "Woett",
+          "author_url": "/forum/user/Woett"
+        }
+      ],
+      "outside_comments": 3,
+      "self_comments": 2
+    },
+    {
+      "claim_id": "90",
+      "problem": "509",
+      "author": "Qing_Hong",
+      "author_url": "/forum/user/Qing_Hong",
+      "submitted": "2026-07-19 06:47:34",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/90/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/509/proof-claims#proof-claim-90",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "89",
+      "problem": "788",
+      "author": "ShouqiaoWang",
+      "author_url": "/forum/user/ShouqiaoWang",
+      "submitted": "2026-07-19 03:41:03",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/89/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/788/proof-claims#proof-claim-89",
+      "comment_authors": [
+        {
+          "post_id": "post-7986",
+          "author": "ShouqiaoWang",
+          "author_url": "/forum/user/ShouqiaoWang"
+        }
+      ],
+      "outside_comments": 0,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "88",
+      "problem": "390",
+      "author": "ShouqiaoWang",
+      "author_url": "/forum/user/ShouqiaoWang",
+      "submitted": "2026-07-19 00:42:26",
+      "comments": 2,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/88/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/390/proof-claims#proof-claim-88",
+      "comment_authors": [
+        {
+          "post_id": "post-8187",
+          "author": "ShouqiaoWang",
+          "author_url": "/forum/user/ShouqiaoWang"
+        },
+        {
+          "post_id": "post-7992",
+          "author": "AIsommelier",
+          "author_url": "/forum/user/AIsommelier"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "87",
+      "problem": "876",
+      "author": "Liam Price",
+      "author_url": "/forum/user/Leeham",
+      "submitted": "2026-07-18 23:44:51",
+      "comments": 7,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/87/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/876/proof-claims#proof-claim-87",
+      "comment_authors": [
+        {
+          "post_id": "post-7906",
+          "author": "Steve Fan",
+          "author_url": "/forum/user/Steve_Fan"
+        },
+        {
+          "post_id": "post-7919",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-8024",
+          "author": "Steve Fan",
+          "author_url": "/forum/user/Steve_Fan"
+        },
+        {
+          "post_id": "post-7848",
+          "author": "SamKorsky",
+          "author_url": "/forum/user/SamKorsky"
+        },
+        {
+          "post_id": "post-7874",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-7872",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-7873",
+          "author": "Liam Price",
+          "author_url": "/forum/user/Leeham"
+        }
+      ],
+      "outside_comments": 6,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "86",
+      "problem": "699",
+      "author": "Liam Price",
+      "author_url": "/forum/user/Leeham",
+      "submitted": "2026-07-18 20:09:14",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/86/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/699/proof-claims#proof-claim-86",
+      "comment_authors": [
+        {
+          "post_id": "post-7856",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "85",
+      "problem": "856",
+      "author": "RayYoung",
+      "author_url": "/forum/user/RayYoung",
+      "submitted": "2026-07-18 12:38:51",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/85/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/856/proof-claims#proof-claim-85",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "84",
+      "problem": "617",
+      "author": "RobSneiderman",
+      "author_url": "/forum/user/RobSneiderman",
+      "submitted": "2026-07-18 07:15:12",
+      "comments": 2,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/84/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/617/proof-claims#proof-claim-84",
+      "comment_authors": [
+        {
+          "post_id": "post-8266",
+          "author": "nwinter",
+          "author_url": "/forum/user/nwinter"
+        },
+        {
+          "post_id": "post-8225",
+          "author": "nwinter",
+          "author_url": "/forum/user/nwinter"
+        }
+      ],
+      "outside_comments": 2,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "83",
+      "problem": "617",
+      "author": "RobSneiderman",
+      "author_url": "/forum/user/RobSneiderman",
+      "submitted": "2026-07-18 07:13:47",
+      "comments": 3,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/83/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/617/proof-claims#proof-claim-83",
+      "comment_authors": [
+        {
+          "post_id": "post-8046",
+          "author": "RamazanKara",
+          "author_url": "/forum/user/RamazanKara"
+        },
+        {
+          "post_id": "post-8097",
+          "author": "RobSneiderman",
+          "author_url": "/forum/user/RobSneiderman"
+        },
+        {
+          "post_id": "post-7999",
+          "author": "Johan Land",
+          "author_url": "/forum/user/JohanLand"
+        }
+      ],
+      "outside_comments": 2,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "82",
+      "problem": "424",
+      "author": "SamKorsky",
+      "author_url": "/forum/user/SamKorsky",
+      "submitted": "2026-07-18 06:36:19",
+      "comments": 2,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/82/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/424/proof-claims#proof-claim-82",
+      "comment_authors": [
+        {
+          "post_id": "post-7855",
+          "author": "SamKorsky",
+          "author_url": "/forum/user/SamKorsky"
+        },
+        {
+          "post_id": "post-7859",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "79",
+      "problem": "327",
+      "author": "WillSawin",
+      "author_url": "/forum/user/WillSawin",
+      "submitted": "2026-07-18 02:23:23",
+      "comments": 5,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/79/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/327/proof-claims#proof-claim-79",
+      "comment_authors": [
+        {
+          "post_id": "post-8183",
+          "author": "Don Della Pietra",
+          "author_url": "/forum/user/dondellapietra"
+        },
+        {
+          "post_id": "post-8190",
+          "author": "WillSawin",
+          "author_url": "/forum/user/WillSawin"
+        },
+        {
+          "post_id": "post-7822",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-7831",
+          "author": "WillSawin",
+          "author_url": "/forum/user/WillSawin"
+        },
+        {
+          "post_id": "post-7994",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        }
+      ],
+      "outside_comments": 3,
+      "self_comments": 2
+    },
+    {
+      "claim_id": "78",
+      "problem": "776",
+      "author": "mthiim",
+      "author_url": "/forum/user/mthiim",
+      "submitted": "2026-07-17 20:22:37",
+      "comments": 3,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/78/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/776/proof-claims#proof-claim-78",
+      "comment_authors": [
+        {
+          "post_id": "post-8514",
+          "author": "StijnC",
+          "author_url": "/forum/user/StijnC"
+        },
+        {
+          "post_id": "post-7929",
+          "author": "mthiim",
+          "author_url": "/forum/user/mthiim"
+        },
+        {
+          "post_id": "post-7914",
+          "author": "coffeewithcolin",
+          "author_url": "/forum/user/coffeewithcolin"
+        }
+      ],
+      "outside_comments": 2,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "77",
+      "problem": "260",
+      "author": "HanWang",
+      "author_url": "/forum/user/HanWang",
+      "submitted": "2026-07-17 17:37:32",
+      "comments": 3,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/77/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/260/proof-claims#proof-claim-77",
+      "comment_authors": [
+        {
+          "post_id": "post-7810",
+          "author": "Dogmachine",
+          "author_url": "/forum/user/Dogmachine"
+        },
+        {
+          "post_id": "post-7820",
+          "author": "HanWang",
+          "author_url": "/forum/user/HanWang"
+        },
+        {
+          "post_id": "post-7821",
+          "author": "HanWang",
+          "author_url": "/forum/user/HanWang"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 2
+    },
+    {
+      "claim_id": "75",
+      "problem": "593",
+      "author": "Eric Li",
+      "author_url": "/forum/user/EricLi",
+      "submitted": "2026-07-17 07:28:53",
+      "comments": 3,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/75/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/593/proof-claims#proof-claim-75",
+      "comment_authors": [
+        {
+          "post_id": "post-7910",
+          "author": "qrdl",
+          "author_url": "/forum/user/qrdl"
+        },
+        {
+          "post_id": "post-7921",
+          "author": "Eric Li",
+          "author_url": "/forum/user/EricLi"
+        },
+        {
+          "post_id": "post-7925",
+          "author": "qrdl",
+          "author_url": "/forum/user/qrdl"
+        }
+      ],
+      "outside_comments": 2,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "74",
+      "problem": "550",
+      "author": "Eric Li",
+      "author_url": "/forum/user/EricLi",
+      "submitted": "2026-07-17 07:08:36",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/74/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/550/proof-claims#proof-claim-74",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "73",
+      "problem": "1177",
+      "author": "Eric Li",
+      "author_url": "/forum/user/EricLi",
+      "submitted": "2026-07-17 07:04:43",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/73/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1177/proof-claims#proof-claim-73",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "72",
+      "problem": "731",
+      "author": "Eric Li",
+      "author_url": "/forum/user/EricLi",
+      "submitted": "2026-07-17 06:50:20",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/72/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/731/proof-claims#proof-claim-72",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "71",
+      "problem": "768",
+      "author": "Eric Li",
+      "author_url": "/forum/user/EricLi",
+      "submitted": "2026-07-17 06:43:04",
+      "comments": 2,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/71/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/768/proof-claims#proof-claim-71",
+      "comment_authors": [
+        {
+          "post_id": "post-7779",
+          "author": "coffeewithcolin",
+          "author_url": "/forum/user/coffeewithcolin"
+        },
+        {
+          "post_id": "post-7891",
+          "author": "Eric Li",
+          "author_url": "/forum/user/EricLi"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "70",
+      "problem": "1112",
+      "author": "Johan Land",
+      "author_url": "/forum/user/JohanLand",
+      "submitted": "2026-07-17 04:57:15",
+      "comments": 5,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/70/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1112/proof-claims#proof-claim-70",
+      "comment_authors": [
+        {
+          "post_id": "post-8513",
+          "author": "StijnC",
+          "author_url": "/forum/user/StijnC"
+        },
+        {
+          "post_id": "post-9020",
+          "author": "Johan Land",
+          "author_url": "/forum/user/JohanLand"
+        },
+        {
+          "post_id": "post-7772",
+          "author": "coffeewithcolin",
+          "author_url": "/forum/user/coffeewithcolin"
+        },
+        {
+          "post_id": "post-7807",
+          "author": "Johan Land",
+          "author_url": "/forum/user/JohanLand"
+        },
+        {
+          "post_id": "post-7816",
+          "author": "coffeewithcolin",
+          "author_url": "/forum/user/coffeewithcolin"
+        }
+      ],
+      "outside_comments": 3,
+      "self_comments": 2
+    },
+    {
+      "claim_id": "69",
+      "problem": "634",
+      "author": "robertboy18",
+      "author_url": "/forum/user/robertboy18",
+      "submitted": "2026-07-17 03:32:25",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/69/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/634/proof-claims#proof-claim-69",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "68",
+      "problem": "130",
+      "author": "Lherdos",
+      "author_url": "/forum/user/Lherdos",
+      "submitted": "2026-07-17 01:47:08",
+      "comments": 4,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/68/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/130/proof-claims#proof-claim-68",
+      "comment_authors": [
+        {
+          "post_id": "post-7773",
+          "author": "coffeewithcolin",
+          "author_url": "/forum/user/coffeewithcolin"
+        },
+        {
+          "post_id": "post-7852",
+          "author": "Lherdos",
+          "author_url": "/forum/user/Lherdos"
+        },
+        {
+          "post_id": "post-7863",
+          "author": "Woett",
+          "author_url": "/forum/user/Woett"
+        },
+        {
+          "post_id": "post-7866",
+          "author": "Lherdos",
+          "author_url": "/forum/user/Lherdos"
+        }
+      ],
+      "outside_comments": 2,
+      "self_comments": 2
+    },
+    {
+      "claim_id": "67",
+      "problem": "254",
+      "author": "Steve Fan",
+      "author_url": "/forum/user/Steve_Fan",
+      "submitted": "2026-07-16 22:16:21",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/67/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/254/proof-claims#proof-claim-67",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "66",
+      "problem": "319",
+      "author": "popular_12345",
+      "author_url": "/forum/user/popular_12345",
+      "submitted": "2026-07-16 20:36:23",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/66/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/319/proof-claims#proof-claim-66",
+      "comment_authors": [
+        {
+          "post_id": "post-7768",
+          "author": "Johan Land",
+          "author_url": "/forum/user/JohanLand"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "64",
+      "problem": "820",
+      "author": "Liam Price",
+      "author_url": "/forum/user/Leeham",
+      "submitted": "2026-07-16 18:02:16",
+      "comments": 2,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/64/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/820/proof-claims#proof-claim-64",
+      "comment_authors": [
+        {
+          "post_id": "post-7756",
+          "author": "Liam Price",
+          "author_url": "/forum/user/Leeham"
+        },
+        {
+          "post_id": "post-7767",
+          "author": "rickyc",
+          "author_url": "/forum/user/rickyc"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "63",
+      "problem": "486",
+      "author": "ShouqiaoWang",
+      "author_url": "/forum/user/ShouqiaoWang",
+      "submitted": "2026-07-16 02:50:25",
+      "comments": 3,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/63/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/486/proof-claims#proof-claim-63",
+      "comment_authors": [
+        {
+          "post_id": "post-7726",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-7785",
+          "author": "ShouqiaoWang",
+          "author_url": "/forum/user/ShouqiaoWang"
+        },
+        {
+          "post_id": "post-8336",
+          "author": "IbbyMian",
+          "author_url": "/forum/user/IbbyMian"
+        }
+      ],
+      "outside_comments": 2,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "62",
+      "problem": "321",
+      "author": "RayYoung",
+      "author_url": "/forum/user/RayYoung",
+      "submitted": "2026-07-15 23:49:54",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/62/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/321/proof-claims#proof-claim-62",
+      "comment_authors": [
+        {
+          "post_id": "post-7731",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "61",
+      "problem": "671",
+      "author": "Liam Price",
+      "author_url": "/forum/user/Leeham",
+      "submitted": "2026-07-15 13:26:03",
+      "comments": 13,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/61/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/671/proof-claims#proof-claim-61",
+      "comment_authors": [
+        {
+          "post_id": "post-7683",
+          "author": "Sam_Petkov",
+          "author_url": "/forum/user/Sam_Petkov"
+        },
+        {
+          "post_id": "post-7693",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-7705",
+          "author": "Liam Price",
+          "author_url": "/forum/user/Leeham"
+        },
+        {
+          "post_id": "post-7707",
+          "author": "Sam_Petkov",
+          "author_url": "/forum/user/Sam_Petkov"
+        },
+        {
+          "post_id": "post-7711",
+          "author": "BorisAlexeev",
+          "author_url": "/forum/user/BorisAlexeev"
+        },
+        {
+          "post_id": "post-7723",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-7738",
+          "author": "Liam Price",
+          "author_url": "/forum/user/Leeham"
+        },
+        {
+          "post_id": "post-7739",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-7740",
+          "author": "Liam Price",
+          "author_url": "/forum/user/Leeham"
+        },
+        {
+          "post_id": "post-7742",
+          "author": "Nat Sothanaphan",
+          "author_url": "/forum/user/natso26"
+        },
+        {
+          "post_id": "post-7743",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-7758",
+          "author": "BorisAlexeev",
+          "author_url": "/forum/user/BorisAlexeev"
+        },
+        {
+          "post_id": "post-7759",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        }
+      ],
+      "outside_comments": 10,
+      "self_comments": 3
+    },
+    {
+      "claim_id": "60",
+      "problem": "1139",
+      "author": "Liam Price",
+      "author_url": "/forum/user/Leeham",
+      "submitted": "2026-07-15 13:23:01",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/60/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1139/proof-claims#proof-claim-60",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "59",
+      "problem": "346",
+      "author": "Liam Price",
+      "author_url": "/forum/user/Leeham",
+      "submitted": "2026-07-15 13:18:18",
+      "comments": 2,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/59/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/346/proof-claims#proof-claim-59",
+      "comment_authors": [
+        {
+          "post_id": "post-7704",
+          "author": "Liam Price",
+          "author_url": "/forum/user/Leeham"
+        },
+        {
+          "post_id": "post-7685",
+          "author": "Kevin Barreto",
+          "author_url": "/forum/user/KStar"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "58",
+      "problem": "730",
+      "author": "Liam Price",
+      "author_url": "/forum/user/Leeham",
+      "submitted": "2026-07-15 13:10:57",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/58/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/730/proof-claims#proof-claim-58",
+      "comment_authors": [
+        {
+          "post_id": "post-8546",
+          "author": "Will Blair",
+          "author_url": "/forum/user/will0708"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "57",
+      "problem": "1038",
+      "author": "tdarv",
+      "author_url": "/forum/user/tdarv",
+      "submitted": "2026-07-15 11:48:25",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/57/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1038/proof-claims#proof-claim-57",
+      "comment_authors": [
+        {
+          "post_id": "post-7879",
+          "author": "tdarv",
+          "author_url": "/forum/user/tdarv"
+        }
+      ],
+      "outside_comments": 0,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "56",
+      "problem": "973",
+      "author": "RayYoung",
+      "author_url": "/forum/user/RayYoung",
+      "submitted": "2026-07-15 09:47:08",
+      "comments": 2,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/56/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/973/proof-claims#proof-claim-56",
+      "comment_authors": [
+        {
+          "post_id": "post-7774",
+          "author": "coffeewithcolin",
+          "author_url": "/forum/user/coffeewithcolin"
+        },
+        {
+          "post_id": "post-7786",
+          "author": "RayYoung",
+          "author_url": "/forum/user/RayYoung"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "55",
+      "problem": "320",
+      "author": "RayYoung",
+      "author_url": "/forum/user/RayYoung",
+      "submitted": "2026-07-15 09:12:47",
+      "comments": 8,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/55/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/320/proof-claims#proof-claim-55",
+      "comment_authors": [
+        {
+          "post_id": "post-7729",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-7734",
+          "author": "RayYoung",
+          "author_url": "/forum/user/RayYoung"
+        },
+        {
+          "post_id": "post-7751",
+          "author": "WillSawin",
+          "author_url": "/forum/user/WillSawin"
+        },
+        {
+          "post_id": "post-7757",
+          "author": "Yanping_Luo",
+          "author_url": "/forum/user/Yanping_Luo"
+        },
+        {
+          "post_id": "post-7668",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-7681",
+          "author": "old-bielefelder",
+          "author_url": "/forum/user/old-bielefelder"
+        },
+        {
+          "post_id": "post-7689",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-7735",
+          "author": "RayYoung",
+          "author_url": "/forum/user/RayYoung"
+        }
+      ],
+      "outside_comments": 6,
+      "self_comments": 2
+    },
+    {
+      "claim_id": "54",
+      "problem": "593",
+      "author": "Sam_Petkov",
+      "author_url": "/forum/user/Sam_Petkov",
+      "submitted": "2026-07-15 06:49:07",
+      "comments": 7,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/54/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/593/proof-claims#proof-claim-54",
+      "comment_authors": [
+        {
+          "post_id": "post-7867",
+          "author": "Sam_Petkov",
+          "author_url": "/forum/user/Sam_Petkov"
+        },
+        {
+          "post_id": "post-7890",
+          "author": "Eric Li",
+          "author_url": "/forum/user/EricLi"
+        },
+        {
+          "post_id": "post-7893",
+          "author": "Sam_Petkov",
+          "author_url": "/forum/user/Sam_Petkov"
+        },
+        {
+          "post_id": "post-7640",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-7645",
+          "author": "Sam_Petkov",
+          "author_url": "/forum/user/Sam_Petkov"
+        },
+        {
+          "post_id": "post-7780",
+          "author": "Eric Li",
+          "author_url": "/forum/user/EricLi"
+        },
+        {
+          "post_id": "post-7783",
+          "author": "Sam_Petkov",
+          "author_url": "/forum/user/Sam_Petkov"
+        }
+      ],
+      "outside_comments": 3,
+      "self_comments": 4
+    },
+    {
+      "claim_id": "53",
+      "problem": "796",
+      "author": "rishikeshgajjala",
+      "author_url": "/forum/user/rishikeshgajjala",
+      "submitted": "2026-07-15 04:48:51",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/53/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/796/proof-claims#proof-claim-53",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "51",
+      "problem": "1188",
+      "author": "coffeewithcolin",
+      "author_url": "/forum/user/coffeewithcolin",
+      "submitted": "2026-07-15 01:59:00",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/51/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1188/proof-claims#proof-claim-51",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "48",
+      "problem": "959",
+      "author": "coffeewithcolin",
+      "author_url": "/forum/user/coffeewithcolin",
+      "submitted": "2026-07-15 01:52:12",
+      "comments": 2,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/48/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/959/proof-claims#proof-claim-48",
+      "comment_authors": [
+        {
+          "post_id": "post-7636",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-7651",
+          "author": "coffeewithcolin",
+          "author_url": "/forum/user/coffeewithcolin"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "47",
+      "problem": "796",
+      "author": "coffeewithcolin",
+      "author_url": "/forum/user/coffeewithcolin",
+      "submitted": "2026-07-15 01:50:31",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/47/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/796/proof-claims#proof-claim-47",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "42",
+      "problem": "662",
+      "author": "coffeewithcolin",
+      "author_url": "/forum/user/coffeewithcolin",
+      "submitted": "2026-07-15 01:41:58",
+      "comments": 2,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/42/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/662/proof-claims#proof-claim-42",
+      "comment_authors": [
+        {
+          "post_id": "post-7628",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-7664",
+          "author": "coffeewithcolin",
+          "author_url": "/forum/user/coffeewithcolin"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "39",
+      "problem": "538",
+      "author": "coffeewithcolin",
+      "author_url": "/forum/user/coffeewithcolin",
+      "submitted": "2026-07-15 01:36:01",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/39/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/538/proof-claims#proof-claim-39",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "36",
+      "problem": "489",
+      "author": "coffeewithcolin",
+      "author_url": "/forum/user/coffeewithcolin",
+      "submitted": "2026-07-15 01:31:47",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/36/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/489/proof-claims#proof-claim-36",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "35",
+      "problem": "450",
+      "author": "coffeewithcolin",
+      "author_url": "/forum/user/coffeewithcolin",
+      "submitted": "2026-07-15 01:30:36",
+      "comments": 8,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/35/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/450/proof-claims#proof-claim-35",
+      "comment_authors": [
+        {
+          "post_id": "post-7663",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-7665",
+          "author": "coffeewithcolin",
+          "author_url": "/forum/user/coffeewithcolin"
+        },
+        {
+          "post_id": "post-7666",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-7667",
+          "author": "coffeewithcolin",
+          "author_url": "/forum/user/coffeewithcolin"
+        },
+        {
+          "post_id": "post-7714",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-7770",
+          "author": "coffeewithcolin",
+          "author_url": "/forum/user/coffeewithcolin"
+        },
+        {
+          "post_id": "post-7775",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-7778",
+          "author": "coffeewithcolin",
+          "author_url": "/forum/user/coffeewithcolin"
+        }
+      ],
+      "outside_comments": 4,
+      "self_comments": 4
+    },
+    {
+      "claim_id": "33",
+      "problem": "394",
+      "author": "coffeewithcolin",
+      "author_url": "/forum/user/coffeewithcolin",
+      "submitted": "2026-07-15 01:26:42",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/33/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/394/proof-claims#proof-claim-33",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "32",
+      "problem": "336",
+      "author": "coffeewithcolin",
+      "author_url": "/forum/user/coffeewithcolin",
+      "submitted": "2026-07-15 01:25:43",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/32/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/336/proof-claims#proof-claim-32",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "29",
+      "problem": "267",
+      "author": "coffeewithcolin",
+      "author_url": "/forum/user/coffeewithcolin",
+      "submitted": "2026-07-15 01:20:26",
+      "comments": 0,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/29/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/267/proof-claims#proof-claim-29",
+      "comment_authors": [],
+      "outside_comments": 0,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "28",
+      "problem": "254",
+      "author": "coffeewithcolin",
+      "author_url": "/forum/user/coffeewithcolin",
+      "submitted": "2026-07-15 01:18:56",
+      "comments": 8,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/28/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/254/proof-claims#proof-claim-28",
+      "comment_authors": [
+        {
+          "post_id": "post-7748",
+          "author": "Steve Fan",
+          "author_url": "/forum/user/Steve_Fan"
+        },
+        {
+          "post_id": "post-7754",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-7762",
+          "author": "Steve Fan",
+          "author_url": "/forum/user/Steve_Fan"
+        },
+        {
+          "post_id": "post-7771",
+          "author": "coffeewithcolin",
+          "author_url": "/forum/user/coffeewithcolin"
+        },
+        {
+          "post_id": "post-7838",
+          "author": "Steve Fan",
+          "author_url": "/forum/user/Steve_Fan"
+        },
+        {
+          "post_id": "post-7763",
+          "author": "Woett",
+          "author_url": "/forum/user/Woett"
+        },
+        {
+          "post_id": "post-7764",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-7765",
+          "author": "Steve Fan",
+          "author_url": "/forum/user/Steve_Fan"
+        }
+      ],
+      "outside_comments": 7,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "25",
+      "problem": "123",
+      "author": "coffeewithcolin",
+      "author_url": "/forum/user/coffeewithcolin",
+      "submitted": "2026-07-15 01:12:04",
+      "comments": 5,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/25/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/123/proof-claims#proof-claim-25",
+      "comment_authors": [
+        {
+          "post_id": "post-7791",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-7806",
+          "author": "Nat Sothanaphan",
+          "author_url": "/forum/user/natso26"
+        },
+        {
+          "post_id": "post-7811",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-7652",
+          "author": "BorisAlexeev",
+          "author_url": "/forum/user/BorisAlexeev"
+        },
+        {
+          "post_id": "post-7656",
+          "author": "coffeewithcolin",
+          "author_url": "/forum/user/coffeewithcolin"
+        }
+      ],
+      "outside_comments": 4,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "14",
+      "problem": "160",
+      "author": "Rio Itabe",
+      "author_url": "/forum/user/ritabe",
+      "submitted": "2026-07-15 00:32:16",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/14/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/160/proof-claims#proof-claim-14",
+      "comment_authors": [
+        {
+          "post_id": "post-8030",
+          "author": "ruizshi",
+          "author_url": "/forum/user/ruizshi"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 0
+    },
+    {
+      "claim_id": "10",
+      "problem": "536",
+      "author": "ShouqiaoWang",
+      "author_url": "/forum/user/ShouqiaoWang",
+      "submitted": "2026-07-14 11:19:58",
+      "comments": 4,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/10/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/536/proof-claims#proof-claim-10",
+      "comment_authors": [
+        {
+          "post_id": "post-8150",
+          "author": "ShouqiaoWang",
+          "author_url": "/forum/user/ShouqiaoWang"
+        },
+        {
+          "post_id": "post-7601",
+          "author": "ShouqiaoWang",
+          "author_url": "/forum/user/ShouqiaoWang"
+        },
+        {
+          "post_id": "post-7602",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-7588",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        }
+      ],
+      "outside_comments": 2,
+      "self_comments": 2
+    },
+    {
+      "claim_id": "9",
+      "problem": "1005",
+      "author": "rickyc",
+      "author_url": "/forum/user/rickyc",
+      "submitted": "2026-07-14 11:14:38",
+      "comments": 2,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/9/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1005/proof-claims#proof-claim-9",
+      "comment_authors": [
+        {
+          "post_id": "post-7661",
+          "author": "Woett",
+          "author_url": "/forum/user/Woett"
+        },
+        {
+          "post_id": "post-7669",
+          "author": "rickyc",
+          "author_url": "/forum/user/rickyc"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "8",
+      "problem": "1038",
+      "author": "ShouqiaoWang",
+      "author_url": "/forum/user/ShouqiaoWang",
+      "submitted": "2026-07-14 11:08:54",
+      "comments": 5,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/8/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/1038/proof-claims#proof-claim-8",
+      "comment_authors": [
+        {
+          "post_id": "post-7853",
+          "author": "ShouqiaoWang",
+          "author_url": "/forum/user/ShouqiaoWang"
+        },
+        {
+          "post_id": "post-7880",
+          "author": "tdarv",
+          "author_url": "/forum/user/tdarv"
+        },
+        {
+          "post_id": "post-7881",
+          "author": "ShouqiaoWang",
+          "author_url": "/forum/user/ShouqiaoWang"
+        },
+        {
+          "post_id": "post-7801",
+          "author": "ShouqiaoWang",
+          "author_url": "/forum/user/ShouqiaoWang"
+        },
+        {
+          "post_id": "post-7589",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        }
+      ],
+      "outside_comments": 2,
+      "self_comments": 3
+    },
+    {
+      "claim_id": "7",
+      "problem": "119",
+      "author": "SamKorsky",
+      "author_url": "/forum/user/SamKorsky",
+      "submitted": "2026-07-14 10:40:43",
+      "comments": 13,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/7/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/119/proof-claims#proof-claim-7",
+      "comment_authors": [
+        {
+          "post_id": "post-7830",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-7832",
+          "author": "SamKorsky",
+          "author_url": "/forum/user/SamKorsky"
+        },
+        {
+          "post_id": "post-7833",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-7860",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-7862",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-7864",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-7875",
+          "author": "WillSawin",
+          "author_url": "/forum/user/WillSawin"
+        },
+        {
+          "post_id": "post-7876",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-7877",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-7884",
+          "author": "WillSawin",
+          "author_url": "/forum/user/WillSawin"
+        },
+        {
+          "post_id": "post-7788",
+          "author": "coffeewithcolin",
+          "author_url": "/forum/user/coffeewithcolin"
+        },
+        {
+          "post_id": "post-7798",
+          "author": "SamKorsky",
+          "author_url": "/forum/user/SamKorsky"
+        },
+        {
+          "post_id": "post-7865",
+          "author": "qrdl",
+          "author_url": "/forum/user/qrdl"
+        }
+      ],
+      "outside_comments": 11,
+      "self_comments": 2
+    },
+    {
+      "claim_id": "6",
+      "problem": "580",
+      "author": "Zeraoulia Rafik",
+      "author_url": "/forum/user/Rafikzeraoulia2025",
+      "submitted": "2026-07-14 10:38:06",
+      "comments": 2,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/6/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/580/proof-claims#proof-claim-6",
+      "comment_authors": [
+        {
+          "post_id": "post-7998",
+          "author": "Johan Land",
+          "author_url": "/forum/user/JohanLand"
+        },
+        {
+          "post_id": "post-8245",
+          "author": "Zeraoulia Rafik",
+          "author_url": "/forum/user/Rafikzeraoulia2025"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 1
+    },
+    {
+      "claim_id": "3",
+      "problem": "625",
+      "author": "Sam_Petkov",
+      "author_url": "/forum/user/Sam_Petkov",
+      "submitted": "2026-07-14 09:43:18",
+      "comments": 14,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/3/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/625/proof-claims#proof-claim-3",
+      "comment_authors": [
+        {
+          "post_id": "post-8629",
+          "author": "Sam_Petkov",
+          "author_url": "/forum/user/Sam_Petkov"
+        },
+        {
+          "post_id": "post-8630",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-8658",
+          "author": "Sam_Petkov",
+          "author_url": "/forum/user/Sam_Petkov"
+        },
+        {
+          "post_id": "post-8705",
+          "author": "Sam_Petkov",
+          "author_url": "/forum/user/Sam_Petkov"
+        },
+        {
+          "post_id": "post-8706",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-8748",
+          "author": "Sam_Petkov",
+          "author_url": "/forum/user/Sam_Petkov"
+        },
+        {
+          "post_id": "post-8764",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-8765",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-8767",
+          "author": "Sam_Petkov",
+          "author_url": "/forum/user/Sam_Petkov"
+        },
+        {
+          "post_id": "post-7587",
+          "author": "Xiao Hu",
+          "author_url": "/forum/user/Xiao_Hu"
+        },
+        {
+          "post_id": "post-7590",
+          "author": "Sam_Petkov",
+          "author_url": "/forum/user/Sam_Petkov"
+        },
+        {
+          "post_id": "post-7592",
+          "author": "Thomas Bloom",
+          "author_url": "/forum/user/TFBloom"
+        },
+        {
+          "post_id": "post-7593",
+          "author": "Sam_Petkov",
+          "author_url": "/forum/user/Sam_Petkov"
+        },
+        {
+          "post_id": "post-7591",
+          "author": "sashko",
+          "author_url": "/forum/user/sashko"
+        }
+      ],
+      "outside_comments": 7,
+      "self_comments": 7
+    },
+    {
+      "claim_id": "2",
+      "problem": "469",
+      "author": "ZachL111",
+      "author_url": "/forum/user/ZachL111",
+      "submitted": "2026-07-14 09:13:19",
+      "comments": 1,
+      "comments_url": "https://www.erdosproblems.com/forum/proof-claims/2/comments",
+      "url": "https://www.erdosproblems.com/forum/thread/469/proof-claims#proof-claim-2",
+      "comment_authors": [
+        {
+          "post_id": "post-7583",
+          "author": "Woett",
+          "author_url": "/forum/user/Woett"
+        }
+      ],
+      "outside_comments": 1,
+      "self_comments": 0
+    }
+  ],
+  "notes": [
+    "Two deleted-comment placeholders excluded; all surviving comment totals match page counters."
+  ]
+}

@@ -866,7 +866,7 @@
         "task_kind": { "type": "string", "maxLength": 40 },
         "check_category": {
           "type": "string",
-          "enum": ["statement", "proof", "computation", "formalization", "literature", "exposition", "other"],
+          "enum": ["statement", "proof", "computation", "formalization", "literature", "exposition", "deslopping", "other"],
           "description": "What part of the claim this task checks. Separate from task_kind, which describes the method. A category does not imply a mathematical verdict."
         },
         "discussion_url": {
