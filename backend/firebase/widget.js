@@ -31,6 +31,14 @@ function reportError(error, action) {
   const code = error.code;
   // Log only the operation and code, never credentials or the SDK error object.
   console.warn(`Significance: ${action} failed (${code || 'unknown'}).`);
+  // A failed response cannot tell us whether an email from this or an earlier
+  // request reached the inbox. Avoid presenting that uncertainty as non-delivery.
+  if (/verification email|reset link/i.test(action) && code !== 'auth/invalid-email') {
+    showMessage(code === 'auth/too-many-requests' || code === 'auth/quota-exceeded'
+      ? 'Another email request could not be completed right now. Check your inbox and spam folder—an earlier request may already have sent a link. Wait before requesting another.'
+      : 'We couldn’t confirm the email request. Check your inbox and spam folder; the email may still arrive. If it doesn’t, wait a little before trying again.', 'error');
+    return;
+  }
   message.textContent = code === 'permission-denied'
     ? 'Posting was refused. Confirm your email, then wait 30 seconds between comments.'
     : code === 'auth/requires-recent-login' ? 'Please sign in again before changing your password.'
@@ -211,7 +219,7 @@ async function start() {
           showMessage('Account created. Check your email for the verification link.');
         } catch (error) {
           reportError(error, 'Send verification email');
-          message.textContent = `Your account was created, but the verification email was not sent. ${message.textContent}`;
+          message.textContent = `Your account was created. ${message.textContent}`;
         }
       }
       button(authMode === 'reset' ? 'Back to sign in' : 'Forgot password?', () => {

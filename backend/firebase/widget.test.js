@@ -53,6 +53,12 @@ test('profile keeps guests out and requires matching passwords and successful re
   await settle();
   assert.ok(buttons().some(n => n.textContent === 'Sign in'));
   assert.ok(!buttons().some(n => n.textContent === 'Change password'));
+  vm.runInContext("reportError({ code: 'auth/too-many-requests' }, 'Send verification email')", context);
+  assert.ok(root.querySelectorAll('p').some(n => n.textContent.includes('an earlier request may already have sent a link')));
+  vm.runInContext("reportError({ code: 'auth/network-request-failed' }, 'Send reset link')", context);
+  assert.ok(root.querySelectorAll('p').some(n => n.textContent.includes('email may still arrive')));
+  vm.runInContext("reportError({ code: 'auth/invalid-email' }, 'Send reset link')", context);
+  assert.ok(root.querySelectorAll('p').some(n => n.textContent === 'Enter a valid email address.'));
   const user = { displayName: 'Test', email: 'test@example.test', emailVerified: true,
     metadata: { creationTime: '2026-10-01T00:00:00Z' } };
   auth.currentUser = user; listener(user); await settle();

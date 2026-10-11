@@ -2,7 +2,7 @@
 
 Prepared 8 October 2026; cloud setup updated 11 October 2026. The account/comment
 route is configured for a production Firebase project, but is not deployed on
-the public site and has not completed the live account test.
+the public site. The owner has reported completing the live account tests.
 
 ## Cloud setup status — 11 October 2026
 
@@ -17,10 +17,10 @@ The public SDK configuration is included in the static assets. A local browser
 preview connects to this project and reads production comments. The owner
 reported completing email verification and posted a test comment, which is
 visible in the production thread. The emulator rules tests pass, including
-rejection of unverified accounts and forged authors. Password-reset delivery,
-author deletion and the two-account production deletion check remain required
-before calling this route ready for public use. Do not treat the emulator
-results as completion of that live test.
+rejection of unverified accounts and forged authors. The owner reported
+successful password-reset delivery, author deletion, and a two-account browser
+check in which another account had no delete control for someone else's comment.
+Server rejection of a forged deletion request is covered by emulator tests.
 
 The discussion UI separates sign-in, registration and password-reset forms,
 adapts to narrow screens, and presents comments beside the account panel on
@@ -58,7 +58,13 @@ They are private account details for now, rather than a public directory.
 The form loads stored details before allowing edits and provides explicit save
 feedback. Ten Firebase/backend tests pass, including owner-only profile access
 and invalid-link rejection. The updated rules are published in production;
-profile save/reload with the owner's account remains a manual browser check.
+the owner reported that saving profile details works.
+
+Email-request errors distinguish an unconfirmed response from non-delivery.
+After a network error or throttled request, users are prompted to check their
+inbox for a link that may already have arrived before retrying. Registration
+does not claim a verification email was never sent solely because the SDK
+returned an error.
 
 Use the existing GitHub Pages site with Firebase Authentication and Cloud
 Firestore on the **Spark** plan. No Cloud Functions, Cloud Run, paid Blaze
