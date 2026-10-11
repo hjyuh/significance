@@ -1,5 +1,5 @@
-name: Record request
-description: Ask for a claim-state record about a mathematical claim.
+name: Request or correct a record
+description: Suggest a mathematical claim for a new record or correct an existing page.
 title: "Record request: "
 labels: ["record-request"]
 body:
@@ -10,20 +10,27 @@ body:
         remains open. It does not say whether the mathematics is right, and
         nothing in it will.
 
-        **If the claim is someone else's and they are alive and reachable,
-        say so below.** A record about a living person's claim is only filed
-        after they have been contacted. If they decline, that is the end of
-        it: no record is filed, and nothing anywhere in this project will
-        note that they were asked or that they said no.
+        **This issue and its comments are public.** Do not include private
+        correspondence or personal information. One issue should cover one
+        claim or one focused correction. No YAML or Significance account is needed.
+
+        Widely circulating public claims from organisations or major announcements
+        may receive editorial records based on public sources. Ordinary claims
+        by individual living authors require an author request or explicit opt-in
+        before publication. A reader's suggestion is not permission to publish.
+        No decline list is kept.
+
+        A maintainer checks sources, asks follow-up questions here, and prepares
+        any proposed record or correction through a pull request, validation,
+        and human review. Nothing is published automatically from this issue.
 
   - type: input
     id: claim-link
     attributes:
-      label: Link to the claim
+      label: Link to the claim or Significance record
       description: >-
-        A paper, preprint, repository, announcement, or post. Whatever the
-        claim actually lives in. If it exists in more than one place, the most
-        stable one.
+        For a new record, link the paper, preprint, repository, announcement,
+        or post. For a correction, link the existing Significance page.
       placeholder: https://arxiv.org/abs/...
     validations:
       required: true
@@ -34,8 +41,7 @@ body:
       label: Your role
       description: >-
         Asked because it changes what happens next, not to rank the request.
-        An author can attest to their own work; a reader asking about someone
-        else's claim starts the contact step described above.
+        This gives maintainers context for the publication rules above.
       options:
         - I am an author of this claim
         - I am a reader with no involvement
@@ -46,17 +52,19 @@ body:
   - type: textarea
     id: what-tracked
     attributes:
-      label: What do you want tracked
+      label: What should be added or corrected? (optional)
       description: >-
         In your own words. Useful things to say: which specific statement
         matters, what evidence already exists, what you think nobody has
-        checked yet. Plain language is fine — the vocabulary is our job.
+        checked yet. For a correction, identify the section or sentence,
+        suggest the change, and link supporting sources. Plain language is
+        fine; leave this blank if you are not sure.
       placeholder: |
         The statement I care about is Theorem 3.2. There is a Lean
         formalization at <link>, but I do not think anyone has checked whether
         it proves the same thing the paper states.
     validations:
-      required: true
+      required: false
 
   - type: markdown
     attributes:
