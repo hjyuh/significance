@@ -11,6 +11,8 @@ class Element {
     this.classList = { toggle() {}, add() {} };
   }
   append(child) { this.children.push(child); }
+  insertBefore(child, before) { this.children.splice(this.children.indexOf(before), 0, child); }
+  get isConnected() { return true; }
   replaceChildren() { this.children = []; }
   setAttribute(key, value) { this.attrs[key] = value; }
   hasAttribute(key) { return key in this.attrs; }
@@ -26,11 +28,14 @@ test('profile keeps guests out and requires matching passwords and successful re
   root.dataset.configUrl = '/config.json';
   const auth = { currentUser: null };
   let listener, failReauth = false, reauthCalls = 0, passwordCalls = 0, commentReads = 0;
+  let savedDetails;
   const context = vm.createContext({
     document: { querySelector: () => root, createElement: tag => new Element(tag) },
     fetch: async () => ({ ok: true, json: async () => ({ projectId: 'demo' }) }),
     console: { warn() {} }, initializeApp: c => c, getAuth: () => auth,
     setPersistence: async () => {}, browserLocalPersistence: {}, getFirestore: () => ({}),
+    doc: () => ({}), getDoc: async () => ({ exists: () => false }),
+    setDoc: async (reference, data) => { savedDetails = { ...data }; },
     getDocs: async () => { commentReads++; },
     onAuthStateChanged: (a, fn) => { listener = fn; fn(null); },
     EmailAuthProvider: { credential: (email, password) => ({ email, password }) },
@@ -70,6 +75,16 @@ test('profile keeps guests out and requires matching passwords and successful re
   assert.equal(passwordCalls, 1);
   assert.ok(fields.every(field => field.value === ''));
   assert.equal(commentReads, 0);
+  const aboutForm = root.querySelectorAll('form').find(form => form.querySelectorAll('textarea').length === 1);
+  const aboutInputs = aboutForm.querySelectorAll('input');
+  aboutInputs[0].value = '  A mathematics project  ';
+  aboutForm.querySelectorAll('textarea')[0].value = '  Interested in exposition.  ';
+  aboutInputs[1].value = 'https://linkedin.com.evil.test/in/test';
+  aboutForm.events.submit({ preventDefault() {} }); await settle();
+  assert.equal(savedDetails, undefined);
+  aboutInputs[1].value = 'https://www.linkedin.com/in/test';
+  aboutForm.events.submit({ preventDefault() {} }); await settle();
+  assert.deepEqual(savedDetails, { workingOn: 'A mathematics project', bio: 'Interested in exposition.', linkedin: 'https://www.linkedin.com/in/test' });
   auth.currentUser = null; listener(null); await settle();
   assert.ok(!buttons().some(n => n.textContent === 'Change password'));
 });

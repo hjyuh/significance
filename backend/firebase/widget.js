@@ -3,7 +3,7 @@ import { getAuth, setPersistence, browserLocalPersistence, connectAuthEmulator, 
   signInWithEmailAndPassword, updateProfile, sendEmailVerification, sendPasswordResetEmail,
   signOut, reload, EmailAuthProvider, reauthenticateWithCredential, updatePassword } from 'firebase/auth';
 import { getFirestore, connectFirestoreEmulator, collection, doc, query, orderBy, limit,
-  getDocs, writeBatch, serverTimestamp, deleteDoc } from 'firebase/firestore';
+  getDocs, getDoc, setDoc, writeBatch, serverTimestamp, deleteDoc } from 'firebase/firestore';
 
 const root = document.querySelector('[data-native-discussion], [data-native-profile]');
 const isProfile = root?.hasAttribute('data-native-profile');
@@ -222,7 +222,7 @@ async function start() {
       }, account).className = 'discussion-text-button';
       element('p', 'Your display name is public. Your email is not shown in comments.', account).className = 'discussion-privacy';
       element('h3', isProfile ? 'Your account, in one place' : 'Have a question?', composer);
-      element('p', isProfile ? 'Sign in to see your profile, edit your public name, and change your password.' : 'You can read the discussion without an account. Sign in to add your thoughts.', composer).className = 'discussion-help';
+      element('p', isProfile ? 'Sign in to edit your name, bio, current work, and LinkedIn link, or change your password.' : 'You can read the discussion without an account. Sign in to add your thoughts.', composer).className = 'discussion-help';
     } else {
       const identity = element('div', null, composer);
       identity.className = 'discussion-identity';
@@ -350,6 +350,73 @@ async function start() {
       }, 'Change password');
     });
     button('Forgot your current password? Send a reset link', async () => { await sendPasswordResetEmail(auth, user.email); showMessage('Password-reset email sent. Check your inbox and spam folder.'); }, security).className = 'discussion-text-button';
+    const about = element('section', null, composer);
+    about.className = 'profile-section profile-about';
+    // Place personal details before account security in the reading order.
+    composer.insertBefore(about, details);
+    element('h3', 'About you', about);
+    element('p', 'Optional details for your profile. Only you can view them for now.', about).className = 'discussion-help';
+    const aboutForm = element('form', null, about);
+    const working = input('What I’m working on', 'text', 'off', aboutForm);
+    working.required = false;
+    working.maxLength = 200;
+    working.placeholder = 'A project, problem, or area you’re exploring';
+    const bioLabel = element('label', null, aboutForm);
+    element('span', 'Bio', bioLabel);
+    const bio = element('textarea', null, bioLabel);
+    bio.rows = 4;
+    bio.maxLength = 1000;
+    bio.placeholder = 'A little about your interests and background';
+    const linkedin = input('LinkedIn URL', 'url', 'url', aboutForm);
+    linkedin.required = false;
+    linkedin.maxLength = 300;
+    linkedin.placeholder = 'https://www.linkedin.com/in/your-name';
+    const aboutSave = element('button', 'Save profile', aboutForm);
+    aboutSave.type = 'submit';
+    aboutSave.className = 'discussion-primary';
+    aboutSave.disabled = true;
+    const loadStatus = element('p', 'Loading your profile…', about);
+    loadStatus.className = 'discussion-help';
+    const reference = doc(db, `profiles/${user.uid}`);
+    let ready = false;
+    async function loadAbout() {
+      aboutSave.disabled = true;
+      try {
+        const snapshot = await getDoc(reference);
+        if (auth.currentUser?.uid !== user.uid || !about.isConnected) return;
+        const data = snapshot.exists() ? snapshot.data() : {};
+        working.value = data.workingOn || '';
+        bio.value = data.bio || '';
+        linkedin.value = data.linkedin || '';
+        ready = true;
+        for (const field of [working, bio, linkedin]) field.disabled = false;
+        aboutSave.disabled = false;
+        retry.hidden = true;
+        loadStatus.textContent = '';
+      } catch (error) {
+        if (auth.currentUser?.uid !== user.uid || !about.isConnected) return;
+        loadStatus.textContent = 'Your profile details could not be loaded. Try again before editing.';
+        console.warn(`Significance: Read profile failed (${error.code || 'unknown'}).`);
+      }
+    }
+    const retry = button('Retry loading profile', loadAbout, about);
+    retry.className = 'discussion-text-button';
+    // Prevent typing into an unloaded form and losing unsaved text on arrival.
+    for (const field of [working, bio, linkedin]) field.disabled = true;
+    loadAbout();
+    aboutForm.addEventListener('submit', event => {
+      event.preventDefault();
+      if (!ready) return;
+      const url = linkedin.value.trim();
+      if (url && !/^https:\/\/(www\.)?linkedin\.com\/in\/[A-Za-z0-9_%\-]+\/?$/.test(url)) {
+        showMessage('Use a LinkedIn profile link like https://www.linkedin.com/in/your-name.', 'error');
+        return;
+      }
+      run(async () => {
+        await setDoc(reference, { workingOn: working.value.trim(), bio: bio.value.trim(), linkedin: url });
+        showMessage('Your profile was saved.');
+      }, 'Save profile');
+    });
   }
   onAuthStateChanged(auth, renderAccount);
   await load();

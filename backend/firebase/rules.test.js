@@ -1,7 +1,8 @@
 import { readFile } from 'node:fs/promises';
+import assert from 'node:assert/strict';
 import { after, before, beforeEach, test } from 'node:test';
 import { initializeTestEnvironment, assertFails, assertSucceeds } from '@firebase/rules-unit-testing';
-import { collection, doc, getDocs, setDoc, deleteDoc, serverTimestamp, writeBatch } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, setDoc, deleteDoc, serverTimestamp, writeBatch } from 'firebase/firestore';
 
 let env;
 before(async () => {
@@ -20,6 +21,21 @@ after(async () => { await env?.cleanup(); });
 function user(uid = 'alice', verified = true) {
   return env.authenticatedContext(uid, { email_verified: verified }).firestore();
 }
+test('profile details persist only for their owner, with bounded fields and LinkedIn URLs', async () => {
+  const details = { workingOn: 'Erdős problems', bio: 'Interested in exposition.', linkedin: 'https://www.linkedin.com/in/alice' };
+  await assertSucceeds(setDoc(doc(user('alice', false), 'profiles/alice'), details));
+  const saved = await assertSucceeds(getDoc(doc(user(), 'profiles/alice')));
+  assert.deepEqual(saved.data(), details);
+  await assertFails(getDoc(doc(user('mallory'), 'profiles/alice')));
+  await assertFails(getDoc(doc(env.unauthenticatedContext().firestore(), 'profiles/alice')));
+  await assertFails(setDoc(doc(user('mallory'), 'profiles/alice'), details));
+  await assertFails(setDoc(doc(user(), 'profiles/alice'), { ...details, bio: 'x'.repeat(1001) }));
+  await assertFails(setDoc(doc(user(), 'profiles/alice'), { ...details, workingOn: 'x'.repeat(201) }));
+  await assertFails(setDoc(doc(user(), 'profiles/alice'), { ...details, linkedin: 'javascript:alert(1)' }));
+  await assertFails(setDoc(doc(user(), 'profiles/alice'), { ...details, linkedin: 'https://linkedin.com.evil.test/in/alice' }));
+  await assertFails(setDoc(doc(user(), 'profiles/alice'), { ...details, moderator: true }));
+  await assertSucceeds(setDoc(doc(user(), 'profiles/alice'), { workingOn: '', bio: '', linkedin: '' }));
+});
 function post(db, uid = 'alice', task = 'pilot', extra = {}) {
   const batch = writeBatch(db);
   const reference = doc(collection(db, `tasks/${task}/comments`));

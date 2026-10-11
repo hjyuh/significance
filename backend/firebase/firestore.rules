@@ -43,6 +43,22 @@ service cloud.firestore {
           || resource.data.lastPosted < request.time - duration.value(30, 's'));
       allow delete: if false;
     }
+    match /profiles/{uid} {
+      // Account details are private until a public-profile flow is introduced.
+      allow read: if request.auth != null && request.auth.uid == uid;
+      allow create, update: if request.auth != null && request.auth.uid == uid
+        && request.resource.data.keys().hasAll(['workingOn', 'bio', 'linkedin'])
+        && request.resource.data.keys().hasOnly(['workingOn', 'bio', 'linkedin'])
+        && request.resource.data.workingOn is string
+        && request.resource.data.workingOn.size() <= 200
+        && request.resource.data.bio is string
+        && request.resource.data.bio.size() <= 1000
+        && request.resource.data.linkedin is string
+        && request.resource.data.linkedin.size() <= 300
+        && (request.resource.data.linkedin == ''
+          || request.resource.data.linkedin.matches('https://(www[.])?linkedin[.]com/in/[A-Za-z0-9_%\\-]+/?'));
+      allow delete: if false;
+    }
     match /moderators/{uid} {
       allow read: if request.auth != null && request.auth.uid == uid;
       allow write: if false;

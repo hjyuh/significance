@@ -16,7 +16,7 @@ against `tasks_manifest.py` through an unauthenticated production read.
 The public SDK configuration is included in the static assets. A local browser
 preview connects to this project and reads production comments. The owner
 reported completing email verification and posted a test comment, which is
-visible in the production thread. The eight emulator rules tests pass, including
+visible in the production thread. The emulator rules tests pass, including
 rejection of unverified accounts and forged authors. Password-reset delivery,
 author deletion and the two-account production deletion check remain required
 before calling this route ready for public use. Do not treat the emulator
@@ -47,7 +47,18 @@ available. Local emulator coverage confirms wrong-password reauthentication
 fails and the previous password no longer signs in after a successful change.
 The form-handler test checks mismatch rejection, no update on failed
 reauthentication, guest access and clearing password fields. A production
-password change still requires the account owner's manual test.
+password change was completed by the owner, who reported signing in successfully
+with the new password.
+
+Profile details include optional current work (200 characters), bio (1,000
+characters) and an HTTPS LinkedIn profile URL (300 characters). These are stored
+in `profiles/{uid}`, readable and writable only by the signed-in owner. Rules
+reject oversized fields, extra keys and URLs outside LinkedIn profile paths.
+They are private account details for now, rather than a public directory.
+The form loads stored details before allowing edits and provides explicit save
+feedback. Ten Firebase/backend tests pass, including owner-only profile access
+and invalid-link rejection. The updated rules are published in production;
+profile save/reload with the owner's account remains a manual browser check.
 
 Use the existing GitHub Pages site with Firebase Authentication and Cloud
 Firestore on the **Spark** plan. No Cloud Functions, Cloud Run, paid Blaze
