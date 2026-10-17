@@ -1,8 +1,18 @@
 # Accounts and comments on a $0 plan
 
 Prepared 8 October 2026; cloud setup updated 11 October 2026. The account/comment
-route is configured for a production Firebase project, but is not deployed on
-the public site. The owner has reported completing the live account tests.
+route is configured and deployed on the public site. The owner has reported
+completing the live account tests.
+
+## Companion discussion — 17 October 2026
+
+The Family 159 companion uses its own thread at
+`tasks/companion-openai-family-159__discussion`. The owner console registered
+this document with `record_id: companion-openai-family-159` and
+`task_id: discussion`. The publication manifest adds it to the 25 existing
+public task threads; no database rule change is needed. Local browser testing
+confirmed its public discussion reads and sign-in controls load. Posting uses
+the same verified-email, author-deletion and cooldown rules as the task pages.
 
 ## Cloud setup status — 11 October 2026
 

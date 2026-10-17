@@ -2,6 +2,7 @@
 import json
 from pathlib import Path
 
+from significance.companions import published_companions
 from significance.records import load_record
 from significance.render import is_published, task_id
 
@@ -17,4 +18,7 @@ for path in sorted((root / 'records').glob('*.yaml')):
         tid = task_id(invitation, index)
         tasks.append(dict(document_id=f"{record['record_id']}__{tid}",
                           record_id=record['record_id'], task_id=tid))
+for companion in published_companions():
+    rid, tid = companion['record_id'], companion['task_id']
+    tasks.append(dict(document_id=f"{rid}__{tid}", record_id=rid, task_id=tid))
 print(json.dumps(tasks, indent=2))

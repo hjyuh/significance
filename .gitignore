@@ -15,7 +15,10 @@ tmp/
 
 # Scratch prompt file kept at the repo root by the author, not part of the build.
 read.txt
-drafts/
+drafts/*
+!drafts/companions/
+drafts/companions/*
+!drafts/companions/family-159/
 
 .private-preview/
 public/author-review/

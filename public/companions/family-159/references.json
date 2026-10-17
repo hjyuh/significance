@@ -1,0 +1,313 @@
+{
+  "pageCount": 198,
+  "references": {
+    "paper": {
+      "label": "Pinned manuscript",
+      "page": 1,
+      "needle": "Quasipolynomial Bounds",
+      "rect": [
+        0.1949950980392157,
+        0.13570656565656572,
+        0.6099997143464053,
+        0.02931237373737374
+      ]
+    },
+    "theorem-1-1": {
+      "label": "Theorem 1.1",
+      "page": 4,
+      "needle": "Theorem 1.1",
+      "rect": [
+        0.1120277777777778,
+        0.49562487373737374,
+        0.7750623939416338,
+        0.023593560606060618
+      ]
+    },
+    "corollary-1-2": {
+      "label": "Corollary 1.2",
+      "page": 4,
+      "needle": "Corollary 1.2",
+      "rect": [
+        0.11274509803921569,
+        0.6647334595959595,
+        0.7745117242496732,
+        0.021349873737373837
+      ]
+    },
+    "section-1-1": {
+      "label": "§1.1 · Density thresholds and summability",
+      "page": 5,
+      "needle": "Density thresholds and summability",
+      "rect": [
+        0.11274509803921569,
+        0.08712601010101002,
+        0.4071853929411766,
+        0.022670707070707077
+      ]
+    },
+    "section-1-2": {
+      "label": "§1.2 · Prior density bounds",
+      "page": 5,
+      "needle": "Prior density bounds",
+      "rect": [
+        0.11274509803921569,
+        0.4483154040404041,
+        0.2624239393464053,
+        0.02267070707070706
+      ]
+    },
+    "section-1-5": {
+      "label": "§1.5 · How to read the proof",
+      "page": 8,
+      "needle": "How to read the proof",
+      "rect": [
+        0.11274509803921569,
+        0.2982371212121212,
+        0.2752953139869282,
+        0.02267070707070706
+      ]
+    },
+    "section-2": {
+      "label": "§2 · Polynomial cells and the increment theorem",
+      "page": 8,
+      "needle": "Polynomial cells and the increment theorem",
+      "rect": [
+        0.11274509803921569,
+        0.5870186868686869,
+        0.5597767504901962,
+        0.025689646464646478
+      ]
+    },
+    "section-2-8": {
+      "label": "§2.8 · From a cell to the next certificate",
+      "page": 12,
+      "needle": "From a cell to the next certificate",
+      "rect": [
+        0.11274509803921569,
+        0.7628217171717172,
+        0.38411107555555574,
+        0.02267070707070706
+      ]
+    },
+    "theorem-2-1": {
+      "label": "Theorem 2.1 · Triangular increment",
+      "page": 10,
+      "needle": "Theorem 2.1",
+      "rect": [
+        0.1120277777777778,
+        0.08844684343434338,
+        0.7752302568189542,
+        0.023593560606060656
+      ]
+    },
+    "lemma-2-2": {
+      "label": "Lemma 2.2 · Dimension-independent fresh rank",
+      "page": 11,
+      "needle": "Lemma 2.2",
+      "rect": [
+        0.11274509803921569,
+        0.2635857323232323,
+        0.7744272552200328,
+        0.023594823232323252
+      ]
+    },
+    "figure-3": {
+      "label": "Figure 3 · Main proof route",
+      "page": 14,
+      "needle": "Figure 3:",
+      "rect": [
+        0.11274509803921569,
+        0.336972095959596,
+        0.7745446087628755,
+        0.021349873737373768
+      ]
+    },
+    "section-3": {
+      "label": "§3 · Constrained paths",
+      "page": 14,
+      "needle": "Constrained paths and their detection estimates",
+      "rect": [
+        0.11274509803921569,
+        0.39141262626262624,
+        0.6066527245751631,
+        0.025689646464646478
+      ]
+    },
+    "section-4": {
+      "label": "§4 · Preparing a cell by rank cuts",
+      "page": 24,
+      "needle": "Preparing a cell by rank cuts",
+      "rect": [
+        0.11274509803921569,
+        0.6951487373737374,
+        0.3857915690849674,
+        0.025689646464646405
+      ]
+    },
+    "proposition-4-1": {
+      "label": "Proposition 4.1",
+      "page": 25,
+      "needle": "Proposition 4.1",
+      "rect": [
+        0.11274509803921569,
+        0.08844684343434338,
+        0.7769894165043146,
+        0.02134987373737373
+      ]
+    },
+    "section-5": {
+      "label": "§5 · Detection independent of the current width",
+      "page": 36,
+      "needle": "Detection independent of the current width",
+      "rect": [
+        0.11274509803921569,
+        0.3499037878787879,
+        0.5548094959477123,
+        0.025689646464646478
+      ]
+    },
+    "section-6": {
+      "label": "§6 · Forward sampling of a prepared cell",
+      "page": 40,
+      "needle": "Forward sampling of a prepared cell",
+      "rect": [
+        0.11274509803921569,
+        0.4153381313131313,
+        0.46539188173202606,
+        0.025689646464646478
+      ]
+    },
+    "proposition-6-2": {
+      "label": "Proposition 6.2",
+      "page": 42,
+      "needle": "Proposition 6.2",
+      "rect": [
+        0.11274509803921569,
+        0.6763622474747475,
+        0.7744618751568629,
+        0.021349873737373695
+      ]
+    },
+    "section-7": {
+      "label": "§7 · Returning the increment",
+      "page": 44,
+      "needle": "Returning the increment: comparison and passive layers",
+      "rect": [
+        0.11274509803921569,
+        0.45594166666666663,
+        0.7006086138235291,
+        0.025689646464646478
+      ]
+    },
+    "proposition-7-8": {
+      "label": "Proposition 7.8",
+      "page": 57,
+      "needle": "Proposition 7.8",
+      "rect": [
+        0.11274509803921569,
+        0.4763786616161616,
+        0.7744186262084968,
+        0.021349873737373768
+      ]
+    },
+    "section-8": {
+      "label": "§8 · Active globalization with exact marking",
+      "page": 60,
+      "needle": "Active globalization with exact marking",
+      "rect": [
+        0.11274509803921569,
+        0.3071929292929293,
+        0.5106855543464051,
+        0.025689646464646478
+      ]
+    },
+    "theorem-8-2": {
+      "label": "Theorem 8.2",
+      "page": 61,
+      "needle": "Theorem 8.2",
+      "rect": [
+        0.1120277777777778,
+        0.6675162878787879,
+        0.7779613158454084,
+        0.021349873737373695
+      ]
+    },
+    "section-9": {
+      "label": "§9 · Parameter extraction and exact restoration",
+      "page": 69,
+      "needle": "Parameter extraction and exact restoration",
+      "rect": [
+        0.11274509803921569,
+        0.37833308080808076,
+        0.5507517717320259,
+        0.025689646464646478
+      ]
+    },
+    "proposition-9-1": {
+      "label": "Proposition 9.1",
+      "page": 70,
+      "needle": "Proposition 9.1",
+      "rect": [
+        0.11274509803921569,
+        0.13316022727272722,
+        0.7764375622119933,
+        0.02134987373737373
+      ]
+    },
+    "section-10": {
+      "label": "§10 · Triangular iteration",
+      "page": 76,
+      "needle": "Triangular iteration",
+      "rect": [
+        0.11274509803921569,
+        0.3670123737373738,
+        0.2904198130392157,
+        0.025689646464646478
+      ]
+    },
+    "proposition-10-2": {
+      "label": "Proposition 10.2 · Triangular dimension bounds",
+      "page": 77,
+      "needle": "Proposition 10.2",
+      "rect": [
+        0.11274509803921569,
+        0.6565529040404041,
+        0.7745322094655558,
+        0.021349873737373695
+      ]
+    },
+    "section-11": {
+      "label": "§11 · Weighted consequences",
+      "page": 82,
+      "needle": "Weighted consequences",
+      "rect": [
+        0.11274509803921569,
+        0.21045429292929285,
+        0.33117755477124183,
+        0.025689646464646478
+      ]
+    },
+    "table-1": {
+      "label": "Table 1 · Analytic inputs",
+      "page": 85,
+      "needle": "Table 1:",
+      "rect": [
+        0.11210294117647059,
+        0.788921590909091,
+        0.7751935700879896,
+        0.021349873737373695
+      ]
+    },
+    "appendices": {
+      "label": "Appendix A · Quantitative conventions and symbols",
+      "page": 86,
+      "needle": "Quantitative conventions and symbols",
+      "rect": [
+        0.11274509803921569,
+        0.08410707070707064,
+        0.49487660454248356,
+        0.02568964646464646
+      ]
+    }
+  }
+}

@@ -40,6 +40,7 @@ from significance.boards import (
     collect_board_files,
     load_board,
 )
+from significance.companions import build_companions
 from significance.export_text import board_row_status_text, record_status_text
 from significance.records import load_record
 from significance.semantics import PALOMAR_CAVEAT, verdict_violations
@@ -795,6 +796,8 @@ def build_site(
     # check produces the same tree on Windows and Linux.
     for asset in sorted(_STATIC_DIR.glob("*"), key=lambda path: path.name):
         shutil.copy(asset, static_out / asset.name)
+
+    build_companions(pages_dir, static_out)
 
     def links_for(prefix: str) -> dict:
         """This build's nav, from the point of view of a page at `prefix`."""
