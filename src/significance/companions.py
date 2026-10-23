@@ -27,6 +27,13 @@ def published_companions() -> list[dict]:
 
 
 def build_companions(pages_dir: Path, static_dir: Path) -> None:
+    # A fixed teaching example demonstrates the service without representing
+    # a living researcher's work or entering the claim-record corpus.
+    example_source = ROOT / "examples" / "research-companion"
+    example_target = pages_dir / "examples" / "research-companion"
+    example_target.mkdir(parents=True, exist_ok=True)
+    for asset in ("index.html", "example.css", "example.js"):
+        shutil.copyfile(example_source / asset, example_target / asset)
     for entry in published_companions():
         source = ROOT / entry["source"]
         target = pages_dir / "companions" / entry["slug"]
